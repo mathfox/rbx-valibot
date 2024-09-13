@@ -23,7 +23,7 @@ import type {
 	TupleWithRestIssue,
 	TupleWithRestSchema,
 	TupleWithRestSchemaAsync,
-} from "../../schemas/index.ts";
+} from "../../schemas";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -33,9 +33,9 @@ import type {
 	ObjectEntriesAsync,
 	TupleItems,
 	TupleItemsAsync,
-} from "../../types/index.ts";
-import { getDefault } from "../getDefault/index.ts";
-import type { InferDefaults } from "./types.ts";
+} from "../../types";
+import { getDefault } from "../getDefault";
+import type { InferDefaults } from "./types";
 
 /**
  * Returns the default values of the schema.

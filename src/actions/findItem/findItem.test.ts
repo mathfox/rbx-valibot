@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type FindItemAction, findItem } from "./findItem.ts";
+import { type FindItemAction, findItem } from "./findItem";
 
 describe("findItem", () => {
 	const operation = (item: number) => item > 9;

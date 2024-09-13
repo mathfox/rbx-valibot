@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, Config, Dataset, InferIssue, InferOutput } from "../../types/index.ts";
-import { getFallback } from "../getFallback/index.ts";
+import type { BaseIssue, BaseSchema, Config, Dataset, InferIssue, InferOutput } from "../../types";
+import { getFallback } from "../getFallback";
 
 /**
  * Fallback type.

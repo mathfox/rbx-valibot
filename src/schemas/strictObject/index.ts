@@ -1,3 +1,3 @@
-export * from "./strictObject.ts";
-export * from "./strictObjectAsync.ts";
-export * from "./types.ts";
+export * from "./strictObject";
+export * from "./strictObjectAsync";
+export * from "./types";

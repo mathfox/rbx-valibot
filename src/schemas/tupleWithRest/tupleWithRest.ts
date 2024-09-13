@@ -11,9 +11,9 @@ import type {
 	InferTupleIssue,
 	InferTupleOutput,
 	TupleItems,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { TupleWithRestIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { TupleWithRestIssue } from "./types";
 
 /**
  * Tuple with rest schema type.

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test } from "@rbxts/jest-globals";
-import { type MinLengthIssue, minLength } from "../../actions/index.ts";
-import { type NumberIssue, type StringIssue, number, string } from "../../schemas/index.ts";
+import { type MinLengthIssue, minLength } from "../../actions";
+import { type NumberIssue, type StringIssue, number, string } from "../../schemas";
 import {
 	deleteGlobalMessage,
 	deleteSchemaMessage,
@@ -8,9 +8,9 @@ import {
 	setGlobalMessage,
 	setSchemaMessage,
 	setSpecificMessage,
-} from "../../storages/index.ts";
-import type { BaseIssue, Dataset, IssuePathItem, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { _addIssue } from "./_addIssue.ts";
+} from "../../storages";
+import type { BaseIssue, Dataset, IssuePathItem, TypedDataset, UntypedDataset } from "../../types";
+import { _addIssue } from "./_addIssue";
 
 describe("_addIssue", () => {
 	describe("should add issue to dataset", () => {

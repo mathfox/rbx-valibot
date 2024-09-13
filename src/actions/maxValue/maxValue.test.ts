@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type MaxValueAction, maxValue } from "./maxValue.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type MaxValueAction, maxValue } from "./maxValue";
 
-// TODO: Add tests for "non-..." cases (see `value.test.ts`)
+// TODO: Add tests for "non-..." cases (see `value.test`)
 
 describe("maxValue", () => {
 	describe("should return action object", () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type NanIssue, type NanSchema, nan } from "./nan.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type NanIssue, type NanSchema, nan } from "./nan";
 
 describe("nan", () => {
 	describe("should return schema object", () => {

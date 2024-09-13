@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectSchemaIssue } from "../../vitest/index.ts";
-import { type NeverIssue, type NeverSchema, never } from "./never.ts";
+import { expectSchemaIssue } from "../../vitest";
+import { type NeverIssue, type NeverSchema, never } from "./never";
 
 describe("never", () => {
 	describe("should return schema object", () => {

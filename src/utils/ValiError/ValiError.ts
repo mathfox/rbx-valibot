@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue } from "../../types";
 
 /**
  * A Valibot error with useful information.

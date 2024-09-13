@@ -1,8 +1,8 @@
-import type { BaseIssue } from "./issue.ts";
-import type { BaseMetadata } from "./metadata.ts";
-import type { BaseSchema, BaseSchemaAsync } from "./schema.ts";
-import type { BaseTransformation, BaseTransformationAsync } from "./transformation.ts";
-import type { BaseValidation, BaseValidationAsync } from "./validation.ts";
+import type { BaseIssue } from "./issue";
+import type { BaseMetadata } from "./metadata";
+import type { BaseSchema, BaseSchemaAsync } from "./schema";
+import type { BaseTransformation, BaseTransformationAsync } from "./transformation";
+import type { BaseValidation, BaseValidationAsync } from "./validation";
 
 /**
  * Infer input type.

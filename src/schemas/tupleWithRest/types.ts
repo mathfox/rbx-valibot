@@ -1,4 +1,4 @@
-import type { BaseIssue } from "../../types/index.ts";
+import type { BaseIssue } from "../../types";
 
 /**
  * Tuple with rest issue type.

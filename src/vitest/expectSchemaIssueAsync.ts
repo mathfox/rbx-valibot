@@ -1,6 +1,6 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseSchemaAsync, InferIssue, UntypedDataset } from "../types/index.ts";
-import { _stringify } from "../utils/index.ts";
+import type { BaseIssue, BaseSchemaAsync, InferIssue, UntypedDataset } from "../types";
+import { _stringify } from "../utils";
 
 /**
  * Expect an schema issue to be returned.

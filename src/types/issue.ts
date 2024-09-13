@@ -1,4 +1,4 @@
-import type { SchemaWithPipe, SchemaWithPipeAsync } from "../methods/index.ts";
+import type { SchemaWithPipe, SchemaWithPipeAsync } from "../methods";
 import type {
 	ArrayIssue,
 	ArraySchema,
@@ -17,19 +17,9 @@ import type {
 	MapIssue,
 	MapSchema,
 	MapSchemaAsync,
-	NonNullableIssue,
-	NonNullableSchema,
-	NonNullableSchemaAsync,
-	NonNullishIssue,
-	NonNullishSchema,
-	NonNullishSchemaAsync,
 	NonOptionalIssue,
 	NonOptionalSchema,
 	NonOptionalSchemaAsync,
-	NullableSchema,
-	NullableSchemaAsync,
-	NullishSchema,
-	NullishSchemaAsync,
 	ObjectIssue,
 	ObjectSchema,
 	ObjectSchemaAsync,
@@ -64,14 +54,14 @@ import type {
 	VariantIssue,
 	VariantSchema,
 	VariantSchemaAsync,
-} from "../schemas/index.ts";
-import type { Config } from "./config.ts";
-import type { InferInput } from "./infer.ts";
-import type { ObjectEntries, ObjectEntriesAsync } from "./object.ts";
-import type { Default, DefaultAsync, ErrorMessage } from "./other.ts";
-import type { BaseSchema, BaseSchemaAsync } from "./schema.ts";
-import type { TupleItems, TupleItemsAsync } from "./tuple.ts";
-import type { FirstTupleItem, MaybeReadonly } from "./utils.ts";
+} from "../schemas";
+import type { Config } from "./config";
+import type { InferInput } from "./infer";
+import type { ObjectEntries, ObjectEntriesAsync } from "./object";
+import type { Default, DefaultAsync, ErrorMessage } from "./other";
+import type { BaseSchema, BaseSchemaAsync } from "./schema";
+import type { TupleItems, TupleItemsAsync } from "./tuple";
+import type { FirstTupleItem, MaybeReadonly } from "./utils";
 
 /**
  * Array path item type.
@@ -398,25 +388,9 @@ export type IssueDotPath<
 																			: // Wrapped (sync)
 																				TSchema extends
 																						| LazySchema<infer TWrapped>
-																						| NonNullableSchema<
-																								infer TWrapped,
-																								ErrorMessage<NonNullableIssue> | undefined
-																						  >
-																						| NonNullishSchema<
-																								infer TWrapped,
-																								ErrorMessage<NonNullishIssue> | undefined
-																						  >
 																						| NonOptionalSchema<
 																								infer TWrapped,
 																								ErrorMessage<NonOptionalIssue> | undefined
-																						  >
-																						| NullableSchema<
-																								infer TWrapped,
-																								Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, undefined>
-																						  >
-																						| NullishSchema<
-																								infer TWrapped,
-																								Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, undefined>
 																						  >
 																						| OptionalSchema<
 																								infer TWrapped,
@@ -430,33 +404,9 @@ export type IssueDotPath<
 																				: // Wrapped (async)
 																					TSchema extends
 																							| LazySchemaAsync<infer TWrapped>
-																							| NonNullableSchemaAsync<
-																									infer TWrapped,
-																									ErrorMessage<NonNullableIssue> | undefined
-																							  >
-																							| NonNullishSchemaAsync<
-																									infer TWrapped,
-																									ErrorMessage<NonNullishIssue> | undefined
-																							  >
 																							| NonOptionalSchemaAsync<
 																									infer TWrapped,
 																									ErrorMessage<NonOptionalIssue> | undefined
-																							  >
-																							| NullableSchemaAsync<
-																									infer TWrapped,
-																									DefaultAsync<
-																										| BaseSchema<unknown, unknown, BaseIssue<unknown>>
-																										| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-																										undefined
-																									>
-																							  >
-																							| NullishSchemaAsync<
-																									infer TWrapped,
-																									DefaultAsync<
-																										| BaseSchema<unknown, unknown, BaseIssue<unknown>>
-																										| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-																										undefined
-																									>
 																							  >
 																							| OptionalSchemaAsync<
 																									infer TWrapped,

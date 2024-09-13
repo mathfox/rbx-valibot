@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { boolean, nullish, number, object, objectWithRest, optional, string } from "../../schemas/index.ts";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { partial } from "./partial.ts";
+import { boolean, nullish, number, object, objectWithRest, optional, string } from "../../schemas";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue } from "../../vitest";
+import { partial } from "./partial";
 
 describe("partial", () => {
 	const entries = {

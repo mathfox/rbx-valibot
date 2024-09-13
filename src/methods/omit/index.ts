@@ -1,1 +1,1 @@
-export * from "./omit.ts";
+export * from "./omit";

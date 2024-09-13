@@ -1,3 +1,3 @@
-export * from "./getDefaults.ts";
-export * from "./getDefaultsAsync.ts";
-export * from "./types.ts";
+export * from "./getDefaults";
+export * from "./getDefaultsAsync";
+export * from "./types";

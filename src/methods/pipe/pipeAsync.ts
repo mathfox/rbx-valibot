@@ -13,7 +13,7 @@ import type {
 	PipeActionAsync,
 	PipeItem,
 	PipeItemAsync,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Schema with pipe async type.

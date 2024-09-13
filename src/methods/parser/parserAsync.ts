@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types/index.ts";
-import { parseAsync } from "../parse/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types";
+import { parseAsync } from "../parse";
 
 /**
  * The parser async type.

@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
 
 /**
  * Starts with issue type.

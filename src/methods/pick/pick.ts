@@ -11,7 +11,7 @@ import type {
 	StrictObjectIssue,
 	StrictObjectSchema,
 	StrictObjectSchemaAsync,
-} from "../../schemas/index.ts";
+} from "../../schemas";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -29,7 +29,7 @@ import type {
 	ObjectEntriesAsync,
 	ObjectKeys,
 	SchemaWithoutPipe,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * The schema type.

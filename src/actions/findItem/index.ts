@@ -1,1 +1,1 @@
-export * from "./findItem.ts";
+export * from "./findItem";

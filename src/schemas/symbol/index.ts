@@ -1,1 +1,1 @@
-export * from "./symbol.ts";
+export * from "./symbol";

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { minLength, transform } from "../../actions/index.ts";
-import { objectAsync, string } from "../../schemas/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { safeParseAsync } from "./safeParseAsync.ts";
+import { minLength, transform } from "../../actions";
+import { objectAsync, string } from "../../schemas";
+import { pipe } from "../pipe";
+import { safeParseAsync } from "./safeParseAsync";
 
 describe("safeParseAsync", () => {
 	test("should return successful output", async () => {

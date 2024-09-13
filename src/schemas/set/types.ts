@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferInput, InferOutput } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferInput, InferOutput } from "../../types";
 
 /**
  * Set issue type.

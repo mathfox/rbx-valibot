@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type PicklistSchema, null_, number, object, picklist, string } from "../../schemas/index.ts";
-import { keyof } from "./keyof.ts";
+import { type PicklistSchema, null_, number, object, picklist, string } from "../../schemas";
+import { keyof } from "./keyof";
 
 describe("keyof", () => {
 	const objectSchema = object({ foo: string(), bar: number(), baz: null_() });

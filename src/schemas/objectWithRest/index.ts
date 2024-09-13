@@ -1,3 +1,3 @@
-export * from "./objectWithRest.ts";
-export * from "./objectWithRestAsync.ts";
-export * from "./types.ts";
+export * from "./objectWithRest";
+export * from "./objectWithRestAsync";
+export * from "./types";

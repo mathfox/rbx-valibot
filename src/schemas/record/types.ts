@@ -1,5 +1,5 @@
-import type { Brand, ReadonlyAction } from "../../actions/index.ts";
-import type { SchemaWithPipe, SchemaWithPipeAsync } from "../../methods/index.ts";
+import type { Brand, ReadonlyAction } from "../../actions";
+import type { SchemaWithPipe, SchemaWithPipeAsync } from "../../methods";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -8,7 +8,7 @@ import type {
 	InferOutput,
 	MarkOptional,
 	Prettify,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Record issue type.

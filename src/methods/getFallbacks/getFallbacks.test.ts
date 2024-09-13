@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { boolean, number, object, strictObject, strictTuple, string, tuple } from "../../schemas/index.ts";
-import { fallback } from "../fallback/index.ts";
-import { getFallbacks } from "./getFallbacks.ts";
+import { boolean, number, object, strictObject, strictTuple, string, tuple } from "../../schemas";
+import { fallback } from "../fallback";
+import { getFallbacks } from "./getFallbacks";
 
 describe("getFallbacks", () => {
 	test("should return undefined", () => {

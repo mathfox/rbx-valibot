@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type HashAction, type HashIssue, hash } from "./hash.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type HashAction, type HashIssue, hash } from "./hash";
 
 describe("hash", () => {
 	describe("should return action object", () => {

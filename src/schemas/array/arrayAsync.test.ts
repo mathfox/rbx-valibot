@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type ArraySchemaAsync, arrayAsync } from "./arrayAsync.ts";
-import type { ArrayIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { type StringIssue, string } from "../string";
+import { type ArraySchemaAsync, arrayAsync } from "./arrayAsync";
+import type { ArrayIssue } from "./types";
 
 describe("array", () => {
 	//	describe("should return schema object", () => {

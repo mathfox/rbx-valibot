@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { minLength, transform } from "../../actions/index.ts";
-import { object, string } from "../../schemas/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { safeParse } from "./safeParse.ts";
+import { minLength, transform } from "../../actions";
+import { object, string } from "../../schemas";
+import { pipe } from "../pipe";
+import { safeParse } from "./safeParse";
 
 describe("safeParse", () => {
 	test("should return successful output", () => {

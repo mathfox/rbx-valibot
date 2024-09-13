@@ -1,4 +1,4 @@
-import type { BaseSchema } from "../../types/index.ts";
+import type { BaseSchema } from "../../types";
 
 /**
  * Unknown schema type.

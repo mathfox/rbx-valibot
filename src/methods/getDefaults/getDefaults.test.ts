@@ -10,8 +10,8 @@ import {
 	strictTuple,
 	string,
 	tuple,
-} from "../../schemas/index.ts";
-import { getDefaults } from "./getDefaults.ts";
+} from "../../schemas";
+import { getDefaults } from "./getDefaults";
 
 describe("getDefaults", () => {
 	test("should return undefined", () => {

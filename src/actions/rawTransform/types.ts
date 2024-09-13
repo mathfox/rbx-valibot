@@ -1,4 +1,4 @@
-import type { BaseIssue, Config, ErrorMessage, IssuePathItem, TypedDataset } from "../../types/index.ts";
+import type { BaseIssue, Config, ErrorMessage, IssuePathItem, TypedDataset } from "../../types";
 
 /**
  * Raw transform issue type.

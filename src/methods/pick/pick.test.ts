@@ -8,10 +8,10 @@ import {
 	object,
 	objectWithRest,
 	string,
-} from "../../schemas/index.ts";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { pick } from "./pick.ts";
+} from "../../schemas";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue } from "../../vitest";
+import { pick } from "./pick";
 
 describe("pick", () => {
 	const entries = {

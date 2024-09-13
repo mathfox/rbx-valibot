@@ -1,1 +1,1 @@
-export * from "./getDotPath.ts";
+export * from "./getDotPath";

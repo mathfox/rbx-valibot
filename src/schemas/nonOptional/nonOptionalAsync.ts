@@ -1,11 +1,6 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type {
-	InferNonOptionalInput,
-	InferNonOptionalIssue,
-	InferNonOptionalOutput,
-	NonOptionalIssue,
-} from "./types.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
+import type { InferNonOptionalInput, InferNonOptionalIssue, InferNonOptionalOutput, NonOptionalIssue } from "./types";
 
 /**
  * Non optional schema async type.

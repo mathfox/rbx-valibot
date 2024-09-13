@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { _stringify } from "../../utils/index.ts";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type ValueAction, value } from "./value.ts";
+import { _stringify } from "../../utils";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type ValueAction, value } from "./value";
 
 describe("value", () => {
 	describe("should return action object", () => {

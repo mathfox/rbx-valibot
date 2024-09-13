@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { type StringSchema, string } from "../string/index.ts";
-import { type OptionalSchema, optional } from "./optional.ts";
+import { expectNoSchemaIssue } from "../../vitest";
+import { type StringSchema, string } from "../string";
+import { type OptionalSchema, optional } from "./optional";
 
 describe("optional", () => {
 	describe("should return schema object", () => {

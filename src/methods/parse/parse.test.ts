@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { transform } from "../../actions/index.ts";
-import { number, object, string } from "../../schemas/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { parse } from "./parse.ts";
+import { transform } from "../../actions";
+import { number, object, string } from "../../schemas";
+import { pipe } from "../pipe";
+import { parse } from "./parse";
 
 describe("parse", () => {
 	const entries = {

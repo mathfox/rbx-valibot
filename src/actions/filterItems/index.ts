@@ -1,1 +1,1 @@
-export * from "./filterItems.ts";
+export * from "./filterItems";

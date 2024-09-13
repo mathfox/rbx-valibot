@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type MultipleOfAction, type MultipleOfIssue, multipleOf } from "./multipleOf.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type MultipleOfAction, type MultipleOfIssue, multipleOf } from "./multipleOf";
 
 describe("multipleOf", () => {
 	describe("should return action object", () => {

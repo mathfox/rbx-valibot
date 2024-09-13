@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { type StringSchema, string } from "../string/index.ts";
-import { type UndefinedableSchema, undefinedable } from "./undefinedable.ts";
+import { expectNoSchemaIssue } from "../../vitest";
+import { type StringSchema, string } from "../string";
+import { type UndefinedableSchema, undefinedable } from "./undefinedable";
 
 describe("undefinedable", () => {
 	describe("should return schema object", () => {

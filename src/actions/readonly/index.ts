@@ -1,1 +1,1 @@
-export * from "./readonly.ts";
+export * from "./readonly";

@@ -7,7 +7,7 @@ import type {
 	OptionalSchemaAsync,
 	UndefinedableSchema,
 	UndefinedableSchemaAsync,
-} from "../../schemas/index.ts";
+} from "../../schemas";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -17,7 +17,7 @@ import type {
 	InferInput,
 	InferIssue,
 	MaybePromise,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Infer default type.

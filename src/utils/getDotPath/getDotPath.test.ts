@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { getDotPath } from "./getDotPath.ts";
+import { getDotPath } from "./getDotPath";
 
 describe("getDotPath", () => {
 	test("should return null if path is undefined", () => {

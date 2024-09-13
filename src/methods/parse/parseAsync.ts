@@ -1,6 +1,6 @@
-import { getGlobalConfig } from "../../storages/index.ts";
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types/index.ts";
-import { ValiError } from "../../utils/index.ts";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types";
+import { ValiError } from "../../utils";
 
 /**
  * Parses an unknown input based on a schema.

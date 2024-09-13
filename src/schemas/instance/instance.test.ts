@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type InstanceIssue, type InstanceSchema, instance } from "./instance.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type InstanceIssue, type InstanceSchema, instance } from "./instance";
 
 describe("instance", () => {
 	describe("should return schema object", () => {

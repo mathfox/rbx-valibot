@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ReadonlyAction, readonly } from "./readonly.ts";
+import { type ReadonlyAction, readonly } from "./readonly";
 
 describe("readonly", () => {
 	test("should return action object", () => {

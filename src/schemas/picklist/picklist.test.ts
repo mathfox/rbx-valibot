@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type PicklistIssue, type PicklistSchema, picklist } from "./picklist.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type PicklistIssue, type PicklistSchema, picklist } from "./picklist";
 
 describe("picklist", () => {
 	const options = ["foo", "bar", "baz"] as const;

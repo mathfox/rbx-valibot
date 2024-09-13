@@ -1,14 +1,14 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { minLength, minValue, transform } from "../../actions/index.ts";
-import { pipe } from "../../methods/index.ts";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { array } from "../array/array.ts";
-import { date } from "../date/index.ts";
-import { number } from "../number/index.ts";
-import { object } from "../object/index.ts";
-import { string } from "../string/index.ts";
-import { type IntersectSchema, intersect } from "./intersect.ts";
+import { minLength, minValue, transform } from "../../actions";
+import { pipe } from "../../methods";
+import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue } from "../../vitest";
+import { array } from "../array/array";
+import { date } from "../date";
+import { number } from "../number";
+import { object } from "../object";
+import { string } from "../string";
+import { type IntersectSchema, intersect } from "./intersect";
 
 describe("intersect", () => {
 	describe("should return schema object", () => {

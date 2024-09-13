@@ -10,7 +10,7 @@ import {
 	type StrictObjectIssue,
 	type StrictObjectSchema,
 	nonOptional,
-} from "../../schemas/index.ts";
+} from "../../schemas";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -25,7 +25,7 @@ import type {
 	ObjectEntries,
 	ObjectKeys,
 	SchemaWithoutPipe,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Schema type.

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { HEX_COLOR_REGEX } from "../../regex.ts";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type HexColorAction, type HexColorIssue, hexColor } from "./hexColor.ts";
+import { HEX_COLOR_REGEX } from "../../regex";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type HexColorAction, type HexColorIssue, hexColor } from "./hexColor";
 
 describe("hexColor", () => {
 	describe("should return action object", () => {

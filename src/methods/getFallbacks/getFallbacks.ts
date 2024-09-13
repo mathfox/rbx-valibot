@@ -15,10 +15,10 @@ import type {
 	TupleSchema,
 	TupleWithRestIssue,
 	TupleWithRestSchema,
-} from "../../schemas/index.ts";
-import type { BaseIssue, BaseSchema, ErrorMessage, ObjectEntries, TupleItems } from "../../types/index.ts";
-import { getFallback } from "../getFallback/index.ts";
-import type { InferFallbacks } from "./types.ts";
+} from "../../schemas";
+import type { BaseIssue, BaseSchema, ErrorMessage, ObjectEntries, TupleItems } from "../../types";
+import { getFallback } from "../getFallback";
+import type { InferFallbacks } from "./types";
 
 /**
  * Returns the fallback values of the schema.

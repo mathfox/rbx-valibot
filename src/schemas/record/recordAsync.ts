@@ -6,9 +6,9 @@ import type {
 	ErrorMessage,
 	InferIssue,
 	ObjectPathItem,
-} from "../../types/index.ts";
-import { _addIssue, _isValidObjectKey } from "../../utils/index.ts";
-import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue, _isValidObjectKey } from "../../utils";
+import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types";
 
 /**
  * Record schema async type.

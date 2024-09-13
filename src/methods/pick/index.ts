@@ -1,1 +1,1 @@
-export * from "./pick.ts";
+export * from "./pick";

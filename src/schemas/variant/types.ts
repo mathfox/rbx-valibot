@@ -1,17 +1,10 @@
-import type {
-	BaseIssue,
-	BaseSchema,
-	BaseSchemaAsync,
-	ErrorMessage,
-	InferIssue,
-	MaybeReadonly,
-} from "../../types/index.ts";
-import type { LooseObjectIssue, LooseObjectSchema, LooseObjectSchemaAsync } from "../looseObject/index.ts";
-import type { ObjectIssue, ObjectSchema, ObjectSchemaAsync } from "../object/index.ts";
-import type { ObjectWithRestIssue, ObjectWithRestSchema, ObjectWithRestSchemaAsync } from "../objectWithRest/index.ts";
-import type { StrictObjectIssue, StrictObjectSchema, StrictObjectSchemaAsync } from "../strictObject/index.ts";
-import type { variant } from "./variant.ts";
-import type { variantAsync } from "./variantAsync.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage, InferIssue, MaybeReadonly } from "../../types";
+import type { LooseObjectIssue, LooseObjectSchema, LooseObjectSchemaAsync } from "../looseObject";
+import type { ObjectIssue, ObjectSchema, ObjectSchemaAsync } from "../object";
+import type { ObjectWithRestIssue, ObjectWithRestSchema, ObjectWithRestSchemaAsync } from "../objectWithRest";
+import type { StrictObjectIssue, StrictObjectSchema, StrictObjectSchemaAsync } from "../strictObject";
+import type { variant } from "./variant";
+import type { variantAsync } from "./variantAsync";
 
 /**
  * Variant issue type.

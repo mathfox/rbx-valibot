@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type AwaitActionAsync, awaitAsync } from "./awaitAsync.ts";
+import { type AwaitActionAsync, awaitAsync } from "./awaitAsync";
 
 describe("awaitAsync", () => {
 	type Input = Promise<string>;

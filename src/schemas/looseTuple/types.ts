@@ -1,4 +1,4 @@
-import type { BaseIssue } from "../../types/index.ts";
+import type { BaseIssue } from "../../types";
 
 /**
  * Loose tuple issue type.

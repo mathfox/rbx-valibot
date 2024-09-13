@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync } from "../../types/index.ts";
-import { ValiError } from "../../utils/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync } from "../../types";
+import { ValiError } from "../../utils";
 
 /**
  * A type guard to check if an error is a ValiError.

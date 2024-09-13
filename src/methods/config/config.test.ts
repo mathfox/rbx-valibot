@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { objectAsync, string } from "../../schemas/index.ts";
-import type { BaseIssue, Config } from "../../types/index.ts";
-import { config } from "./config.ts";
+import { objectAsync, string } from "../../schemas";
+import type { BaseIssue, Config } from "../../types";
+import { config } from "./config";
 
 describe("config", () => {
 	test("should override config of schema", () => {

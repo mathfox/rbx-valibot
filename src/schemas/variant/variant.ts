@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types/index.ts";
-import { _addIssue, _joinExpects } from "../../utils/index.ts";
-import type { InferVariantIssue, VariantIssue, VariantOptionSchema, VariantOptions } from "./types.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
+import { _addIssue, _joinExpects } from "../../utils";
+import type { InferVariantIssue, VariantIssue, VariantOptionSchema, VariantOptions } from "./types";
 
 /**
  * Variant schema type.

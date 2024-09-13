@@ -1,18 +1,18 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, decimal, email } from "../../actions/index.ts";
-import { pipe } from "../../methods/index.ts";
-import { EMAIL_REGEX } from "../../regex.ts";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { bigint } from "../bigint/bigint.ts";
-import { boolean } from "../boolean/index.ts";
-import { literal } from "../literal/literal.ts";
-import { null_ } from "../null/null.ts";
-import { number } from "../number/index.ts";
-import { object, objectAsync } from "../object/index.ts";
-import { strictObjectAsync } from "../strictObject/index.ts";
-import { string } from "../string/index.ts";
-import { type VariantSchemaAsync, variantAsync } from "./variantAsync.ts";
+import { url, decimal, email } from "../../actions";
+import { pipe } from "../../methods";
+import { EMAIL_REGEX } from "../../regex";
+import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { bigint } from "../bigint/bigint";
+import { boolean } from "../boolean";
+import { literal } from "../literal/literal";
+import { null_ } from "../null/null";
+import { number } from "../number";
+import { object, objectAsync } from "../object";
+import { strictObjectAsync } from "../strictObject";
+import { string } from "../string";
+import { type VariantSchemaAsync, variantAsync } from "./variantAsync";
 
 // TODO: Add test for invalid type inputs
 

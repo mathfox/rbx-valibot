@@ -1,3 +1,3 @@
-export * from "./nonOptional.ts";
-export * from "./nonOptionalAsync.ts";
-export * from "./types.ts";
+export * from "./nonOptional";
+export * from "./nonOptionalAsync";
+export * from "./types";

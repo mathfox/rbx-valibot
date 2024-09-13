@@ -1,6 +1,6 @@
-import type { BaseTransformation, Dataset } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { Context, RawTransformIssue } from "./types.ts";
+import type { BaseTransformation, Dataset } from "../../types";
+import { _addIssue } from "../../utils";
+import type { Context, RawTransformIssue } from "./types";
 
 /**
  * Raw transform action type.

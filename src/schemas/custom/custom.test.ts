@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type CustomSchema, custom } from "./custom.ts";
-import type { CustomIssue } from "./types.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type CustomSchema, custom } from "./custom";
+import type { CustomIssue } from "./types";
 
 describe("custom", () => {
 	type PixelString = `${number}px`;

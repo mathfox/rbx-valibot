@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type TrimEndAction, trimEnd } from "./trimEnd.ts";
+import { type TrimEndAction, trimEnd } from "./trimEnd";
 
 describe("trimEnd", () => {
 	test("should return action object", () => {

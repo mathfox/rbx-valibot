@@ -1,1 +1,1 @@
-export * from "./_joinExpects.ts";
+export * from "./_joinExpects";

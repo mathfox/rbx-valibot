@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type RawTransformActionAsync, rawTransformAsync } from "./rawTransformAsync.ts";
+import { type RawTransformActionAsync, rawTransformAsync } from "./rawTransformAsync";
 
 describe("rawTransformAsync", () => {
 	const action = rawTransformAsync<string, number>(async ({ dataset, addIssue, NEVER }) => {

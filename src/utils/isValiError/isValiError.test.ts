@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { StringIssue } from "../../schemas/index.ts";
-import { ValiError } from "../../utils/index.ts";
-import { isValiError } from "./isValiError.ts";
+import type { StringIssue } from "../../schemas";
+import { ValiError } from "../../utils";
+import { isValiError } from "./isValiError";
 
 describe("isValiError", () => {
 	test("should return true if ValiError", () => {

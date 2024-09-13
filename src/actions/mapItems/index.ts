@@ -1,1 +1,1 @@
-export * from "./mapItems.ts";
+export * from "./mapItems";

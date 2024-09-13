@@ -14,15 +14,8 @@ import {
 	type StrictObjectSchema,
 	type StrictObjectSchemaAsync,
 	picklist,
-} from "../../schemas/index.ts";
-import type {
-	BaseIssue,
-	BaseSchema,
-	ErrorMessage,
-	ObjectEntries,
-	ObjectEntriesAsync,
-	UnionToTuple,
-} from "../../types/index.ts";
+} from "../../schemas";
+import type { BaseIssue, BaseSchema, ErrorMessage, ObjectEntries, ObjectEntriesAsync, UnionToTuple } from "../../types";
 
 /**
  * Schema type.

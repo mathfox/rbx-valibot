@@ -1,6 +1,6 @@
-import type { BaseSchemaAsync, Dataset, ErrorMessage, MaybePromise } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { CustomIssue } from "./types.ts";
+import type { BaseSchemaAsync, Dataset, ErrorMessage, MaybePromise } from "../../types";
+import { _addIssue } from "../../utils";
+import type { CustomIssue } from "./types";
 
 /**
  * Check async type.

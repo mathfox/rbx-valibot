@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { transform } from "../../actions/index.ts";
-import { number, object, string } from "../../schemas/index.ts";
-import { fallback, fallbackAsync } from "../fallback/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { getFallback } from "./getFallback.ts";
+import { transform } from "../../actions";
+import { number, object, string } from "../../schemas";
+import { fallback, fallbackAsync } from "../fallback";
+import { pipe } from "../pipe";
+import { getFallback } from "./getFallback";
 
 describe("getFallback", () => {
 	test("should return undefined", () => {

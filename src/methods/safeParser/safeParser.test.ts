@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { minLength, transform } from "../../actions/index.ts";
-import { object, string } from "../../schemas/index.ts";
-import type { Config, InferIssue } from "../../types/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { safeParser } from "./safeParser.ts";
+import { minLength, transform } from "../../actions";
+import { object, string } from "../../schemas";
+import type { Config, InferIssue } from "../../types";
+import { pipe } from "../pipe";
+import { safeParser } from "./safeParser";
 
 describe("safeParser", () => {
 	describe("should return function object", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type RawCheckAction, rawCheck } from "./rawCheck.ts";
-import type { RawCheckIssue } from "./types.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type RawCheckAction, rawCheck } from "./rawCheck";
+import type { RawCheckIssue } from "./types";
 
 describe("rawCheck", () => {
 	const action = rawCheck<number>(({ dataset, addIssue }) => {

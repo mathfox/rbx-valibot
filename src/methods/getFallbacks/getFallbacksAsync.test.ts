@@ -9,9 +9,9 @@ import {
 	string,
 	tuple,
 	tupleAsync,
-} from "../../schemas/index.ts";
-import { fallback, fallbackAsync } from "../fallback/index.ts";
-import { getFallbacksAsync } from "./getFallbacksAsync.ts";
+} from "../../schemas";
+import { fallback, fallbackAsync } from "../fallback";
+import { getFallbacksAsync } from "./getFallbacksAsync";
 
 describe("await getFallbacksAsync", () => {
 	test("should return undefined", async () => {

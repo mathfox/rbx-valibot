@@ -1,6 +1,6 @@
-import type { BaseValidationAsync, ErrorMessage, MaybePromise } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { CheckIssue } from "./types.ts";
+import type { BaseValidationAsync, ErrorMessage, MaybePromise } from "../../types";
+import { _addIssue } from "../../utils";
+import type { CheckIssue } from "./types";
 
 /**
  * Check action async type.

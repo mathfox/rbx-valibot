@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { type StringSchema, string } from "../string/index.ts";
-import { type UndefinedableSchemaAsync, undefinedableAsync } from "./undefinedableAsync.ts";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { type StringSchema, string } from "../string";
+import { type UndefinedableSchemaAsync, undefinedableAsync } from "./undefinedableAsync";
 
 describe("undefinedableAsync", () => {
 	describe("should return schema object", () => {

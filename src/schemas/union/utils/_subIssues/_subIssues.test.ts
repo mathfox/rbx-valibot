@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { EmailIssue, UrlIssue } from "../../../../actions/index.ts";
-import type { TypedDataset } from "../../../../types/index.ts";
-import { _subIssues } from "./_subIssues.ts";
+import type { EmailIssue, UrlIssue } from "../../../../actions";
+import type { TypedDataset } from "../../../../types";
+import { _subIssues } from "./_subIssues";
 
 describe("_subIssues", () => {
 	describe("should return undefined", () => {

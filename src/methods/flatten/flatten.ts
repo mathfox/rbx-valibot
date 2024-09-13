@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, IssueDotPath, Prettify } from "../../types/index.ts";
-import { getDotPath } from "../../utils/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, IssueDotPath, Prettify } from "../../types";
+import { getDotPath } from "../../utils";
 
 // TODO: Add unit and type tests for flatten method
 

@@ -13,8 +13,8 @@ import {
 	optional,
 	optionalAsync,
 	string,
-} from "../../schemas/index.ts";
-import { unwrap } from "./unwrap.ts";
+} from "../../schemas";
+import { unwrap } from "./unwrap";
 
 describe("unwrap", () => {
 	const wrapped = string();

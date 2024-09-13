@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type CheckIssue, type MinLengthIssue, check } from "../../actions/index.ts";
-import type { TypedDataset } from "../../types/index.ts";
-import { forward } from "./forward.ts";
+import { type CheckIssue, type MinLengthIssue, check } from "../../actions";
+import type { TypedDataset } from "../../types";
+import { forward } from "./forward";
 
 describe("forward", () => {
 	test("should forward issues to end of path list", () => {

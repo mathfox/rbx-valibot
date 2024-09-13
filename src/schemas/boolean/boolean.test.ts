@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type BooleanIssue, type BooleanSchema, boolean } from "./boolean.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type BooleanIssue, type BooleanSchema, boolean } from "./boolean";
 
 describe("boolean", () => {
 	describe("should return schema object", () => {

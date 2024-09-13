@@ -1,2 +1,2 @@
-export * from "./lazy.ts";
-export * from "./lazyAsync.ts";
+export * from "./lazy";
+export * from "./lazyAsync";

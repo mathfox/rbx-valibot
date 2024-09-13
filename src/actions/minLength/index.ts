@@ -1,1 +1,1 @@
-export * from "./minLength.ts";
+export * from "./minLength";

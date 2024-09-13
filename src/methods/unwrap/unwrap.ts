@@ -16,8 +16,8 @@ import type {
 	OptionalSchemaAsync,
 	UndefinedableSchema,
 	UndefinedableSchemaAsync,
-} from "../../schemas/index.ts";
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types/index.ts";
+} from "../../schemas";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types";
 
 /**
  * Unwraps the wrapped schema.

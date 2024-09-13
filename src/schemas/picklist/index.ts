@@ -1,1 +1,1 @@
-export * from "./picklist.ts";
+export * from "./picklist";

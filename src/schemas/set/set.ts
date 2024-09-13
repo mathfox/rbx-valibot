@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, SetPathItem } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { InferSetInput, InferSetOutput, SetIssue } from "./types.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, SetPathItem } from "../../types";
+import { _addIssue } from "../../utils";
+import type { InferSetInput, InferSetOutput, SetIssue } from "./types";
 
 /**
  * Set schema type.

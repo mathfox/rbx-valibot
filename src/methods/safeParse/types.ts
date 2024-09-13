@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, InferOutput } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, InferOutput } from "../../types";
 
 /**
  * Safe parse result type.

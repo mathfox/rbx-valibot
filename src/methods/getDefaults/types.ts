@@ -23,9 +23,9 @@ import type {
 	TupleWithRestIssue,
 	TupleWithRestSchema,
 	TupleWithRestSchemaAsync,
-} from "../../schemas/index.ts";
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types/index.ts";
-import type { InferDefault } from "../getDefault/index.ts";
+} from "../../schemas";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types";
+import type { InferDefault } from "../getDefault";
 
 /**
  * Infer defaults type.

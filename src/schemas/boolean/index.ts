@@ -1,1 +1,1 @@
-export * from "./boolean.ts";
+export * from "./boolean";

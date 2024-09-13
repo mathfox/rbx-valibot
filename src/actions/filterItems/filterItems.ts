@@ -1,5 +1,5 @@
-import type { BaseTransformation } from "../../types/index.ts";
-import type { ArrayInput, ArrayRequirement } from "../types.ts";
+import type { BaseTransformation } from "../../types";
+import type { ArrayInput, ArrayRequirement } from "../types";
 
 /**
  * Filter items action type.

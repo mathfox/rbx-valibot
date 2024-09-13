@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, IssueDotPath } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, IssueDotPath } from "../../types";
 
 // TODO: Add type tests for getDotPath util
 

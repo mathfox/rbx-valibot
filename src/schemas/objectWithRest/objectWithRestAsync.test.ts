@@ -1,16 +1,16 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { array } from "../array/array.ts";
-import type { ArrayIssue } from "../array/types.ts";
-import { boolean } from "../boolean/index.ts";
-import { never } from "../never/index.ts";
-import { number } from "../number/index.ts";
-import { object, objectAsync } from "../object/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type ObjectWithRestSchemaAsync, objectWithRestAsync } from "./objectWithRestAsync.ts";
-import type { ObjectWithRestIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { array } from "../array/array";
+import type { ArrayIssue } from "../array/types";
+import { boolean } from "../boolean";
+import { never } from "../never";
+import { number } from "../number";
+import { object, objectAsync } from "../object";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type ObjectWithRestSchemaAsync, objectWithRestAsync } from "./objectWithRestAsync";
+import type { ObjectWithRestIssue } from "./types";
 
 describe("objectWithRestAsync", () => {
 	describe("should return schema object", () => {

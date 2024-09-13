@@ -7,9 +7,9 @@ import type {
 	InferObjectOutput,
 	ObjectEntriesAsync,
 	ObjectPathItem,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { ObjectIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { ObjectIssue } from "./types";
 
 /**
  * Object schema async type.

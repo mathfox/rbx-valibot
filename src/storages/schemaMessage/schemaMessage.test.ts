@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { deleteSchemaMessage, getSchemaMessage, setSchemaMessage } from "./schemaMessage.ts";
+import { deleteSchemaMessage, getSchemaMessage, setSchemaMessage } from "./schemaMessage";
 
 describe("schemaMessage", () => {
 	const lang = "de";

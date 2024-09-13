@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types";
 
 /**
  * Changes the local configuration of a schema.

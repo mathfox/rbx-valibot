@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type EnumIssue, type EnumSchema, enum_ } from "./enum.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type EnumIssue, type EnumSchema, enum_ } from "./enum";
 
 describe("enum_", () => {
 	enum options {

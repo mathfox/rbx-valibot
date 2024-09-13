@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type TransformActionAsync, transformAsync } from "./transformAsync.ts";
+import { type TransformActionAsync, transformAsync } from "./transformAsync";
 
 describe("transformAsync", () => {
 	test("should return action object", () => {

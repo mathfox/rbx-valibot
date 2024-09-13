@@ -1,3 +1,3 @@
-export * from "./custom.ts";
-export * from "./customAsync.ts";
-export * from "./types.ts";
+export * from "./custom";
+export * from "./customAsync";
+export * from "./types";

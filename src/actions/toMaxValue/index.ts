@@ -1,1 +1,1 @@
-export * from "./toMaxValue.ts";
+export * from "./toMaxValue";

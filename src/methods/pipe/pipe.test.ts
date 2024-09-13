@@ -8,10 +8,10 @@ import {
 	minValue,
 	transform,
 	trim,
-} from "../../actions/index.ts";
-import { DECIMAL_REGEX } from "../../regex.ts";
-import { string } from "../../schemas/index.ts";
-import { pipe } from "./pipe.ts";
+} from "../../actions";
+import { DECIMAL_REGEX } from "../../regex";
+import { string } from "../../schemas";
+import { pipe } from "./pipe";
 
 describe("pipe", () => {
 	const schema = pipe(string(), description("text"), trim(), minLength(1), decimal());

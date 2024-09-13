@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types/index.ts";
-import { type SafeParseResult, safeParseAsync } from "../safeParse/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types";
+import { type SafeParseResult, safeParseAsync } from "../safeParse";
 
 /**
  * The safe parser async type.

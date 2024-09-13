@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseValidation, IssuePathItem, PathKeys } from "../../types/index.ts";
+import type { BaseIssue, BaseValidation, IssuePathItem, PathKeys } from "../../types";
 
 // TODO: We should try to find a better way to type this function without
 // breaking the type inference, as the current implementation loses some type

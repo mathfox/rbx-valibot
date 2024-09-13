@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { transformAsync } from "../../actions/index.ts";
-import { boolean, number, union } from "../../schemas/index.ts";
-import { pipeAsync } from "../pipe/index.ts";
-import { type SchemaWithFallbackAsync, fallbackAsync } from "./fallbackAsync.ts";
+import { transformAsync } from "../../actions";
+import { boolean, number, union } from "../../schemas";
+import { pipeAsync } from "../pipe";
+import { type SchemaWithFallbackAsync, fallbackAsync } from "./fallbackAsync";
 
 describe("fallbackAsync", () => {
 	//	describe("should return schema object", () => {

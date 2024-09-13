@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { number } from "../number/index.ts";
-import { object } from "../object/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type StrictObjectSchema, strictObject } from "./strictObject.ts";
-import type { StrictObjectIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { number } from "../number";
+import { object } from "../object";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type StrictObjectSchema, strictObject } from "./strictObject";
+import type { StrictObjectIssue } from "./types";
 
 describe("strictObject", () => {
 	describe("should return schema object", () => {

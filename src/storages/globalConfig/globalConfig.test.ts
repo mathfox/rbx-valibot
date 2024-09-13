@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type GlobalConfig, deleteGlobalConfig, getGlobalConfig, setGlobalConfig } from "./globalConfig.ts";
+import { type GlobalConfig, deleteGlobalConfig, getGlobalConfig, setGlobalConfig } from "./globalConfig";
 
 describe("config", () => {
 	const config: GlobalConfig = {

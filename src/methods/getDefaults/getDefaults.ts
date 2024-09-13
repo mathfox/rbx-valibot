@@ -15,10 +15,10 @@ import type {
 	TupleSchema,
 	TupleWithRestIssue,
 	TupleWithRestSchema,
-} from "../../schemas/index.ts";
-import type { BaseIssue, BaseSchema, ErrorMessage, ObjectEntries, TupleItems } from "../../types/index.ts";
-import { getDefault } from "../getDefault/index.ts";
-import type { InferDefaults } from "./types.ts";
+} from "../../schemas";
+import type { BaseIssue, BaseSchema, ErrorMessage, ObjectEntries, TupleItems } from "../../types";
+import { getDefault } from "../getDefault";
+import type { InferDefaults } from "./types";
 
 /**
  * Returns the default values of the schema.

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ToMinValueAction, toMinValue } from "./toMinValue.ts";
+import { type ToMinValueAction, toMinValue } from "./toMinValue";
 
 describe("toMinValue", () => {
 	const action = toMinValue<number, 10>(10);

@@ -1,4 +1,4 @@
-import type { BaseIssue, MaybePromise } from "../../types/index.ts";
+import type { BaseIssue, MaybePromise } from "../../types";
 
 /**
  * Partial input type.

@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types/index.ts";
+import type { BaseTransformation } from "../../types";
 
 /**
  * Trim action type.

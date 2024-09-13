@@ -1,6 +1,6 @@
-import type { BaseValidation } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { Context, RawCheckIssue } from "./types.ts";
+import type { BaseValidation } from "../../types";
+import { _addIssue } from "../../utils";
+import type { Context, RawCheckIssue } from "./types";
 
 /**
  * Raw check action type.

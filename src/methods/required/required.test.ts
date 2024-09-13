@@ -1,17 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import {
-	boolean,
-	nonOptional,
-	nullish,
-	number,
-	object,
-	objectWithRest,
-	optional,
-	string,
-} from "../../schemas/index.ts";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue } from "../../vitest/index.ts";
-import { required } from "./required.ts";
+import { boolean, nonOptional, nullish, number, object, objectWithRest, optional, string } from "../../schemas";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue } from "../../vitest";
+import { required } from "./required";
 
 describe("required", () => {
 	const entries = {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { number, object, optional, optionalAsync, string } from "../../schemas/index.ts";
-import { getDefault } from "./getDefault.ts";
+import { number, object, optional, optionalAsync, string } from "../../schemas";
+import { getDefault } from "./getDefault";
 
 describe("getDefault", () => {
 	test("should return undefined", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { _merge } from "./_merge.ts";
+import { _merge } from "./_merge";
 
 describe("_merge", () => {
 	describe("should return dataset with value", () => {

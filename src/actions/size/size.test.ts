@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type SizeAction, type SizeIssue, size } from "./size.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type SizeAction, type SizeIssue, size } from "./size";
 
 describe("size", () => {
 	describe("should return action object", () => {

@@ -9,10 +9,10 @@ import {
 	optional,
 	optionalAsync,
 	string,
-} from "../../schemas/index.ts";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { requiredAsync } from "./requiredAsync.ts";
+} from "../../schemas";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { requiredAsync } from "./requiredAsync";
 
 describe("requiredAsync", () => {
 	const entries = {

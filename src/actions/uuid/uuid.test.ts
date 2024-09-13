@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { UUID_REGEX } from "../../regex.ts";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type UuidAction, type UuidIssue, uuid } from "./uuid.ts";
+import { UUID_REGEX } from "../../regex";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type UuidAction, type UuidIssue, uuid } from "./uuid";
 
 describe("uuid", () => {
 	describe("should return action object", () => {

@@ -1,1 +1,1 @@
-export * from "./size.ts";
+export * from "./size";

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { transform } from "../../actions/index.ts";
-import { boolean, number, union } from "../../schemas/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { type SchemaWithFallback, fallback } from "./fallback.ts";
+import { transform } from "../../actions";
+import { boolean, number, union } from "../../schemas";
+import { pipe } from "../pipe";
+import { type SchemaWithFallback, fallback } from "./fallback";
 
 describe("fallback", () => {
 	//	describe("should return schema object", () => {

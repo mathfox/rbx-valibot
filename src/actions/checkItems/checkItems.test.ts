@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { TypedDataset } from "../../types/dataset.ts";
-import { expectNoActionIssue } from "../../vitest/index.ts";
-import { type CheckItemsAction, type CheckItemsIssue, checkItems } from "./checkItems.ts";
+import type { TypedDataset } from "../../types/dataset";
+import { expectNoActionIssue } from "../../vitest";
+import { type CheckItemsAction, type CheckItemsIssue, checkItems } from "./checkItems";
 
 describe("checkItems", () => {
 	describe("should return action object", () => {

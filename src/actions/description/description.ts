@@ -1,4 +1,4 @@
-import type { BaseMetadata } from "../../types/index.ts";
+import type { BaseMetadata } from "../../types";
 
 /**
  * Description action type.

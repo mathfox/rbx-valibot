@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type MaxLengthAction, type MaxLengthIssue, maxLength } from "./maxLength.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type MaxLengthAction, type MaxLengthIssue, maxLength } from "./maxLength";
 
 describe("maxLength", () => {
 	describe("should return action object", () => {

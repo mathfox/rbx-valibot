@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types/index.ts";
+import type { BaseTransformation } from "../../types";
 
 /**
  * To upper case action type.

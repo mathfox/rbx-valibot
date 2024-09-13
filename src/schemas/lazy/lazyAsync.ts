@@ -6,7 +6,7 @@ import type {
 	InferIssue,
 	InferOutput,
 	MaybePromise,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Lazy schema async type.

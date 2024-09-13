@@ -1,5 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } from "../types/index.ts";
+import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } from "../types";
 
 /**
  * Expect an action issue to be returned.

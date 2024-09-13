@@ -1,1 +1,1 @@
-export * from "./_isPartiallyTyped.ts";
+export * from "./_isPartiallyTyped";

@@ -1,5 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseSchema, InferInput } from "../types/index.ts";
+import type { BaseIssue, BaseSchema, InferInput } from "../types";
 
 /**
  * Expect no schema issue to be returned.

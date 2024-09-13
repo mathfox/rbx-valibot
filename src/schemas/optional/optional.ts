@@ -1,6 +1,6 @@
-import { getDefault } from "../../methods/index.ts";
-import type { BaseIssue, BaseSchema, Dataset, Default, InferInput, InferIssue } from "../../types/index.ts";
-import type { InferOptionalOutput } from "./types.ts";
+import { getDefault } from "../../methods";
+import type { BaseIssue, BaseSchema, Dataset, Default, InferInput, InferIssue } from "../../types";
+import type { InferOptionalOutput } from "./types";
 
 /**
  * Optional schema type.

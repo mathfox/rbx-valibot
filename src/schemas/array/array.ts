@@ -7,9 +7,9 @@ import type {
 	InferInput,
 	InferIssue,
 	InferOutput,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { ArrayIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { ArrayIssue } from "./types";
 
 /**
  * Array schema type.

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ReduceItemsAction, reduceItems } from "./reduceItems.ts";
+import { type ReduceItemsAction, reduceItems } from "./reduceItems";
 
 describe("reduceItems", () => {
 	const operation = (output: number, item: number) => output + item;

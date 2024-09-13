@@ -7,8 +7,8 @@ import type {
 	InferIssue,
 	InferOutput,
 	MaybePromise,
-} from "../../types/index.ts";
-import type { SchemaWithFallback, SchemaWithFallbackAsync } from "../fallback/index.ts";
+} from "../../types";
+import type { SchemaWithFallback, SchemaWithFallbackAsync } from "../fallback";
 
 /**
  * Infer fallback type.

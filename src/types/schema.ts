@@ -1,6 +1,6 @@
-import type { Config } from "./config.ts";
-import type { Dataset } from "./dataset.ts";
-import type { BaseIssue } from "./issue.ts";
+import type { Config } from "./config";
+import type { Dataset } from "./dataset";
+import type { BaseIssue } from "./issue";
 
 /**
  * Base schema type.

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type TransformAction, transform } from "./transform.ts";
+import { type TransformAction, transform } from "./transform";
 
 describe("transform", () => {
 	test("should return action object", () => {

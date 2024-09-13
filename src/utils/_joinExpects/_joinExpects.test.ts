@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { _joinExpects } from "./_joinExpects.ts";
+import { _joinExpects } from "./_joinExpects";
 
 describe("_joinExpects", () => {
 	test("should remove duplicates", () => {

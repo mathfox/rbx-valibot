@@ -1,12 +1,12 @@
-import type { BaseIssue, BaseSchemaAsync, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types/index.ts";
-import { _addIssue, _joinExpects } from "../../utils/index.ts";
+import type { BaseIssue, BaseSchemaAsync, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
+import { _addIssue, _joinExpects } from "../../utils";
 import type {
 	InferVariantIssue,
 	VariantIssue,
 	VariantOptionSchema,
 	VariantOptionSchemaAsync,
 	VariantOptionsAsync,
-} from "./types.ts";
+} from "./types";
 
 /**
  * Variant schema async type.

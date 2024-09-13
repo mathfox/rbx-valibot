@@ -7,9 +7,9 @@ import type {
 	InferObjectOutput,
 	ObjectEntries,
 	ObjectPathItem,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { StrictObjectIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { StrictObjectIssue } from "./types";
 
 /**
  * Strict object schema type.

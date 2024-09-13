@@ -6,7 +6,7 @@ import type {
 	DefaultValue,
 	InferOutput,
 	NonOptional,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Infer optional output type.

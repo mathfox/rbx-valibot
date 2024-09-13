@@ -8,9 +8,9 @@ import type {
 	InferTupleIssue,
 	InferTupleOutput,
 	TupleItemsAsync,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { TupleIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { TupleIssue } from "./types";
 
 /**
  * Tuple schema async type.

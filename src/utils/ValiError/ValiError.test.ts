@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { MinLengthIssue } from "../../actions/index.ts";
-import { ValiError } from "./ValiError.ts";
+import type { MinLengthIssue } from "../../actions";
+import { ValiError } from "./ValiError";
 
 describe("ValiError", () => {
 	test("should create error instance", () => {

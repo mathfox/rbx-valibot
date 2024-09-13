@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, ObjectPathItem } from "../../types/index.ts";
-import { _addIssue, _isValidObjectKey } from "../../utils/index.ts";
-import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, ObjectPathItem } from "../../types";
+import { _addIssue, _isValidObjectKey } from "../../utils";
+import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types";
 
 /**
  * Record schema type.

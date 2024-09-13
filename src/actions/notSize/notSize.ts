@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { SizeInput } from "../types.ts";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
+import type { SizeInput } from "../types";
 
 /**
  * Not size issue type.

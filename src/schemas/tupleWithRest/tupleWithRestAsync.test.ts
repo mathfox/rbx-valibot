@@ -1,13 +1,13 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { boolean } from "../boolean/index.ts";
-import { type NullIssue, null_ } from "../null/index.ts";
-import { number } from "../number/index.ts";
-import { optionalAsync } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type TupleWithRestSchemaAsync, tupleWithRestAsync } from "./tupleWithRestAsync.ts";
-import type { TupleWithRestIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { boolean } from "../boolean";
+import { type NullIssue, null_ } from "../null";
+import { number } from "../number";
+import { optionalAsync } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type TupleWithRestSchemaAsync, tupleWithRestAsync } from "./tupleWithRestAsync";
+import type { TupleWithRestIssue } from "./types";
 
 describe("tupleWithRestAsync", () => {
 	describe("should return schema object", () => {

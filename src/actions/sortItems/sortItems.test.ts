@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type SortItemsAction, sortItems } from "./sortItems.ts";
+import { type SortItemsAction, sortItems } from "./sortItems";
 
 describe("sortItems", () => {
 	const operation = (itemA: number, itemB: number) => (itemA > itemB ? 1 : itemA < itemB ? -1 : 0);

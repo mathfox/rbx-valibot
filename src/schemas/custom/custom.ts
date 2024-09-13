@@ -1,6 +1,6 @@
-import type { BaseSchema, Dataset, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { CustomIssue } from "./types.ts";
+import type { BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
+import type { CustomIssue } from "./types";
 
 /**
  * Check type.

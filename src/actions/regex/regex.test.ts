@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type RegexAction, type RegexIssue, regex } from "./regex.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type RegexAction, type RegexIssue, regex } from "./regex";
 
 describe("regex", () => {
 	const requirement = /^ID-\d{3}$/u;

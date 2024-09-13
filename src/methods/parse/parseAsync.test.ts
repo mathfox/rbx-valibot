@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { transform } from "../../actions/index.ts";
-import { number, objectAsync, string } from "../../schemas/index.ts";
-import { pipe } from "../pipe/index.ts";
-import { parseAsync } from "./parseAsync.ts";
+import { transform } from "../../actions";
+import { number, objectAsync, string } from "../../schemas";
+import { pipe } from "../pipe";
+import { parseAsync } from "./parseAsync";
 
 describe("parseAsync", () => {
 	const entries = {

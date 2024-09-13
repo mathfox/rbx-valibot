@@ -7,8 +7,8 @@ import type {
 	InferIssue,
 	InferOutput,
 	NonOptional,
-} from "../../types/index.ts";
-import type { UnionIssue, UnionOptions, UnionOptionsAsync, UnionSchema, UnionSchemaAsync } from "../union/index.ts";
+} from "../../types";
+import type { UnionIssue, UnionOptions, UnionOptionsAsync, UnionSchema, UnionSchemaAsync } from "../union";
 
 /**
  * Non optional issue type.

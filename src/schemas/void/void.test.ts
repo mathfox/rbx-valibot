@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type VoidIssue, type VoidSchema, void_ } from "./void.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type VoidIssue, type VoidSchema, void_ } from "./void";
 
 describe("void", () => {
 	describe("should return schema object", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssueAsync, expectNoActionIssueAsync } from "../../vitest/index.ts";
-import { type CheckActionAsync, checkAsync } from "./checkAsync.ts";
-import type { CheckIssue } from "./types.ts";
+import { expectActionIssueAsync, expectNoActionIssueAsync } from "../../vitest";
+import { type CheckActionAsync, checkAsync } from "./checkAsync";
+import type { CheckIssue } from "./types";
 
 describe("checkAsync", () => {
 	//	describe("should return action object", () => {

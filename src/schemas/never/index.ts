@@ -1,1 +1,1 @@
-export * from "./never.ts";
+export * from "./never";

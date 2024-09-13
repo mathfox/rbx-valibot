@@ -12,8 +12,8 @@ import {
 	string,
 	tuple,
 	tupleAsync,
-} from "../../schemas/index.ts";
-import { getDefaultsAsync } from "./getDefaultsAsync.ts";
+} from "../../schemas";
+import { getDefaultsAsync } from "./getDefaultsAsync";
 
 describe("getDefaultsAsync", () => {
 	test("should return undefined", async () => {

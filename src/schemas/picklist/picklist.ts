@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, MaybeReadonly } from "../../types/index.ts";
-import { _addIssue, _joinExpects, _stringify } from "../../utils/index.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, MaybeReadonly } from "../../types";
+import { _addIssue, _joinExpects, _stringify } from "../../utils";
 
 /**
  * Picklist options type.

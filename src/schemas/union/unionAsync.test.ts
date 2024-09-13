@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, email, minLength } from "../../actions/index.ts";
-import { pipe } from "../../methods/index.ts";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { literal } from "../literal/literal.ts";
-import { number } from "../number/index.ts";
-import { string } from "../string/index.ts";
-import { type UnionSchemaAsync, unionAsync } from "./unionAsync.ts";
+import { url, email, minLength } from "../../actions";
+import { pipe } from "../../methods";
+import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { literal } from "../literal/literal";
+import { number } from "../number";
+import { string } from "../string";
+import { type UnionSchemaAsync, unionAsync } from "./unionAsync";
 
 describe("unionAsync", () => {
 	describe("should return schema object", () => {

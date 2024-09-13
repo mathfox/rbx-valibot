@@ -1,1 +1,1 @@
-export * from "./enum.ts";
+export * from "./enum";

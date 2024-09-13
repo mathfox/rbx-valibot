@@ -1,7 +1,7 @@
-import type { InferInput, InferIssue, InferOutput } from "./infer.ts";
-import type { BaseIssue } from "./issue.ts";
-import type { BaseSchema, BaseSchemaAsync } from "./schema.ts";
-import type { MaybeReadonly } from "./utils.ts";
+import type { InferInput, InferIssue, InferOutput } from "./infer";
+import type { BaseIssue } from "./issue";
+import type { BaseSchema, BaseSchemaAsync } from "./schema";
+import type { MaybeReadonly } from "./utils";
 
 /**
  * Tuple items type.

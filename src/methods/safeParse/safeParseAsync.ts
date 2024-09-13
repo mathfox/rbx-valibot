@@ -1,6 +1,6 @@
-import { getGlobalConfig } from "../../storages/index.ts";
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types/index.ts";
-import type { SafeParseResult } from "./types.ts";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types";
+import type { SafeParseResult } from "./types";
 
 /**
  * Parses an unknown input based on a schema.

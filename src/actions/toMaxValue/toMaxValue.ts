@@ -1,5 +1,5 @@
-import type { BaseTransformation } from "../../types/index.ts";
-import type { ValueInput } from "../types.ts";
+import type { BaseTransformation } from "../../types";
+import type { ValueInput } from "../types";
 
 /**
  * To max value action type.

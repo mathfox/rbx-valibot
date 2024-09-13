@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type MinSizeAction, type MinSizeIssue, minSize } from "./minSize.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type MinSizeAction, type MinSizeIssue, minSize } from "./minSize";
 
 describe("minSize", () => {
 	describe("should return action object", () => {

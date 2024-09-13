@@ -1,4 +1,4 @@
-import type { BaseTransformation, TypedDataset } from "../../types/index.ts";
+import type { BaseTransformation, TypedDataset } from "../../types";
 
 /**
  * Transform action type.

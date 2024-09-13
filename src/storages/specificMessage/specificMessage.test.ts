@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { string } from "../../schemas/index.ts";
-import { deleteSpecificMessage, getSpecificMessage, setSpecificMessage } from "./specificMessage.ts";
+import { string } from "../../schemas";
+import { deleteSpecificMessage, getSpecificMessage, setSpecificMessage } from "./specificMessage";
 
 describe("schemaMessage", () => {
 	const reference = string;

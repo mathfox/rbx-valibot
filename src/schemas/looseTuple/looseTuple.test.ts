@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { boolean } from "../boolean/index.ts";
-import { number } from "../number/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type LooseTupleSchema, looseTuple } from "./looseTuple.ts";
-import type { LooseTupleIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { boolean } from "../boolean";
+import { number } from "../number";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type LooseTupleSchema, looseTuple } from "./looseTuple";
+import type { LooseTupleIssue } from "./types";
 
 describe("looseTuple", () => {
 	describe("should return schema object", () => {

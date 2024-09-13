@@ -7,9 +7,9 @@ import type {
 	InferObjectOutput,
 	ObjectEntries,
 	ObjectPathItem,
-} from "../../types/index.ts";
-import { _addIssue, _isValidObjectKey } from "../../utils/index.ts";
-import type { LooseObjectIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue, _isValidObjectKey } from "../../utils";
+import type { LooseObjectIssue } from "./types";
 
 /**
  * Loose object schema type.

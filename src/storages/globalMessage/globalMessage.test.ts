@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { deleteGlobalMessage, getGlobalMessage, setGlobalMessage } from "./globalMessage.ts";
+import { deleteGlobalMessage, getGlobalMessage, setGlobalMessage } from "./globalMessage";
 
 describe("globalMessage", () => {
 	const lang = "de";

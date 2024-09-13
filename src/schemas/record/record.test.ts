@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type NumberIssue, number } from "../number/index.ts";
-import { optional } from "../optional/index.ts";
-import { picklist } from "../picklist/index.ts";
-import { string } from "../string/index.ts";
-import { type RecordSchema, record } from "./record.ts";
-import type { RecordIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type NumberIssue, number } from "../number";
+import { optional } from "../optional";
+import { picklist } from "../picklist";
+import { string } from "../string";
+import { type RecordSchema, record } from "./record";
+import type { RecordIssue } from "./types";
 
 describe("record", () => {
 	describe("should return schema record", () => {

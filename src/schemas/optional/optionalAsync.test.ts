@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { type StringSchema, string } from "../string/index.ts";
-import { type OptionalSchemaAsync, optionalAsync } from "./optionalAsync.ts";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { type StringSchema, string } from "../string";
+import { type OptionalSchemaAsync, optionalAsync } from "./optionalAsync";
 
 describe("optionalAsync", () => {
 	describe("should return schema object", () => {

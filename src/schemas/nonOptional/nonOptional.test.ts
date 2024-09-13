@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type NullishSchema, nullish } from "../nullish/index.ts";
-import { type StringSchema, string } from "../string/index.ts";
-import { type NonOptionalSchema, nonOptional } from "./nonOptional.ts";
-import type { NonOptionalIssue } from "./types.ts";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type NullishSchema, nullish } from "../nullish";
+import { type StringSchema, string } from "../string";
+import { type NonOptionalSchema, nonOptional } from "./nonOptional";
+import type { NonOptionalIssue } from "./types";
 
 describe("nonOptional", () => {
 	describe("should return schema object", () => {

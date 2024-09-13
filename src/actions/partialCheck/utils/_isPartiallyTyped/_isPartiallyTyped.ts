@@ -1,4 +1,4 @@
-import type { BaseIssue, Dataset } from "../../../../types/index.ts";
+import type { BaseIssue, Dataset } from "../../../../types";
 
 /**
  * Checks if a dataset is partially typed.

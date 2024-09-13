@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, InferInput, InferIssue, InferOutput } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, InferInput, InferIssue, InferOutput } from "../../types";
 
 /**
  * Lazy schema type.

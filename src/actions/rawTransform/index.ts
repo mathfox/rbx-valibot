@@ -1,3 +1,3 @@
-export * from "./rawTransform.ts";
-export * from "./rawTransformAsync.ts";
-export type { RawTransformIssue } from "./types.ts";
+export * from "./rawTransform";
+export * from "./rawTransformAsync";
+export type { RawTransformIssue } from "./types";

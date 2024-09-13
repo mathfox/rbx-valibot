@@ -1,15 +1,15 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { minLength, minValue, transform } from "../../actions/index.ts";
-import { pipe } from "../../methods/index.ts";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { array } from "../array/array.ts";
-import { arrayAsync } from "../array/arrayAsync.ts";
-import { date } from "../date/index.ts";
-import { number } from "../number/index.ts";
-import { object, objectAsync } from "../object/index.ts";
-import { string } from "../string/index.ts";
-import { type IntersectSchemaAsync, intersectAsync } from "./intersectAsync.ts";
+import { minLength, minValue, transform } from "../../actions";
+import { pipe } from "../../methods";
+import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { array } from "../array/array";
+import { arrayAsync } from "../array/arrayAsync";
+import { date } from "../date";
+import { number } from "../number";
+import { object, objectAsync } from "../object";
+import { string } from "../string";
+import { type IntersectSchemaAsync, intersectAsync } from "./intersectAsync";
 
 describe("intersectAsync", () => {
 	describe("should return schema object", () => {

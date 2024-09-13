@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ToLowerCaseAction, toLowerCase } from "./toLowerCase.ts";
+import { type ToLowerCaseAction, toLowerCase } from "./toLowerCase";
 
 describe("toLowerCase", () => {
 	test("should return action object", () => {

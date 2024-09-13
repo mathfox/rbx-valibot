@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ToMaxValueAction, toMaxValue } from "./toMaxValue.ts";
+import { type ToMaxValueAction, toMaxValue } from "./toMaxValue";
 
 describe("toMaxValue", () => {
 	const action = toMaxValue<number, 10>(10);

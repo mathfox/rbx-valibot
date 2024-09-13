@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { EMAIL_REGEX } from "../../regex.ts";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type EmailAction, type EmailIssue, email } from "./email.ts";
+import { EMAIL_REGEX } from "../../regex";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type EmailAction, type EmailIssue, email } from "./email";
 
 describe("email", () => {
 	describe("should return action object", () => {

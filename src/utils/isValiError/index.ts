@@ -1,1 +1,1 @@
-export * from "./isValiError.ts";
+export * from "./isValiError";

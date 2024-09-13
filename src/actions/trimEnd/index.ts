@@ -1,1 +1,1 @@
-export * from "./trimEnd.ts";
+export * from "./trimEnd";

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type BrandAction, brand } from "./brand.ts";
+import { type BrandAction, brand } from "./brand";
 
 describe("brand", () => {
 	//test("should return action object", () => {

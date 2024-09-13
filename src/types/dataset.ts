@@ -1,4 +1,4 @@
-import type { BaseIssue } from "./issue.ts";
+import type { BaseIssue } from "./issue";
 
 /**
  * Typed dataset type.

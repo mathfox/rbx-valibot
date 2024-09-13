@@ -1,4 +1,4 @@
-import type { BaseIssue, ErrorMessage } from "../../types/index.ts";
+import type { BaseIssue, ErrorMessage } from "../../types";
 
 // Create schema message store
 let store: Map<string | undefined, ErrorMessage<BaseIssue<unknown>>> | undefined;

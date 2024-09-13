@@ -1,4 +1,4 @@
-import type { BaseIssue } from "../../types/index.ts";
+import type { BaseIssue } from "../../types";
 
 /**
  * Union issue type.
@@ -19,5 +19,5 @@ export interface UnionIssue<TSubIssue extends BaseIssue<unknown>> extends BaseIs
 	/**
 	 * The sub issues.
 	 */
-	readonly issues?: [TSubIssue, ...TSubIssue[]];
+	readonly issues?: [TSubIssue, ..ubIssue[]];
 }

@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync } from "../../types";
 
 /**
  * Creates an object entries definition from a list of keys and a schema.

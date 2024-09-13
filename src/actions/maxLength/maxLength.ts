@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { LengthInput } from "../types.ts";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
+import type { LengthInput } from "../types";
 
 /**
  * Max length issue type.

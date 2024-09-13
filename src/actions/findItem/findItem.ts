@@ -1,5 +1,5 @@
-import type { BaseTransformation, TypedDataset } from "../../types/index.ts";
-import type { ArrayInput, ArrayRequirement } from "../types.ts";
+import type { BaseTransformation, TypedDataset } from "../../types";
+import type { ArrayInput, ArrayRequirement } from "../types";
 
 /**
  * Find item action type.

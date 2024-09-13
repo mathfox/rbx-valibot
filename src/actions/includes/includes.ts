@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types/index.ts";
-import { _addIssue, _stringify } from "../../utils/index.ts";
-import type { ContentInput, ContentRequirement } from "../types.ts";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
+import { _addIssue, _stringify } from "../../utils";
+import type { ContentInput, ContentRequirement } from "../types";
 
 /**
  * Includes issue type.

@@ -1,4 +1,4 @@
-import { getGlobalMessage, getSchemaMessage, getSpecificMessage } from "../../storages/index.ts";
+import { getGlobalMessage, getSchemaMessage, getSpecificMessage } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -13,7 +13,7 @@ import type {
 	InferInput,
 	InferIssue,
 	IssuePathItem,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Context type.

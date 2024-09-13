@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type EmptyAction, type EmptyIssue, empty } from "./empty.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type EmptyAction, type EmptyIssue, empty } from "./empty";
 
 describe("empty", () => {
 	describe("should return action object", () => {

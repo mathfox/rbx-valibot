@@ -6,9 +6,9 @@ import type {
 	ErrorMessage,
 	InferIssue,
 	SetPathItem,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { InferSetInput, InferSetOutput, SetIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { InferSetInput, InferSetOutput, SetIssue } from "./types";
 
 /**
  * Set schema async type.

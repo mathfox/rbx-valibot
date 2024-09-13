@@ -1,4 +1,4 @@
-import type { BaseTransformationAsync, TypedDataset } from "../../types/index.ts";
+import type { BaseTransformationAsync, TypedDataset } from "../../types";
 
 /**
  * Transform action async type.

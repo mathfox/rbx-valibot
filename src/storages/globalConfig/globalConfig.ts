@@ -1,4 +1,4 @@
-import type { BaseIssue, Config } from "../../types/index.ts";
+import type { BaseIssue, Config } from "../../types";
 
 /**
  * The global config type.

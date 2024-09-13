@@ -1,4 +1,4 @@
-import type { BaseIssue, Dataset } from "../../../../types/index.ts";
+import type { BaseIssue, Dataset } from "../../../../types";
 
 /**
  * Returns the sub issues of the provided datasets for the union issue.

@@ -1,6 +1,6 @@
-import { EMAIL_REGEX } from "../../regex.ts";
-import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
+import { EMAIL_REGEX } from "../../regex";
+import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
 
 /**
  * Email issue type.

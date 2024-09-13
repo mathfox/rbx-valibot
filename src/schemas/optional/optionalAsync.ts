@@ -1,4 +1,4 @@
-import { getDefault } from "../../methods/index.ts";
+import { getDefault } from "../../methods";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -7,8 +7,8 @@ import type {
 	DefaultAsync,
 	InferInput,
 	InferIssue,
-} from "../../types/index.ts";
-import type { InferOptionalOutput } from "./types.ts";
+} from "../../types";
+import type { InferOptionalOutput } from "./types";
 
 /**
  * Optional schema async type.

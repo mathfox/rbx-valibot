@@ -1,1 +1,1 @@
-export * from "./specificMessage.ts";
+export * from "./specificMessage";

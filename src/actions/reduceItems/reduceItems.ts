@@ -1,5 +1,5 @@
-import type { BaseTransformation, TypedDataset } from "../../types/index.ts";
-import type { ArrayInput } from "../types.ts";
+import type { BaseTransformation, TypedDataset } from "../../types";
+import type { ArrayInput } from "../types";
 
 /**
  * Array action type.

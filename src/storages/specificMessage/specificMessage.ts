@@ -8,7 +8,7 @@ import type {
 	BaseValidationAsync,
 	ErrorMessage,
 	InferIssue,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Reference type.

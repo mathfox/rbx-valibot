@@ -1,6 +1,6 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, MapPathItem } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { InferMapInput, InferMapOutput, MapIssue } from "./types.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue, MapPathItem } from "../../types";
+import { _addIssue } from "../../utils";
+import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
 /**
  * Map schema type.

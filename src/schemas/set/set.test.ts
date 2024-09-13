@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type SetSchema, set } from "./set.ts";
-import type { SetIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { type StringIssue, string } from "../string";
+import { type SetSchema, set } from "./set";
+import type { SetIssue } from "./types";
 
 describe("set", () => {
 	describe("should return schema object", () => {

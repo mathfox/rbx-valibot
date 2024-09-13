@@ -1,16 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import {
-	boolean,
-	nullishAsync,
-	number,
-	objectAsync,
-	objectWithRestAsync,
-	optionalAsync,
-	string,
-} from "../../schemas/index.ts";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync } from "../../vitest/index.ts";
-import { partialAsync } from "./partialAsync.ts";
+import { boolean, nullishAsync, number, objectAsync, objectWithRestAsync, optionalAsync, string } from "../../schemas";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync } from "../../vitest";
+import { partialAsync } from "./partialAsync";
 
 describe("partialAsync", () => {
 	const entries = {

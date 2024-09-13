@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { number, object, string } from "../../schemas/index.ts";
-import { isOfType } from "./isOfType.ts";
+import { number, object, string } from "../../schemas";
+import { isOfType } from "./isOfType";
 
 describe("isOfType", () => {
 	test("should check string schema", () => {

@@ -10,7 +10,7 @@ import type {
 	LastTupleItem,
 	PipeAction,
 	PipeItem,
-} from "../../types/index.ts";
+} from "../../types";
 
 /**
  * Schema with pipe type.

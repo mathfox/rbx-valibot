@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { arrayAsync, string } from "../../schemas/index.ts";
-import { entriesFromList } from "./entriesFromList.ts";
+import { arrayAsync, string } from "../../schemas";
+import { entriesFromList } from "./entriesFromList";
 
 describe("entriesFromList", () => {
 	//	describe("should return object entries", () => {

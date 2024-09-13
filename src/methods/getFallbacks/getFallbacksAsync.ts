@@ -23,7 +23,7 @@ import type {
 	TupleWithRestIssue,
 	TupleWithRestSchema,
 	TupleWithRestSchemaAsync,
-} from "../../schemas/index.ts";
+} from "../../schemas";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -33,9 +33,9 @@ import type {
 	ObjectEntriesAsync,
 	TupleItems,
 	TupleItemsAsync,
-} from "../../types/index.ts";
-import { getFallback } from "../getFallback/index.ts";
-import type { InferFallbacks } from "./types.ts";
+} from "../../types";
+import { getFallback } from "../getFallback";
+import type { InferFallbacks } from "./types";
 
 /**
  * Returns the fallback values of the schema.

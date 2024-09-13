@@ -1,7 +1,7 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types/index.ts";
-import { _addIssue, _joinExpects } from "../../utils/index.ts";
-import type { InferIntersectInput, InferIntersectOutput, IntersectIssue, IntersectOptions } from "./types.ts";
-import { _merge } from "./utils/index.ts";
+import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { _addIssue, _joinExpects } from "../../utils";
+import type { InferIntersectInput, InferIntersectOutput, IntersectIssue, IntersectOptions } from "./types";
+import { _merge } from "./utils";
 
 /**
  * Intersect schema type.

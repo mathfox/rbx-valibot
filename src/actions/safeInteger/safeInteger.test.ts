@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type SafeIntegerAction, type SafeIntegerIssue, safeInteger } from "./safeInteger.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type SafeIntegerAction, type SafeIntegerIssue, safeInteger } from "./safeInteger";
 
 describe("safeInteger", () => {
 	describe("should return action object", () => {

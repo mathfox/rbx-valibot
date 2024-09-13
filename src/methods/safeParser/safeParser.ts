@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, Config, InferIssue } from "../../types/index.ts";
-import { type SafeParseResult, safeParse } from "../safeParse/index.ts";
+import type { BaseIssue, BaseSchema, Config, InferIssue } from "../../types";
+import { type SafeParseResult, safeParse } from "../safeParse";
 
 /**
  * The safe parser type.

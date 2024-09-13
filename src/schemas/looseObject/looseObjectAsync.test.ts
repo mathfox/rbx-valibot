@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { number } from "../number/index.ts";
-import { objectAsync } from "../object/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type LooseObjectSchemaAsync, looseObjectAsync } from "./looseObjectAsync.ts";
-import type { LooseObjectIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { number } from "../number";
+import { objectAsync } from "../object";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type LooseObjectSchemaAsync, looseObjectAsync } from "./looseObjectAsync";
+import type { LooseObjectIssue } from "./types";
 
 describe("looseObjectAsync", () => {
 	describe("should return schema object", () => {

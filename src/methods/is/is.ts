@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, InferInput } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, InferInput } from "../../types";
 
 /**
  * Checks if the input matches the scheme. By using a type predicate, this

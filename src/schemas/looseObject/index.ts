@@ -1,3 +1,3 @@
-export * from "./looseObject.ts";
-export * from "./looseObjectAsync.ts";
-export * from "./types.ts";
+export * from "./looseObject";
+export * from "./looseObjectAsync";
+export * from "./types";

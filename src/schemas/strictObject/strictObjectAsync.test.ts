@@ -1,12 +1,12 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { number } from "../number/index.ts";
-import { objectAsync } from "../object/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type StrictObjectSchemaAsync, strictObjectAsync } from "./strictObjectAsync.ts";
-import type { StrictObjectIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { number } from "../number";
+import { objectAsync } from "../object";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type StrictObjectSchemaAsync, strictObjectAsync } from "./strictObjectAsync";
+import type { StrictObjectIssue } from "./types";
 
 describe("strictObjectAsync", () => {
 	describe("should return schema object", () => {

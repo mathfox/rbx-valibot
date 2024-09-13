@@ -1,11 +1,9 @@
-import type { ReadonlyAction } from "../actions/index.ts";
-import type { SchemaWithPipe, SchemaWithPipeAsync } from "../methods/index.ts";
+import type { ReadonlyAction } from "../actions";
+import type { SchemaWithPipe, SchemaWithPipeAsync } from "../methods";
 import type {
 	LooseObjectIssue,
 	LooseObjectSchema,
 	LooseObjectSchemaAsync,
-	NullishSchema,
-	NullishSchemaAsync,
 	ObjectIssue,
 	ObjectSchema,
 	ObjectSchemaAsync,
@@ -17,12 +15,12 @@ import type {
 	StrictObjectIssue,
 	StrictObjectSchema,
 	StrictObjectSchemaAsync,
-} from "../schemas/index.ts";
-import type { InferInput, InferIssue, InferOutput } from "./infer.ts";
-import type { BaseIssue } from "./issue.ts";
-import type { ErrorMessage } from "./other.ts";
-import type { BaseSchema, BaseSchemaAsync } from "./schema.ts";
-import type { MarkOptional, MaybeReadonly, Prettify } from "./utils.ts";
+} from "../schemas";
+import type { InferInput, InferIssue, InferOutput } from "./infer";
+import type { BaseIssue } from "./issue";
+import type { ErrorMessage } from "./other";
+import type { BaseSchema, BaseSchemaAsync } from "./schema";
+import type { MarkOptional, MaybeReadonly, Prettify } from "./utils";
 
 /**
  * Object entries type.
@@ -71,11 +69,6 @@ export type ObjectKeys<
  * `nullish`.
  */
 type QuestionMarkSchema =
-	| NullishSchema<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>
-	| NullishSchemaAsync<
-			BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-			unknown
-	  >
 	| OptionalSchema<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>
 	| OptionalSchemaAsync<
 			BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,

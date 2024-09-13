@@ -1,5 +1,5 @@
-import type { BaseIssue } from "./issue.ts";
-import type { ErrorMessage } from "./other.ts";
+import type { BaseIssue } from "./issue";
+import type { ErrorMessage } from "./other";
 
 /**
  * Config type.

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { NumberIssue, ObjectIssue, StringIssue } from "../../../../schemas/index.ts";
-import type { TypedDataset, UntypedDataset } from "../../../../types/index.ts";
-import { _isPartiallyTyped } from "./_isPartiallyTyped.ts";
+import type { NumberIssue, ObjectIssue, StringIssue } from "../../../../schemas";
+import type { TypedDataset, UntypedDataset } from "../../../../types";
+import { _isPartiallyTyped } from "./_isPartiallyTyped";
 
 describe("_isPartiallyTyped", () => {
 	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions

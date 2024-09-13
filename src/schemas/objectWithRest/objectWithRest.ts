@@ -11,9 +11,9 @@ import type {
 	InferOutput,
 	ObjectEntries,
 	ObjectPathItem,
-} from "../../types/index.ts";
-import { _addIssue, _isValidObjectKey } from "../../utils/index.ts";
-import type { ObjectWithRestIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue, _isValidObjectKey } from "../../utils";
+import type { ObjectWithRestIssue } from "./types";
 
 /**
  * Object with rest schema type.

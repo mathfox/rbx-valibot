@@ -1,4 +1,4 @@
-import type { BaseTransformationAsync, TypedDataset } from "../../types/index.ts";
+import type { BaseTransformationAsync, TypedDataset } from "../../types";
 
 /**
  * Await action async type.
@@ -27,7 +27,6 @@ export function awaitAsync<TInput extends Promise<unknown>>(): AwaitActionAsync<
 		reference: awaitAsync,
 		async: true,
 		async _run(dataset) {
-			// DEVIATION: manual cast was required
 			dataset.value = (await dataset.value) as TInput;
 			return dataset as TypedDataset<Awaited<TInput>, never>;
 		},

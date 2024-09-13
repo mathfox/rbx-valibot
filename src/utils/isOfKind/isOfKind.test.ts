@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { trim } from "../../actions/index.ts";
-import { string } from "../../schemas/index.ts";
-import { isOfKind } from "./isOfKind.ts";
+import { trim } from "../../actions";
+import { string } from "../../schemas";
+import { isOfKind } from "./isOfKind";
 
 describe("isOfKind", () => {
 	test("should check string schema", () => {

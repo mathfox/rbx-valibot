@@ -1,3 +1,3 @@
-export * from "./rawCheck.ts";
-export * from "./rawCheckAsync.ts";
-export type { RawCheckIssue } from "./types.ts";
+export * from "./rawCheck";
+export * from "./rawCheckAsync";
+export type { RawCheckIssue } from "./types";

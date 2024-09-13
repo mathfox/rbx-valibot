@@ -1,3 +1,3 @@
-export * from "./strictTuple.ts";
-export * from "./strictTupleAsync.ts";
-export * from "./types.ts";
+export * from "./strictTuple";
+export * from "./strictTupleAsync";
+export * from "./types";

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type MapItemsAction, mapItems } from "./mapItems.ts";
+import { type MapItemsAction, mapItems } from "./mapItems";
 
 describe("mapItems", () => {
 	const operation = (item: number) => ({ item });

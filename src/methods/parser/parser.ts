@@ -1,5 +1,5 @@
-import type { BaseIssue, BaseSchema, Config, InferIssue, InferOutput } from "../../types/index.ts";
-import { parse } from "../parse/index.ts";
+import type { BaseIssue, BaseSchema, Config, InferIssue, InferOutput } from "../../types";
+import { parse } from "../parse";
 
 /**
  * The parser type.

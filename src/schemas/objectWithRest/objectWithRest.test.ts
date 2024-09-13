@@ -1,16 +1,16 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types/index.ts";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { array } from "../array/array.ts";
-import type { ArrayIssue } from "../array/types.ts";
-import { boolean } from "../boolean/index.ts";
-import { never } from "../never/index.ts";
-import { number } from "../number/index.ts";
-import { object } from "../object/index.ts";
-import { optional } from "../optional/index.ts";
-import { type StringIssue, string } from "../string/index.ts";
-import { type ObjectWithRestSchema, objectWithRest } from "./objectWithRest.ts";
-import type { ObjectWithRestIssue } from "./types.ts";
+import type { InferIssue, UntypedDataset } from "../../types";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { array } from "../array/array";
+import type { ArrayIssue } from "../array/types";
+import { boolean } from "../boolean";
+import { never } from "../never";
+import { number } from "../number";
+import { object } from "../object";
+import { optional } from "../optional";
+import { type StringIssue, string } from "../string";
+import { type ObjectWithRestSchema, objectWithRest } from "./objectWithRest";
+import type { ObjectWithRestIssue } from "./types";
 
 describe("objectWithRest", () => {
 	describe("should return schema object", () => {

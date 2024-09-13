@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { type CustomSchemaAsync, customAsync } from "./customAsync.ts";
-import type { CustomIssue } from "./types.ts";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { type CustomSchemaAsync, customAsync } from "./customAsync";
+import type { CustomIssue } from "./types";
 
 describe("customAsync", () => {
 	type PixelString = `${number}px`;

@@ -1,1 +1,1 @@
-export * from "./isOfKind.ts";
+export * from "./isOfKind";

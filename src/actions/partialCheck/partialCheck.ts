@@ -1,7 +1,7 @@
-import type { BaseValidation, DeepPickN, ErrorMessage, PathKeys } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { PartialCheckIssue, PartialInput } from "./types.ts";
-import { _isPartiallyTyped } from "./utils/index.ts";
+import type { BaseValidation, DeepPickN, ErrorMessage, PathKeys } from "../../types";
+import { _addIssue } from "../../utils";
+import type { PartialCheckIssue, PartialInput } from "./types";
+import { _isPartiallyTyped } from "./utils";
 
 /**
  * Partial check action type.

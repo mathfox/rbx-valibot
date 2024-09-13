@@ -1,3 +1,5 @@
 /node_modules
 /sourcemap.json
 /out
+/include
+/tests/tests-place.rbxl

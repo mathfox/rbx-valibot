@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, MaybeReadonly } from "../../types/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, MaybeReadonly } from "../../types";
 
 /**
  * Intersect issue type.

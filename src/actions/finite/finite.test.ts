@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
-import { type FiniteAction, type FiniteIssue, finite } from "./finite.ts";
+import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { type FiniteAction, type FiniteIssue, finite } from "./finite";
 
 describe("finite", () => {
 	describe("should return action object", () => {

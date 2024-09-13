@@ -6,9 +6,9 @@ import type {
 	ErrorMessage,
 	InferIssue,
 	MapPathItem,
-} from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { InferMapInput, InferMapOutput, MapIssue } from "./types.ts";
+} from "../../types";
+import { _addIssue } from "../../utils";
+import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
 /**
  * Map schema async type.

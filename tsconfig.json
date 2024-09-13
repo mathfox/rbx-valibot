@@ -7,7 +7,6 @@
         "jsxFragmentFactory": "React.Fragment",
         "module": "commonjs",
         "moduleResolution": "Node",
-        "allowImportingTsExtensions": true,
         "noLib": true,
         "resolveJsonModule": true,
         "experimentalDecorators": true,
@@ -21,5 +20,8 @@
         "rootDir": "src",
         "outDir": "out",
         "declaration": true
-    }
+    },
+    "include": [
+        "src"
+    ]
 }

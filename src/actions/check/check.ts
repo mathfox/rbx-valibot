@@ -1,6 +1,6 @@
-import type { BaseValidation, ErrorMessage } from "../../types/index.ts";
-import { _addIssue } from "../../utils/index.ts";
-import type { CheckIssue } from "./types.ts";
+import type { BaseValidation, ErrorMessage } from "../../types";
+import { _addIssue } from "../../utils";
+import type { CheckIssue } from "./types";
 
 /**
  * Check action type.

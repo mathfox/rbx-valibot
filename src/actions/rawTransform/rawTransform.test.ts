@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type RawTransformAction, rawTransform } from "./rawTransform.ts";
+import { type RawTransformAction, rawTransform } from "./rawTransform";
 
 describe("rawTransform", () => {
 	const action = rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {

@@ -8,10 +8,10 @@ import type {
 	MaybeReadonly,
 	TypedDataset,
 	UntypedDataset,
-} from "../../types/index.ts";
-import { _addIssue, _joinExpects } from "../../utils/index.ts";
-import type { UnionIssue } from "./types.ts";
-import { _subIssues } from "./utils/index.ts";
+} from "../../types";
+import { _addIssue, _joinExpects } from "../../utils";
+import type { UnionIssue } from "./types";
+import { _subIssues } from "./utils";
 
 /**
  * Union options type.

@@ -1,9 +1,9 @@
-import type { Config } from "./config.ts";
-import type { Dataset } from "./dataset.ts";
-import type { InferInput, InferIssue } from "./infer.ts";
-import type { BaseIssue } from "./issue.ts";
-import type { BaseSchema, BaseSchemaAsync } from "./schema.ts";
-import type { MaybePromise, MaybeReadonly } from "./utils.ts";
+import type { Config } from "./config";
+import type { Dataset } from "./dataset";
+import type { InferInput, InferIssue } from "./infer";
+import type { BaseIssue } from "./issue";
+import type { BaseSchema, BaseSchemaAsync } from "./schema";
+import type { MaybePromise, MaybeReadonly } from "./utils";
 
 /**
  * Error message type.

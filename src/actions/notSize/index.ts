@@ -1,1 +1,1 @@
-export * from "./notSize.ts";
+export * from "./notSize";

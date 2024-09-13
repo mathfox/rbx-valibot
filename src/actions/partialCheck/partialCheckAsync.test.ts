@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { NumberIssue, ObjectIssue, StringIssue } from "../../schemas/index.ts";
-import type { DeepPickN, TypedDataset, UntypedDataset } from "../../types/index.ts";
-import { type PartialCheckActionAsync, partialCheckAsync } from "./partialCheckAsync.ts";
-import type { PartialCheckIssue } from "./types.ts";
+import type { NumberIssue, ObjectIssue, StringIssue } from "../../schemas";
+import type { DeepPickN, TypedDataset, UntypedDataset } from "../../types";
+import { type PartialCheckActionAsync, partialCheckAsync } from "./partialCheckAsync";
+import type { PartialCheckIssue } from "./types";
 
 describe("partialCheckAsync", () => {
 	describe("should return action object", () => {

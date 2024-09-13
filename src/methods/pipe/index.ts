@@ -1,2 +1,2 @@
-export * from "./pipe.ts";
-export * from "./pipeAsync.ts";
+export * from "./pipe";
+export * from "./pipeAsync";

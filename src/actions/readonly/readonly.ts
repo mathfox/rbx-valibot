@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types/index.ts";
+import type { BaseTransformation } from "../../types";
 
 /**
  * Readonly action type.
