@@ -1,0 +1,1 @@
+bun ./node_modules/roblox-ts/out/CLI/cli.js --rojo ./tests.project.json --type game

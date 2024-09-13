@@ -1,1 +1,1 @@
-export * from './globalConfig.ts';
+export * from "./globalConfig.ts";
