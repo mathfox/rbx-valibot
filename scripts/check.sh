@@ -1,0 +1,1 @@
+./node_modules/@biomejs/biome/bin/biome check --write ./src

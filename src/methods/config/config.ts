@@ -1,10 +1,4 @@
-import type {
-  BaseIssue,
-  BaseSchema,
-  BaseSchemaAsync,
-  Config,
-  InferIssue,
-} from '../../types/index.ts';
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types/index.ts";
 
 /**
  * Changes the local configuration of a schema.
@@ -15,14 +9,14 @@ import type {
  * @returns The configured schema.
  */
 export function config<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(schema: TSchema, config: Config<InferIssue<TSchema>>): TSchema {
-  return {
-    ...schema,
-    _run(dataset, config_) {
-      return schema._run(dataset, { ...config_, ...config });
-    },
-  };
+	return {
+		...schema,
+		_run(dataset, config_) {
+			return schema._run(dataset, { ...config_, ...config });
+		},
+	};
 }
