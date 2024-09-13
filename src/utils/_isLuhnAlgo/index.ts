@@ -1,1 +1,1 @@
-export * from './_isLuhnAlgo.ts';
+export * from "./_isLuhnAlgo.ts";

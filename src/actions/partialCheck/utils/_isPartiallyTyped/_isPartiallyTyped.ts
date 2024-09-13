@@ -1,4 +1,4 @@
-import type { BaseIssue, Dataset } from '../../../../types/index.ts';
+import type { BaseIssue, Dataset } from "../../../../types/index.ts";
 
 /**
  * Checks if a dataset is partially typed.
@@ -9,40 +9,40 @@ import type { BaseIssue, Dataset } from '../../../../types/index.ts';
  * @returns Whether it is partially typed.
  */
 export function _isPartiallyTyped(
-  dataset: Dataset<unknown, BaseIssue<unknown>>,
-  pathList: readonly (readonly (string | number)[])[]
+	dataset: Dataset<unknown, BaseIssue<unknown>>,
+	pathList: readonly (readonly (string | number)[])[],
 ): boolean {
-  // If issues exist, check if a specified path matches path of a schema issue
-  if (dataset.issues) {
-    for (const path of pathList) {
-      for (const issue of dataset.issues) {
-        // Hint: We also mark the data as untyped if there are validation
-        // issues, since the data could potentially be untyped if a pipeline
-        // contains a transformation action.
+	// If issues exist, check if a specified path matches path of a schema issue
+	if (dataset.issues) {
+		for (const path of pathList) {
+			for (const issue of dataset.issues) {
+				// Hint: We also mark the data as untyped if there are validation
+				// issues, since the data could potentially be untyped if a pipeline
+				// contains a transformation action.
 
-        // Create typed variable
-        let typed = false;
+				// Create typed variable
+				let typed = false;
 
-        // Calculate bound of match check
-        const bound = Math.min(path.length, issue.path?.length ?? 0);
+				// Calculate bound of match check
+				const bound = Math.min(path.length, issue.path?.length ?? 0);
 
-        // Mark data as typed if any path items of same index do not match
-        for (let index = 0; index < bound; index++) {
-          // @ts-expect-error We know that key of issue path item exists
-          if (path[index] !== issue.path[index].key) {
-            typed = true;
-            break;
-          }
-        }
+				// Mark data as typed if any path items of same index do not match
+				for (let index = 0; index < bound; index++) {
+					// @ts-expect-error We know that key of issue path item exists
+					if (path[index] !== issue.path[index].key) {
+						typed = true;
+						break;
+					}
+				}
 
-        // Return false if untyped
-        if (!typed) {
-          return false;
-        }
-      }
-    }
-  }
+				// Return false if untyped
+				if (!typed) {
+					return false;
+				}
+			}
+		}
+	}
 
-  // Return true if typed
-  return true;
+	// Return true if typed
+	return true;
 }

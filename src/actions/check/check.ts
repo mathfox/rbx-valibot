@@ -1,34 +1,32 @@
-import type { BaseValidation, ErrorMessage } from '../../types/index.ts';
-import { _addIssue } from '../../utils/index.ts';
-import type { CheckIssue } from './types.ts';
+import type { BaseValidation, ErrorMessage } from "../../types/index.ts";
+import { _addIssue } from "../../utils/index.ts";
+import type { CheckIssue } from "./types.ts";
 
 /**
  * Check action type.
  */
-export interface CheckAction<
-  TInput,
-  TMessage extends ErrorMessage<CheckIssue<TInput>> | undefined,
-> extends BaseValidation<TInput, TInput, CheckIssue<TInput>> {
-  /**
-   * The action type.
-   */
-  readonly type: 'check';
-  /**
-   * The action reference.
-   */
-  readonly reference: typeof check;
-  /**
-   * The expected property.
-   */
-  readonly expects: null;
-  /**
-   * The validation function.
-   */
-  readonly requirement: (input: TInput) => boolean;
-  /**
-   * The error message.
-   */
-  readonly message: TMessage;
+export interface CheckAction<TInput, TMessage extends ErrorMessage<CheckIssue<TInput>> | undefined>
+	extends BaseValidation<TInput, TInput, CheckIssue<TInput>> {
+	/**
+	 * The action type.
+	 */
+	readonly type: "check";
+	/**
+	 * The action reference.
+	 */
+	readonly reference: typeof check;
+	/**
+	 * The expected property.
+	 */
+	readonly expects: null;
+	/**
+	 * The validation function.
+	 */
+	readonly requirement: (input: TInput) => boolean;
+	/**
+	 * The error message.
+	 */
+	readonly message: TMessage;
 }
 
 /**
@@ -38,9 +36,7 @@ export interface CheckAction<
  *
  * @returns A check action.
  */
-export function check<TInput>(
-  requirement: (input: TInput) => boolean
-): CheckAction<TInput, undefined>;
+export function check<TInput>(requirement: (input: TInput) => boolean): CheckAction<TInput, undefined>;
 
 /**
  * Creates a check validation action.
@@ -50,31 +46,28 @@ export function check<TInput>(
  *
  * @returns A check action.
  */
-export function check<
-  TInput,
-  const TMessage extends ErrorMessage<CheckIssue<TInput>> | undefined,
->(
-  requirement: (input: TInput) => boolean,
-  message: TMessage
+export function check<TInput, const TMessage extends ErrorMessage<CheckIssue<TInput>> | undefined>(
+	requirement: (input: TInput) => boolean,
+	message: TMessage,
 ): CheckAction<TInput, TMessage>;
 
 export function check(
-  requirement: (input: unknown) => boolean,
-  message?: ErrorMessage<CheckIssue<unknown>>
+	requirement: (input: unknown) => boolean,
+	message?: ErrorMessage<CheckIssue<unknown>>,
 ): CheckAction<unknown, ErrorMessage<CheckIssue<unknown>> | undefined> {
-  return {
-    kind: 'validation',
-    type: 'check',
-    reference: check,
-    async: false,
-    expects: null,
-    requirement,
-    message,
-    _run(dataset, config) {
-      if (dataset.typed && !this.requirement(dataset.value)) {
-        _addIssue(this, 'input', dataset, config);
-      }
-      return dataset;
-    },
-  };
+	return {
+		kind: "validation",
+		type: "check",
+		reference: check,
+		async: false,
+		expects: null,
+		requirement,
+		message,
+		_run(dataset, config) {
+			if (dataset.typed && !this.requirement(dataset.value)) {
+				_addIssue(this, "input", dataset, config);
+			}
+			return dataset;
+		},
+	};
 }

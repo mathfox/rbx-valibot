@@ -6,9 +6,9 @@
  *
  * @returns Whether it matches.
  */
-export function isOfType<
-  const TType extends TObject['type'],
-  const TObject extends { type: string },
->(type: TType, object: TObject): object is Extract<TObject, { type: TType }> {
-  return object.type === type;
+export function isOfType<const TType extends TObject["type"], const TObject extends { type: string }>(
+	type: TType,
+	object: TObject,
+): object is Extract<TObject, { type: TType }> {
+	return object.type === type;
 }

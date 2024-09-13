@@ -1,1 +1,1 @@
-export * from './hexColor.ts';
+export * from "./hexColor.ts";

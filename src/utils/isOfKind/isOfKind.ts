@@ -6,9 +6,9 @@
  *
  * @returns Whether it matches.
  */
-export function isOfKind<
-  const TKind extends TObject['kind'],
-  const TObject extends { kind: string },
->(kind: TKind, object: TObject): object is Extract<TObject, { kind: TKind }> {
-  return object.kind === kind;
+export function isOfKind<const TKind extends TObject["kind"], const TObject extends { kind: string }>(
+	kind: TKind,
+	object: TObject,
+): object is Extract<TObject, { kind: TKind }> {
+	return object.kind === kind;
 }

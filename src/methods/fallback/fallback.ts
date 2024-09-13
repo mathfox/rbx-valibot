@@ -1,36 +1,27 @@
-import type {
-  BaseIssue,
-  BaseSchema,
-  Config,
-  Dataset,
-  InferIssue,
-  InferOutput,
-} from '../../types/index.ts';
-import { getFallback } from '../getFallback/index.ts';
+import type { BaseIssue, BaseSchema, Config, Dataset, InferIssue, InferOutput } from "../../types/index.ts";
+import { getFallback } from "../getFallback/index.ts";
 
 /**
  * Fallback type.
  */
-export type Fallback<
-  TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-> =
-  | InferOutput<TSchema>
-  | ((
-      dataset?: Dataset<InferOutput<TSchema>, InferIssue<TSchema>>,
-      config?: Config<InferIssue<TSchema>>
-    ) => InferOutput<TSchema>);
+export type Fallback<TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>> =
+	| InferOutput<TSchema>
+	| ((
+			dataset?: Dataset<InferOutput<TSchema>, InferIssue<TSchema>>,
+			config?: Config<InferIssue<TSchema>>,
+	  ) => InferOutput<TSchema>);
 
 /**
  * Schema with fallback type.
  */
 export type SchemaWithFallback<
-  TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  TFallback extends Fallback<TSchema>,
+	TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
+	TFallback extends Fallback<TSchema>,
 > = TSchema & {
-  /**
-   * The fallback value.
-   */
-  readonly fallback: TFallback;
+	/**
+	 * The fallback value.
+	 */
+	readonly fallback: TFallback;
 };
 
 /**
@@ -42,20 +33,15 @@ export type SchemaWithFallback<
  * @returns The passed schema.
  */
 export function fallback<
-  const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  const TFallback extends Fallback<TSchema>,
->(
-  schema: TSchema,
-  fallback: TFallback
-): SchemaWithFallback<TSchema, TFallback> {
-  return {
-    ...schema,
-    fallback,
-    _run(dataset, config) {
-      const outputDataset = schema._run(dataset, config);
-      return outputDataset.issues
-        ? { typed: true, value: getFallback(this, outputDataset, config) }
-        : outputDataset;
-    },
-  };
+	const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
+	const TFallback extends Fallback<TSchema>,
+>(schema: TSchema, fallback: TFallback): SchemaWithFallback<TSchema, TFallback> {
+	return {
+		...schema,
+		fallback,
+		_run(dataset, config) {
+			const outputDataset = schema._run(dataset, config);
+			return outputDataset.issues ? { typed: true, value: getFallback(this, outputDataset, config) } : outputDataset;
+		},
+	};
 }

@@ -1,13 +1,6 @@
-import { getGlobalConfig } from '../../storages/index.ts';
-import type {
-  BaseIssue,
-  BaseSchema,
-  BaseSchemaAsync,
-  Config,
-  InferIssue,
-  InferOutput,
-} from '../../types/index.ts';
-import { ValiError } from '../../utils/index.ts';
+import { getGlobalConfig } from "../../storages/index.ts";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types/index.ts";
+import { ValiError } from "../../utils/index.ts";
 
 /**
  * Parses an unknown input based on a schema.
@@ -19,20 +12,13 @@ import { ValiError } from '../../utils/index.ts';
  * @returns The parsed input.
  */
 export async function parseAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
->(
-  schema: TSchema,
-  input: unknown,
-  config?: Config<InferIssue<TSchema>>
-): Promise<InferOutput<TSchema>> {
-  const dataset = await schema._run(
-    { typed: false, value: input },
-    getGlobalConfig(config)
-  );
-  if (dataset.issues) {
-    throw new ValiError(dataset.issues);
-  }
-  return dataset.value;
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+>(schema: TSchema, input: unknown, config?: Config<InferIssue<TSchema>>): Promise<InferOutput<TSchema>> {
+	const dataset = await schema._run({ typed: false, value: input }, getGlobalConfig(config));
+	if (dataset.issues) {
+		throw new ValiError(dataset.issues);
+	}
+	return dataset.value;
 }

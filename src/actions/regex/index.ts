@@ -1,1 +1,1 @@
-export * from './regex.ts';
+export * from "./regex.ts";

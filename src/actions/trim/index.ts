@@ -1,1 +1,1 @@
-export * from './trim.ts';
+export * from "./trim.ts";

@@ -1,24 +1,23 @@
-import type { BaseValidationAsync, MaybePromise } from '../../types/index.ts';
-import { _addIssue } from '../../utils/index.ts';
-import type { Context, RawCheckIssue } from './types.ts';
+import type { BaseValidationAsync, MaybePromise } from "../../types/index.ts";
+import { _addIssue } from "../../utils/index.ts";
+import type { Context, RawCheckIssue } from "./types.ts";
 
 /**
  * Raw check action async type.
  */
-export interface RawCheckActionAsync<TInput>
-  extends BaseValidationAsync<TInput, TInput, RawCheckIssue<TInput>> {
-  /**
-   * The action type.
-   */
-  readonly type: 'raw_check';
-  /**
-   * The action reference.
-   */
-  readonly reference: typeof rawCheckAsync;
-  /**
-   * The expected property.
-   */
-  readonly expects: null;
+export interface RawCheckActionAsync<TInput> extends BaseValidationAsync<TInput, TInput, RawCheckIssue<TInput>> {
+	/**
+	 * The action type.
+	 */
+	readonly type: "raw_check";
+	/**
+	 * The action reference.
+	 */
+	readonly reference: typeof rawCheckAsync;
+	/**
+	 * The expected property.
+	 */
+	readonly expects: null;
 }
 
 /**
@@ -29,22 +28,21 @@ export interface RawCheckActionAsync<TInput>
  * @returns A raw check action.
  */
 export function rawCheckAsync<TInput>(
-  action: (context: Context<TInput>) => MaybePromise<void>
+	action: (context: Context<TInput>) => MaybePromise<void>,
 ): RawCheckActionAsync<TInput> {
-  return {
-    kind: 'validation',
-    type: 'raw_check',
-    reference: rawCheckAsync,
-    async: true,
-    expects: null,
-    async _run(dataset, config) {
-      await action({
-        dataset,
-        config,
-        addIssue: (info) =>
-          _addIssue(this, info?.label ?? 'input', dataset, config, info),
-      });
-      return dataset;
-    },
-  };
+	return {
+		kind: "validation",
+		type: "raw_check",
+		reference: rawCheckAsync,
+		async: true,
+		expects: null,
+		async _run(dataset, config) {
+			await action({
+				dataset,
+				config,
+				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
+			});
+			return dataset;
+		},
+	};
 }

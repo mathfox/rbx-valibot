@@ -1,9 +1,7 @@
-import type { BaseIssue, ErrorMessage } from '../../types/index.ts';
+import type { BaseIssue, ErrorMessage } from "../../types/index.ts";
 
 // Create schema message store
-let store:
-  | Map<string | undefined, ErrorMessage<BaseIssue<unknown>>>
-  | undefined;
+let store: Map<string | undefined, ErrorMessage<BaseIssue<unknown>>> | undefined;
 
 /**
  * Sets a schema error message.
@@ -11,12 +9,9 @@ let store:
  * @param message The error message.
  * @param lang The language of the message.
  */
-export function setSchemaMessage(
-  message: ErrorMessage<BaseIssue<unknown>>,
-  lang?: string
-): void {
-  if (!store) store = new Map();
-  store.set(lang, message);
+export function setSchemaMessage(message: ErrorMessage<BaseIssue<unknown>>, lang?: string): void {
+	if (!store) store = new Map();
+	store.set(lang, message);
 }
 
 /**
@@ -26,10 +21,8 @@ export function setSchemaMessage(
  *
  * @returns The error message.
  */
-export function getSchemaMessage(
-  lang?: string
-): ErrorMessage<BaseIssue<unknown>> | undefined {
-  return store?.get(lang);
+export function getSchemaMessage(lang?: string): ErrorMessage<BaseIssue<unknown>> | undefined {
+	return store?.get(lang);
 }
 
 /**
@@ -38,5 +31,5 @@ export function getSchemaMessage(
  * @param lang The language of the message.
  */
 export function deleteSchemaMessage(lang?: string): void {
-  store?.delete(lang);
+	store?.delete(lang);
 }

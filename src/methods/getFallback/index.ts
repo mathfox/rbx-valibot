@@ -1,1 +1,1 @@
-export * from './getFallback.ts';
+export * from "./getFallback.ts";

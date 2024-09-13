@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { BaseSchema } from '../../types/index.ts';
+import type { BaseSchema } from "../../types/index.ts";
 
 /**
  * Any schema type.
  */
 export interface AnySchema extends BaseSchema<any, any, never> {
-  /**
-   * The schema type.
-   */
-  readonly type: 'any';
-  /**
-   * The schema reference.
-   */
-  readonly reference: typeof any;
-  /**
-   * The expected property.
-   */
-  readonly expects: 'any';
+	/**
+	 * The schema type.
+	 */
+	readonly type: "any";
+	/**
+	 * The schema reference.
+	 */
+	readonly reference: typeof any;
+	/**
+	 * The expected property.
+	 */
+	readonly expects: "any";
 }
 
 /**
@@ -29,15 +29,15 @@ export interface AnySchema extends BaseSchema<any, any, never> {
  * @returns An any schema.
  */
 export function any(): AnySchema {
-  return {
-    kind: 'schema',
-    type: 'any',
-    reference: any,
-    expects: 'any',
-    async: false,
-    _run(dataset) {
-      dataset.typed = true;
-      return dataset;
-    },
-  };
+	return {
+		kind: "schema",
+		type: "any",
+		reference: any,
+		expects: "any",
+		async: false,
+		_run(dataset) {
+			dataset.typed = true;
+			return dataset;
+		},
+	};
 }

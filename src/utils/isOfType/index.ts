@@ -1,1 +1,1 @@
-export * from './isOfType.ts';
+export * from "./isOfType.ts";

@@ -1,37 +1,26 @@
-import type {
-  BaseIssue,
-  BaseSchema,
-  InferInput,
-  InferIssue,
-  InferOutput,
-} from '../../types/index.ts';
+import type { BaseIssue, BaseSchema, InferInput, InferIssue, InferOutput } from "../../types/index.ts";
 
 /**
  * Lazy schema type.
  */
-export interface LazySchema<
-  TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-> extends BaseSchema<
-    InferInput<TWrapped>,
-    InferOutput<TWrapped>,
-    InferIssue<TWrapped>
-  > {
-  /**
-   * The schema type.
-   */
-  readonly type: 'lazy';
-  /**
-   * The schema reference.
-   */
-  readonly reference: typeof lazy;
-  /**
-   * The expected property.
-   */
-  readonly expects: 'unknown';
-  /**
-   * The schema getter.
-   */
-  readonly getter: (input: unknown) => TWrapped;
+export interface LazySchema<TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>
+	extends BaseSchema<InferInput<TWrapped>, InferOutput<TWrapped>, InferIssue<TWrapped>> {
+	/**
+	 * The schema type.
+	 */
+	readonly type: "lazy";
+	/**
+	 * The schema reference.
+	 */
+	readonly reference: typeof lazy;
+	/**
+	 * The expected property.
+	 */
+	readonly expects: "unknown";
+	/**
+	 * The schema getter.
+	 */
+	readonly getter: (input: unknown) => TWrapped;
 }
 
 /**
@@ -41,18 +30,18 @@ export interface LazySchema<
  *
  * @returns A lazy schema.
  */
-export function lazy<
-  const TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
->(getter: (input: unknown) => TWrapped): LazySchema<TWrapped> {
-  return {
-    kind: 'schema',
-    type: 'lazy',
-    reference: lazy,
-    expects: 'unknown',
-    async: false,
-    getter,
-    _run(dataset, config) {
-      return this.getter(dataset.value)._run(dataset, config);
-    },
-  };
+export function lazy<const TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>(
+	getter: (input: unknown) => TWrapped,
+): LazySchema<TWrapped> {
+	return {
+		kind: "schema",
+		type: "lazy",
+		reference: lazy,
+		expects: "unknown",
+		async: false,
+		getter,
+		_run(dataset, config) {
+			return this.getter(dataset.value)._run(dataset, config);
+		},
+	};
 }

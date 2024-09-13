@@ -1,1 +1,1 @@
-export * from './multipleOf.ts';
+export * from "./multipleOf.ts";

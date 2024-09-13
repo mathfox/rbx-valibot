@@ -1,11 +1,6 @@
-import { expect } from 'vitest';
-import type {
-  BaseIssue,
-  BaseSchemaAsync,
-  InferIssue,
-  UntypedDataset,
-} from '../types/index.ts';
-import { _stringify } from '../utils/index.ts';
+import { expect } from "vitest";
+import type { BaseIssue, BaseSchemaAsync, InferIssue, UntypedDataset } from "../types/index.ts";
+import { _stringify } from "../utils/index.ts";
 
 /**
  * Expect an schema issue to be returned.
@@ -14,31 +9,29 @@ import { _stringify } from '../utils/index.ts';
  * @param baseIssue The base issue data.
  * @param values The values to test.
  */
-export async function expectSchemaIssueAsync<
-  TSchema extends BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
->(
-  schema: TSchema,
-  baseIssue: Omit<InferIssue<TSchema>, 'input' | 'received'>,
-  values: unknown[]
+export async function expectSchemaIssueAsync<TSchema extends BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>>(
+	schema: TSchema,
+	baseIssue: Omit<InferIssue<TSchema>, "input" | "received">,
+	values: unknown[],
 ): Promise<void> {
-  for (const value of values) {
-    expect(await schema._run({ typed: false, value }, {})).toStrictEqual({
-      typed: false,
-      value,
-      issues: [
-        {
-          requirement: undefined,
-          path: undefined,
-          issues: undefined,
-          lang: undefined,
-          abortEarly: undefined,
-          abortPipeEarly: undefined,
+	for (const value of values) {
+		expect(await schema._run({ typed: false, value }, {})).toStrictEqual({
+			typed: false,
+			value,
+			issues: [
+				{
+					requirement: undefined,
+					path: undefined,
+					issues: undefined,
+					lang: undefined,
+					abortEarly: undefined,
+					abortPipeEarly: undefined,
 
-          ...baseIssue,
-          input: value,
-          received: _stringify(value),
-        },
-      ],
-    } satisfies UntypedDataset<InferIssue<TSchema>>);
-  }
+					...baseIssue,
+					input: value,
+					received: _stringify(value),
+				},
+			],
+		} satisfies UntypedDataset<InferIssue<TSchema>>);
+	}
 }

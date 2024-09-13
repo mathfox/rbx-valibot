@@ -1,1 +1,1 @@
-export * from './entriesFromList.ts';
+export * from "./entriesFromList.ts";

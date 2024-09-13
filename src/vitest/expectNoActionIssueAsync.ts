@@ -1,9 +1,5 @@
-import { expect } from 'vitest';
-import type {
-  BaseIssue,
-  BaseValidationAsync,
-  InferInput,
-} from '../types/index.ts';
+import { expect } from "vitest";
+import type { BaseIssue, BaseValidationAsync, InferInput } from "../types/index.ts";
 
 /**
  * Expect no action issue to be returned.
@@ -12,13 +8,13 @@ import type {
  * @param values The values to test.
  */
 export async function expectNoActionIssueAsync<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  TAction extends BaseValidationAsync<any, unknown, BaseIssue<unknown>>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	TAction extends BaseValidationAsync<any, unknown, BaseIssue<unknown>>,
 >(action: TAction, values: InferInput<TAction>[]): Promise<void> {
-  for (const value of values) {
-    expect(await action._run({ typed: true, value }, {})).toStrictEqual({
-      typed: true,
-      value,
-    });
-  }
+	for (const value of values) {
+		expect(await action._run({ typed: true, value }, {})).toStrictEqual({
+			typed: true,
+			value,
+		});
+	}
 }

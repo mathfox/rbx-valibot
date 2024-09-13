@@ -1,10 +1,4 @@
-import type {
-  BaseIssue,
-  BaseSchema,
-  BaseSchemaAsync,
-  InferIssue,
-  IssueDotPath,
-} from '../../types/index.ts';
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferIssue, IssueDotPath } from "../../types/index.ts";
 
 // TODO: Add type tests for getDotPath util
 
@@ -25,26 +19,26 @@ export function getDotPath(issue: BaseIssue<unknown>): string | null;
  * @returns The dot path or null.
  */
 export function getDotPath<
-  TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(issue: InferIssue<TSchema>): IssueDotPath<TSchema> | null;
 
 export function getDotPath(issue: BaseIssue<unknown>): string | null {
-  if (issue.path) {
-    let key = '';
-    for (const item of issue.path) {
-      if (typeof item.key === 'string' || typeof item.key === 'number') {
-        if (key) {
-          key += `.${item.key}`;
-        } else {
-          key += item.key;
-        }
-      } else {
-        return null;
-      }
-    }
-    return key;
-  }
-  return null;
+	if (issue.path) {
+		let key = "";
+		for (const item of issue.path) {
+			if (typeof item.key === "string" || typeof item.key === "number") {
+				if (key) {
+					key += `.${item.key}`;
+				} else {
+					key += item.key;
+				}
+			} else {
+				return null;
+			}
+		}
+		return key;
+	}
+	return null;
 }

@@ -1,1 +1,1 @@
-export * from './safeInteger.ts';
+export * from "./safeInteger.ts";

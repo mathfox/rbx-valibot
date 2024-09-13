@@ -1,1 +1,1 @@
-export * from './promise.ts';
+export * from "./promise.ts";

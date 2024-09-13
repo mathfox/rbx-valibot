@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, InferInput } from '../../types/index.ts';
+import type { BaseIssue, BaseSchema, InferInput } from "../../types/index.ts";
 
 /**
  * Checks if the input matches the scheme. By using a type predicate, this
@@ -9,9 +9,9 @@ import type { BaseIssue, BaseSchema, InferInput } from '../../types/index.ts';
  *
  * @returns Whether the input matches the scheme.
  */
-export function is<
-  const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
->(schema: TSchema, input: unknown): input is InferInput<TSchema> {
-  return !schema._run({ typed: false, value: input }, { abortEarly: true })
-    .issues;
+export function is<const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>(
+	schema: TSchema,
+	input: unknown,
+): input is InferInput<TSchema> {
+	return !schema._run({ typed: false, value: input }, { abortEarly: true }).issues;
 }

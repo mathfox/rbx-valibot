@@ -1,1 +1,1 @@
-export * from './toMinValue.ts';
+export * from "./toMinValue.ts";

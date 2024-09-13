@@ -1,3 +1,3 @@
-export * from './nonNullable.ts';
-export * from './nonNullableAsync.ts';
-export * from './types.ts';
+export * from "./nonNullable.ts";
+export * from "./nonNullableAsync.ts";
+export * from "./types.ts";

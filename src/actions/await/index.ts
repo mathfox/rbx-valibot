@@ -1,1 +1,1 @@
-export * from './awaitAsync.ts';
+export * from "./awaitAsync.ts";

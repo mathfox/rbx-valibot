@@ -1,34 +1,27 @@
-import type {
-  BaseIssue,
-  BaseSchema,
-  BaseSchemaAsync,
-  Config,
-  InferIssue,
-  InferOutput,
-} from '../../types/index.ts';
-import { parseAsync } from '../parse/index.ts';
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue, InferOutput } from "../../types/index.ts";
+import { parseAsync } from "../parse/index.ts";
 
 /**
  * The parser async type.
  */
 export interface ParserAsync<
-  TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  TConfig extends Config<InferIssue<TSchema>> | undefined,
+	TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	TConfig extends Config<InferIssue<TSchema>> | undefined,
 > {
-  /**
-   * Parses an unknown input based on the schema.
-   */
-  (input: unknown): Promise<InferOutput<TSchema>>;
-  /**
-   * The schema to be used.
-   */
-  readonly schema: TSchema;
-  /**
-   * The parser configuration.
-   */
-  readonly config: TConfig;
+	/**
+	 * Parses an unknown input based on the schema.
+	 */
+	(input: unknown): Promise<InferOutput<TSchema>>;
+	/**
+	 * The schema to be used.
+	 */
+	readonly schema: TSchema;
+	/**
+	 * The parser configuration.
+	 */
+	readonly config: TConfig;
 }
 
 /**
@@ -39,9 +32,9 @@ export interface ParserAsync<
  * @returns The parser function.
  */
 export function parserAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(schema: TSchema): ParserAsync<TSchema, undefined>;
 
 /**
@@ -53,35 +46,28 @@ export function parserAsync<
  * @returns The parser function.
  */
 export function parserAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TConfig extends Config<InferIssue<TSchema>> | undefined,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TConfig extends Config<InferIssue<TSchema>> | undefined,
 >(schema: TSchema, config: TConfig): ParserAsync<TSchema, TConfig>;
 
 export function parserAsync(
-  schema:
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  config?: Config<
-    InferIssue<
-      | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-      | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>
-    >
-  >
+	schema: BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	config?: Config<
+		InferIssue<BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>>
+	>,
 ): ParserAsync<
-  | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-  | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  Config<BaseIssue<unknown>> | undefined
+	BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	Config<BaseIssue<unknown>> | undefined
 > {
-  const func: ParserAsync<
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-    Config<BaseIssue<unknown>> | undefined
-  > = (input: unknown) => parseAsync(schema, input, config);
-  // @ts-expect-error
-  func.schema = schema;
-  // @ts-expect-error
-  func.config = config;
-  return func;
+	const func: ParserAsync<
+		BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+		Config<BaseIssue<unknown>> | undefined
+	> = (input: unknown) => parseAsync(schema, input, config);
+	// @ts-expect-error
+	func.schema = schema;
+	// @ts-expect-error
+	func.config = config;
+	return func;
 }

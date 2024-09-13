@@ -1,69 +1,64 @@
 import type {
-  BaseIssue,
-  BaseSchema,
-  BaseSchemaAsync,
-  Config,
-  Dataset,
-  FirstTupleItem,
-  InferInput,
-  InferIssue,
-  InferOutput,
-  LastTupleItem,
-  PipeAction,
-  PipeActionAsync,
-  PipeItem,
-  PipeItemAsync,
-} from '../../types/index.ts';
+	BaseIssue,
+	BaseSchema,
+	BaseSchemaAsync,
+	Config,
+	Dataset,
+	FirstTupleItem,
+	InferInput,
+	InferIssue,
+	InferOutput,
+	LastTupleItem,
+	PipeAction,
+	PipeActionAsync,
+	PipeItem,
+	PipeItemAsync,
+} from "../../types/index.ts";
 
 /**
  * Schema with pipe async type.
  */
 export type SchemaWithPipeAsync<
-  TPipe extends [
-    (
-      | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-      | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>
-    ),
-    ...(
-      | PipeItem<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
-      | PipeItemAsync<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
-    )[],
-  ],
-> = Omit<FirstTupleItem<TPipe>, 'async' | '_run' | '_types'> & {
-  /**
-   * The pipe items.
-   */
-  readonly pipe: TPipe;
-  /**
-   * Whether it's async.
-   */
-  readonly async: true;
-  /**
-   * Parses unknown input.
-   *
-   * @param dataset The input dataset.
-   * @param config The configuration.
-   *
-   * @returns The output dataset.
-   *
-   * @internal
-   */
-  readonly _run: (
-    dataset: Dataset<unknown, never>,
-    config: Config<InferIssue<FirstTupleItem<TPipe>>>
-  ) => Promise<
-    Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>
-  >;
-  /**
-   * Input, output and issue type.
-   *
-   * @internal
-   */
-  readonly _types?: {
-    readonly input: InferInput<FirstTupleItem<TPipe>>;
-    readonly output: InferOutput<LastTupleItem<TPipe>>;
-    readonly issue: InferIssue<TPipe[number]>;
-  };
+	TPipe extends [
+		BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+		...(
+			| PipeItem<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
+			| PipeItemAsync<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
+		)[],
+	],
+> = Omit<FirstTupleItem<TPipe>, "async" | "_run" | "_types"> & {
+	/**
+	 * The pipe items.
+	 */
+	readonly pipe: TPipe;
+	/**
+	 * Whether it's async.
+	 */
+	readonly async: true;
+	/**
+	 * Parses unknown input.
+	 *
+	 * @param dataset The input dataset.
+	 * @param config The configuration.
+	 *
+	 * @returns The output dataset.
+	 *
+	 * @internal
+	 */
+	readonly _run: (
+		dataset: Dataset<unknown, never>,
+		config: Config<InferIssue<FirstTupleItem<TPipe>>>,
+	) => Promise<Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>>;
+	/**
+	 * Input, output and issue type.
+	 *
+	 * @internal
+	 */
+	readonly _types?: {
+		readonly input: InferInput<FirstTupleItem<TPipe>>;
+		readonly output: InferOutput<LastTupleItem<TPipe>>;
+		readonly issue: InferIssue<TPipe[number]>;
+	};
 };
 
 /**
@@ -75,22 +70,18 @@ export type SchemaWithPipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
 ): SchemaWithPipeAsync<[TSchema, TItem1]>;
 
 /**
@@ -103,33 +94,25 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
 ): SchemaWithPipeAsync<[TSchema, TItem1, TItem2]>;
 
 /**
@@ -143,44 +126,32 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
 ): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3]>;
 
 /**
@@ -195,55 +166,39 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
 ): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4]>;
 
 /**
@@ -259,66 +214,46 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
 ): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5]>;
 
 /**
@@ -335,80 +270,54 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >
-): SchemaWithPipeAsync<
-  [TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6]
->;
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6]>;
 
 /**
  * Adds a pipeline to a schema, that can validate and transform its input.
@@ -425,91 +334,61 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >
-): SchemaWithPipeAsync<
-  [TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7]
->;
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7]>;
 
 /**
  * Adds a pipeline to a schema, that can validate and transform its input.
@@ -527,102 +406,68 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >
-): SchemaWithPipeAsync<
-  [TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8]
->;
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8]>;
 
 /**
  * Adds a pipeline to a schema, that can validate and transform its input.
@@ -641,124 +486,75 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >
-): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-  ]
->;
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8, TItem9]>;
 
 /**
  * Adds a pipeline to a schema, that can validate and transform its input.
@@ -778,136 +574,82 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >
-): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-  ]
->;
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+): SchemaWithPipeAsync<[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8, TItem9, TItem10]>;
 
 /**
  * Adds a pipeline to a schema, that can validate and transform its input.
@@ -928,151 +670,90 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-  ]
+	[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8, TItem9, TItem10, TItem11]
 >;
 
 /**
@@ -1095,167 +776,97 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-  ]
+	[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8, TItem9, TItem10, TItem11, TItem12]
 >;
 
 /**
@@ -1279,183 +890,104 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-  ]
+	[TSchema, TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8, TItem9, TItem10, TItem11, TItem12, TItem13]
 >;
 
 /**
@@ -1480,199 +1012,127 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+	]
 >;
 
 /**
@@ -1698,215 +1158,135 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
-  const TItem15 extends
-    | PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TItem15 extends
+		| PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >,
-  item15:
-    | TItem15
-    | PipeAction<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
+	item15:
+		| TItem15
+		| PipeAction<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>
+		| PipeActionAsync<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-    TItem15,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+		TItem15,
+	]
 >;
 
 /**
@@ -1933,231 +1313,143 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
-  const TItem15 extends
-    | PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
-  const TItem16 extends
-    | PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TItem15 extends
+		| PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
+	const TItem16 extends
+		| PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >,
-  item15:
-    | TItem15
-    | PipeAction<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >,
-  item16:
-    | TItem16
-    | PipeAction<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
+	item15:
+		| TItem15
+		| PipeAction<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>
+		| PipeActionAsync<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>,
+	item16:
+		| TItem16
+		| PipeAction<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>
+		| PipeActionAsync<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-    TItem15,
-    TItem16,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+		TItem15,
+		TItem16,
+	]
 >;
 
 /**
@@ -2185,247 +1477,151 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
-  const TItem15 extends
-    | PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
-  const TItem16 extends
-    | PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
-  const TItem17 extends
-    | PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TItem15 extends
+		| PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
+	const TItem16 extends
+		| PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
+	const TItem17 extends
+		| PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >,
-  item15:
-    | TItem15
-    | PipeAction<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >,
-  item16:
-    | TItem16
-    | PipeAction<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >,
-  item17:
-    | TItem17
-    | PipeAction<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
+	item15:
+		| TItem15
+		| PipeAction<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>
+		| PipeActionAsync<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>,
+	item16:
+		| TItem16
+		| PipeAction<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>
+		| PipeActionAsync<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>,
+	item17:
+		| TItem17
+		| PipeAction<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>
+		| PipeActionAsync<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-    TItem15,
-    TItem16,
-    TItem17,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+		TItem15,
+		TItem16,
+		TItem17,
+	]
 >;
 
 /**
@@ -2454,263 +1650,159 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
-  const TItem15 extends
-    | PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
-  const TItem16 extends
-    | PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
-  const TItem17 extends
-    | PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
-  const TItem18 extends
-    | PipeItem<InferOutput<TItem17>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem17>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TItem15 extends
+		| PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
+	const TItem16 extends
+		| PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
+	const TItem17 extends
+		| PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
+	const TItem18 extends
+		| PipeItem<InferOutput<TItem17>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem17>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >,
-  item15:
-    | TItem15
-    | PipeAction<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >,
-  item16:
-    | TItem16
-    | PipeAction<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >,
-  item17:
-    | TItem17
-    | PipeAction<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >,
-  item18:
-    | TItem18
-    | PipeAction<
-        InferOutput<TItem17>,
-        InferOutput<TItem18>,
-        InferIssue<TItem18>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem17>,
-        InferOutput<TItem18>,
-        InferIssue<TItem18>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
+	item15:
+		| TItem15
+		| PipeAction<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>
+		| PipeActionAsync<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>,
+	item16:
+		| TItem16
+		| PipeAction<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>
+		| PipeActionAsync<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>,
+	item17:
+		| TItem17
+		| PipeAction<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>
+		| PipeActionAsync<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>,
+	item18:
+		| TItem18
+		| PipeAction<InferOutput<TItem17>, InferOutput<TItem18>, InferIssue<TItem18>>
+		| PipeActionAsync<InferOutput<TItem17>, InferOutput<TItem18>, InferIssue<TItem18>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-    TItem15,
-    TItem16,
-    TItem17,
-    TItem18,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+		TItem15,
+		TItem16,
+		TItem17,
+		TItem18,
+	]
 >;
 
 /**
@@ -2740,322 +1832,204 @@ export function pipeAsync<
  * @returns A schema with a pipeline.
  */
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItem1 extends
-    | PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
-  const TItem2 extends
-    | PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
-  const TItem3 extends
-    | PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
-  const TItem4 extends
-    | PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
-  const TItem5 extends
-    | PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
-  const TItem6 extends
-    | PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
-  const TItem7 extends
-    | PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
-  const TItem8 extends
-    | PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
-  const TItem9 extends
-    | PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
-  const TItem10 extends
-    | PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
-  const TItem11 extends
-    | PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
-  const TItem12 extends
-    | PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
-  const TItem13 extends
-    | PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
-  const TItem14 extends
-    | PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
-  const TItem15 extends
-    | PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
-  const TItem16 extends
-    | PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
-  const TItem17 extends
-    | PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
-  const TItem18 extends
-    | PipeItem<InferOutput<TItem17>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem17>, unknown, BaseIssue<unknown>>,
-  const TItem19 extends
-    | PipeItem<InferOutput<TItem18>, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<InferOutput<TItem18>, unknown, BaseIssue<unknown>>,
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItem1 extends
+		| PipeItem<InferOutput<TSchema>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TSchema>, unknown, BaseIssue<unknown>>,
+	const TItem2 extends
+		| PipeItem<InferOutput<TItem1>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem1>, unknown, BaseIssue<unknown>>,
+	const TItem3 extends
+		| PipeItem<InferOutput<TItem2>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem2>, unknown, BaseIssue<unknown>>,
+	const TItem4 extends
+		| PipeItem<InferOutput<TItem3>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem3>, unknown, BaseIssue<unknown>>,
+	const TItem5 extends
+		| PipeItem<InferOutput<TItem4>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem4>, unknown, BaseIssue<unknown>>,
+	const TItem6 extends
+		| PipeItem<InferOutput<TItem5>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem5>, unknown, BaseIssue<unknown>>,
+	const TItem7 extends
+		| PipeItem<InferOutput<TItem6>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem6>, unknown, BaseIssue<unknown>>,
+	const TItem8 extends
+		| PipeItem<InferOutput<TItem7>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem7>, unknown, BaseIssue<unknown>>,
+	const TItem9 extends
+		| PipeItem<InferOutput<TItem8>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem8>, unknown, BaseIssue<unknown>>,
+	const TItem10 extends
+		| PipeItem<InferOutput<TItem9>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem9>, unknown, BaseIssue<unknown>>,
+	const TItem11 extends
+		| PipeItem<InferOutput<TItem10>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem10>, unknown, BaseIssue<unknown>>,
+	const TItem12 extends
+		| PipeItem<InferOutput<TItem11>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem11>, unknown, BaseIssue<unknown>>,
+	const TItem13 extends
+		| PipeItem<InferOutput<TItem12>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem12>, unknown, BaseIssue<unknown>>,
+	const TItem14 extends
+		| PipeItem<InferOutput<TItem13>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem13>, unknown, BaseIssue<unknown>>,
+	const TItem15 extends
+		| PipeItem<InferOutput<TItem14>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem14>, unknown, BaseIssue<unknown>>,
+	const TItem16 extends
+		| PipeItem<InferOutput<TItem15>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem15>, unknown, BaseIssue<unknown>>,
+	const TItem17 extends
+		| PipeItem<InferOutput<TItem16>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem16>, unknown, BaseIssue<unknown>>,
+	const TItem18 extends
+		| PipeItem<InferOutput<TItem17>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem17>, unknown, BaseIssue<unknown>>,
+	const TItem19 extends
+		| PipeItem<InferOutput<TItem18>, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<InferOutput<TItem18>, unknown, BaseIssue<unknown>>,
 >(
-  schema: TSchema,
-  item1:
-    | TItem1
-    | PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
-    | PipeActionAsync<
-        InferOutput<TSchema>,
-        InferOutput<TItem1>,
-        InferIssue<TItem1>
-      >,
-  item2:
-    | TItem2
-    | PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
-    | PipeActionAsync<
-        InferOutput<TItem1>,
-        InferOutput<TItem2>,
-        InferIssue<TItem2>
-      >,
-  item3:
-    | TItem3
-    | PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
-    | PipeActionAsync<
-        InferOutput<TItem2>,
-        InferOutput<TItem3>,
-        InferIssue<TItem3>
-      >,
-  item4:
-    | TItem4
-    | PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
-    | PipeActionAsync<
-        InferOutput<TItem3>,
-        InferOutput<TItem4>,
-        InferIssue<TItem4>
-      >,
-  item5:
-    | TItem5
-    | PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
-    | PipeActionAsync<
-        InferOutput<TItem4>,
-        InferOutput<TItem5>,
-        InferIssue<TItem5>
-      >,
-  item6:
-    | TItem6
-    | PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
-    | PipeActionAsync<
-        InferOutput<TItem5>,
-        InferOutput<TItem6>,
-        InferIssue<TItem6>
-      >,
-  item7:
-    | TItem7
-    | PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
-    | PipeActionAsync<
-        InferOutput<TItem6>,
-        InferOutput<TItem7>,
-        InferIssue<TItem7>
-      >,
-  item8:
-    | TItem8
-    | PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
-    | PipeActionAsync<
-        InferOutput<TItem7>,
-        InferOutput<TItem8>,
-        InferIssue<TItem8>
-      >,
-  item9:
-    | TItem9
-    | PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
-    | PipeActionAsync<
-        InferOutput<TItem8>,
-        InferOutput<TItem9>,
-        InferIssue<TItem9>
-      >,
-  item10:
-    | TItem10
-    | PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
-    | PipeActionAsync<
-        InferOutput<TItem9>,
-        InferOutput<TItem10>,
-        InferIssue<TItem10>
-      >,
-  item11:
-    | TItem11
-    | PipeAction<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem10>,
-        InferOutput<TItem11>,
-        InferIssue<TItem11>
-      >,
-  item12:
-    | TItem12
-    | PipeAction<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem11>,
-        InferOutput<TItem12>,
-        InferIssue<TItem12>
-      >,
-  item13:
-    | TItem13
-    | PipeAction<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem12>,
-        InferOutput<TItem13>,
-        InferIssue<TItem13>
-      >,
-  item14:
-    | TItem14
-    | PipeAction<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem13>,
-        InferOutput<TItem14>,
-        InferIssue<TItem14>
-      >,
-  item15:
-    | TItem15
-    | PipeAction<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem14>,
-        InferOutput<TItem15>,
-        InferIssue<TItem15>
-      >,
-  item16:
-    | TItem16
-    | PipeAction<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem15>,
-        InferOutput<TItem16>,
-        InferIssue<TItem16>
-      >,
-  item17:
-    | TItem17
-    | PipeAction<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem16>,
-        InferOutput<TItem17>,
-        InferIssue<TItem17>
-      >,
-  item18:
-    | TItem18
-    | PipeAction<
-        InferOutput<TItem17>,
-        InferOutput<TItem18>,
-        InferIssue<TItem18>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem17>,
-        InferOutput<TItem18>,
-        InferIssue<TItem18>
-      >,
-  item19:
-    | TItem19
-    | PipeAction<
-        InferOutput<TItem18>,
-        InferOutput<TItem19>,
-        InferIssue<TItem19>
-      >
-    | PipeActionAsync<
-        InferOutput<TItem18>,
-        InferOutput<TItem19>,
-        InferIssue<TItem19>
-      >
+	schema: TSchema,
+	item1:
+		| TItem1
+		| PipeAction<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>
+		| PipeActionAsync<InferOutput<TSchema>, InferOutput<TItem1>, InferIssue<TItem1>>,
+	item2:
+		| TItem2
+		| PipeAction<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>
+		| PipeActionAsync<InferOutput<TItem1>, InferOutput<TItem2>, InferIssue<TItem2>>,
+	item3:
+		| TItem3
+		| PipeAction<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>
+		| PipeActionAsync<InferOutput<TItem2>, InferOutput<TItem3>, InferIssue<TItem3>>,
+	item4:
+		| TItem4
+		| PipeAction<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>
+		| PipeActionAsync<InferOutput<TItem3>, InferOutput<TItem4>, InferIssue<TItem4>>,
+	item5:
+		| TItem5
+		| PipeAction<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>
+		| PipeActionAsync<InferOutput<TItem4>, InferOutput<TItem5>, InferIssue<TItem5>>,
+	item6:
+		| TItem6
+		| PipeAction<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>
+		| PipeActionAsync<InferOutput<TItem5>, InferOutput<TItem6>, InferIssue<TItem6>>,
+	item7:
+		| TItem7
+		| PipeAction<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>
+		| PipeActionAsync<InferOutput<TItem6>, InferOutput<TItem7>, InferIssue<TItem7>>,
+	item8:
+		| TItem8
+		| PipeAction<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>
+		| PipeActionAsync<InferOutput<TItem7>, InferOutput<TItem8>, InferIssue<TItem8>>,
+	item9:
+		| TItem9
+		| PipeAction<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>
+		| PipeActionAsync<InferOutput<TItem8>, InferOutput<TItem9>, InferIssue<TItem9>>,
+	item10:
+		| TItem10
+		| PipeAction<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>
+		| PipeActionAsync<InferOutput<TItem9>, InferOutput<TItem10>, InferIssue<TItem10>>,
+	item11:
+		| TItem11
+		| PipeAction<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>
+		| PipeActionAsync<InferOutput<TItem10>, InferOutput<TItem11>, InferIssue<TItem11>>,
+	item12:
+		| TItem12
+		| PipeAction<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>
+		| PipeActionAsync<InferOutput<TItem11>, InferOutput<TItem12>, InferIssue<TItem12>>,
+	item13:
+		| TItem13
+		| PipeAction<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>
+		| PipeActionAsync<InferOutput<TItem12>, InferOutput<TItem13>, InferIssue<TItem13>>,
+	item14:
+		| TItem14
+		| PipeAction<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>
+		| PipeActionAsync<InferOutput<TItem13>, InferOutput<TItem14>, InferIssue<TItem14>>,
+	item15:
+		| TItem15
+		| PipeAction<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>
+		| PipeActionAsync<InferOutput<TItem14>, InferOutput<TItem15>, InferIssue<TItem15>>,
+	item16:
+		| TItem16
+		| PipeAction<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>
+		| PipeActionAsync<InferOutput<TItem15>, InferOutput<TItem16>, InferIssue<TItem16>>,
+	item17:
+		| TItem17
+		| PipeAction<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>
+		| PipeActionAsync<InferOutput<TItem16>, InferOutput<TItem17>, InferIssue<TItem17>>,
+	item18:
+		| TItem18
+		| PipeAction<InferOutput<TItem17>, InferOutput<TItem18>, InferIssue<TItem18>>
+		| PipeActionAsync<InferOutput<TItem17>, InferOutput<TItem18>, InferIssue<TItem18>>,
+	item19:
+		| TItem19
+		| PipeAction<InferOutput<TItem18>, InferOutput<TItem19>, InferIssue<TItem19>>
+		| PipeActionAsync<InferOutput<TItem18>, InferOutput<TItem19>, InferIssue<TItem19>>,
 ): SchemaWithPipeAsync<
-  [
-    TSchema,
-    TItem1,
-    TItem2,
-    TItem3,
-    TItem4,
-    TItem5,
-    TItem6,
-    TItem7,
-    TItem8,
-    TItem9,
-    TItem10,
-    TItem11,
-    TItem12,
-    TItem13,
-    TItem14,
-    TItem15,
-    TItem16,
-    TItem17,
-    TItem18,
-    TItem19,
-  ]
+	[
+		TSchema,
+		TItem1,
+		TItem2,
+		TItem3,
+		TItem4,
+		TItem5,
+		TItem6,
+		TItem7,
+		TItem8,
+		TItem9,
+		TItem10,
+		TItem11,
+		TItem12,
+		TItem13,
+		TItem14,
+		TItem15,
+		TItem16,
+		TItem17,
+		TItem18,
+		TItem19,
+	]
 >;
 
 export function pipeAsync<
-  const TSchema extends
-    | BaseSchema<unknown, unknown, BaseIssue<unknown>>
-    | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-  const TItems extends (
-    | PipeItem<unknown, unknown, BaseIssue<unknown>>
-    | PipeItemAsync<unknown, unknown, BaseIssue<unknown>>
-  )[],
+	const TSchema extends
+		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
+		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+	const TItems extends (
+		| PipeItem<unknown, unknown, BaseIssue<unknown>>
+		| PipeItemAsync<unknown, unknown, BaseIssue<unknown>>
+	)[],
 >(...pipe: [TSchema, ...TItems]): SchemaWithPipeAsync<[TSchema, ...TItems]> {
-  return {
-    ...pipe[0],
-    pipe,
-    async: true,
-    async _run(dataset, config) {
-      // Execute pipeline items in sequence
-      for (const item of pipe) {
-        // Exclude metadata items from execution
-        if (item.kind !== 'metadata') {
-          // Mark dataset as untyped and break pipe if there are issues and pipe
-          // item is schema or transformation
-          if (
-            dataset.issues &&
-            (item.kind === 'schema' || item.kind === 'transformation')
-          ) {
-            dataset.typed = false;
-            break;
-          }
+	return {
+		...pipe[0],
+		pipe,
+		async: true,
+		async _run(dataset, config) {
+			// Execute pipeline items in sequence
+			for (const item of pipe) {
+				// Exclude metadata items from execution
+				if (item.kind !== "metadata") {
+					// Mark dataset as untyped and break pipe if there are issues and pipe
+					// item is schema or transformation
+					if (dataset.issues && (item.kind === "schema" || item.kind === "transformation")) {
+						dataset.typed = false;
+						break;
+					}
 
-          // Continue pipe execution if there is no reason to abort early
-          if (
-            !dataset.issues ||
-            (!config.abortEarly && !config.abortPipeEarly)
-          ) {
-            // @ts-expect-error
-            dataset = await item._run(dataset, config);
-          }
-        }
-      }
+					// Continue pipe execution if there is no reason to abort early
+					if (!dataset.issues || (!config.abortEarly && !config.abortPipeEarly)) {
+						// @ts-expect-error
+						dataset = await item._run(dataset, config);
+					}
+				}
+			}
 
-      // Return output dataset
-      return dataset;
-    },
-  };
+			// Return output dataset
+			return dataset;
+		},
+	};
 }

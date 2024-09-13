@@ -1,1 +1,1 @@
-export * from './_subIssues.ts';
+export * from "./_subIssues.ts";

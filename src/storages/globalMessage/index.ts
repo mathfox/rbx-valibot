@@ -1,1 +1,1 @@
-export * from './globalMessage.ts';
+export * from "./globalMessage.ts";

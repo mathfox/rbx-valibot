@@ -1,1 +1,1 @@
-export * from './startsWith.ts';
+export * from "./startsWith.ts";

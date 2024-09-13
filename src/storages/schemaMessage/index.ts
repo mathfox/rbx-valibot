@@ -1,1 +1,1 @@
-export * from './schemaMessage.ts';
+export * from "./schemaMessage.ts";

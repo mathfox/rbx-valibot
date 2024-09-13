@@ -1,1 +1,1 @@
-export * from './toLowerCase.ts';
+export * from "./toLowerCase.ts";

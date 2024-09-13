@@ -10,10 +10,5 @@
  * @internal
  */
 export function _isValidObjectKey(object: object, key: string): boolean {
-  return (
-    Object.hasOwn(object, key) &&
-    key !== '__proto__' &&
-    key !== 'prototype' &&
-    key !== 'constructor'
-  );
+	return Object.hasOwn(object, key) && key !== "__proto__" && key !== "prototype" && key !== "constructor";
 }

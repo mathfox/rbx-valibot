@@ -8,15 +8,15 @@
  *
  * @internal
  */
-export function _joinExpects(values: string[], separator: '&' | '|'): string {
-  // Create list without duplicates
-  const list = [...new Set(values)];
+export function _joinExpects(values: string[], separator: "&" | "|"): string {
+	// Create list without duplicates
+	const list = [...new Set(values)];
 
-  // If list has more than one item, join them
-  if (list.length > 1) {
-    return `(${list.join(` ${separator} `)})`;
-  }
+	// If list has more than one item, join them
+	if (list.length > 1) {
+		return `(${list.join(` ${separator} `)})`;
+	}
 
-  // Otherwise, return first item or "never"
-  return list[0] ?? 'never';
+	// Otherwise, return first item or "never"
+	return list[0] ?? "never";
 }

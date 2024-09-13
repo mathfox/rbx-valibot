@@ -1,3 +1,3 @@
-export * from './getFallbacks.ts';
-export * from './getFallbacksAsync.ts';
-export * from './types.ts';
+export * from "./getFallbacks.ts";
+export * from "./getFallbacksAsync.ts";
+export * from "./types.ts";

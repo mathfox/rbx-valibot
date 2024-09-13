@@ -1,1 +1,1 @@
-export * from './number.ts';
+export * from "./number.ts";

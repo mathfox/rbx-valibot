@@ -1,1 +1,1 @@
-export * from './flatten.ts';
+export * from "./flatten.ts";

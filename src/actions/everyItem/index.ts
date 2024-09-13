@@ -1,1 +1,1 @@
-export * from './everyItem.ts';
+export * from "./everyItem.ts";

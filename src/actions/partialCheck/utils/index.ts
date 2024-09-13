@@ -1,1 +1,1 @@
-export * from './_isPartiallyTyped/index.ts';
+export * from "./_isPartiallyTyped/index.ts";
