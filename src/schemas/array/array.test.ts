@@ -131,7 +131,7 @@ describe("array", () => {
 				{
 					type: "array",
 					origin: "value",
-					input: ["foo", 123, "baz", null],
+					input: ["foo", 123, "baz", undefined],
 					key: 1,
 					value: 123,
 				},
@@ -139,25 +139,25 @@ describe("array", () => {
 		};
 
 		test("for wrong items", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, "baz", null] }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, "baz", undefined] }, {})).toStrictEqual({
 				typed: false,
-				value: ["foo", 123, "baz", null],
+				value: ["foo", 123, "baz", undefined],
 				issues: [
 					stringIssue,
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "string",
-						input: null,
+						input: undefined,
 						expected: "string",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "array",
 								origin: "value",
-								input: ["foo", 123, "baz", null],
+								input: ["foo", 123, "baz", undefined],
 								key: 3,
-								value: null,
+								value: undefined,
 							},
 						],
 					},
@@ -166,7 +166,7 @@ describe("array", () => {
 		});
 
 		test("with abort early", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, "baz", null] }, { abortEarly: true })).toStrictEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, "baz", undefined] }, { abortEarly: true })).toStrictEqual({
 				typed: false,
 				value: ["foo"],
 				issues: [{ ...stringIssue, abortEarly: true }],

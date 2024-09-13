@@ -120,14 +120,11 @@ export function arrayAsync(
 							if (issue.path) {
 								issue.path.unshift(pathItem);
 							} else {
-								// @ts-expect-error
 								issue.path = [pathItem];
 							}
-							// @ts-expect-error
 							dataset.issues?.push(issue);
 						}
 						if (!dataset.issues) {
-							// @ts-expect-error
 							dataset.issues = itemDataset.issues;
 						}
 
@@ -144,7 +141,6 @@ export function arrayAsync(
 					}
 
 					// Add item to dataset
-					// @ts-expect-error
 					dataset.value.push(itemDataset.value);
 				}
 
