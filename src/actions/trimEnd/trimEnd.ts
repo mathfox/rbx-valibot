@@ -26,7 +26,7 @@ export function trimEnd(): TrimEndAction {
 		reference: trimEnd,
 		async: false,
 		_run(dataset) {
-			dataset.value = dataset.value.trimEnd();
+			dataset.value = dataset.value.gsub("%s+$", "")[0];
 			return dataset;
 		},
 	};

@@ -4,15 +4,16 @@ import { type EveryItemAction, type EveryItemIssue, everyItem } from "./everyIte
 
 describe("everyItem", () => {
 	describe("should return action object", () => {
-		const requirement = (item: string) => item.startsWith("DE");
+		const requirement = (item: string) => item.sub(1, 2) === "DE";
 		const baseAction: Omit<EveryItemAction<string[], never>, "message"> = {
 			kind: "validation",
 			type: "every_item",
 			reference: everyItem,
-			expects: null,
+			expects: undefined,
 			requirement,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -67,7 +68,7 @@ describe("everyItem", () => {
 		const baseIssue: Omit<EveryItemIssue<number[]>, "input" | "received"> = {
 			kind: "validation",
 			type: "every_item",
-			expected: null,
+			expected: undefined,
 			message: "message",
 			requirement,
 		};

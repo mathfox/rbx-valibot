@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue, _stringify } from "../../utils";
+import { _addIssue } from "../../utils";
 import type { ContentInput, ContentRequirement } from "../types";
 
 /**
@@ -88,7 +88,8 @@ export function excludes(
 	ContentRequirement<ContentInput>,
 	ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
 > {
-	const received = _stringify(requirement);
+	const received = tostring(requirement);
+
 	return {
 		kind: "validation",
 		type: "excludes",
@@ -98,9 +99,13 @@ export function excludes(
 		requirement,
 		message,
 		_run(dataset, config) {
-			// @ts-expect-error
-			if (dataset.typed && dataset.value.includes(this.requirement)) {
-				_addIssue(this, "content", dataset, config, { received });
+			if (dataset.typed) {
+				if (
+					(typeIs(dataset.value, "string") && dataset.value.match(this.requirement as string)[0] !== undefined) ||
+					(dataset.value as defined[]).includes(this.requirement as defined)
+				) {
+					_addIssue(this, "content", dataset, config, { received });
+				}
 			}
 			return dataset;
 		},

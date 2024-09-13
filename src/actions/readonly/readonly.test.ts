@@ -8,7 +8,8 @@ describe("readonly", () => {
 			type: "readonly",
 			reference: readonly,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies ReadonlyAction<{ key: string }>);
 	});
 

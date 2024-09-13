@@ -21,7 +21,7 @@ export interface BaseValidation<TInput, TOutput, TIssue extends BaseIssue<unknow
 	/**
 	 * The expected property.
 	 */
-	readonly expects: string | null;
+	readonly expects: string | undefined;
 	/**
 	 * Whether it's async.
 	 */

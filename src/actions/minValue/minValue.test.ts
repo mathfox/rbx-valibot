@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type MinValueAction, minValue } from "./minValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 // TODO: Add tests for "non-..." cases (see `value.test`)
 
@@ -13,7 +14,8 @@ describe("minValue", () => {
 			expects: ">=5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -43,11 +45,10 @@ describe("minValue", () => {
 
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", () => {
-			expect(minValue(1)._run({ typed: false, value: null }, {})).toStrictEqual({ typed: false, value: null });
-		});
-
-		test("for valid bigints", () => {
-			expectNoActionIssue(minValue(10n), [10n, 11n, 9999n]);
+			expect(minValue(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({
+				typed: false,
+				value: undefined,
+			});
 		});
 
 		test("for valid booleans", () => {
@@ -55,13 +56,8 @@ describe("minValue", () => {
 			expectNoActionIssue(minValue(true), [true]);
 		});
 
-		test("for valid dates", () => {
-			const date = new Date();
-			expectNoActionIssue(minValue(date), [date, new Date(+date + 1), new Date(+date + 999999)]);
-		});
-
 		test("for valid numbers", () => {
-			expectNoActionIssue(minValue(10), [10, 11, 9999, Number.MAX_VALUE]);
+			expectNoActionIssue(minValue(10), [10, 11, 9999, MAX_SAFE_INTEGER]);
 		});
 
 		test("for valid strings", () => {
@@ -76,31 +72,13 @@ describe("minValue", () => {
 			message: "message",
 		} as const;
 
-		test("for invalid bigints", () => {
-			expectActionIssue(minValue(10n, "message"), { ...baseInfo, expected: ">=10", requirement: 10n }, [
-				-9999n,
-				0n,
-				9n,
-			]);
-		});
-
 		test("for invalid booleans", () => {
 			expectActionIssue(minValue(true, "message"), { ...baseInfo, expected: ">=true", requirement: true }, [false]);
 		});
 
-		test("for invalid dates", () => {
-			const date = new Date();
-			expectActionIssue(
-				minValue<Date, Date, "message">(date, "message"),
-				{ ...baseInfo, expected: `>=${date.toJSON()}`, requirement: date },
-				[new Date(0), new Date(+date - 999999), new Date(+date - 1)],
-				(value) => value.toJSON(),
-			);
-		});
-
 		test("for invalid numbers", () => {
 			expectActionIssue(minValue(10, "message"), { ...baseInfo, expected: ">=10", requirement: 10 }, [
-				Number.MIN_VALUE,
+				MIN_SAFE_INTEGER,
 				0,
 				9,
 			]);

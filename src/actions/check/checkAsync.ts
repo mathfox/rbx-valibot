@@ -18,7 +18,7 @@ export interface CheckActionAsync<TInput, TMessage extends ErrorMessage<CheckIss
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -62,7 +62,7 @@ export function checkAsync(
 		type: "check",
 		reference: checkAsync,
 		async: true,
-		expects: null,
+		expects: undefined,
 		requirement,
 		message,
 		async _run(dataset, config) {

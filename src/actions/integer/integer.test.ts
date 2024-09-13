@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type IntegerAction, type IntegerIssue, integer } from "./integer";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 describe("integer", () => {
 	describe("should return action object", () => {
@@ -8,10 +9,12 @@ describe("integer", () => {
 			kind: "validation",
 			type: "integer",
 			reference: integer,
-			expects: null,
-			requirement: expect.any(Function),
+			expects: undefined,
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {
@@ -50,7 +53,7 @@ describe("integer", () => {
 		});
 
 		test("for integer numbers", () => {
-			expectNoActionIssue(action, [0, 123456789, -123456789, Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]);
+			expectNoActionIssue(action, [0, 123456789, -123456789, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER]);
 		});
 	});
 
@@ -59,21 +62,22 @@ describe("integer", () => {
 		const baseIssue: Omit<IntegerIssue<number>, "input" | "received"> = {
 			kind: "validation",
 			type: "integer",
-			expected: null,
+			expected: undefined,
 			message: "message",
-			requirement: expect.any(Function),
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 		};
 
 		test("for floating point numbers", () => {
-			expectActionIssue(action, baseIssue, [0.1, 12.34, -1 / 3, Math.PI]);
+			expectActionIssue(action, baseIssue, [0.1, 12.34, -1 / 3, math.pi]);
 		});
 
 		test("for infinite numbers", () => {
-			expectActionIssue(action, baseIssue, [Infinity, -Infinity]);
+			expectActionIssue(action, baseIssue, [math.huge, -math.huge]);
 		});
 
 		test("for not a number", () => {
-			expectActionIssue(action, baseIssue, [NaN]);
+			expectActionIssue(action, baseIssue, [0 / 0]);
 		});
 	});
 });

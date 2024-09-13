@@ -6,20 +6,20 @@ import type { PartialCheckIssue } from "./types";
 
 describe("partialCheckAsync", () => {
 	describe("should return action object", () => {
-		// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 		type Input = { nested: { key: string } };
 		const pathList = [["nested", "key"]] as const;
 		type PathList = typeof pathList;
 		type Selection = DeepPickN<Input, PathList>;
-		const requirement = async (input: Selection) => input.nested.key.includes("foo");
+		const requirement = async (input: Selection) => input.nested.key.match("foo")[0] !== undefined;
 		const baseAction: Omit<PartialCheckActionAsync<Input, Selection, never>, "message"> = {
 			kind: "validation",
 			type: "partial_check",
 			reference: partialCheckAsync,
-			expects: null,
+			expects: undefined,
 			requirement,
 			async: true,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -88,15 +88,15 @@ describe("partialCheckAsync", () => {
 		test("if root is untyped", async () => {
 			const dataset: UntypedDataset<ObjectIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 				issues: [
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: undefined,
 					},
 				],
@@ -106,7 +106,7 @@ describe("partialCheckAsync", () => {
 
 		test("if part of path is untyped", async () => {
 			const input = {
-				nested: null,
+				nested: undefined,
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -118,9 +118,9 @@ describe("partialCheckAsync", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -138,7 +138,7 @@ describe("partialCheckAsync", () => {
 
 		test("if entire path is untyped", async () => {
 			const input = {
-				nested: { key: null },
+				nested: { key: undefined },
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -150,9 +150,9 @@ describe("partialCheckAsync", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "string",
-						input: null,
+						input: undefined,
 						expected: "string",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -207,7 +207,7 @@ describe("partialCheckAsync", () => {
 						kind: "validation",
 						type: "partial_check",
 						input,
-						expected: null,
+						expected: undefined,
 						received: "Object",
 						requirement,
 					},
@@ -218,20 +218,20 @@ describe("partialCheckAsync", () => {
 		test("if only unselected paths are untyped", async () => {
 			const input: {
 				nested: { key: string };
-				tuple: [number, { key: string }, null];
-				other: null;
+				tuple: [number, { key: string }, undefined];
+				other: undefined;
 			} = {
 				nested: { key: "foo" },
-				tuple: [123, { key: "baz" }, null],
-				other: null,
+				tuple: [123, { key: "baz" }, undefined],
+				other: undefined,
 			};
 			const firstIssue: NumberIssue = {
 				...baseInfo,
 				kind: "schema",
 				type: "number",
-				input: null,
+				input: undefined,
 				expected: "number",
-				received: "null",
+				received: "undefined",
 				path: [
 					{
 						type: "object",
@@ -253,9 +253,9 @@ describe("partialCheckAsync", () => {
 				...baseInfo,
 				kind: "schema",
 				type: "string",
-				input: null,
+				input: undefined,
 				expected: "string",
-				received: "null",
+				received: "undefined",
 				path: [
 					{
 						type: "object",
@@ -281,7 +281,7 @@ describe("partialCheckAsync", () => {
 						kind: "validation",
 						type: "partial_check",
 						input: input,
-						expected: null,
+						expected: undefined,
 						received: "Object",
 						requirement,
 					},

@@ -26,7 +26,7 @@ export function trim(): TrimAction {
 		reference: trim,
 		async: false,
 		_run(dataset) {
-			dataset.value = dataset.value.trim();
+			dataset.value = dataset.value.gsub("%s+", "")[0];
 			return dataset;
 		},
 	};

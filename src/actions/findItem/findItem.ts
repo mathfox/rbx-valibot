@@ -1,4 +1,4 @@
-import type { BaseTransformation, TypedDataset } from "../../types";
+import type { BaseTransformation, MaybeReadonly, TypedDataset } from "../../types";
 import type { ArrayInput, ArrayRequirement } from "../types";
 
 /**
@@ -37,8 +37,9 @@ export function findItem(operation: ArrayRequirement<unknown[]>): FindItemAction
 		async: false,
 		operation,
 		_run(dataset) {
-			// @ts-expect-error
-			dataset.value = dataset.value.find(this.operation);
+			dataset.value = (dataset.value as defined[]).find(
+				this.operation as ArrayRequirement<MaybeReadonly<defined[]>>,
+			) as defined[];
 			return dataset as TypedDataset<unknown, never>;
 		},
 	};

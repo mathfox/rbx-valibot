@@ -10,7 +10,8 @@ describe("empty", () => {
 			reference: empty,
 			expects: "0",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {
@@ -42,9 +43,9 @@ describe("empty", () => {
 		const action = empty();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -67,11 +68,21 @@ describe("empty", () => {
 		};
 
 		test("for invalid strings", () => {
-			expectActionIssue(action, baseIssue, [" ", "\n", "foo", "foobarbaz123"], (input) => `${input.length}`);
+			expectActionIssue(
+				action,
+				baseIssue,
+				[" ", "\n", "foo", "foobarbaz123"],
+				(input) => `${(input as ArrayLike<any>).size()}`,
+			);
 		});
 
 		test("for invalid arrays", () => {
-			expectActionIssue(action, baseIssue, [[null], [1, 2, 3, 4, 6], Array(999)], (input) => `${input.length}`);
+			expectActionIssue(
+				action,
+				baseIssue,
+				[[undefined], [1, 2, 3, 4, 6], new Array(999)],
+				(input) => `${(input as ArrayLike<any>).size()}`,
+			);
 		});
 	});
 });

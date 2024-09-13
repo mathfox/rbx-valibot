@@ -29,14 +29,14 @@ export type ContentRequirement<TInput extends ContentInput> = TInput extends rea
 /**
  * Length input type.
  */
-export type LengthInput = string | ArrayLike<unknown>;
+export type LengthInput = string | ArrayLike<any>;
 
 /**
  * Size input type.
  */
-export type SizeInput = Blob | Map<unknown, unknown> | Set<unknown>;
+export type SizeInput = Map<unknown, unknown> | Set<unknown>;
 
 /**
  * Value input type.
  */
-export type ValueInput = string | number | bigint | boolean | Date;
+export type ValueInput = string | number | boolean;

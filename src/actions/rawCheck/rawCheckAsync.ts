@@ -17,7 +17,7 @@ export interface RawCheckActionAsync<TInput> extends BaseValidationAsync<TInput,
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 }
 
 /**
@@ -35,7 +35,7 @@ export function rawCheckAsync<TInput>(
 		type: "raw_check",
 		reference: rawCheckAsync,
 		async: true,
-		expects: null,
+		expects: undefined,
 		async _run(dataset, config) {
 			await action({
 				dataset,

@@ -4,7 +4,6 @@ import type { TypedDataset, UntypedDataset } from "../../../../types";
 import { _isPartiallyTyped } from "./_isPartiallyTyped";
 
 describe("_isPartiallyTyped", () => {
-	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 	type Input = {
 		nested: { key: string };
 		tuple: [number, { key: string }, number];
@@ -29,15 +28,15 @@ describe("_isPartiallyTyped", () => {
 		test("if issue has no path", () => {
 			const dataset: UntypedDataset<ObjectIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 				issues: [
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: undefined,
 					},
 				],
@@ -47,7 +46,7 @@ describe("_isPartiallyTyped", () => {
 
 		test("if part of path matches path of issue", () => {
 			const input = {
-				nested: null,
+				nested: undefined,
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -59,9 +58,9 @@ describe("_isPartiallyTyped", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -79,7 +78,7 @@ describe("_isPartiallyTyped", () => {
 
 		test("if entire path matches path of issue", () => {
 			const input = {
-				nested: { key: null },
+				nested: { key: undefined },
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -91,9 +90,9 @@ describe("_isPartiallyTyped", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "string",
-						input: null,
+						input: undefined,
 						expected: "string",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -134,8 +133,8 @@ describe("_isPartiallyTyped", () => {
 		test("if only unselected paths are untyped", () => {
 			const input = {
 				nested: { key: "foo" },
-				tuple: [123, { key: "baz" }, null],
-				other: null,
+				tuple: [123, { key: "baz" }, undefined],
+				other: undefined,
 			};
 			const dataset: UntypedDataset<NumberIssue | StringIssue> = {
 				typed: false,
@@ -145,9 +144,9 @@ describe("_isPartiallyTyped", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "number",
-						input: null,
+						input: undefined,
 						expected: "number",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -169,9 +168,9 @@ describe("_isPartiallyTyped", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "string",
-						input: null,
+						input: undefined,
 						expected: "string",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",

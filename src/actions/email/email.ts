@@ -1,3 +1,4 @@
+import RegExp from "@rbxts/regexp";
 import { EMAIL_REGEX } from "../../regex";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
@@ -17,7 +18,7 @@ export interface EmailIssue<TInput extends string> extends BaseIssue<TInput> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -44,7 +45,7 @@ export interface EmailAction<TInput extends string, TMessage extends ErrorMessag
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The email regex.
 	 */
@@ -90,7 +91,7 @@ export function email(
 		kind: "validation",
 		type: "email",
 		reference: email,
-		expects: null,
+		expects: undefined,
 		async: false,
 		requirement: EMAIL_REGEX,
 		message,

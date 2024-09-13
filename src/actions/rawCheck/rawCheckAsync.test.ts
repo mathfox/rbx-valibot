@@ -15,22 +15,23 @@ describe("rawCheckAsync", () => {
 			kind: "validation",
 			type: "raw_check",
 			reference: rawCheckAsync,
-			expects: null,
+			expects: undefined,
 			async: true,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies RawCheckActionAsync<number>);
 	});
 
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", async () => {
-			expect(await action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(await action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
 		test("for valid inputs", async () => {
-			await expectNoActionIssueAsync(action, [1, 12345, Infinity]);
+			await expectNoActionIssueAsync(action, [1, 12345, math.huge]);
 		});
 	});
 
@@ -38,12 +39,12 @@ describe("rawCheckAsync", () => {
 		const baseIssue: Omit<RawCheckIssue<number>, "input" | "received"> = {
 			kind: "validation",
 			type: "raw_check",
-			expected: null,
+			expected: undefined,
 			message: "message",
 		};
 
 		test("for invalid inputs", async () => {
-			await expectActionIssueAsync(action, baseIssue, [0, -1, -12345, -Infinity]);
+			await expectActionIssueAsync(action, baseIssue, [0, -1, -12345, -math.huge]);
 		});
 	});
 });

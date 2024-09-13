@@ -3,49 +3,13 @@ import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type SizeAction, type SizeIssue, size } from "./size";
 
 describe("size", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<SizeAction<Blob, 5, never>, "message"> = {
-			kind: "validation",
-			type: "size",
-			reference: size,
-			expects: "5",
-			requirement: 5,
-			async: false,
-			_run: expect.any(Function),
-		};
-
-		test("with undefined message", () => {
-			const action: SizeAction<Blob, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(size(5)).toStrictEqual(action);
-			expect(size(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(size(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies SizeAction<Blob, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(size(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies SizeAction<Blob, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = size(3);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -66,10 +30,10 @@ describe("size", () => {
 					["two", "2"],
 					["three", 3],
 				]),
-				new Map<string | number | boolean, string | null>([
+				new Map<string | number | boolean, string | undefined>([
 					["1", "one"],
-					[2, null],
-					[true, null],
+					[2, undefined],
+					[true, undefined],
 				]),
 			]);
 		});
@@ -77,27 +41,11 @@ describe("size", () => {
 		test("for valid sets", () => {
 			expectNoActionIssue(action, [
 				new Set([1, 2, 3]),
-				new Set("123"),
+				new Set(["123"]),
 				new Set([" ", "\n", "\t"]),
 				new Set([[1, 2, 3, 4], [5, 6], [7]]),
-				new Set([1, "two", null]),
-				new Set(["1", { value: "5" }, null]),
-			]);
-		});
-
-		test("for valid blobs", () => {
-			expectNoActionIssue(action, [
-				new Blob(["bot"]),
-				new Blob(["✨"]),
-				new Blob([" \t\n"]),
-				new Blob(["1", "2", "3"], { type: "text/plain" }),
-				new Blob(
-					[
-						new Uint8Array([104, 105]), // 'hi'
-						new Blob(["!"], { type: "text/plain" }),
-					],
-					{ type: "text/plain" },
-				),
+				new Set([1, "two", undefined]),
+				new Set(["1", { value: "5" }, undefined]),
 			]);
 		});
 	});
@@ -121,13 +69,13 @@ describe("size", () => {
 					new Map([[1, "one"]]),
 					new Map([
 						["one", 1],
-						["two", null],
+						["two", undefined],
 					]),
-					new Map<string | number, string | null>([
+					new Map<string | number, string | undefined>([
 						[1, "one"],
 						[2, "two"],
 						["3", "three"],
-						[4, null],
+						[4, undefined],
 					]),
 				],
 				(value) => `${value.size}`,
@@ -141,29 +89,9 @@ describe("size", () => {
 				[
 					new Set(),
 					new Set([1]),
-					new Set(["one", null]),
-					new Set("1234"),
+					new Set(["one", undefined]),
+					new Set(["1234"]),
 					new Set([[1, 2, 3, 4], [5, 6], [7], [8, 9]]),
-				],
-				(value) => `${value.size}`,
-			);
-		});
-
-		test("for invalid blobs", () => {
-			expectActionIssue(
-				action,
-				baseIssue,
-				[
-					new Blob([]),
-					new Blob([""]),
-					new Blob([" "]),
-					new Blob(["1"]),
-					new Blob(["hi"], { type: "text/plain" }),
-					new Blob([new Uint8Array([72, 105])]), // 'Hi'
-					new Blob(["  \t\n"]),
-					new Blob([new Uint8Array([104, 105, 33, 33])]), // 'hi!!'
-					new Blob(["🤖"]),
-					new Blob(["🤖😍"]),
 				],
 				(value) => `${value.size}`,
 			);

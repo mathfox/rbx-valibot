@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type SafeIntegerAction, type SafeIntegerIssue, safeInteger } from "./safeInteger";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 describe("safeInteger", () => {
 	describe("should return action object", () => {
@@ -8,10 +9,12 @@ describe("safeInteger", () => {
 			kind: "validation",
 			type: "safe_integer",
 			reference: safeInteger,
-			expects: null,
-			requirement: expect.any(Function),
+			expects: undefined,
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -43,14 +46,14 @@ describe("safeInteger", () => {
 		const action = safeInteger();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
 		test("for safe integer numbers", () => {
-			expectNoActionIssue(action, [0, 123456789, -123456789, Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]);
+			expectNoActionIssue(action, [0, 123456789, -123456789, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER]);
 		});
 	});
 
@@ -59,30 +62,26 @@ describe("safeInteger", () => {
 		const baseIssue: Omit<SafeIntegerIssue<number>, "input" | "received"> = {
 			kind: "validation",
 			type: "safe_integer",
-			expected: null,
+			expected: undefined,
 			message: "message",
-			requirement: expect.any(Function),
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 		};
 
 		test("for unsafe integer numbers", () => {
-			expectActionIssue(action, baseIssue, [
-				Number.MAX_VALUE,
-				Number.MIN_VALUE,
-				Number.MAX_SAFE_INTEGER + 1,
-				Number.MIN_SAFE_INTEGER - 1,
-			]);
+			expectActionIssue(action, baseIssue, [MAX_SAFE_INTEGER + 1, MIN_SAFE_INTEGER - 1]);
 		});
 
 		test("for floating point numbers", () => {
-			expectActionIssue(action, baseIssue, [0.1, 12.34, -1 / 3, Math.PI]);
+			expectActionIssue(action, baseIssue, [0.1, 12.34, -1 / 3, math.pi]);
 		});
 
 		test("for infinite numbers", () => {
-			expectActionIssue(action, baseIssue, [Infinity, -Infinity]);
+			expectActionIssue(action, baseIssue, [math.huge, -math.huge]);
 		});
 
 		test("for not a number", () => {
-			expectActionIssue(action, baseIssue, [NaN]);
+			expectActionIssue(action, baseIssue, [0 / 0]);
 		});
 	});
 });

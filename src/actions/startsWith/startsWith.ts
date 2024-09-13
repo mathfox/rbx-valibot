@@ -95,9 +95,9 @@ export function startsWith(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !dataset.value.startsWith(this.requirement)) {
+			if (dataset.typed && dataset.value.sub(1, this.requirement.size()) !== this.requirement) {
 				_addIssue(this, "start", dataset, config, {
-					received: `"${dataset.value.slice(0, this.requirement.length)}"`,
+					received: `"${dataset.value.sub(1, this.requirement.size())}"`,
 				});
 			}
 			return dataset;

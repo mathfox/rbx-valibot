@@ -15,7 +15,7 @@ export interface CheckIssue<TInput> extends BaseIssue<TInput> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The validation function.
 	 */

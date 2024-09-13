@@ -11,7 +11,8 @@ describe("startsWith", () => {
 			expects: '"abc"',
 			requirement: "abc",
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -43,9 +44,9 @@ describe("startsWith", () => {
 		const action = startsWith("abc");
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -69,7 +70,7 @@ describe("startsWith", () => {
 				action,
 				baseIssue,
 				["", "a", "ab", " abc", "Abc", "a123", "ab123", "abdef", "aabc", "zabc", "zabcdef"],
-				(value) => `"${value.slice(0, "abc".length)}"`,
+				(value) => `"${value.sub(1, "abc".size())}"`,
 			);
 		});
 	});

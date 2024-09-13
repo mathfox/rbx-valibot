@@ -95,9 +95,9 @@ export function endsWith(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !dataset.value.endsWith(this.requirement)) {
+			if (dataset.typed && !dataset.value.match(`${this.requirement}$`)) {
 				_addIssue(this, "end", dataset, config, {
-					received: `"${dataset.value.slice(-this.requirement.length)}"`,
+					received: `"${dataset.value.sub(-this.requirement.size())}"`,
 				});
 			}
 			return dataset;

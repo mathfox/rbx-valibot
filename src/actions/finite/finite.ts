@@ -1,3 +1,4 @@
+import { isFinite } from "@rbxts/number";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -16,7 +17,7 @@ export interface FiniteIssue<TInput extends number> extends BaseIssue<TInput> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -43,7 +44,7 @@ export interface FiniteAction<TInput extends number, TMessage extends ErrorMessa
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -80,8 +81,8 @@ export function finite(
 		type: "finite",
 		reference: finite,
 		async: false,
-		expects: null,
-		requirement: Number.isFinite,
+		expects: undefined,
+		requirement: isFinite,
 		message,
 		_run(dataset, config) {
 			if (dataset.typed && !this.requirement(dataset.value)) {

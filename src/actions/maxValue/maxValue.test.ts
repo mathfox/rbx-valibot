@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type MaxValueAction, maxValue } from "./maxValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 // TODO: Add tests for "non-..." cases (see `value.test`)
 
@@ -13,7 +14,8 @@ describe("maxValue", () => {
 			expects: "<=5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -46,22 +48,13 @@ describe("maxValue", () => {
 			expect(maxValue(1)._run({ typed: false, value: null }, {})).toStrictEqual({ typed: false, value: null });
 		});
 
-		test("for valid bigints", () => {
-			expectNoActionIssue(maxValue(10n), [-9999n, 0n, 10n]);
-		});
-
 		test("for valid booleans", () => {
 			expectNoActionIssue(maxValue(true), [true, false]);
 			expectNoActionIssue(maxValue(false), [false]);
 		});
 
-		test("for valid dates", () => {
-			const date = new Date();
-			expectNoActionIssue(maxValue(date), [new Date(0), new Date(+date - 999999), date]);
-		});
-
 		test("for valid numbers", () => {
-			expectNoActionIssue(maxValue(10), [Number.MIN_VALUE, 0, 10]);
+			expectNoActionIssue(maxValue(10), [MIN_SAFE_INTEGER, 0, 10]);
 		});
 
 		test("for valid strings", () => {
@@ -76,29 +69,15 @@ describe("maxValue", () => {
 			message: "message",
 		} as const;
 
-		test("for invalid bigints", () => {
-			expectActionIssue(maxValue(10n, "message"), { ...baseInfo, expected: "<=10", requirement: 10n }, [11n, 9999n]);
-		});
-
 		test("for invalid booleans", () => {
 			expectActionIssue(maxValue(false, "message"), { ...baseInfo, expected: "<=false", requirement: false }, [true]);
-		});
-
-		test("for invalid dates", () => {
-			const date = new Date();
-			expectActionIssue(
-				maxValue<Date, Date, "message">(date, "message"),
-				{ ...baseInfo, expected: `<=${date.toJSON()}`, requirement: date },
-				[new Date(+date + 1), new Date(+date + 999999)],
-				(value) => value.toJSON(),
-			);
 		});
 
 		test("for invalid numbers", () => {
 			expectActionIssue(maxValue(10, "message"), { ...baseInfo, expected: "<=10", requirement: 10 }, [
 				11,
 				9999,
-				Number.MAX_VALUE,
+				MAX_SAFE_INTEGER,
 			]);
 		});
 

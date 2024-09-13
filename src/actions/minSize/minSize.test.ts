@@ -3,49 +3,13 @@ import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type MinSizeAction, type MinSizeIssue, minSize } from "./minSize";
 
 describe("minSize", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<MinSizeAction<Blob, 5, never>, "message"> = {
-			kind: "validation",
-			type: "min_size",
-			reference: minSize,
-			expects: ">=5",
-			requirement: 5,
-			async: false,
-			_run: expect.any(Function),
-		};
-
-		test("with undefined message", () => {
-			const action: MinSizeAction<Blob, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(minSize(5)).toStrictEqual(action);
-			expect(minSize(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(minSize(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies MinSizeAction<Blob, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(minSize(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies MinSizeAction<Blob, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = minSize(3);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -62,10 +26,10 @@ describe("minSize", () => {
 					[3, "three"],
 					[4, "four"],
 				]),
-				new Map<string | number | boolean, string | null>([
+				new Map<string | number | boolean, string | undefined>([
 					["1", "one"],
-					[2, null],
-					[true, null],
+					[2, undefined],
+					[true, undefined],
 					[4, "four"],
 					[5, "five"],
 				]),
@@ -75,23 +39,8 @@ describe("minSize", () => {
 		test("for valid sets", () => {
 			expectNoActionIssue(action, [
 				new Set([1, 2, 3]),
-				new Set([1, "two", null, "4"]),
-				new Set(["1", 2, "three", null, { value: "5" }]),
-			]);
-		});
-
-		test("for valid blobs", () => {
-			expectNoActionIssue(action, [
-				new Blob(["123"]),
-				new Blob(["1", "2", "3"], { type: "text/plain" }),
-				new Blob(
-					[
-						new Uint8Array([72, 101, 108, 108, 111]), // 'Hello'
-						new Blob(["!"], { type: "text/plain" }),
-					],
-					{ type: "text/plain" },
-				),
-				new Blob(["foobarbaz123"]),
+				new Set([1, "two", undefined, "4"]),
+				new Set(["1", 2, "three", undefined, { value: "5" }]),
 			]);
 		});
 	});
@@ -126,21 +75,7 @@ describe("minSize", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[new Set(), new Set([1]), new Set(["one", null])],
-				(value) => `${value.size}`,
-			);
-		});
-
-		test("for invalid blobs", () => {
-			expectActionIssue(
-				action,
-				baseIssue,
-				[
-					new Blob([]),
-					new Blob(["1"]),
-					new Blob(["hi"], { type: "text/plain" }),
-					new Blob([new Uint8Array([72, 105])]), // 'Hi'
-				],
+				[new Set(), new Set([1]), new Set(["one", undefined])],
 				(value) => `${value.size}`,
 			);
 		});

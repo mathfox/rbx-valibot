@@ -38,21 +38,18 @@ export function rawTransformAsync<TInput, TOutput>(
 				dataset,
 				config,
 				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
-				NEVER: null as never,
+				NEVER: undefined as never,
 			});
 
 			// Update dataset depending on issues
 			if (dataset.issues) {
-				// @ts-expect-error
-				dataset.typed = false;
+				dataset.typed = false as true;
 			} else {
-				// @ts-expect-error
-				dataset.value = output;
+				dataset.value = output as TInput;
 			}
 
 			// Return output dataset
-			// @ts-expect-error
-			return dataset as Dataset<TOutput, RawTransformIssue<TInput>>;
+			return dataset as unknown as Dataset<TOutput, RawTransformIssue<TInput>>;
 		},
 	};
 }

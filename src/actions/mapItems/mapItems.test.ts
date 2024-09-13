@@ -12,7 +12,8 @@ describe("mapItems", () => {
 			reference: mapItems,
 			async: false,
 			operation,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies MapItemsAction<number[], { item: number }>);
 	});
 

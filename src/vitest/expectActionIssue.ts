@@ -9,10 +9,7 @@ import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } 
  * @param values The values to test.
  * @param getReceived Received value getter.
  */
-export function expectActionIssue<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TAction extends BaseValidation<any, unknown, BaseIssue<unknown>>,
->(
+export function expectActionIssue<TAction extends BaseValidation<any, unknown, BaseIssue<unknown>>>(
 	action: TAction,
 	baseIssue: Omit<InferIssue<TAction>, "input" | "received">,
 	values: InferInput<TAction>[],

@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types";
+import type { BaseTransformation, MaybeReadonly } from "../../types";
 import type { ArrayInput } from "../types";
 
 /**
@@ -41,7 +41,7 @@ export function sortItems(operation?: ArrayAction<unknown[]>): SortItemsAction<u
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = dataset.value.sort(this.operation);
+			dataset.value = (dataset.value as defined[]).sort(this.operation as any);
 			return dataset;
 		},
 	};

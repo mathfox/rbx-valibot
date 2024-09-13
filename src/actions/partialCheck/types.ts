@@ -20,7 +20,7 @@ export interface PartialCheckIssue<TInput extends PartialInput> extends BaseIssu
 	/**
 	 * The expected input.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The validation function.
 	 */

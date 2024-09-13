@@ -3,7 +3,7 @@ import { type TransformActionAsync, transformAsync } from "./transformAsync";
 
 describe("transformAsync", () => {
 	test("should return action object", () => {
-		const operation = async (input: string) => input.length;
+		const operation = async (input: string) => input.size();
 		const action = transformAsync(operation);
 		expect(action).toStrictEqual({
 			kind: "transformation",
@@ -11,13 +11,14 @@ describe("transformAsync", () => {
 			reference: transformAsync,
 			async: true,
 			operation,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies TransformActionAsync<string, number>);
 	});
 
 	describe("should transform input", () => {
 		test("to length of string", async () => {
-			const action = transformAsync(async (input: string) => input.length);
+			const action = transformAsync(async (input: string) => input.size());
 			expect(await action._run({ typed: true, value: "123456" }, {})).toStrictEqual({
 				typed: true,
 				value: 6,

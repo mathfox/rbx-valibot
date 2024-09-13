@@ -11,7 +11,8 @@ describe("length", () => {
 			expects: "5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -104,7 +105,7 @@ describe("length", () => {
 					"@#",
 					"@#$%",
 				],
-				(value) => `${value.length}`,
+				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
 
@@ -122,7 +123,7 @@ describe("length", () => {
 					[{ 1: "one", 2: "two", 3: "three" }],
 					[[1], [2], null, [{ value: 3 }]],
 				],
-				(value) => `${value.length}`,
+				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
 	});

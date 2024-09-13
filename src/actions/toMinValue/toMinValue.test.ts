@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { type ToMinValueAction, toMinValue } from "./toMinValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 describe("toMinValue", () => {
 	const action = toMinValue<number, 10>(10);
@@ -11,7 +12,8 @@ describe("toMinValue", () => {
 			reference: toMinValue,
 			requirement: 10,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies ToMinValueAction<number, 10>);
 	});
 
@@ -19,7 +21,7 @@ describe("toMinValue", () => {
 		const outputDataset = { typed: true, value: 10 };
 		expect(action._run({ typed: true, value: 9 }, {})).toStrictEqual(outputDataset);
 		expect(action._run({ typed: true, value: 0 }, {})).toStrictEqual(outputDataset);
-		expect(action._run({ typed: true, value: Number.MIN_VALUE }, {})).toStrictEqual(outputDataset);
+		expect(action._run({ typed: true, value: MIN_SAFE_INTEGER }, {})).toStrictEqual(outputDataset);
 	});
 
 	test("should not transform value", () => {
@@ -31,9 +33,9 @@ describe("toMinValue", () => {
 			typed: true,
 			value: 11,
 		});
-		expect(action._run({ typed: true, value: Number.MAX_VALUE }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: MAX_SAFE_INTEGER }, {})).toStrictEqual({
 			typed: true,
-			value: Number.MAX_VALUE,
+			value: MAX_SAFE_INTEGER,
 		});
 	});
 });

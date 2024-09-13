@@ -24,7 +24,7 @@ export interface PartialCheckAction<
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -79,15 +79,11 @@ export function partialCheck(
 		type: "partial_check",
 		reference: partialCheck,
 		async: false,
-		expects: null,
+		expects: undefined,
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (
-				_isPartiallyTyped(dataset, pathList) &&
-				// @ts-expect-error
-				!this.requirement(dataset.value)
-			) {
+			if (_isPartiallyTyped(dataset, pathList) && !this.requirement(dataset.value as PartialInput)) {
 				_addIssue(this, "input", dataset, config);
 			}
 			return dataset;

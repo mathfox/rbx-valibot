@@ -19,7 +19,7 @@ export interface CheckItemsIssue<TInput extends ArrayInput> extends BaseIssue<TI
 	/**
 	 * The expected input.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -44,7 +44,7 @@ export interface CheckItemsAction<
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -88,12 +88,12 @@ export function checkItems(
 		type: "check_items",
 		reference: checkItems,
 		async: false,
-		expects: null,
+		expects: undefined,
 		requirement,
 		message,
 		_run(dataset, config) {
 			if (dataset.typed) {
-				for (let index = 0; index < dataset.value.length; index++) {
+				for (let index = 0; index < dataset.value.size(); index++) {
 					const item = dataset.value[index];
 					if (!this.requirement(item, index, dataset.value)) {
 						_addIssue(this, "item", dataset, config, {

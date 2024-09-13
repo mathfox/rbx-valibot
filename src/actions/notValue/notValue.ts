@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue, _stringify } from "../../utils";
+import { _addIssue } from "../../utils";
 import type { ValueInput } from "../types";
 
 /**
@@ -88,13 +88,13 @@ export function notValue(
 		type: "not_value",
 		reference: notValue,
 		async: false,
-		expects: requirement instanceof Date ? `!${requirement.toJSON()}` : `!${_stringify(requirement)}`,
+		expects: `!${tostring(requirement)}`,
 		requirement,
 		message,
 		_run(dataset, config) {
 			if (dataset.typed && this.requirement <= dataset.value && this.requirement >= dataset.value) {
 				_addIssue(this, "value", dataset, config, {
-					received: dataset.value instanceof Date ? dataset.value.toJSON() : _stringify(dataset.value),
+					received: tostring(dataset.value),
 				});
 			}
 			return dataset;

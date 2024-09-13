@@ -14,7 +14,8 @@ describe("reduceItems", () => {
 			async: false,
 			operation,
 			initial,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies ReduceItemsAction<number[], number>);
 	});
 

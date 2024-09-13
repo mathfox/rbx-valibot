@@ -13,10 +13,7 @@ export type ErrorMessage<TIssue extends BaseIssue<unknown>> = ((issue: TIssue) =
 /**
  * Default type.
  */
-export type Default<
-	TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-	TInput extends null | undefined,
-> =
+export type Default<TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>, TInput extends undefined> =
 	| MaybeReadonly<InferInput<TWrapped> | TInput>
 	| ((
 			dataset?: Dataset<TInput, never>,
@@ -30,7 +27,7 @@ export type DefaultAsync<
 	TWrapped extends
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-	TInput extends null | undefined,
+	TInput extends undefined,
 > =
 	| MaybeReadonly<InferInput<TWrapped> | TInput>
 	| ((
@@ -43,10 +40,10 @@ export type DefaultAsync<
  */
 export type DefaultValue<
 	TDefault extends
-		| Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, null | undefined>
+		| Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, undefined>
 		| DefaultAsync<
 				BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-				null | undefined
+				undefined
 		  >,
 > = TDefault extends DefaultAsync<
 	infer TWrapped extends

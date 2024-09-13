@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { _stringify } from "../../utils";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type NotValueAction, notValue } from "./notValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 describe("notValue", () => {
 	describe("should return action object", () => {
@@ -12,7 +12,8 @@ describe("notValue", () => {
 			expects: "!5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -42,35 +43,10 @@ describe("notValue", () => {
 
 	describe("should return dataset with issues", () => {
 		test("for untyped inputs", () => {
-			expect(notValue(1)._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(notValue(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
-		});
-
-		test("for valid bigints", () => {
-			expectNoActionIssue(notValue(10n), [-123n, 0n, 9n, 11n, 123n]);
-		});
-
-		test("for valid non-bigints", () => {
-			expectNoActionIssue(notValue(10n), [
-				9,
-				11,
-				9.0,
-				11.0,
-				"9",
-				"11",
-				"9.0",
-				"11.0",
-				"",
-				" ",
-				new Date(9),
-				new Date(11),
-				true,
-				false,
-			]);
-			expectNoActionIssue(notValue(1n), [0, 0.0, "0", " 0 ", "", " ", false, new Date(0)]);
-			expectNoActionIssue(notValue(0n), [1, 1.0, "1", " 1 ", true, new Date(1)]);
 		});
 
 		test("for valid booleans", () => {
@@ -79,61 +55,31 @@ describe("notValue", () => {
 		});
 
 		test("for valid non-booleans", () => {
-			expectNoActionIssue(notValue(true), [0n, 0, 0.0, "0", "0.0", " 0 ", "", " ", new Date(0)]);
-			expectNoActionIssue(notValue(true), [123n, 123, 123.0, "123", "123.0", "foo", "true", new Date(123)]);
-			expectNoActionIssue(notValue(false), [1n, 1, 1.0, "1", "1.0", " 1 ", new Date(1)]);
-			expectNoActionIssue(notValue(false), [123n, 123, 123.0, "123", "123.0", "foo", "false", new Date(123)]);
-		});
-
-		test("for valid dates", () => {
-			const date = new Date();
-			const nextDate = new Date(+date + 1);
-			expectNoActionIssue(notValue(date), [
-				new Date(+date - 1),
-				new Date(+date + 1),
-				new Date(+date + 999999),
-				new Date(nextDate.getTime()),
-				new Date(nextDate.toISOString()),
-				new Date(
-					nextDate.getFullYear(),
-					nextDate.getMonth(),
-					nextDate.getDate(),
-					nextDate.getHours(),
-					nextDate.getMinutes(),
-					nextDate.getSeconds(),
-					nextDate.getMilliseconds(),
-				),
-			]);
-		});
-
-		test("for valid non-dates", () => {
-			const date1 = new Date(10);
-			expectNoActionIssue(notValue(date1), [9n, 11n, 9, 11, 9.0, 11.0, "9", "11", "9.0", "11.0", "", " ", true, false]);
-			const date2 = new Date(1);
-			expectNoActionIssue(notValue(date2), [0, 0.0, 0n, "0", "0.0", " 0 ", "", " ", false]);
-			const date3 = new Date(0);
-			expectNoActionIssue(notValue(date3), [1, 1.0, 1n, "1", "1.0", " 1 ", true]);
+			expectNoActionIssue(notValue(true), [0, 0.0, "0", "0.0", " 0 ", "", " "]);
+			expectNoActionIssue(notValue(true), [123, 123.0, "123", "123.0", "foo", "true"]);
+			expectNoActionIssue(notValue(false), [1, 1.0, "1", "1.0", " 1 "]);
+			expectNoActionIssue(notValue(false), [123, 123.0, "123", "123.0", "foo", "false"]);
 		});
 
 		test("for valid numbers", () => {
 			expectNoActionIssue(notValue(10), [
-				-Infinity,
-				Number.MIN_VALUE,
+				-math.huge,
+				MIN_SAFE_INTEGER,
 				-10,
 				-9,
 				9,
 				11,
 				9999,
-				Number.MAX_VALUE,
-				Infinity,
-				NaN,
+				MAX_SAFE_INTEGER,
+				math.huge,
+				0 / 0,
 			]);
 		});
 
 		test("for valid non-numbers", () => {
-			expectNoActionIssue(notValue(10), [9n, 11n, "9", "11", "9.0", "11.0", "", " ", new Date(9), true, false]);
-			expectNoActionIssue(notValue(1), [0n, "0", "0.0", " 0 ", "", " ", false, new Date(0)]);
-			expectNoActionIssue(notValue(0), [1n, "1", "1.0", " 1 ", true, new Date(1)]);
+			expectNoActionIssue(notValue(10), ["9", "11", "9.0", "11.0", "", " ", true, false]);
+			expectNoActionIssue(notValue(1), ["0", "0.0", " 0 ", "", " ", false]);
+			expectNoActionIssue(notValue(0), ["1", "1.0", " 1 ", true]);
 		});
 
 		test("for valid strings", () => {
@@ -152,9 +98,9 @@ describe("notValue", () => {
 		});
 
 		test("for valid non-strings", () => {
-			expectNoActionIssue(notValue("10"), [9n, 11n, 9, 11, 9.0, 11.0, new Date(9), new Date(11), true, false]);
-			expectNoActionIssue(notValue("1"), [0n, 0, 0.0, false, new Date(0)]);
-			expectNoActionIssue(notValue("0"), [1n, 1, 1.0, true, new Date(1)]);
+			expectNoActionIssue(notValue("10"), [9, 11, 9.0, 11.0, true, false]);
+			expectNoActionIssue(notValue("1"), [0, 0.0, false]);
+			expectNoActionIssue(notValue("0"), [1, 1.0, true]);
 		});
 	});
 
@@ -165,129 +111,34 @@ describe("notValue", () => {
 			message: "message",
 		} as const;
 
-		const getReceived = (value: unknown): string => (value instanceof Date ? value.toJSON() : _stringify(value));
-
-		test("for invalid bigints", () => {
-			expectActionIssue(notValue(123n, "message"), { ...baseInfo, expected: "!123", requirement: 123n }, [
-				123n,
-				BigInt(123),
-				BigInt("123"),
-			]);
-		});
-
-		test("for invalid non-bigints", () => {
-			expectActionIssue(
-				notValue(123n, "message"),
-				{ ...baseInfo, expected: "!123", requirement: 123n },
-				[123, 123.0, "123", " 123 ", new Date(123)],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue(1n, "message"),
-				{ ...baseInfo, expected: "!1", requirement: 1n },
-				[1, 1.0, "1", " 1 ", true, new Date(1)],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue(0n, "message"),
-				{ ...baseInfo, expected: "!0", requirement: 0n },
-				[0, 0.0, "0", " 0 ", "", " ", false, new Date(0)],
-				getReceived,
-			);
-		});
+		const getReceived = (value: unknown): string => tostring(value);
 
 		test("for invalid booleans", () => {
 			expectActionIssue(notValue(true, "message"), { ...baseInfo, expected: "!true", requirement: true }, [true]);
 			expectActionIssue(notValue(false, "message"), { ...baseInfo, expected: "!false", requirement: false }, [false]);
 		});
 
-		test("for invalid non-booleans", () => {
-			expectActionIssue(
-				notValue(true, "message"),
-				{ ...baseInfo, expected: "!true", requirement: true },
-				[1, 1.0, 1n, "1", "1.0", " 1 ", new Date(1)],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue(false, "message"),
-				{ ...baseInfo, expected: "!false", requirement: false },
-				[0, 0.0, 0n, "0", "0.0", " 0 ", "", " ", new Date(0)],
-				getReceived,
-			);
-		});
-
-		test("for invalid dates", () => {
-			const date = new Date();
-			expectActionIssue(
-				notValue(date, "message"),
-				{ ...baseInfo, expected: `!${date.toJSON()}`, requirement: date },
-				[
-					date,
-					new Date(date.getTime()),
-					new Date(date.toISOString()),
-					new Date(
-						date.getFullYear(),
-						date.getMonth(),
-						date.getDate(),
-						date.getHours(),
-						date.getMinutes(),
-						date.getSeconds(),
-						date.getMilliseconds(),
-					),
-				],
-				getReceived,
-			);
-		});
-
-		test("for invalid non-dates", () => {
-			const date1 = new Date(123);
-			expectActionIssue(
-				notValue(date1, "message"),
-				{ ...baseInfo, expected: `!${date1.toJSON()}`, requirement: date1 },
-				[123, 123.0, 123n, "123", "123.0", " 123 "],
-				getReceived,
-			);
-			const date2 = new Date(1);
-			expectActionIssue(
-				notValue(date2, "message"),
-				{ ...baseInfo, expected: `!${date2.toJSON()}`, requirement: date2 },
-				[1, 1.0, 1n, "1", "1.0", " 1 ", true],
-				getReceived,
-			);
-			const date3 = new Date(0);
-			expectActionIssue(
-				notValue(date3, "message"),
-				{ ...baseInfo, expected: `!${date3.toJSON()}`, requirement: date3 },
-				[0, 0.0, 0n, "0", "0.0", " 0 ", "", " ", false],
-				getReceived,
-			);
-		});
-
 		test("for invalid numbers", () => {
-			expectActionIssue(notValue(123, "message"), { ...baseInfo, expected: "!123", requirement: 123 }, [
-				123,
-				123.0,
-				Number(123),
-			]);
+			expectActionIssue(notValue(123, "message"), { ...baseInfo, expected: "!123", requirement: 123 }, [123, 123.0]);
 		});
 
 		test("for invalid non-numbers", () => {
 			expectActionIssue(
 				notValue(123, "message"),
 				{ ...baseInfo, expected: "!123", requirement: 123 },
-				[123n, "123", "123.0", " 123 ", new Date(123)],
+				["123", "123.0", " 123 "],
 				getReceived,
 			);
 			expectActionIssue(
 				notValue(1, "message"),
 				{ ...baseInfo, expected: "!1", requirement: 1 },
-				[1n, "1", "1.0", " 1 ", true, new Date(1)],
+				["1", "1.0", " 1 ", true],
 				getReceived,
 			);
 			expectActionIssue(
 				notValue(0, "message"),
 				{ ...baseInfo, expected: "!0", requirement: 0 },
-				[0n, "0", "0.0", " 0 ", "", " ", false, new Date(0)],
+				["0", "0.0", " 0 ", "", " ", false],
 				getReceived,
 			);
 		});
@@ -302,13 +153,13 @@ describe("notValue", () => {
 			expectActionIssue(
 				notValue("1", "message"),
 				{ ...baseInfo, expected: '!"1"', requirement: "1" },
-				[1n, 1, 1.0, true, new Date(1)],
+				[1, 1.0, true],
 				getReceived,
 			);
 			expectActionIssue(
 				notValue("0", "message"),
 				{ ...baseInfo, expected: '!"0"', requirement: "0" },
-				[0n, 0, 0.0, false, new Date(0)],
+				[0, 0.0, false],
 				getReceived,
 			);
 		});

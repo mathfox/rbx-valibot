@@ -1,3 +1,4 @@
+import type RegExp from "@rbxts/regexp";
 import { UUID_REGEX } from "../../regex";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
@@ -17,7 +18,7 @@ export interface UuidIssue<TInput extends string> extends BaseIssue<TInput> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -44,7 +45,7 @@ export interface UuidAction<TInput extends string, TMessage extends ErrorMessage
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The UUID regex.
 	 */
@@ -81,7 +82,7 @@ export function uuid(
 		type: "uuid",
 		reference: uuid,
 		async: false,
-		expects: null,
+		expects: undefined,
 		requirement: UUID_REGEX,
 		message,
 		_run(dataset, config) {

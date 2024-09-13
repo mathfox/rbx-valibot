@@ -10,7 +10,8 @@ describe("nonEmpty", () => {
 			reference: nonEmpty,
 			expects: "!0",
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -42,9 +43,9 @@ describe("nonEmpty", () => {
 		const action = nonEmpty();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -53,7 +54,7 @@ describe("nonEmpty", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [[null], [1, 2, 3, 4, 6], Array(999)]);
+			expectNoActionIssue(action, [[undefined], [1, 2, 3, 4, 6], new Array(999)]);
 		});
 	});
 

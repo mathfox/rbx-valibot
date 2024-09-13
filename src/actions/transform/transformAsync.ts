@@ -35,10 +35,8 @@ export function transformAsync<TInput, TOutput>(
 		async: true,
 		operation,
 		async _run(dataset) {
-			// @ts-expect-error
-			dataset.value = await this.operation(dataset.value);
-			// @ts-expect-error
-			return dataset as TypedDataset<TOutput, never>;
+			dataset.value = (await this.operation(dataset.value)) as any;
+			return dataset as unknown as TypedDataset<TOutput, never>;
 		},
 	};
 }

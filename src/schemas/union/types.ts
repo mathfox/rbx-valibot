@@ -19,5 +19,5 @@ export interface UnionIssue<TSubIssue extends BaseIssue<unknown>> extends BaseIs
 	/**
 	 * The sub issues.
 	 */
-	readonly issues?: [TSubIssue, ..ubIssue[]];
+	readonly issues?: [TSubIssue, ...TSubIssue[]];
 }

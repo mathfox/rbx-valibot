@@ -1,4 +1,4 @@
-import type { BaseTransformation, TypedDataset } from "../../types";
+import type { BaseTransformation, MaybeReadonly, TypedDataset } from "../../types";
 import type { ArrayInput } from "../types";
 
 /**
@@ -59,8 +59,10 @@ export function reduceItems(
 		operation,
 		initial,
 		_run(dataset) {
-			// @ts-expect-error
-			dataset.value = dataset.value.reduce(this.operation, this.initial);
+			dataset.value = (dataset.value as Array<defined>).reduce(
+				this.operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
+				this.initial as defined,
+			) as defined[];
 			return dataset as TypedDataset<unknown, never>;
 		},
 	};

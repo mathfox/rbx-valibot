@@ -1,14 +1,4 @@
 /**
- * Extracts `null` from a type.
- */
-export type NonNullable<TValue> = TValue extends null ? never : TValue;
-
-/**
- * Extracts `null` and `undefined` from a type.
- */
-export type NonNullish<TValue> = TValue extends null | undefined ? never : TValue;
-
-/**
  * Extracts `undefined` from a type.
  */
 export type NonOptional<TValue> = TValue extends undefined ? never : TValue;
@@ -29,7 +19,6 @@ export type MaybePromise<TValue> = TValue | Promise<TValue>;
  * Hint: This type has no effect and is only used so that TypeScript displays
  * the final type in the preview instead of the utility types used.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type Prettify<TObject> = { [TKey in keyof TObject]: TObject[TKey] } & {};
 
 /**
@@ -52,9 +41,11 @@ export type LastTupleItem<TTuple extends [unknown, ...unknown[]]> = TTuple[TTupl
 /**
  * Converts union to intersection type.
  */
-export type UnionToIntersect<TUnion> =
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(TUnion extends any ? (arg: TUnion) => void : never) extends (arg: infer Intersect) => void ? Intersect : never;
+export type UnionToIntersect<TUnion> = (TUnion extends any ? (arg: TUnion) => void : never) extends (
+	arg: infer TIntersect,
+) => void
+	? TIntersect
+	: never;
 
 /**
  * Converts union to tuple type.

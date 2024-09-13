@@ -76,9 +76,9 @@ export function empty(
 		expects: "0",
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value.length > 0) {
+			if (dataset.typed && (dataset.value as ArrayLike<unknown>).size() > 0) {
 				_addIssue(this, "length", dataset, config, {
-					received: `${dataset.value.length}`,
+					received: `${(dataset.value as ArrayLike<unknown>).size()}`,
 				});
 			}
 			return dataset;

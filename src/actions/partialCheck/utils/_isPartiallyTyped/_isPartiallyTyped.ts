@@ -24,12 +24,11 @@ export function _isPartiallyTyped(
 				let typed = false;
 
 				// Calculate bound of match check
-				const bound = Math.min(path.length, issue.path?.length ?? 0);
+				const bound = math.min(path.size(), issue.path?.size() ?? 0);
 
 				// Mark data as typed if any path items of same index do not match
 				for (let index = 0; index < bound; index++) {
-					// @ts-expect-error We know that key of issue path item exists
-					if (path[index] !== issue.path[index].key) {
+					if (path[index] !== issue.path![index].key) {
 						typed = true;
 						break;
 					}

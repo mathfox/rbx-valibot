@@ -9,10 +9,11 @@ describe("email", () => {
 			kind: "validation",
 			type: "email",
 			reference: email,
-			expects: null,
+			expects: undefined,
 			requirement: EMAIL_REGEX,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {
@@ -152,7 +153,7 @@ describe("email", () => {
 		const baseIssue: Omit<EmailIssue<string>, "input" | "received"> = {
 			kind: "validation",
 			type: "email",
-			expected: null,
+			expected: undefined,
 			message: "message",
 			requirement: EMAIL_REGEX,
 		};

@@ -11,7 +11,8 @@ describe("includes", () => {
 			expects: '"foo"',
 			requirement: "foo",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {

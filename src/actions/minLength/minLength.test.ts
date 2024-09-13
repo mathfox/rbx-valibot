@@ -11,7 +11,8 @@ describe("minLength", () => {
 			expects: ">=5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -43,9 +44,9 @@ describe("minLength", () => {
 		const action = minLength(5);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -54,7 +55,7 @@ describe("minLength", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [[1, 2, 3, 4, 5], Array(6), Array(999)]);
+			expectNoActionIssue(action, [[1, 2, 3, 4, 5], new Array(6), new Array(999)]);
 		});
 	});
 
@@ -69,11 +70,16 @@ describe("minLength", () => {
 		};
 
 		test("for invalid strings", () => {
-			expectActionIssue(action, baseIssue, ["", "foo", "1234"], (value) => `${value.length}`);
+			expectActionIssue(action, baseIssue, ["", "foo", "1234"], (value) => `${(value as ArrayLike<unknown>).size()}`);
 		});
 
 		test("for invalid arrays", () => {
-			expectActionIssue(action, baseIssue, [[], ["foo", "bar"], [1, 2, 3, 4]], (value) => `${value.length}`);
+			expectActionIssue(
+				action,
+				baseIssue,
+				[[], ["foo", "bar"], [1, 2, 3, 4]],
+				(value) => `${(value as ArrayLike<unknown>).size()}`,
+			);
 		});
 	});
 });

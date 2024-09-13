@@ -8,7 +8,8 @@ describe("trimStart", () => {
 			type: "trim_start",
 			reference: trimStart,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies TrimStartAction);
 	});
 

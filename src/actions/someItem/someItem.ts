@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage, MaybeReadonly } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ArrayInput, ArrayRequirement } from "../types";
 
@@ -17,7 +17,7 @@ export interface SomeItemIssue<TInput extends ArrayInput> extends BaseIssue<TInp
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -42,7 +42,7 @@ export interface SomeItemAction<
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -86,11 +86,14 @@ export function someItem(
 		type: "some_item",
 		reference: someItem,
 		async: false,
-		expects: null,
+		expects: undefined,
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !dataset.value.some(this.requirement)) {
+			if (
+				dataset.typed &&
+				!(dataset.value as Array<defined>).some(this.requirement as ArrayRequirement<MaybeReadonly<defined[]>>)
+			) {
 				_addIssue(this, "item", dataset, config);
 			}
 			return dataset;

@@ -17,7 +17,7 @@ export interface RawCheckAction<TInput> extends BaseValidation<TInput, TInput, R
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 }
 
 /**
@@ -33,7 +33,7 @@ export function rawCheck<TInput>(action: (context: Context<TInput>) => void): Ra
 		type: "raw_check",
 		reference: rawCheck,
 		async: false,
-		expects: null,
+		expects: undefined,
 		_run(dataset, config) {
 			action({
 				dataset,

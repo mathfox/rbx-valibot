@@ -8,7 +8,8 @@ describe("toUpperCase", () => {
 			type: "to_upper_case",
 			reference: toUpperCase,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies ToUpperCaseAction);
 	});
 

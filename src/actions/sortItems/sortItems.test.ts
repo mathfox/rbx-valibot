@@ -12,7 +12,8 @@ describe("sortItems", () => {
 			reference: sortItems,
 			async: false,
 			operation,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies SortItemsAction<number[]>);
 	});
 

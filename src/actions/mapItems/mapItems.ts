@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types";
+import type { BaseTransformation, MaybeReadonly } from "../../types";
 import type { ArrayInput } from "../types";
 
 /**
@@ -44,7 +44,9 @@ export function mapItems(operation: ArrayAction<unknown[], unknown>): MapItemsAc
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = dataset.value.map(this.operation);
+			dataset.value = (dataset.value as defined[]).map(
+				this.operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
+			);
 			return dataset;
 		},
 	};

@@ -11,15 +11,16 @@ describe("partialCheck", () => {
 		const pathList = [["nested", "key"]] as const;
 		type PathList = typeof pathList;
 		type Selection = DeepPickN<Input, PathList>;
-		const requirement = (input: Selection) => input.nested.key.includes("foo");
+		const requirement = (input: Selection) => input.nested.key.match("foo")[0] !== undefined;
 		const baseAction: Omit<PartialCheckAction<Input, Selection, never>, "message"> = {
 			kind: "validation",
 			type: "partial_check",
 			reference: partialCheck,
-			expects: null,
+			expects: undefined,
 			requirement,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -86,15 +87,15 @@ describe("partialCheck", () => {
 		test("if root is untyped", () => {
 			const dataset: UntypedDataset<ObjectIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 				issues: [
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: undefined,
 					},
 				],
@@ -104,7 +105,7 @@ describe("partialCheck", () => {
 
 		test("if part of path is untyped", () => {
 			const input = {
-				nested: null,
+				nested: undefined,
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -116,9 +117,9 @@ describe("partialCheck", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "object",
-						input: null,
+						input: undefined,
 						expected: "Object",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -136,7 +137,7 @@ describe("partialCheck", () => {
 
 		test("if entire path is untyped", () => {
 			const input = {
-				nested: { key: null },
+				nested: { key: undefined },
 				tuple: [123, { key: "foo" }, 456],
 				other: "bar",
 			};
@@ -148,9 +149,9 @@ describe("partialCheck", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "string",
-						input: null,
+						input: undefined,
 						expected: "string",
-						received: "null",
+						received: "undefined",
 						path: [
 							{
 								type: "object",
@@ -205,7 +206,7 @@ describe("partialCheck", () => {
 						kind: "validation",
 						type: "partial_check",
 						input,
-						expected: null,
+						expected: undefined,
 						received: "Object",
 						requirement,
 					},
@@ -216,20 +217,20 @@ describe("partialCheck", () => {
 		test("if only unselected paths are untyped", () => {
 			const input: {
 				nested: { key: string };
-				tuple: [number, { key: string }, null];
-				other: null;
+				tuple: [number, { key: string }, undefined];
+				other: undefined;
 			} = {
 				nested: { key: "foo" },
-				tuple: [123, { key: "baz" }, null],
-				other: null,
+				tuple: [123, { key: "baz" }, undefined],
+				other: undefined,
 			};
 			const firstIssue: NumberIssue = {
 				...baseInfo,
 				kind: "schema",
 				type: "number",
-				input: null,
+				input: undefined,
 				expected: "number",
-				received: "null",
+				received: "undefined",
 				path: [
 					{
 						type: "object",
@@ -251,9 +252,9 @@ describe("partialCheck", () => {
 				...baseInfo,
 				kind: "schema",
 				type: "string",
-				input: null,
+				input: undefined,
 				expected: "string",
-				received: "null",
+				received: "undefined",
 				path: [
 					{
 						type: "object",
@@ -279,7 +280,7 @@ describe("partialCheck", () => {
 						kind: "validation",
 						type: "partial_check",
 						input: input,
-						expected: null,
+						expected: undefined,
 						received: "Object",
 						requirement,
 					},

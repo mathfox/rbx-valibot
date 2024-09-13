@@ -9,10 +9,11 @@ describe("hexColor", () => {
 			kind: "validation",
 			type: "hex_color",
 			reference: hexColor,
-			expects: null,
+			expects: undefined,
 			requirement: HEX_COLOR_REGEX,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {
@@ -80,7 +81,7 @@ describe("hexColor", () => {
 		const baseIssue: Omit<HexColorIssue<string>, "input" | "received"> = {
 			kind: "validation",
 			type: "hex_color",
-			expected: null,
+			expected: undefined,
 			message: "message",
 			requirement: HEX_COLOR_REGEX,
 		};

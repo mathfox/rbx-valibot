@@ -3,7 +3,7 @@ import { type TransformAction, transform } from "./transform";
 
 describe("transform", () => {
 	test("should return action object", () => {
-		const operation = (input: string) => input.length;
+		const operation = (input: string) => input.size();
 		const action = transform(operation);
 		expect(action).toStrictEqual({
 			kind: "transformation",
@@ -11,13 +11,14 @@ describe("transform", () => {
 			reference: transform,
 			async: false,
 			operation,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies TransformAction<string, number>);
 	});
 
 	describe("should transform input", () => {
 		test("to length of string", () => {
-			const action = transform((input: string) => input.length);
+			const action = transform((input: string) => input.size());
 			expect(action._run({ typed: true, value: "123456" }, {})).toStrictEqual({
 				typed: true,
 				value: 6,

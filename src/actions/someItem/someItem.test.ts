@@ -4,15 +4,16 @@ import { type SomeItemAction, type SomeItemIssue, someItem } from "./someItem";
 
 describe("someItem", () => {
 	describe("should return action object", () => {
-		const requirement = (item: string) => item.startsWith("DE");
+		const requirement = (item: string) => item.sub(1, 2) === "DE";
 		const baseAction: Omit<SomeItemAction<string[], never>, "message"> = {
 			kind: "validation",
 			type: "some_item",
 			reference: someItem,
-			expects: null,
+			expects: undefined,
 			requirement,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -45,9 +46,9 @@ describe("someItem", () => {
 		const action = someItem<number[]>((item: number) => item > 9);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -63,7 +64,7 @@ describe("someItem", () => {
 		const baseIssue: Omit<SomeItemIssue<number[]>, "input" | "received"> = {
 			kind: "validation",
 			type: "some_item",
-			expected: null,
+			expected: undefined,
 			message: "message",
 			requirement,
 		};

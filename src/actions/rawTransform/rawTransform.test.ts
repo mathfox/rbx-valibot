@@ -3,7 +3,7 @@ import { type RawTransformAction, rawTransform } from "./rawTransform";
 
 describe("rawTransform", () => {
 	const action = rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
-		const length = dataset.value.length;
+		const length = dataset.value.size();
 		if (length < 3) {
 			addIssue({ message: "message" });
 			return NEVER;
@@ -17,7 +17,8 @@ describe("rawTransform", () => {
 			type: "raw_transform",
 			reference: rawTransform,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies RawTransformAction<string, number>);
 	});
 
@@ -43,7 +44,7 @@ describe("rawTransform", () => {
 					{
 						kind: "transformation",
 						type: "raw_transform",
-						expected: null,
+						expected: undefined,
 						message: "message",
 						input: "fo",
 						received: '"fo"',

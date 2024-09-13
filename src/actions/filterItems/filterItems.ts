@@ -1,4 +1,4 @@
-import type { BaseTransformation } from "../../types";
+import type { BaseTransformation, MaybeReadonly } from "../../types";
 import type { ArrayInput, ArrayRequirement } from "../types";
 
 /**
@@ -36,7 +36,7 @@ export function filterItems(operation: ArrayRequirement<unknown[]>): FilterItems
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = dataset.value.filter(this.operation);
+			dataset.value = (dataset.value as defined[]).filter(this.operation as ArrayRequirement<MaybeReadonly<defined[]>>);
 			return dataset;
 		},
 	};

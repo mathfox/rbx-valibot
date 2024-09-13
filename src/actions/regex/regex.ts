@@ -1,3 +1,4 @@
+import type RegExp from "@rbxts/regexp";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 

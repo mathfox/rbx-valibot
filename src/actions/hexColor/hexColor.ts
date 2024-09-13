@@ -1,3 +1,4 @@
+import type RegExp from "@rbxts/regexp";
 import { HEX_COLOR_REGEX } from "../../regex";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
@@ -17,7 +18,7 @@ export interface HexColorIssue<TInput extends string> extends BaseIssue<TInput> 
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -44,7 +45,7 @@ export interface HexColorAction<TInput extends string, TMessage extends ErrorMes
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The hex color regex.
 	 */
@@ -81,7 +82,7 @@ export function hexColor(
 		type: "hex_color",
 		reference: hexColor,
 		async: false,
-		expects: null,
+		expects: undefined,
 		requirement: HEX_COLOR_REGEX,
 		message,
 		_run(dataset, config) {

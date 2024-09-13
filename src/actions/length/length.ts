@@ -96,9 +96,9 @@ export function length(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value.length !== this.requirement) {
+			if (dataset.typed && (dataset.value as ArrayLike<unknown>).size() !== this.requirement) {
 				_addIssue(this, "length", dataset, config, {
-					received: `${dataset.value.length}`,
+					received: `${(dataset.value as ArrayLike<unknown>).size()}`,
 				});
 			}
 			return dataset;

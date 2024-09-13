@@ -9,10 +9,11 @@ describe("uuid", () => {
 			kind: "validation",
 			type: "uuid",
 			reference: uuid,
-			expects: null,
+			expects: undefined,
 			requirement: UUID_REGEX,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -44,9 +45,9 @@ describe("uuid", () => {
 		const action = uuid();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -90,7 +91,7 @@ describe("uuid", () => {
 		const baseIssue: Omit<UuidIssue<string>, "input" | "received"> = {
 			kind: "validation",
 			type: "uuid",
-			expected: null,
+			expected: undefined,
 			message: "message",
 			requirement: UUID_REGEX,
 		};

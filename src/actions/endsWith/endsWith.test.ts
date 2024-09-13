@@ -11,7 +11,8 @@ describe("endsWith", () => {
 			expects: '"abc"',
 			requirement: "abc",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any(() => {}),
+			//_run: expect.any(Function),
 		};
 
 		test("with undefined message", () => {
@@ -69,7 +70,7 @@ describe("endsWith", () => {
 				action,
 				baseIssue,
 				["", "c", "bc", "abc ", "abC", "123a", "123ab", "xyzab", "abcc", "abcz", "zabcdef"],
-				(value) => `"${value.slice(-"abc".length)}"`,
+				(value) => `"${value.sub(-"abc".size())}"`,
 			);
 		});
 	});

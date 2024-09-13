@@ -1,9 +1,10 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type RegexAction, type RegexIssue, regex } from "./regex";
+import RegExp from "@rbxts/regexp";
 
 describe("regex", () => {
-	const requirement = /^ID-\d{3}$/u;
+	const requirement = RegExp("^ID-d{3}$", "u");
 
 	describe("should return action object", () => {
 		const baseAction: Omit<RegexAction<string, never>, "message"> = {
@@ -13,7 +14,8 @@ describe("regex", () => {
 			expects: `${requirement}`,
 			requirement,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {

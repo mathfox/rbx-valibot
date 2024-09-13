@@ -1,3 +1,4 @@
+import { isInteger } from "@rbxts/number";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -16,7 +17,7 @@ export interface IntegerIssue<TInput extends number> extends BaseIssue<TInput> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -43,7 +44,7 @@ export interface IntegerAction<TInput extends number, TMessage extends ErrorMess
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -80,8 +81,8 @@ export function integer(
 		type: "integer",
 		reference: integer,
 		async: false,
-		expects: null,
-		requirement: Number.isInteger,
+		expects: undefined,
+		requirement: isInteger,
 		message,
 		_run(dataset, config) {
 			if (dataset.typed && !this.requirement(dataset.value)) {

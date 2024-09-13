@@ -11,7 +11,8 @@ describe("notLength", () => {
 			expects: "!5",
 			requirement: 5,
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -43,9 +44,9 @@ describe("notLength", () => {
 		const action = notLength(3);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -77,7 +78,7 @@ describe("notLength", () => {
 				[[1, 2, 3]],
 				[[1, 2], ["3"]],
 				[{ 1: "one", 2: "two", 3: "three" }],
-				[[1], [2], null, [{ value: 3 }]],
+				[[1], [2], undefined, [{ value: 3 }]],
 			]);
 		});
 	});
@@ -106,7 +107,7 @@ describe("notLength", () => {
 					"あああ", // 'あ' is 3 bytes but the total length of the string is 3
 					"@#$",
 				],
-				(value) => `${value.length}`,
+				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
 
@@ -117,12 +118,12 @@ describe("notLength", () => {
 				[
 					[1, 2, 3],
 					["foo", "bar", "baz"],
-					[1, null, undefined],
+					[1, undefined, undefined],
 					[[1, 2, 3, 4], [5], [6, 7]],
 					[{ value: 1 }, { value: 2 }, { value: 3 }],
 					["1", 2, { value: 3 }],
 				],
-				(value) => `${value.length}`,
+				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
 	});

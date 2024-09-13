@@ -1,3 +1,4 @@
+import { isSafeInteger } from "@rbxts/number";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -16,7 +17,7 @@ export interface SafeIntegerIssue<TInput extends number> extends BaseIssue<TInpu
 	/**
 	 * The expected property.
 	 */
-	readonly expected: null;
+	readonly expected: undefined;
 	/**
 	 * The received property.
 	 */
@@ -45,7 +46,7 @@ export interface SafeIntegerAction<
 	/**
 	 * The expected property.
 	 */
-	readonly expects: null;
+	readonly expects: undefined;
 	/**
 	 * The validation function.
 	 */
@@ -83,8 +84,8 @@ export function safeInteger(
 		type: "safe_integer",
 		reference: safeInteger,
 		async: false,
-		expects: null,
-		requirement: Number.isSafeInteger,
+		expects: undefined,
+		requirement: isSafeInteger,
 		message,
 		_run(dataset, config) {
 			if (dataset.typed && !this.requirement(dataset.value)) {

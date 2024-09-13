@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest";
 import { type FiniteAction, type FiniteIssue, finite } from "./finite";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 
 describe("finite", () => {
 	describe("should return action object", () => {
@@ -8,10 +9,12 @@ describe("finite", () => {
 			kind: "validation",
 			type: "finite",
 			reference: finite,
-			expects: null,
-			requirement: expect.any(Function),
+			expects: undefined,
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {
@@ -50,7 +53,7 @@ describe("finite", () => {
 		});
 
 		test("for finite numbers", () => {
-			expectNoActionIssue(action, [0, 1234, 12.34, Number.MAX_VALUE, Number.MIN_VALUE]);
+			expectNoActionIssue(action, [0, 1234, 12.34, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER]);
 		});
 	});
 
@@ -59,17 +62,18 @@ describe("finite", () => {
 		const baseIssue: Omit<FiniteIssue<number>, "input" | "received"> = {
 			kind: "validation",
 			type: "finite",
-			expected: null,
+			expected: undefined,
 			message: "message",
-			requirement: expect.any(Function),
+			//requirement: expect.any(Function),
+			requirement: expect.any(() => {}),
 		};
 
 		test("for infinite numbers", () => {
-			expectActionIssue(action, baseIssue, [Infinity, -Infinity]);
+			expectActionIssue(action, baseIssue, [math.huge, -math.huge]);
 		});
 
 		test("for not a number", () => {
-			expectActionIssue(action, baseIssue, [NaN]);
+			expectActionIssue(action, baseIssue, [0 / 0]);
 		});
 	});
 });
