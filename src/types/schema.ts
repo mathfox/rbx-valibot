@@ -17,10 +17,7 @@ export interface BaseSchema<TInput, TOutput, TIssue extends BaseIssue<unknown>> 
 	/**
 	 * The schema reference.
 	 */
-	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...args: any[]
-	) => BaseSchema<unknown, unknown, BaseIssue<unknown>>;
+	readonly reference: (...args: any[]) => BaseSchema<unknown, unknown, BaseIssue<unknown>>;
 	/**
 	 * The expected property.
 	 */
@@ -61,7 +58,6 @@ export interface BaseSchemaAsync<TInput, TOutput, TIssue extends BaseIssue<unkno
 	 * The schema reference.
 	 */
 	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		...args: any[]
 	) => BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>;
 	/**

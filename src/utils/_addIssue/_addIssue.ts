@@ -14,7 +14,6 @@ import type {
 	InferIssue,
 	IssuePathItem,
 } from "../../types/index.ts";
-import { _stringify } from "../_stringify/index.ts";
 
 /**
  * Context type.
@@ -22,13 +21,9 @@ import { _stringify } from "../_stringify/index.ts";
 type Context =
 	| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 	| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| BaseValidation<any, unknown, BaseIssue<unknown>>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| BaseValidationAsync<any, unknown, BaseIssue<unknown>>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| BaseTransformation<any, unknown, BaseIssue<unknown>>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	| BaseTransformationAsync<any, unknown, BaseIssue<unknown>>;
 
 /**
@@ -63,9 +58,8 @@ export function _addIssue<const TContext extends Context>(
 ): void {
 	// Get expected and received string
 	const input = other && "input" in other ? other.input : dataset.value;
-	// @ts-expect-error
-	const expected = other?.expected ?? context.expects ?? null;
-	const received = other?.received ?? _stringify(input);
+	const expected = other?.expected ?? context.expects ?? undefined;
+	const received = other?.received ?? tostring(input);
 
 	// Create issue object
 	// Hint: The issue is deliberately not constructed with the spread operator
@@ -77,7 +71,6 @@ export function _addIssue<const TContext extends Context>(
 		expected,
 		received,
 		message: `Invalid ${label}: ${expected ? `Expected ${expected} but r` : "R"}eceived ${received}`,
-		// @ts-expect-error
 		requirement: context.requirement,
 		path: other?.path,
 		issues: other?.issues,
@@ -95,7 +88,7 @@ export function _addIssue<const TContext extends Context>(
 		// @ts-expect-error
 		context.message ??
 		getSpecificMessage(context.reference, issue.lang) ??
-		(isSchema ? getSchemaMessage(issue.lang) : null) ??
+		(isSchema ? getSchemaMessage(issue.lang) : undefined) ??
 		config.message ??
 		getGlobalMessage(issue.lang);
 

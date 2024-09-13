@@ -5,7 +5,6 @@ import { array } from "../array/array.ts";
 import type { ArrayIssue } from "../array/types.ts";
 import { boolean } from "../boolean/index.ts";
 import { never } from "../never/index.ts";
-import { nullish } from "../nullish/index.ts";
 import { number } from "../number/index.ts";
 import { object, objectAsync } from "../object/index.ts";
 import { optional } from "../optional/index.ts";
@@ -80,16 +79,8 @@ describe("objectWithRestAsync", () => {
 
 		// Primitive types
 
-		test("for bigints", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", async () => {
@@ -102,10 +93,6 @@ describe("objectWithRestAsync", () => {
 
 		test("for strings", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types
@@ -143,14 +130,6 @@ describe("objectWithRestAsync", () => {
 				objectWithRestAsync({ key: optional(string()) }, number()),
 				// @ts-expect-error
 				[{}, { key: undefined, other: 123 }, { key: "foo" }],
-			);
-		});
-
-		test("for nullish entry", async () => {
-			await expectNoSchemaIssueAsync(
-				objectWithRestAsync({ key: nullish(number()) }, number()),
-				// @ts-expect-error
-				[{}, { key: undefined, other: 123 }, { key: null }, { key: 123 }],
 			);
 		});
 	});

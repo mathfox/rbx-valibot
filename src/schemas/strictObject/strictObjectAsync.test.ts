@@ -1,7 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { InferIssue, UntypedDataset } from "../../types/index.ts";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
-import { nullish } from "../nullish/index.ts";
 import { number } from "../number/index.ts";
 import { objectAsync } from "../object/index.ts";
 import { optional } from "../optional/index.ts";
@@ -71,16 +70,8 @@ describe("strictObjectAsync", () => {
 
 		// Primitive types
 
-		test("for bigints", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", async () => {
@@ -93,10 +84,6 @@ describe("strictObjectAsync", () => {
 
 		test("for strings", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types
@@ -131,15 +118,6 @@ describe("strictObjectAsync", () => {
 				// @ts-expect-error
 				{ key: undefined },
 				{ key: "foo" },
-			]);
-		});
-
-		test("for nullish entry", async () => {
-			await expectNoSchemaIssueAsync(strictObjectAsync({ key: nullish(number()) }), [
-				{},
-				{ key: undefined },
-				{ key: null },
-				{ key: 123 },
 			]);
 		});
 	});

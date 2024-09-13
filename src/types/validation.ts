@@ -17,11 +17,7 @@ export interface BaseValidation<TInput, TOutput, TIssue extends BaseIssue<unknow
 	/**
 	 * The validation reference.
 	 */
-	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...args: any[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	) => BaseValidation<any, any, BaseIssue<unknown>>;
+	readonly reference: (...args: any[]) => BaseValidation<any, any, BaseIssue<unknown>>;
 	/**
 	 * The expected property.
 	 */
@@ -65,12 +61,8 @@ export interface BaseValidationAsync<TInput, TOutput, TIssue extends BaseIssue<u
 	 * The validation reference.
 	 */
 	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		...args: any[]
-	) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
-		| BaseValidation<any, any, BaseIssue<unknown>>
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		| BaseValidationAsync<any, any, BaseIssue<unknown>>;
+	) => BaseValidation<any, any, BaseIssue<unknown>> | BaseValidationAsync<any, any, BaseIssue<unknown>>;
 	/**
 	 * Whether it's async.
 	 */
@@ -95,7 +87,6 @@ export interface BaseValidationAsync<TInput, TOutput, TIssue extends BaseIssue<u
  * Generic validation type.
  */
 export interface GenericValidation<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TInput = any,
 	TOutput = TInput,
 	TIssue extends BaseIssue<unknown> = BaseIssue<unknown>,
@@ -105,7 +96,6 @@ export interface GenericValidation<
  * Generic validation async type.
  */
 export interface GenericValidationAsync<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TInput = any,
 	TOutput = TInput,
 	TIssue extends BaseIssue<unknown> = BaseIssue<unknown>,

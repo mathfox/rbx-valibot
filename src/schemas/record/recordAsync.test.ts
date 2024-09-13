@@ -73,16 +73,8 @@ describe("recordAsync", () => {
 
 		// Primitive types
 
-		test("for bigints", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", async () => {
@@ -95,10 +87,6 @@ describe("recordAsync", () => {
 
 		test("for strings", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types

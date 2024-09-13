@@ -13,7 +13,7 @@ export function _joinExpects(values: string[], separator: "&" | "|"): string {
 	const list = [...new Set(values)];
 
 	// If list has more than one item, join them
-	if (list.length > 1) {
+	if (list.size() > 1) {
 		return `(${list.join(` ${separator} `)})`;
 	}
 

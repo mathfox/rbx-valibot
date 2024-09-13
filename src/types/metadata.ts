@@ -13,11 +13,7 @@ export interface BaseMetadata<TInput> {
 	/**
 	 * The metadata reference.
 	 */
-	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...args: any[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	) => BaseMetadata<any>;
+	readonly reference: (...args: any[]) => BaseMetadata<any>;
 	/**
 	 * Input, output and issue type.
 	 *
@@ -33,5 +29,4 @@ export interface BaseMetadata<TInput> {
 /**
  * Generic metadata type.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface GenericMetadata<TInput = any> extends BaseMetadata<TInput> {}

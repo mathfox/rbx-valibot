@@ -5,7 +5,6 @@ import { array } from "../array/array.ts";
 import type { ArrayIssue } from "../array/types.ts";
 import { boolean } from "../boolean/index.ts";
 import { never } from "../never/index.ts";
-import { nullish } from "../nullish/index.ts";
 import { number } from "../number/index.ts";
 import { object } from "../object/index.ts";
 import { optional } from "../optional/index.ts";
@@ -80,16 +79,8 @@ describe("objectWithRest", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectSchemaIssue(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", () => {
 			expectSchemaIssue(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", () => {
-			expectSchemaIssue(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", () => {
@@ -102,10 +93,6 @@ describe("objectWithRest", () => {
 
 		test("for strings", () => {
 			expectSchemaIssue(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", () => {
-			expectSchemaIssue(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types
@@ -143,14 +130,6 @@ describe("objectWithRest", () => {
 				objectWithRest({ key: optional(string()) }, number()),
 				// @ts-expect-error
 				[{}, { key: undefined, other: 123 }, { key: "foo" }],
-			);
-		});
-
-		test("for nullish entry", () => {
-			expectNoSchemaIssue(
-				objectWithRest({ key: nullish(number()) }, number()),
-				// @ts-expect-error
-				[{}, { key: undefined, other: 123 }, { key: null }, { key: 123 }],
 			);
 		});
 	});

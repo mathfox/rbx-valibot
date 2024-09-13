@@ -17,11 +17,7 @@ export interface BaseTransformation<TInput, TOutput, TIssue extends BaseIssue<un
 	/**
 	 * The transformation reference.
 	 */
-	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...args: any[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	) => BaseTransformation<any, any, BaseIssue<unknown>>;
+	readonly reference: (...args: any[]) => BaseTransformation<any, any, BaseIssue<unknown>>;
 	/**
 	 * Whether it's async.
 	 */
@@ -58,12 +54,8 @@ export interface BaseTransformationAsync<TInput, TOutput, TIssue extends BaseIss
 	 * The transformation reference.
 	 */
 	readonly reference: (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		...args: any[]
-	) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
-		| BaseTransformation<any, any, BaseIssue<unknown>>
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		| BaseTransformationAsync<any, any, BaseIssue<unknown>>;
+	) => BaseTransformation<any, any, BaseIssue<unknown>> | BaseTransformationAsync<any, any, BaseIssue<unknown>>;
 	/**
 	 * Whether it's async.
 	 */
@@ -85,7 +77,6 @@ export interface BaseTransformationAsync<TInput, TOutput, TIssue extends BaseIss
  * Generic transformation type.
  */
 export interface GenericTransformation<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TInput = any,
 	TOutput = TInput,
 	TIssue extends BaseIssue<unknown> = BaseIssue<unknown>,
@@ -95,7 +86,6 @@ export interface GenericTransformation<
  * Generic transformation async type.
  */
 export interface GenericTransformationAsync<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TInput = any,
 	TOutput = TInput,
 	TIssue extends BaseIssue<unknown> = BaseIssue<unknown>,

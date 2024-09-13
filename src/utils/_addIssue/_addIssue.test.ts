@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, test } from "@rbxts/jest-globals";
-import { url, type DecimalIssue, type MinLengthIssue, decimal, minLength } from "../../actions/index.ts";
-import { DECIMAL_REGEX } from "../../regex.ts";
+import { type MinLengthIssue, minLength } from "../../actions/index.ts";
 import { type NumberIssue, type StringIssue, number, string } from "../../schemas/index.ts";
 import {
 	deleteGlobalMessage,
@@ -34,37 +33,6 @@ describe("_addIssue", () => {
 			message: "Invalid length: Expected >=1 but received 0",
 			requirement: 1,
 		};
-
-		const dataset: TypedDataset<string, MinLength1Issue | DecimalIssue<string>> = { typed: true, value: "" };
-
-		test("for issue one", () => {
-			_addIssue(minLength(1), "length", dataset, {}, { received: "0" });
-			expect(dataset).toStrictEqual({
-				typed: true,
-				value: "",
-				issues: [minLengthIssue],
-			} satisfies TypedDataset<string, MinLength1Issue>);
-		});
-
-		const decimalIssue: DecimalIssue<string> = {
-			...baseInfo,
-			kind: "validation",
-			type: "decimal",
-			input: "",
-			expected: null,
-			received: '""',
-			message: 'Invalid decimal: Received ""',
-			requirement: DECIMAL_REGEX,
-		};
-
-		test("for issue two", () => {
-			_addIssue(decimal(), "decimal", dataset, {});
-			expect(dataset).toStrictEqual({
-				typed: true,
-				value: "",
-				issues: [minLengthIssue, decimalIssue],
-			} satisfies TypedDataset<string, MinLength1Issue | DecimalIssue<string>>);
-		});
 	});
 
 	describe("should generate default message", () => {
@@ -75,15 +43,6 @@ describe("_addIssue", () => {
 			};
 			_addIssue(string(), "type", dataset, {});
 			expect(dataset.issues?.[0].message).toBe("Invalid type: Expected string but received null");
-		});
-
-		test("with only received", () => {
-			const dataset: TypedDataset<string, StringIssue> = {
-				typed: true,
-				value: "foo",
-			};
-			_addIssue(url(), "URL", dataset, {});
-			expect(dataset.issues?.[0].message).toBe('Invalid URL: Received "foo"');
 		});
 	});
 
@@ -139,19 +98,6 @@ describe("_addIssue", () => {
 				message: () => configMessage,
 			});
 			expect(dataset.issues?.[0].message).toBe(schemaMessage);
-		});
-
-		test("not from schema storage", () => {
-			setSchemaMessage(() => schemaMessage);
-			setGlobalMessage(globalMessage);
-			const dataset: TypedDataset<string, StringIssue> = {
-				typed: true,
-				value: "foo",
-			};
-			_addIssue(url(), "type", dataset, {
-				message: () => configMessage,
-			});
-			expect(dataset.issues?.[0].message).not.toBe(schemaMessage);
 		});
 
 		test("from config object", () => {
@@ -224,18 +170,5 @@ describe("_addIssue", () => {
 			...other,
 			message: 'Invalid type: Expected "bar" but received "foo"',
 		});
-	});
-
-	test("should set typed if schema to false", () => {
-		const dataset: Dataset<number, NumberIssue> = {
-			typed: true,
-			value: NaN,
-		};
-		_addIssue(number(), "type", dataset, {});
-		expect(dataset).toStrictEqual({
-			typed: false,
-			value: NaN,
-			issues: expect.any(Array),
-		} satisfies UntypedDataset<NumberIssue>);
 	});
 });

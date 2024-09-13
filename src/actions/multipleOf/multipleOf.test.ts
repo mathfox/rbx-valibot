@@ -69,11 +69,11 @@ describe("multipleOf", () => {
 		});
 
 		test("for infinity", () => {
-			expectActionIssue(action, baseIssue, [-Infinity, Infinity]);
+			expectActionIssue(action, baseIssue, [-math.huge, math.huge]);
 		});
 
 		test("for NaN", () => {
-			expectActionIssue(action, baseIssue, [NaN]);
+			expectActionIssue(action, baseIssue, [0 / 0]);
 		});
 	});
 });

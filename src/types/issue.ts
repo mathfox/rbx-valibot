@@ -170,7 +170,7 @@ export interface SetPathItem {
 	/**
 	 * The path item key.
 	 */
-	readonly key: null;
+	readonly key: undefined;
 	/**
 	 * The path item key.
 	 */
@@ -230,7 +230,7 @@ export interface BaseIssue<TInput> extends Config<BaseIssue<TInput>> {
 	/**
 	 * The expected property.
 	 */
-	readonly expected: string | null;
+	readonly expected: string | undefined;
 	/**
 	 * The received property.
 	 */
@@ -412,14 +412,11 @@ export type IssueDotPath<
 																						  >
 																						| NullableSchema<
 																								infer TWrapped,
-																								Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, null>
+																								Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, undefined>
 																						  >
 																						| NullishSchema<
 																								infer TWrapped,
-																								Default<
-																									BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-																									null | undefined
-																								>
+																								Default<BaseSchema<unknown, unknown, BaseIssue<unknown>>, undefined>
 																						  >
 																						| OptionalSchema<
 																								infer TWrapped,
@@ -450,7 +447,7 @@ export type IssueDotPath<
 																									DefaultAsync<
 																										| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 																										| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-																										null
+																										undefined
 																									>
 																							  >
 																							| NullishSchemaAsync<
@@ -458,7 +455,7 @@ export type IssueDotPath<
 																									DefaultAsync<
 																										| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 																										| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-																										null | undefined
+																										undefined
 																									>
 																							  >
 																							| OptionalSchemaAsync<

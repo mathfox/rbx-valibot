@@ -61,14 +61,6 @@ describe("boolean", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectSchemaIssue(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
-		test("for null", () => {
-			expectSchemaIssue(schema, baseIssue, [null]);
-		});
-
 		test("for numbers", () => {
 			expectSchemaIssue(schema, baseIssue, [-1, 0, 123, 45.67]);
 		});
@@ -79,10 +71,6 @@ describe("boolean", () => {
 
 		test("for strings", () => {
 			expectSchemaIssue(schema, baseIssue, ["", "0", "true", "false"]);
-		});
-
-		test("for symbols", () => {
-			expectSchemaIssue(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types

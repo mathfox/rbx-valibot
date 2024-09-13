@@ -1,15 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import {
-	nullable,
-	nullableAsync,
-	nullish,
-	nullishAsync,
-	number,
-	object,
-	optional,
-	optionalAsync,
-	string,
-} from "../../schemas/index.ts";
+import { number, object, optional, optionalAsync, string } from "../../schemas/index.ts";
 import { getDefault } from "./getDefault.ts";
 
 describe("getDefault", () => {
@@ -39,61 +29,6 @@ describe("getDefault", () => {
 
 		test("for asycn value getter", async () => {
 			expect(await getDefault(optionalAsync(string(), async () => "foo"))).toBe("foo");
-		});
-	});
-
-	describe("should return nullable default", () => {
-		test("for undefined value", async () => {
-			expect(getDefault(nullable(string()))).toBeUndefined();
-		});
-
-		test("for null value", async () => {
-			expect(getDefault(nullable(string(), null))).toBeNull();
-			expect(getDefault(nullable(string(), () => null))).toBeNull();
-			expect(await getDefault(nullableAsync(string(), async () => null))).toBeNull();
-		});
-
-		test("for direct value", () => {
-			expect(getDefault(nullable(string(), "foo"))).toBe("foo");
-			expect(getDefault(nullableAsync(string(), "foo"))).toBe("foo");
-		});
-
-		test("for value getter", () => {
-			expect(getDefault(nullable(string(), () => "foo"))).toBe("foo");
-			expect(getDefault(nullableAsync(string(), () => "foo"))).toBe("foo");
-		});
-
-		test("for value getter", async () => {
-			expect(await getDefault(nullableAsync(string(), async () => "foo"))).toBe("foo");
-		});
-	});
-
-	describe("should return nullish default", () => {
-		test("for undefined value", async () => {
-			expect(getDefault(nullish(string()))).toBeUndefined();
-			expect(getDefault(nullish(string(), undefined))).toBeUndefined();
-			expect(getDefault(nullish(string(), () => undefined))).toBeUndefined();
-			expect(await getDefault(nullishAsync(string(), async () => undefined))).toBeUndefined();
-		});
-
-		test("for null value", async () => {
-			expect(getDefault(nullish(string(), null))).toBeNull();
-			expect(getDefault(nullish(string(), () => null))).toBeNull();
-			expect(await getDefault(nullishAsync(string(), async () => null))).toBeNull();
-		});
-
-		test("for direct value", () => {
-			expect(getDefault(nullish(string(), "foo"))).toBe("foo");
-			expect(getDefault(nullishAsync(string(), "foo"))).toBe("foo");
-		});
-
-		test("for value getter", () => {
-			expect(getDefault(nullish(string(), () => "foo"))).toBe("foo");
-			expect(getDefault(nullishAsync(string(), () => "foo"))).toBe("foo");
-		});
-
-		test("for value getter", async () => {
-			expect(await getDefault(nullishAsync(string(), async () => "foo"))).toBe("foo");
 		});
 	});
 });

@@ -71,7 +71,7 @@ export function function_(
 		async: false,
 		message,
 		_run(dataset, config) {
-			if (typeof dataset.value === "function") {
+			if (typeIs(dataset.value, "function")) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);

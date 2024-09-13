@@ -16,27 +16,27 @@ describe("getDotPath", () => {
 		).toBeNull();
 	});
 
-	test("should return null if path contains item without key", () => {
-		expect(
-			getDotPath({
-				kind: "schema",
-				type: "string",
-				input: 123,
-				expected: "string",
-				received: "123",
-				message: "Invalid type: Expected string but received 123",
-				path: [
-					{
-						type: "set",
-						origin: "value",
-						input: new Set(["foo", 123, "baz", null]),
-						key: null,
-						value: 123,
-					},
-				],
-			}),
-		).toBeNull();
-	});
+	//test("should return null if path contains item without key", () => {
+	//	expect(
+	//		getDotPath({
+	//			kind: "schema",
+	//			type: "string",
+	//			input: 123,
+	//			expected: "string",
+	//			received: "123",
+	//			message: "Invalid type: Expected string but received 123",
+	//			path: [
+	//				{
+	//					type: "set",
+	//					origin: "value",
+	//					input: new Set(["foo", 123, "baz", null]),
+	//					key: null,
+	//					value: 123,
+	//				},
+	//			],
+	//		}),
+	//	).toBeNull();
+	//});
 
 	test("should return null if path contains key that is not string or number", () => {
 		const key = new Map<string, string>([["foo", "bar"]]);

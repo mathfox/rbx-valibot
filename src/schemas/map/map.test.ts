@@ -77,16 +77,8 @@ describe("map", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectSchemaIssue(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", () => {
 			expectSchemaIssue(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", () => {
-			expectSchemaIssue(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", () => {
@@ -99,10 +91,6 @@ describe("map", () => {
 
 		test("for strings", () => {
 			expectSchemaIssue(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", () => {
-			expectSchemaIssue(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types

@@ -1,7 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { InferIssue, UntypedDataset } from "../../types/index.ts";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
-import { nullish } from "../nullish/index.ts";
 import { number } from "../number/index.ts";
 import { object } from "../object/index.ts";
 import { optional } from "../optional/index.ts";
@@ -69,16 +68,8 @@ describe("strictObject", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectSchemaIssue(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", () => {
 			expectSchemaIssue(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", () => {
-			expectSchemaIssue(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", () => {
@@ -91,10 +82,6 @@ describe("strictObject", () => {
 
 		test("for strings", () => {
 			expectSchemaIssue(schema, baseIssue, ["", "abc", "123"]);
-		});
-
-		test("for symbols", () => {
-			expectSchemaIssue(schema, baseIssue, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types
@@ -125,15 +112,6 @@ describe("strictObject", () => {
 				// @ts-expect-error
 				{ key: undefined },
 				{ key: "foo" },
-			]);
-		});
-
-		test("for nullish entry", () => {
-			expectNoSchemaIssue(strictObject({ key: nullish(number()) }), [
-				{},
-				{ key: undefined },
-				{ key: null },
-				{ key: 123 },
 			]);
 		});
 	});

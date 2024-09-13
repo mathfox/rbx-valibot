@@ -38,14 +38,6 @@ describe("symbol", () => {
 		});
 	});
 
-	describe("should return dataset without issues", () => {
-		const schema = symbol();
-
-		test("for symbols", () => {
-			expectNoSchemaIssue(schema, [Symbol(), Symbol("foo")]);
-		});
-	});
-
 	describe("should return dataset with issues", () => {
 		const schema = symbol("message");
 		const baseIssue: Omit<SymbolIssue, "input" | "received"> = {
@@ -57,16 +49,8 @@ describe("symbol", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectSchemaIssue(schema, baseIssue, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", () => {
 			expectSchemaIssue(schema, baseIssue, [true, false]);
-		});
-
-		test("for null", () => {
-			expectSchemaIssue(schema, baseIssue, [null]);
 		});
 
 		test("for numbers", () => {

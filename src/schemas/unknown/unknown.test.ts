@@ -19,16 +19,8 @@ describe("unknown", () => {
 
 		// Primitive types
 
-		test("for bigints", () => {
-			expectNoSchemaIssue(schema, [-1n, 0n, 123n]);
-		});
-
 		test("for booleans", () => {
 			expectNoSchemaIssue(schema, [true, false]);
-		});
-
-		test("for null", () => {
-			expectNoSchemaIssue(schema, [null]);
 		});
 
 		test("for numbers", () => {
@@ -41,10 +33,6 @@ describe("unknown", () => {
 
 		test("for strings", () => {
 			expectNoSchemaIssue(schema, ["", "foo", "123"]);
-		});
-
-		test("for symbols", () => {
-			expectNoSchemaIssue(schema, [Symbol(), Symbol("foo")]);
 		});
 
 		// Complex types
