@@ -1,5 +1,5 @@
-import { describe, expect, test } from "vitest";
-import type { MinLengthIssue, UrlIssue } from "../../actions/index.ts";
+import { describe, expect, test } from "@rbxts/jest-globals";
+import type { MinLengthIssue } from "../../actions/index.ts";
 import { ValiError } from "./ValiError.ts";
 
 describe("ValiError", () => {
@@ -14,20 +14,10 @@ describe("ValiError", () => {
 			requirement: 10,
 		};
 
-		const urlIssue: UrlIssue<string> = {
-			kind: "validation",
-			type: "url",
-			input: "foo",
-			expected: null,
-			received: '"foo"',
-			message: 'Invalid URL: Received "foo"',
-			requirement: expect.any(Function),
-		};
-
-		const error = new ValiError([minLengthIssue, urlIssue]);
+		const error = new ValiError([minLengthIssue]);
 		expect(error).toBeInstanceOf(ValiError);
 		expect(error.name).toBe("ValiError");
 		expect(error.message).toBe(minLengthIssue.message);
-		expect(error.issues).toEqual([minLengthIssue, urlIssue]);
+		expect(error.issues).toEqual([minLengthIssue]);
 	});
 });

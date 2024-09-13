@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssueAsync, expectNoActionIssueAsync } from "../../vitest/index.ts";
 import { type RawCheckActionAsync, rawCheckAsync } from "./rawCheckAsync.ts";
 import type { RawCheckIssue } from "./types.ts";

@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "@rbxts/jest-globals";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest/index.ts";
 import { type StringIssue, type StringSchema, string } from "../string/index.ts";
 import { type LazySchemaAsync, lazyAsync } from "./lazyAsync.ts";

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { transform } from "../../actions/index.ts";
 import { number, objectAsync, string } from "../../schemas/index.ts";
 import { pipe } from "../pipe/index.ts";

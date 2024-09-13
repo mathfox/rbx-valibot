@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { type ToLowerCaseAction, toLowerCase } from "./toLowerCase.ts";
 
 describe("toLowerCase", () => {

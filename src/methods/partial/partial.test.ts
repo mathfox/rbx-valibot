@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, nullish, number, object, objectWithRest, optional, string } from "../../schemas/index.ts";
 import type { InferIssue, UntypedDataset } from "../../types/index.ts";
 import { expectNoSchemaIssue } from "../../vitest/index.ts";

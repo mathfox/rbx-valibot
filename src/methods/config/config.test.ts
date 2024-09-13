@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { objectAsync, string } from "../../schemas/index.ts";
 import type { BaseIssue, Config } from "../../types/index.ts";
 import { config } from "./config.ts";
@@ -6,8 +6,8 @@ import { config } from "./config.ts";
 describe("config", () => {
 	test("should override config of schema", () => {
 		const schema = string();
-		// @ts-expect-error
-		schema._run = vi.fn(schema._run);
+		//// @ts-expect-error
+		//schema._run = vi.fn(schema._run);
 		const dataset = { typed: false, value: "foo" };
 		const globalConfig: Config<BaseIssue<unknown>> = {
 			lang: "de",
@@ -24,8 +24,8 @@ describe("config", () => {
 
 	test("should override config of async schema", () => {
 		const schema = objectAsync({ key: string() });
-		// @ts-expect-error
-		schema._run = vi.fn(schema._run);
+		//// @ts-expect-error
+		//schema._run = vi.fn(schema._run);
 		const dataset = { typed: false, value: { key: "foo" } };
 		const globalConfig: Config<BaseIssue<unknown>> = {
 			lang: "de",

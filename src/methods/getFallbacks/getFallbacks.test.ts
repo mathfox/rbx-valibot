@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, number, object, strictObject, strictTuple, string, tuple } from "../../schemas/index.ts";
 import { fallback } from "../fallback/index.ts";
 import { getFallbacks } from "./getFallbacks.ts";

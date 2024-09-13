@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
 import { type LengthAction, type LengthIssue, length } from "./length.ts";
 

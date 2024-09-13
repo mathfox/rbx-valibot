@@ -7,7 +7,10 @@ export class ValiError<
 	TSchema extends
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-> extends Error {
+> {
+	public name: string;
+	public message: string;
+
 	/**
 	 * The error issues.
 	 */
@@ -19,8 +22,8 @@ export class ValiError<
 	 * @param issues The error issues.
 	 */
 	constructor(issues: [InferIssue<TSchema>, ...InferIssue<TSchema>[]]) {
-		super(issues[0].message);
 		this.name = "ValiError";
+		this.message = issues[0].message;
 		this.issues = issues;
 	}
 }

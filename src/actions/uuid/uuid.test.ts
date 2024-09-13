@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { UUID_REGEX } from "../../regex.ts";
 import { expectActionIssue, expectNoActionIssue } from "../../vitest/index.ts";
 import { type UuidAction, type UuidIssue, uuid } from "./uuid.ts";

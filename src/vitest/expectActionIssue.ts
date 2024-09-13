@@ -1,4 +1,4 @@
-import { expect } from "vitest";
+import { expect } from "@rbxts/jest-globals";
 import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } from "../types/index.ts";
 import { _stringify } from "../utils/index.ts";
 

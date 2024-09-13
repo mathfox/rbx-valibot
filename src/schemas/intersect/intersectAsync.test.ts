@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { minLength, minValue, transform } from "../../actions/index.ts";
 import { pipe } from "../../methods/index.ts";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types/index.ts";

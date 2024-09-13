@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "@rbxts/jest-globals";
 import { url, type DecimalIssue, type MinLengthIssue, decimal, minLength } from "../../actions/index.ts";
 import { DECIMAL_REGEX } from "../../regex.ts";
 import { type NumberIssue, type StringIssue, number, string } from "../../schemas/index.ts";

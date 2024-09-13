@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import type { NumberIssue, ObjectIssue, StringIssue } from "../../../../schemas/index.ts";
 import type { TypedDataset, UntypedDataset } from "../../../../types/index.ts";
 import { _isPartiallyTyped } from "./_isPartiallyTyped.ts";

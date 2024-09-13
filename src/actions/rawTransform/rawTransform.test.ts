@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { type RawTransformAction, rawTransform } from "./rawTransform.ts";
 
 describe("rawTransform", () => {

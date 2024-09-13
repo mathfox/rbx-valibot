@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { url, decimal, email } from "../../actions/index.ts";
 import { pipe } from "../../methods/index.ts";
 import { EMAIL_REGEX } from "../../regex.ts";

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import type { EmailIssue, UrlIssue } from "../../../../actions/index.ts";
 import type { TypedDataset } from "../../../../types/index.ts";
 import { _subIssues } from "./_subIssues.ts";

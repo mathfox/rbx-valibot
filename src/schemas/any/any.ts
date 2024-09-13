@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { BaseSchema } from "../../types/index.ts";
 
 /**

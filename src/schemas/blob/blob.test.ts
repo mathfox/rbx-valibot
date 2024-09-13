@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest/index.ts";
 import { type BlobIssue, type BlobSchema, blob } from "./blob.ts";
 

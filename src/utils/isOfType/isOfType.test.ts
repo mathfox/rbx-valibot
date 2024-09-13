@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { number, object, string } from "../../schemas/index.ts";
 import { isOfType } from "./isOfType.ts";
 

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue } from "../../vitest/index.ts";
 import { type AnySchema, any } from "./any.ts";
 
@@ -10,7 +10,8 @@ describe("any", () => {
 			reference: any,
 			expects: "any",
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		} satisfies AnySchema);
 	});
 
@@ -43,9 +44,9 @@ describe("any", () => {
 			expectNoSchemaIssue(schema, ["", "foo", "123"]);
 		});
 
-		test("for symbols", () => {
-			expectNoSchemaIssue(schema, [Symbol(), Symbol("foo")]);
-		});
+		//test("for symbols", () => {
+		//	expectNoSchemaIssue(schema, [Symbol(), Symbol("foo")]);
+		//});
 
 		// Complex types
 

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { type FindItemAction, findItem } from "./findItem.ts";
 
 describe("findItem", () => {

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { type PicklistSchema, null_, number, object, picklist, string } from "../../schemas/index.ts";
 import { keyof } from "./keyof.ts";
 

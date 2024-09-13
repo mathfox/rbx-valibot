@@ -1,4 +1,4 @@
-import { expect } from "vitest";
+import { expect } from "@rbxts/jest-globals";
 import type { BaseIssue, BaseSchema, InferInput } from "../types/index.ts";
 
 /**

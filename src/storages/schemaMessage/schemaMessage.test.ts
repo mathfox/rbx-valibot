@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { deleteSchemaMessage, getSchemaMessage, setSchemaMessage } from "./schemaMessage.ts";
 
 describe("schemaMessage", () => {

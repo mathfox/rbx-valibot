@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import type { TypedDataset } from "../../types/dataset.ts";
 import { expectNoActionIssue } from "../../vitest/index.ts";
 import { type CheckItemsAction, type CheckItemsIssue, checkItems } from "./checkItems.ts";
