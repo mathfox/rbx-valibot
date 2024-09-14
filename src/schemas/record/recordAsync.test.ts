@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../vitest";
+import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { type NumberIssue, number } from "../number";
 import { optionalAsync } from "../optional";
 import { picklist } from "../picklist";

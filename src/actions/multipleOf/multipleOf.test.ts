@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { type MultipleOfAction, type MultipleOfIssue, multipleOf } from "./multipleOf";
 
 describe("multipleOf", () => {

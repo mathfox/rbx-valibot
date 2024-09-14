@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { type MaxValueAction, maxValue } from "./maxValue";
 import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
 

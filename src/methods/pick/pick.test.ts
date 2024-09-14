@@ -10,7 +10,7 @@ import {
 	string,
 } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue } from "../../tests";
 import { pick } from "./pick";
 
 describe("pick", () => {

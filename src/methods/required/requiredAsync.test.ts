@@ -11,7 +11,7 @@ import {
 	string,
 } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssueAsync } from "../../vitest";
+import { expectNoSchemaIssueAsync } from "../../tests";
 import { requiredAsync } from "./requiredAsync";
 
 describe("requiredAsync", () => {

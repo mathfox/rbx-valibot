@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type NullishSchema, nullish } from "../nullish";
 import { type StringSchema, string } from "../string";
 import { type NonOptionalSchema, nonOptional } from "./nonOptional";

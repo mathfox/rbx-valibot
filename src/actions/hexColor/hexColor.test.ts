@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { HEX_COLOR_REGEX } from "../../regex";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { type HexColorAction, type HexColorIssue, hexColor } from "./hexColor";
 
 describe("hexColor", () => {

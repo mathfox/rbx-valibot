@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectActionIssueAsync, expectNoActionIssueAsync } from "../../vitest";
+import { expectActionIssueAsync, expectNoActionIssueAsync } from "../../tests";
 import { type CheckActionAsync, checkAsync } from "./checkAsync";
 import type { CheckIssue } from "./types";
 

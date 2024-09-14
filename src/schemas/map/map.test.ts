@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { number } from "../number";
 import { type StringIssue, string } from "../string";
 import { type MapSchema, map } from "./map";

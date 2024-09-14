@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { UUID_REGEX } from "../../regex";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { type UuidAction, type UuidIssue, uuid } from "./uuid";
 
 describe("uuid", () => {

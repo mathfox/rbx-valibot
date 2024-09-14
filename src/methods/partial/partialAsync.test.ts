@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, nullishAsync, number, objectAsync, objectWithRestAsync, optionalAsync, string } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssueAsync } from "../../vitest";
+import { expectNoSchemaIssueAsync } from "../../tests";
 import { partialAsync } from "./partialAsync";
 
 describe("partialAsync", () => {

@@ -1,6 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
 import type { BaseIssue, BaseValidationAsync, InferInput, InferIssue, TypedDataset } from "../types";
-import { _stringify } from "../utils";
 
 /**
  * Expect an action issue to be returned.
@@ -10,10 +9,7 @@ import { _stringify } from "../utils";
  * @param values The values to test.
  * @param getReceived Received value getter.
  */
-export async function expectActionIssueAsync<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TAction extends BaseValidationAsync<any, unknown, BaseIssue<unknown>>,
->(
+export async function expectActionIssueAsync<TAction extends BaseValidationAsync<any, unknown, BaseIssue<unknown>>>(
 	action: TAction,
 	baseIssue: Omit<InferIssue<TAction>, "input" | "received">,
 	values: InferInput<TAction>[],
@@ -33,7 +29,7 @@ export async function expectActionIssueAsync<
 					abortPipeEarly: undefined,
 
 					input: value,
-					received: getReceived?.(value) ?? _stringify(value),
+					received: getReceived?.(value) ?? tostring(value),
 					...baseIssue,
 				},
 			],

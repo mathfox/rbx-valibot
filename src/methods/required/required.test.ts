@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, nonOptional, nullish, number, object, objectWithRest, optional, string } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue } from "../../tests";
 import { required } from "./required";
 
 describe("required", () => {

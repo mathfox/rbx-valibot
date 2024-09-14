@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "@rbxts/jest-globals";
-import { expectNoSchemaIssue, expectSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type StringIssue, type StringSchema, string } from "../string";
 import { type LazySchema, lazy } from "./lazy";
 

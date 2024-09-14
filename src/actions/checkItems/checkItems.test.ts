@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { TypedDataset } from "../../types/dataset";
-import { expectNoActionIssue } from "../../vitest";
+import { expectNoActionIssue } from "../../tests";
 import { type CheckItemsAction, type CheckItemsIssue, checkItems } from "./checkItems";
 
 describe("checkItems", () => {

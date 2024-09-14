@@ -5,4 +5,4 @@ export * from "./schemas";
 export * from "./storages";
 export * from "./types";
 export * from "./utils";
-export * from "./vitest";
+export * from "./tests";

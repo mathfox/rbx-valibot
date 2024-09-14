@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { EMAIL_REGEX } from "../../regex";
-import { expectActionIssue, expectNoActionIssue } from "../../vitest";
+import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { type EmailAction, type EmailIssue, email } from "./email";
 
 describe("email", () => {

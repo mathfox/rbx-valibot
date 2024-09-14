@@ -3,7 +3,7 @@ import { url, decimal, email } from "../../actions";
 import { pipe } from "../../methods";
 import { EMAIL_REGEX } from "../../regex";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
-import { expectNoSchemaIssueAsync } from "../../vitest";
+import { expectNoSchemaIssueAsync } from "../../tests";
 import { bigint } from "../bigint/bigint";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";

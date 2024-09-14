@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { expectSchemaIssue } from "../../vitest";
+import { expectSchemaIssue } from "../../tests";
 import { type NeverIssue, type NeverSchema, never } from "./never";
 
 describe("never", () => {

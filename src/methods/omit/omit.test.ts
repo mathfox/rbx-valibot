@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { type BooleanIssue, type NumberIssue, boolean, number, object, objectWithRest, string } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
-import { expectNoSchemaIssue } from "../../vitest";
+import { expectNoSchemaIssue } from "../../tests";
 import { omit } from "./omit";
 
 describe("omit", () => {

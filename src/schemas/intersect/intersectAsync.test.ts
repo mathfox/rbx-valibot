@@ -2,7 +2,7 @@ import { describe, expect, test } from "@rbxts/jest-globals";
 import { minLength, minValue, transform } from "../../actions";
 import { pipe } from "../../methods";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
-import { expectNoSchemaIssueAsync } from "../../vitest";
+import { expectNoSchemaIssueAsync } from "../../tests";
 import { array } from "../array/array";
 import { arrayAsync } from "../array/arrayAsync";
 import { date } from "../date";
