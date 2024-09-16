@@ -73,7 +73,7 @@ export function intersect(
 		message,
 		_run(dataset, config) {
 			// Parse input with schema of options, if not empty
-			if (this.options.length) {
+			if (this.options.size()) {
 				// Get input value from dataset
 				const input = dataset.value;
 
@@ -90,11 +90,9 @@ export function intersect(
 					// If there are issues, capture them
 					if (optionDataset.issues) {
 						if (dataset.issues) {
-							// @ts-expect-error
-							dataset.issues.push(...optionDataset.issues);
+							dataset.issues.push(...(optionDataset.issues as unknown as never[]));
 						} else {
-							// @ts-expect-error
-							dataset.issues = optionDataset.issues;
+							dataset.issues = optionDataset.issues as never;
 						}
 
 						// If necessary, abort early
@@ -112,7 +110,7 @@ export function intersect(
 					// Add output of option if necessary
 					if (dataset.typed) {
 						if (outputs) {
-							outputs.push(optionDataset.value);
+							(outputs as defined[]).push(optionDataset.value as defined);
 						} else {
 							outputs = [optionDataset.value];
 						}
@@ -125,7 +123,7 @@ export function intersect(
 					dataset.value = outputs![0];
 
 					// Merge outputs into one final output
-					for (let index = 1; index < outputs!.length; index++) {
+					for (let index = 1; index < outputs!.size(); index++) {
 						const mergeDataset = _merge(dataset.value, outputs![index]);
 
 						// If outputs can't be merged, add issue and break loop

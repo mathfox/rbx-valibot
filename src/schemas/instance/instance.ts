@@ -4,7 +4,6 @@ import { _addIssue } from "../../utils";
 /**
  * Class type.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Class = new (...args: any[]) => any;
 
 /**
@@ -78,7 +77,7 @@ export function instance(
 		kind: "schema",
 		type: "instance",
 		reference: instance,
-		expects: class_.name,
+		expects: tostring(class_),
 		async: false,
 		class: class_,
 		message,

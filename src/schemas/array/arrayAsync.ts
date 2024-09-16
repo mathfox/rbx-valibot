@@ -1,3 +1,4 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	ArrayPathItem,
 	BaseIssue,
@@ -91,21 +92,23 @@ export function arrayAsync(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (Array.isArray(input)) {
+			if (isArray(input)) {
 				// Set typed to `true` and value to empty array
 				dataset.typed = true;
 				dataset.value = [];
 
 				// Parse schema of each item async
-				const itemDatasets = await Promise.all(input.map((value) => this.item._run({ typed: false, value }, config)));
+				const itemDatasets = await Promise.all(
+					(input as defined[]).map((value) => this.item._run({ typed: false, value }, config)),
+				);
 
 				// Process each item dataset
-				for (let key = 0; key < itemDatasets.length; key++) {
+				for (let key = 0; key < itemDatasets.size(); key++) {
 					// Get item dataset
 					const itemDataset = itemDatasets[key];
 
 					// If there are issues, capture them
-					if (itemDataset.issues) {
+					if ((itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues) {
 						// Create array path item
 						const pathItem: ArrayPathItem = {
 							type: "array",
@@ -116,16 +119,16 @@ export function arrayAsync(
 						};
 
 						// Add modified item dataset issues to issues
-						for (const issue of itemDataset.issues) {
+						for (const issue of (itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues!) {
 							if (issue.path) {
 								issue.path.unshift(pathItem);
 							} else {
-								issue.path = [pathItem];
+								(issue as { path: defined }).path = [pathItem];
 							}
-							dataset.issues?.push(issue);
+							dataset.issues?.push(issue as never);
 						}
 						if (!dataset.issues) {
-							dataset.issues = itemDataset.issues;
+							dataset.issues = (itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues as never;
 						}
 
 						// If necessary, abort early
@@ -136,12 +139,12 @@ export function arrayAsync(
 					}
 
 					// If not typed, set typed to `false`
-					if (!itemDataset.typed) {
+					if (!(itemDataset as Dataset<unknown, BaseIssue<unknown>>).typed) {
 						dataset.typed = false;
 					}
 
 					// Add item to dataset
-					dataset.value.push(itemDataset.value);
+					(dataset.value as defined[]).push((itemDataset as Dataset<unknown, BaseIssue<unknown>>).value as defined);
 				}
 
 				// Otherwise, add array issue

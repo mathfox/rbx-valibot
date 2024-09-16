@@ -8,7 +8,7 @@ import type {
 	ObjectEntries,
 	ObjectPathItem,
 } from "../../types";
-import { _addIssue, _isValidObjectKey } from "../../utils";
+import { _addIssue } from "../../utils";
 import type { LooseObjectIssue } from "./types";
 
 /**

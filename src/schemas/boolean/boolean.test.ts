@@ -10,7 +10,8 @@ describe("boolean", () => {
 			reference: boolean,
 			expects: "boolean",
 			async: false,
-			_run: expect.any(Function),
+			//_run: expect.any(Function),
+			_run: expect.any(() => {}),
 		};
 
 		test("with undefined message", () => {

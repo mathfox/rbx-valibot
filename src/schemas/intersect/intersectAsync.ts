@@ -73,7 +73,7 @@ export function intersectAsync(
 		message,
 		async _run(dataset, config) {
 			// Parse input with schema of options, if not empty
-			if (this.options.length) {
+			if (this.options.size()) {
 				// Get input value from dataset
 				const input = dataset.value;
 
@@ -91,13 +91,13 @@ export function intersectAsync(
 				// Collect outputs of option datasets
 				for (const optionDataset of optionDatasets) {
 					// If there are issues, capture them
-					if (optionDataset.issues) {
+					if ((optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues) {
 						if (dataset.issues) {
-							// @ts-expect-error
-							dataset.issues.push(...optionDataset.issues);
+							dataset.issues.push(
+								...((optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues as unknown as never[]),
+							);
 						} else {
-							// @ts-expect-error
-							dataset.issues = optionDataset.issues;
+							dataset.issues = (optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues as never;
 						}
 
 						// If necessary, abort early
@@ -108,16 +108,16 @@ export function intersectAsync(
 					}
 
 					// If not typed, set typed to `false`
-					if (!optionDataset.typed) {
+					if (!(optionDataset as Dataset<unknown, BaseIssue<unknown>>).typed) {
 						dataset.typed = false;
 					}
 
 					// Add output of option if necessary
 					if (dataset.typed) {
 						if (outputs) {
-							outputs.push(optionDataset.value);
+							(outputs as defined[]).push((optionDataset as Dataset<unknown, BaseIssue<unknown>>).value as defined);
 						} else {
-							outputs = [optionDataset.value];
+							outputs = [(optionDataset as Dataset<unknown, BaseIssue<unknown>>).value];
 						}
 					}
 				}
@@ -128,7 +128,7 @@ export function intersectAsync(
 					dataset.value = outputs![0];
 
 					// Merge outputs into one final output
-					for (let index = 1; index < outputs!.length; index++) {
+					for (let index = 1; index < outputs!.size(); index++) {
 						const mergeDataset = _merge(dataset.value, outputs![index]);
 
 						// If outputs can't be merged, add issue and break loop

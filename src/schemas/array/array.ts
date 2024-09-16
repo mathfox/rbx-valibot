@@ -1,3 +1,4 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	ArrayPathItem,
 	BaseIssue,
@@ -81,13 +82,13 @@ export function array(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (Array.isArray(input)) {
+			if (isArray(input)) {
 				// Set typed to `true` and value to empty array
 				dataset.typed = true;
 				dataset.value = [];
 
 				// Parse schema of each array item
-				for (let key = 0; key < input.length; key++) {
+				for (let key = 0; key < input.size(); key++) {
 					const value = input[key];
 					const itemDataset = this.item._run({ typed: false, value }, config);
 
@@ -107,15 +108,12 @@ export function array(
 							if (issue.path) {
 								issue.path.unshift(pathItem);
 							} else {
-								// @ts-expect-error
-								issue.path = [pathItem];
+								(issue as { path: defined }).path = [pathItem];
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
+							dataset.issues?.push(issue as never);
 						}
 						if (!dataset.issues) {
-							// @ts-expect-error
-							dataset.issues = itemDataset.issues;
+							dataset.issues = itemDataset.issues as never;
 						}
 
 						// If necessary, abort early
@@ -131,8 +129,7 @@ export function array(
 					}
 
 					// Add item to dataset
-					// @ts-expect-error
-					dataset.value.push(itemDataset.value);
+					(dataset.value as defined[]).push(itemDataset.value as defined);
 				}
 
 				// Otherwise, add array issue
