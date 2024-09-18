@@ -14,8 +14,7 @@ describe("maxValue", () => {
 			expects: "<=5",
 			requirement: 5,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -45,7 +44,10 @@ describe("maxValue", () => {
 
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", () => {
-			expect(maxValue(1)._run({ typed: false, value: null }, {})).toStrictEqual({ typed: false, value: null });
+			expect(maxValue(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({
+				typed: false,
+				value: undefined,
+			});
 		});
 
 		test("for valid booleans", () => {

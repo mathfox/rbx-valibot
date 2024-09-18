@@ -11,8 +11,7 @@ describe("transform", () => {
 			reference: transform,
 			async: false,
 			operation,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies TransformAction<string, number>);
 	});
 

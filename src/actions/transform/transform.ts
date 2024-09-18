@@ -33,7 +33,7 @@ export function transform<TInput, TOutput>(operation: (input: TInput) => TOutput
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = this.operation(dataset.value) as any;
+			dataset.value = this.operation(dataset.value) as unknown as TInput;
 			return dataset as unknown as TypedDataset<TOutput, never>;
 		},
 	};

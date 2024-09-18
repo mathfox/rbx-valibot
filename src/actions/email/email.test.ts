@@ -12,8 +12,7 @@ describe("email", () => {
 			expects: undefined,
 			requirement: EMAIL_REGEX,
 			async: false,
-			_run: expect.any(() => {}),
-			//_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -47,9 +46,9 @@ describe("email", () => {
 		// General tests
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 

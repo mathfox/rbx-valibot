@@ -12,8 +12,7 @@ describe("uuid", () => {
 			expects: undefined,
 			requirement: UUID_REGEX,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {

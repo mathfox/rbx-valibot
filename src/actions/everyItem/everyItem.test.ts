@@ -12,8 +12,7 @@ describe("everyItem", () => {
 			expects: undefined,
 			requirement,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -46,9 +45,9 @@ describe("everyItem", () => {
 		const action = everyItem<number[]>((item: number) => item > 9);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 

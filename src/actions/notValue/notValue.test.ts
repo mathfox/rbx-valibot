@@ -12,8 +12,7 @@ describe("notValue", () => {
 			expects: "!5",
 			requirement: 5,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {

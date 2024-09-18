@@ -11,8 +11,7 @@ describe("length", () => {
 			expects: "5",
 			requirement: 5,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -44,9 +43,9 @@ describe("length", () => {
 		const action = length(3);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -67,7 +66,7 @@ describe("length", () => {
 			expectNoActionIssue(action, [
 				[1, 2, 3],
 				["foo", "bar", "baz"],
-				[1, null, undefined],
+				[1, undefined],
 				[[1, 2, 3, 4], [5], [6, 7]],
 				[{ value: 1 }, { value: 2 }, { value: 3 }],
 				["1", 2, { value: 3 }],
@@ -121,7 +120,7 @@ describe("length", () => {
 					[[1, 2, 3]],
 					[[1, 2], ["3"]],
 					[{ 1: "one", 2: "two", 3: "three" }],
-					[[1], [2], null, [{ value: 3 }]],
+					[[1], [2], undefined, [{ value: 3 }]],
 				],
 				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);

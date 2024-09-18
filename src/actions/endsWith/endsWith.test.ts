@@ -11,8 +11,7 @@ describe("endsWith", () => {
 			expects: '"abc"',
 			requirement: "abc",
 			async: false,
-			_run: expect.any(() => {}),
-			//_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -44,9 +43,9 @@ describe("endsWith", () => {
 		const action = endsWith("abc");
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 

@@ -12,8 +12,7 @@ describe("toMinValue", () => {
 			reference: toMinValue,
 			requirement: 10,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies ToMinValueAction<number, 10>);
 	});
 

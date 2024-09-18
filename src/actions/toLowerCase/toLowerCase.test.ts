@@ -8,8 +8,7 @@ describe("toLowerCase", () => {
 			type: "to_lower_case",
 			reference: toLowerCase,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies ToLowerCaseAction);
 	});
 

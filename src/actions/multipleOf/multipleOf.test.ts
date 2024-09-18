@@ -11,8 +11,7 @@ describe("multipleOf", () => {
 			expects: "%5",
 			requirement: 5,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -44,9 +43,9 @@ describe("multipleOf", () => {
 		const action = multipleOf(5);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 

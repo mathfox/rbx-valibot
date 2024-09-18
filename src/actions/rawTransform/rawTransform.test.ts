@@ -17,8 +17,7 @@ describe("rawTransform", () => {
 			type: "raw_transform",
 			reference: rawTransform,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies RawTransformAction<string, number>);
 	});
 

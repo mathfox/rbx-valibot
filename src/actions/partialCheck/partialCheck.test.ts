@@ -6,7 +6,6 @@ import type { PartialCheckIssue } from "./types";
 
 describe("partialCheck", () => {
 	describe("should return action object", () => {
-		// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 		type Input = { nested: { key: string } };
 		const pathList = [["nested", "key"]] as const;
 		type PathList = typeof pathList;
@@ -19,8 +18,7 @@ describe("partialCheck", () => {
 			expects: undefined,
 			requirement,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -51,7 +49,6 @@ describe("partialCheck", () => {
 		});
 	});
 
-	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 	type Input = {
 		nested: { key: string };
 		tuple: [number, { key: string }, number];

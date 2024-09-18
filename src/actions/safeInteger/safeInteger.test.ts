@@ -10,11 +10,9 @@ describe("safeInteger", () => {
 			type: "safe_integer",
 			reference: safeInteger,
 			expects: undefined,
-			//requirement: expect.any(Function),
-			requirement: expect.any(() => {}),
+			requirement: expect.any("function"),
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -64,8 +62,7 @@ describe("safeInteger", () => {
 			type: "safe_integer",
 			expected: undefined,
 			message: "message",
-			//requirement: expect.any(Function),
-			requirement: expect.any(() => {}),
+			requirement: expect.any("function"),
 		};
 
 		test("for unsafe integer numbers", () => {

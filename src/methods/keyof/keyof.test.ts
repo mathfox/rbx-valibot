@@ -1,10 +1,10 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type PicklistSchema, null_, number, object, picklist, string } from "../../schemas";
+import { type PicklistSchema, number, object, picklist, string } from "../../schemas";
 import { keyof } from "./keyof";
 
 describe("keyof", () => {
-	const objectSchema = object({ foo: string(), bar: number(), baz: null_() });
-	const options = ["foo", "bar", "baz"] as const;
+	const objectSchema = object({ foo: string(), bar: number() });
+	const options = ["foo", "bar"] as const;
 	type Options = typeof options;
 
 	describe("should return objectSchema object", () => {
@@ -12,10 +12,10 @@ describe("keyof", () => {
 			kind: "schema",
 			type: "picklist",
 			reference: picklist,
-			expects: '("foo" | "bar" | "baz")',
+			expects: '("foo" | "bar")',
 			options,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {

@@ -11,8 +11,7 @@ describe("includes", () => {
 			expects: '"foo"',
 			requirement: "foo",
 			async: false,
-			_run: expect.any(() => {}),
-			//_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -45,9 +44,9 @@ describe("includes", () => {
 		const action = includes("foo");
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -56,7 +55,7 @@ describe("includes", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [["foo"], [123, "foo"], [null, 123, "foo", true, "foo"]]);
+			expectNoActionIssue(action, [["foo"], [123, "foo"], [undefined, 123, "foo", true, "foo"]]);
 		});
 	});
 
@@ -75,7 +74,7 @@ describe("includes", () => {
 		});
 
 		test("for invalid arrays", () => {
-			expectActionIssue(action, baseIssue, [[], ["fo"], [123, "fobar"], [null, 123, true]], () => '!"foo"');
+			expectActionIssue(action, baseIssue, [[], ["fo"], [123, "fobar"], [undefined, 123, true]], () => '!"foo"');
 		});
 	});
 });

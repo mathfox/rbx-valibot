@@ -12,8 +12,7 @@ describe("toMaxValue", () => {
 			reference: toMaxValue,
 			requirement: 10,
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies ToMaxValueAction<number, 10>);
 	});
 

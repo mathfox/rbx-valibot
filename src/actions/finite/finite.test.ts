@@ -10,11 +10,9 @@ describe("finite", () => {
 			type: "finite",
 			reference: finite,
 			expects: undefined,
-			//requirement: expect.any(Function),
-			requirement: expect.any(() => {}),
+			requirement: expect.any("function"),
 			async: false,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -46,9 +44,9 @@ describe("finite", () => {
 		const action = finite();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 			});
 		});
 
@@ -64,8 +62,7 @@ describe("finite", () => {
 			type: "finite",
 			expected: undefined,
 			message: "message",
-			//requirement: expect.any(Function),
-			requirement: expect.any(() => {}),
+			requirement: expect.any("function"),
 		};
 
 		test("for infinite numbers", () => {

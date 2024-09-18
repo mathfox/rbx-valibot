@@ -18,8 +18,7 @@ describe("partialCheckAsync", () => {
 			expects: undefined,
 			requirement,
 			async: true,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -52,7 +51,6 @@ describe("partialCheckAsync", () => {
 		});
 	});
 
-	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 	type Input = {
 		nested: { key: string };
 		tuple: [number, { key: string }, number];

@@ -17,8 +17,7 @@ describe("rawCheckAsync", () => {
 			reference: rawCheckAsync,
 			expects: undefined,
 			async: true,
-			//_run: expect.any(Function),
-			_run: expect.any(() => {}),
+			_run: expect.any("function"),
 		} satisfies RawCheckActionAsync<number>);
 	});
 
