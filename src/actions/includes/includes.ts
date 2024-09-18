@@ -99,11 +99,15 @@ export function includes(
 		requirement,
 		message,
 		_run(dataset, config) {
-			// @ts-expect-error
-			if (dataset.typed && !dataset.value.includes(this.requirement)) {
-				_addIssue(this, "content", dataset, config, {
-					received: `!${expects}`,
-				});
+			if (dataset.typed) {
+				if (
+					(typeIs(dataset.value, "string") && dataset.value.find(this.requirement as string)[0] === undefined) ||
+					(dataset.value as defined[]).find((value) => value === this.requirement) === undefined
+				) {
+					_addIssue(this, "content", dataset, config, {
+						received: `!${expects}`,
+					});
+				}
 			}
 			return dataset;
 		},

@@ -19,7 +19,7 @@ describe("looseObjectAsync", () => {
 			expects: "Object",
 			entries,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -121,7 +121,6 @@ describe("looseObjectAsync", () => {
 		test("for optional entry", async () => {
 			await expectNoSchemaIssueAsync(looseObjectAsync({ key: optional(string()) }), [
 				{},
-				// @ts-expect-error
 				{ key: undefined },
 				{ key: "foo" },
 			]);
@@ -141,7 +140,7 @@ describe("looseObjectAsync", () => {
 		});
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

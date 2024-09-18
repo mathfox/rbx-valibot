@@ -1,13 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, decimal, email } from "../../actions";
+import { email } from "../../actions";
 import { pipe } from "../../methods";
 import { EMAIL_REGEX } from "../../regex";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
-import { bigint } from "../bigint/bigint";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
-import { null_ } from "../null/null";
 import { number } from "../number";
 import { object, objectAsync } from "../object";
 import { strictObjectAsync } from "../strictObject";
@@ -30,7 +28,7 @@ describe("variantAsync", () => {
 			key,
 			options,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -61,12 +59,8 @@ describe("variantAsync", () => {
 	describe("should return dataset without issues", () => {
 		test("for simple variants", async () => {
 			await expectNoSchemaIssueAsync(
-				variantAsync("type", [
-					object({ type: literal("foo") }),
-					object({ type: literal("bar") }),
-					objectAsync({ type: null_() }),
-				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
+				variantAsync("type", [object({ type: literal("foo") }), object({ type: literal("bar") })]),
+				[{ type: "foo" }, { type: "bar" }],
 			);
 		});
 
@@ -89,9 +83,9 @@ describe("variantAsync", () => {
 			await expectNoSchemaIssueAsync(
 				variantAsync("type", [
 					object({ type: literal("foo") }),
-					variantAsync("type", [object({ type: literal("bar") }), objectAsync({ type: null_() })]),
+					variantAsync("type", [object({ type: literal("bar") })]),
 				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
+				[{ type: "foo" }, { type: "bar" }],
 			);
 		});
 
@@ -99,16 +93,16 @@ describe("variantAsync", () => {
 			await expectNoSchemaIssueAsync(
 				variantAsync("type", [
 					object({ type: literal("foo") }),
-					variantAsync("type", [object({ type: literal("bar") }), variantAsync("type", [object({ type: null_() })])]),
+					variantAsync("type", [object({ type: literal("bar") })]),
 				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
+				[{ type: "foo" }, { type: "bar" }],
 			);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			path: undefined,
 			issues: undefined,
@@ -678,7 +672,6 @@ describe("variantAsync", () => {
 
 		test("for untyped object", async () => {
 			const schema = variantAsync("type", [
-				object({ type: literal("foo"), other: bigint() }),
 				object({ type: literal("bar"), other: string() }),
 				objectAsync({ type: literal("baz"), other: number() }),
 			]);
@@ -744,7 +737,6 @@ describe("variantAsync", () => {
 
 		test("for multiple untyped objects", async () => {
 			const schema = variantAsync("type", [
-				object({ type: literal("foo"), other: bigint() }),
 				object({ type: literal("bar"), other: string() }),
 				object({ type: literal("bar"), other: number() }),
 				objectAsync({ type: literal("bar"), other: boolean() }),
@@ -792,7 +784,7 @@ describe("variantAsync", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [
@@ -828,7 +820,7 @@ describe("variantAsync", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [
@@ -849,8 +841,6 @@ describe("variantAsync", () => {
 			const schema = variantAsync("type", [
 				object({ type: literal("foo"), other: number() }),
 				object({ type: literal("foo"), other: pipe(string(), email()) }),
-				object({ type: literal("foo"), other: pipe(string(), url()) }),
-				object({ type: literal("foo"), other: pipe(string(), decimal()) }),
 				objectAsync({ type: literal("foo"), other: boolean() }),
 			]);
 			type Schema = typeof schema;
@@ -864,7 +854,7 @@ describe("variantAsync", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [

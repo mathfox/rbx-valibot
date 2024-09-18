@@ -16,7 +16,7 @@ describe("setAsync", () => {
 			expects: "Set",
 			value,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -114,7 +114,7 @@ describe("setAsync", () => {
 		const schema = setAsync(string());
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,
@@ -133,17 +133,17 @@ describe("setAsync", () => {
 				{
 					type: "set",
 					origin: "value",
-					input: new Set(["foo", 123, "baz", null]),
-					key: null,
+					input: new Set(["foo", 123, "baz"]),
+					key: undefined,
 					value: 123,
 				},
 			],
 		};
 
 		test("for wrong values", async () => {
-			expect(await schema._run({ typed: false, value: new Set(["foo", 123, "baz", null]) }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: new Set(["foo", 123, "baz"]) }, {})).toStrictEqual({
 				typed: false,
-				value: new Set(["foo", 123, "baz", null]),
+				value: new Set(["foo", 123, "baz"]),
 				issues: [
 					stringIssue,
 					{
@@ -157,9 +157,9 @@ describe("setAsync", () => {
 							{
 								type: "set",
 								origin: "value",
-								input: new Set(["foo", 123, "baz", null]),
-								key: null,
-								value: null,
+								input: new Set(["foo", 123, "baz"]),
+								key: undefined,
+								value: undefined,
 							},
 						],
 					},
@@ -169,7 +169,7 @@ describe("setAsync", () => {
 
 		test("with abort early", async () => {
 			expect(
-				await schema._run({ typed: false, value: new Set(["foo", 123, "baz", null]) }, { abortEarly: true }),
+				await schema._run({ typed: false, value: new Set(["foo", 123, "baz"]) }, { abortEarly: true }),
 			).toStrictEqual({
 				typed: false,
 				value: new Set(["foo"]),
@@ -204,14 +204,14 @@ describe("setAsync", () => {
 								type: "set",
 								origin: "value",
 								input,
-								key: null,
+								key: undefined,
 								value: new Set([123, "foo"]),
 							},
 							{
 								type: "set",
 								origin: "value",
 								input: new Set([123, "foo"]),
-								key: null,
+								key: undefined,
 								value: 123,
 							},
 						],
@@ -228,7 +228,7 @@ describe("setAsync", () => {
 								type: "set",
 								origin: "value",
 								input,
-								key: null,
+								key: undefined,
 								value: "bar",
 							},
 						],

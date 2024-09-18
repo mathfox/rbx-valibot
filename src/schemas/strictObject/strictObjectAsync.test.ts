@@ -19,7 +19,7 @@ describe("strictObjectAsync", () => {
 			expects: "Object",
 			entries,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -115,7 +115,6 @@ describe("strictObjectAsync", () => {
 		test("for optional entry", async () => {
 			await expectNoSchemaIssueAsync(strictObjectAsync({ key: optional(string()) }), [
 				{},
-				// @ts-expect-error
 				{ key: undefined },
 				{ key: "foo" },
 			]);
@@ -129,7 +128,7 @@ describe("strictObjectAsync", () => {
 		});
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

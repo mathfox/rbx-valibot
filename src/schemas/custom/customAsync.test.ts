@@ -15,7 +15,7 @@ describe("customAsync", () => {
 	//			expects: "unknown",
 	//			check: isPixelString,
 	//			async: true,
-	//			_run: expect.any(Function),
+	//			_run: expect.any("function"),
 	//		};
 	//
 	//		test("with undefined message", () => {

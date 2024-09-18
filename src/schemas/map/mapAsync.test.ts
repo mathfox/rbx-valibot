@@ -20,7 +20,7 @@ describe("mapAsync", () => {
 			key,
 			value,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -140,7 +140,7 @@ describe("mapAsync", () => {
 		const schema = mapAsync(number(), string());
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

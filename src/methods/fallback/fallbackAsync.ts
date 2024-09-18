@@ -78,8 +78,7 @@ export function fallbackAsync<
 		async _run(dataset, config) {
 			const outputDataset = await schema._run(dataset, config);
 			return outputDataset.issues
-				? //// @ts-expect-error
-					{ typed: true, value: await getFallback(this as any, outputDataset, config) }
+				? { typed: true, value: await getFallback(this as unknown as TSchema, outputDataset, config) }
 				: outputDataset;
 		},
 	};

@@ -10,7 +10,7 @@ describe("number", () => {
 			reference: number,
 			expects: "number",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -46,11 +46,11 @@ describe("number", () => {
 		});
 
 		test("for positive integers", () => {
-			expectNoSchemaIssue(schema, [1, 23, 456, Number.MAX_VALUE]);
+			expectNoSchemaIssue(schema, [1, 23, 456]);
 		});
 
 		test("for negative integers", () => {
-			expectNoSchemaIssue(schema, [-1, -23, -456, Number.MIN_VALUE]);
+			expectNoSchemaIssue(schema, [-1, -23, -456]);
 		});
 
 		test("for positive floats", () => {
@@ -62,7 +62,7 @@ describe("number", () => {
 		});
 
 		test("for infinity numbers", () => {
-			expectNoSchemaIssue(schema, [Infinity, -Infinity]);
+			expectNoSchemaIssue(schema, [math.huge, -math.huge]);
 		});
 	});
 

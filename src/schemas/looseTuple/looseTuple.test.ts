@@ -19,7 +19,7 @@ describe("looseTuple", () => {
 			expects: "Array",
 			items,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -62,7 +62,7 @@ describe("looseTuple", () => {
 		});
 
 		test("for unknown items", () => {
-			expectNoSchemaIssue(schema, [["foo", 123, null, true, undefined]]);
+			expectNoSchemaIssue(schema, [["foo", 123, true, undefined]]);
 		});
 	});
 

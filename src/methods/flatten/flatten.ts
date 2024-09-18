@@ -86,14 +86,12 @@ export function flatten(issues: [BaseIssue<unknown>, ...BaseIssue<unknown>[]]): 
 			// If path has valid keys, add message to nested errors
 			if (dotPath) {
 				if (!flatErrors.nested) {
-					// @ts-expect-error
-					flatErrors.nested = {};
+					(flatErrors as typeof flatErrors & { nested: {} }).nested = {};
 				}
 				if (flatErrors.nested![dotPath]) {
 					flatErrors.nested![dotPath]!.push(issue.message);
 				} else {
-					// @ts-expect-error
-					flatErrors.nested![dotPath] = [issue.message];
+					(flatErrors.nested! as Record<string, defined[]>)[dotPath] = [issue.message];
 				}
 
 				// Otherwise, add message to other errors
@@ -101,8 +99,7 @@ export function flatten(issues: [BaseIssue<unknown>, ...BaseIssue<unknown>[]]): 
 				if (flatErrors.other) {
 					flatErrors.other.push(issue.message);
 				} else {
-					// @ts-expect-error
-					flatErrors.other = [issue.message];
+					(flatErrors as { other: string[] }).other = [issue.message];
 				}
 			}
 
@@ -111,8 +108,7 @@ export function flatten(issues: [BaseIssue<unknown>, ...BaseIssue<unknown>[]]): 
 			if (flatErrors.root) {
 				flatErrors.root.push(issue.message);
 			} else {
-				// @ts-expect-error
-				flatErrors.root = [issue.message];
+				(flatErrors as { root: string[] }).root = [issue.message];
 			}
 		}
 	}

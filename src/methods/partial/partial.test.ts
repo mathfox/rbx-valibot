@@ -9,10 +9,9 @@ describe("partial", () => {
 		key1: string(),
 		key2: number(),
 		key3: string(),
-		key4: nullish(number(), 123),
 	};
 	const baseInfo = {
-		message: expect.any(String),
+		message: expect.any("string"),
 		requirement: undefined,
 		issues: undefined,
 		lang: undefined,
@@ -33,14 +32,13 @@ describe("partial", () => {
 					reference: object,
 					expects: "Object",
 					entries: {
-						key1: { ...optional(entries.key1), _run: expect.any(Function) },
-						key2: { ...optional(entries.key2), _run: expect.any(Function) },
-						key3: { ...optional(entries.key3), _run: expect.any(Function) },
-						key4: { ...optional(entries.key4), _run: expect.any(Function) },
+						key1: { ...optional(entries.key1), _run: expect.any("function") },
+						key2: { ...optional(entries.key2), _run: expect.any("function") },
+						key3: { ...optional(entries.key3), _run: expect.any("function") },
 					},
 					message: undefined,
 					async: false,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema1);
 			});
 
@@ -51,28 +49,27 @@ describe("partial", () => {
 					reference: object,
 					expects: "Object",
 					entries: {
-						key1: { ...optional(entries.key1), _run: expect.any(Function) },
+						key1: { ...optional(entries.key1), _run: expect.any("function") },
 						key2: entries.key2,
-						key3: { ...optional(entries.key3), _run: expect.any(Function) },
-						key4: entries.key4,
+						key3: { ...optional(entries.key3), _run: expect.any("function") },
 					},
 					message: undefined,
 					async: false,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema2);
 			});
 		});
 
 		describe("should return dataset without nested issues", () => {
 			test("if partial keys are present", () => {
-				const input = { key1: "foo", key2: 123, key3: "bar", key4: 123 };
+				const input = { key1: "foo", key2: 123, key3: "bar" };
 				expectNoSchemaIssue(schema1, [input]);
 				expectNoSchemaIssue(schema2, [input]);
 			});
 
 			test("if partial keys are missing", () => {
 				expectNoSchemaIssue(schema1, [{}]);
-				expectNoSchemaIssue(schema2, [{ key2: 123, key4: 123 }]);
+				expectNoSchemaIssue(schema2, [{ key2: 123 }]);
 			});
 		});
 
@@ -81,7 +78,7 @@ describe("partial", () => {
 				for (const input of [{}, { key1: "foo", key3: "bar" }]) {
 					expect(schema2._run({ typed: false, value: input }, {})).toStrictEqual({
 						typed: false,
-						value: { ...input, key4: 123 },
+						value: { ...input },
 						issues: [
 							{
 								...baseInfo,
@@ -121,15 +118,14 @@ describe("partial", () => {
 					reference: objectWithRest,
 					expects: "Object",
 					entries: {
-						key1: { ...optional(entries.key1), _run: expect.any(Function) },
-						key2: { ...optional(entries.key2), _run: expect.any(Function) },
-						key3: { ...optional(entries.key3), _run: expect.any(Function) },
-						key4: { ...optional(entries.key4), _run: expect.any(Function) },
+						key1: { ...optional(entries.key1), _run: expect.any("function") },
+						key2: { ...optional(entries.key2), _run: expect.any("function") },
+						key3: { ...optional(entries.key3), _run: expect.any("function") },
 					},
 					rest,
 					message: undefined,
 					async: false,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema1);
 			});
 
@@ -141,14 +137,13 @@ describe("partial", () => {
 					expects: "Object",
 					entries: {
 						key1: entries.key1,
-						key2: { ...optional(entries.key2), _run: expect.any(Function) },
-						key3: { ...optional(entries.key3), _run: expect.any(Function) },
-						key4: entries.key4,
+						key2: { ...optional(entries.key2), _run: expect.any("function") },
+						key3: { ...optional(entries.key3), _run: expect.any("function") },
 					},
 					rest,
 					message: undefined,
 					async: false,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema2);
 			});
 		});
@@ -159,19 +154,15 @@ describe("partial", () => {
 					key1: "foo",
 					key2: 123,
 					key3: "bar",
-					key4: 123,
 					other: true,
 				};
-				// @ts-expect-error
-				expectNoSchemaIssue(schema1, [input]);
-				// @ts-expect-error
-				expectNoSchemaIssue(schema2, [input]);
+				expectNoSchemaIssue(schema1, [input as any]);
+				expectNoSchemaIssue(schema2, [input as any]);
 			});
 
 			test("if partial keys are missing", () => {
 				expectNoSchemaIssue(schema1, [{}]);
-				// @ts-expect-error
-				expectNoSchemaIssue(schema2, [{ key1: "foo", key4: 123, other: true }]);
+				expectNoSchemaIssue(schema2, [{ key1: "foo", other: true } as any]);
 			});
 		});
 
@@ -180,7 +171,7 @@ describe("partial", () => {
 				for (const input of [{}, { key2: 123, key3: "bar", other: true }]) {
 					expect(schema2._run({ typed: false, value: input }, {})).toStrictEqual({
 						typed: false,
-						value: { ...input, key4: 123 },
+						value: { ...input },
 						issues: [
 							{
 								...baseInfo,

@@ -19,7 +19,7 @@ describe("tupleAsync", () => {
 			expects: "Array",
 			items,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -127,7 +127,7 @@ describe("tupleAsync", () => {
 		});
 
 		test("for unknown items", async () => {
-			expect(await schema._run({ typed: false, value: ["foo", 123, null, true, undefined] }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toStrictEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -138,7 +138,7 @@ describe("tupleAsync", () => {
 		const schema = tupleAsync([string(), number(), boolean()]);
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,
@@ -202,7 +202,7 @@ describe("tupleAsync", () => {
 
 		test("for wrong nested items", async () => {
 			const nestedSchema = tupleAsync([schema, schema]);
-			const input: [[string, string, boolean], null] = [["foo", "123", false], null];
+			const input: [[string, string, boolean], undefined] = [["foo", "123", false], undefined];
 			expect(await nestedSchema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -235,7 +235,7 @@ describe("tupleAsync", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "tuple",
-						input: null,
+						input: undefined,
 						expected: "Array",
 						received: "null",
 						path: [

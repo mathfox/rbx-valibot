@@ -10,9 +10,9 @@ describe("optionalAsync", () => {
 			type: "optional",
 			reference: optionalAsync,
 			expects: "(string | undefined)",
-			wrapped: { ...string(), _run: expect.any(Function) },
+			wrapped: { ...string(), _run: expect.any("function") },
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with never default", () => {

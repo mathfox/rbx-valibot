@@ -10,9 +10,9 @@ describe("undefinedable", () => {
 			type: "undefinedable",
 			reference: undefinedable,
 			expects: "(string | undefined)",
-			wrapped: { ...string(), _run: expect.any(Function) },
+			wrapped: { ...string(), _run: expect.any("function") },
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with never default", () => {

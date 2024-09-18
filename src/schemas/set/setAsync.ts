@@ -111,7 +111,7 @@ export function setAsync(
 							type: "set",
 							origin: "value",
 							input,
-							key: null,
+							key: undefined,
 							value: inputValue,
 						};
 
@@ -120,14 +120,11 @@ export function setAsync(
 							if (issue.path) {
 								issue.path.unshift(pathItem);
 							} else {
-								// @ts-expect-error
 								issue.path = [pathItem];
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
+							dataset.issues?.push(issue as never);
 						}
 						if (!dataset.issues) {
-							// @ts-expect-error
 							dataset.issues = valueDataset.issues;
 						}
 
@@ -144,8 +141,7 @@ export function setAsync(
 					}
 
 					// Add value to dataset
-					// @ts-expect-error
-					dataset.value.add(valueDataset.value);
+					(dataset.value as Set<defined>).add(valueDataset.value);
 				}
 
 				// Otherwise, add set issue

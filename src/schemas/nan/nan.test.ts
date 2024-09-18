@@ -10,7 +10,7 @@ describe("nan", () => {
 			reference: nan,
 			expects: "NaN",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {

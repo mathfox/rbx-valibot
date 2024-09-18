@@ -88,7 +88,7 @@ export function set(
 							type: "set",
 							origin: "value",
 							input,
-							key: null,
+							key: undefined,
 							value: inputValue,
 						};
 
@@ -97,11 +97,9 @@ export function set(
 							if (issue.path) {
 								issue.path.unshift(pathItem);
 							} else {
-								// @ts-expect-error
-								issue.path = [pathItem];
+								(issue as { path: unknown }).path = [pathItem];
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
+							dataset.issues?.push(issue as never);
 						}
 						if (!dataset.issues) {
 							// @ts-expect-error
@@ -121,8 +119,7 @@ export function set(
 					}
 
 					// Add value to dataset
-					// @ts-expect-error
-					dataset.value.add(valueDataset.value);
+					(dataset.value as Set<defined>).add(valueDataset.value as defined);
 				}
 
 				// Otherwise, add set issue

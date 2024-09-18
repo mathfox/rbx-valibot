@@ -21,7 +21,7 @@ describe("pick", () => {
 		key4: number(),
 	};
 	const baseInfo = {
-		message: expect.any(String),
+		message: expect.any("string"),
 		requirement: undefined,
 		issues: undefined,
 		lang: undefined,
@@ -39,12 +39,12 @@ describe("pick", () => {
 				reference: object,
 				expects: "Object",
 				entries: {
-					key1: { ...string(), _run: expect.any(Function) },
-					key3: { ...string(), _run: expect.any(Function) },
+					key1: { ...string(), _run: expect.any("function") },
+					key3: { ...string(), _run: expect.any("function") },
 				},
 				message: undefined,
 				async: false,
-				_run: expect.any(Function),
+				_run: expect.any("function"),
 			} satisfies typeof schema);
 		});
 
@@ -58,7 +58,7 @@ describe("pick", () => {
 					schema._run(
 						{
 							typed: false,
-							value: { key1: "foo", key2: 123, key3: "bar", other: null },
+							value: { key1: "foo", key2: 123, key3: "bar" },
 						},
 						{},
 					),
@@ -108,25 +108,23 @@ describe("pick", () => {
 				reference: objectWithRest,
 				expects: "Object",
 				entries: {
-					key2: { ...number(), _run: expect.any(Function) },
-					key3: { ...string(), _run: expect.any(Function) },
+					key2: { ...number(), _run: expect.any("function") },
+					key3: { ...string(), _run: expect.any("function") },
 				},
-				rest: { ...boolean(), _run: expect.any(Function) },
+				rest: { ...boolean(), _run: expect.any("function") },
 				message: undefined,
 				async: false,
-				_run: expect.any(Function),
+				_run: expect.any("function"),
 			} satisfies typeof schema);
 		});
 
 		describe("should return dataset without nested issues", () => {
 			test("if picked keys are specified", () => {
-				// @ts-expect-error
-				expectNoSchemaIssue(schema, [{ key2: 123, key3: "bar" }]);
+				expectNoSchemaIssue(schema, [{ key2: 123, key3: "bar" } as any]);
 			});
 
 			test("if not picked key matches rest", () => {
-				// @ts-expect-error
-				expectNoSchemaIssue(schema, [{ key1: false, key2: 123, key3: "bar" }]);
+				expectNoSchemaIssue(schema, [{ key1: false, key2: 123, key3: "bar" } as any]);
 			});
 		});
 

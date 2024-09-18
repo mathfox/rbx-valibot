@@ -10,7 +10,7 @@ describe("unknown", () => {
 			reference: unknown,
 			expects: "unknown",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		} satisfies UnknownSchema);
 	});
 

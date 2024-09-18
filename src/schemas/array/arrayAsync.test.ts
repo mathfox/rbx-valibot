@@ -6,43 +6,43 @@ import { type ArraySchemaAsync, arrayAsync } from "./arrayAsync";
 import type { ArrayIssue } from "./types";
 
 describe("array", () => {
-	//	describe("should return schema object", () => {
-	//		const item = string();
-	//		type Item = typeof item;
-	//		const baseSchema: Omit<ArraySchemaAsync<Item, never>, "message"> = {
-	//			kind: "schema",
-	//			type: "array",
-	//			reference: arrayAsync,
-	//			expects: "Array",
-	//			item: { ...string(), _run: expect.any(Function) },
-	//			async: true,
-	//			_run: expect.any(Function),
-	//		};
-	//
-	//		test("with undefined message", () => {
-	//			const schema: ArraySchemaAsync<Item, undefined> = {
-	//				...baseSchema,
-	//				message: undefined,
-	//			};
-	//			expect(arrayAsync(item)).toStrictEqual(schema);
-	//			expect(arrayAsync(item, undefined)).toStrictEqual(schema);
-	//		});
-	//
-	//		test("with string message", () => {
-	//			expect(arrayAsync(item, "message")).toStrictEqual({
-	//				...baseSchema,
-	//				message: "message",
-	//			} satisfies ArraySchemaAsync<Item, "message">);
-	//		});
-	//
-	//		test("with function message", () => {
-	//			const message = () => "message";
-	//			expect(arrayAsync(item, message)).toStrictEqual({
-	//				...baseSchema,
-	//				message,
-	//			} satisfies ArraySchemaAsync<Item, typeof message>);
-	//		});
-	//	});
+	describe("should return schema object", () => {
+		const item = string();
+		type Item = typeof item;
+		const baseSchema: Omit<ArraySchemaAsync<Item, never>, "message"> = {
+			kind: "schema",
+			type: "array",
+			reference: arrayAsync,
+			expects: "Array",
+			item: { ...string(), _run: expect.any("function") },
+			async: true,
+			_run: expect.any("function"),
+		};
+
+		test("with undefined message", () => {
+			const schema: ArraySchemaAsync<Item, undefined> = {
+				...baseSchema,
+				message: undefined,
+			};
+			expect(arrayAsync(item)).toStrictEqual(schema);
+			expect(arrayAsync(item, undefined)).toStrictEqual(schema);
+		});
+
+		test("with string message", () => {
+			expect(arrayAsync(item, "message")).toStrictEqual({
+				...baseSchema,
+				message: "message",
+			} satisfies ArraySchemaAsync<Item, "message">);
+		});
+
+		test("with function message", () => {
+			const message = () => "message";
+			expect(arrayAsync(item, message)).toStrictEqual({
+				...baseSchema,
+				message,
+			} satisfies ArraySchemaAsync<Item, typeof message>);
+		});
+	});
 
 	describe("should return dataset without issues", () => {
 		const schema = arrayAsync(string());

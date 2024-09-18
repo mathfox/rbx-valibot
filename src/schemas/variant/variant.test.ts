@@ -1,13 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, decimal, email } from "../../actions";
+import { email } from "../../actions";
 import { pipe } from "../../methods";
 import { EMAIL_REGEX } from "../../regex";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
-import { bigint } from "../bigint/bigint";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
-import { null_ } from "../null/null";
 import { number } from "../number";
 import { object } from "../object";
 import { strictObject } from "../strictObject";
@@ -30,7 +28,7 @@ describe("variant", () => {
 			key,
 			options,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -60,14 +58,10 @@ describe("variant", () => {
 
 	describe("should return dataset without issues", () => {
 		test("for simple variants", () => {
-			expectNoSchemaIssue(
-				variant("type", [
-					object({ type: literal("foo") }),
-					object({ type: literal("bar") }),
-					object({ type: null_() }),
-				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
-			);
+			expectNoSchemaIssue(variant("type", [object({ type: literal("foo") }), object({ type: literal("bar") })]), [
+				{ type: "foo" },
+				{ type: "bar" },
+			]);
 		});
 
 		test("for same discriminators", () => {
@@ -87,28 +81,22 @@ describe("variant", () => {
 
 		test("for nested variants", () => {
 			expectNoSchemaIssue(
-				variant("type", [
-					object({ type: literal("foo") }),
-					variant("type", [object({ type: literal("bar") }), object({ type: null_() })]),
-				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
+				variant("type", [object({ type: literal("foo") }), variant("type", [object({ type: literal("bar") })])]),
+				[{ type: "foo" }, { type: "bar" }],
 			);
 		});
 
 		test("for deeply nested variants", () => {
 			expectNoSchemaIssue(
-				variant("type", [
-					object({ type: literal("foo") }),
-					variant("type", [object({ type: literal("bar") }), variant("type", [object({ type: null_() })])]),
-				]),
-				[{ type: "foo" }, { type: "bar" }, { type: null }],
+				variant("type", [object({ type: literal("foo") }), variant("type", [object({ type: literal("bar") })])]),
+				[{ type: "foo" }, { type: "bar" }],
 			);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			path: undefined,
 			issues: undefined,
@@ -678,11 +666,10 @@ describe("variant", () => {
 
 		test("for untyped object", () => {
 			const schema = variant("type", [
-				object({ type: literal("foo"), other: bigint() }),
 				object({ type: literal("bar"), other: string() }),
 				object({ type: literal("baz"), other: number() }),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: undefined };
 			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -716,7 +703,7 @@ describe("variant", () => {
 					object({ type: literal("baz"), other: number() }),
 				]),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: undefined };
 			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -744,12 +731,11 @@ describe("variant", () => {
 
 		test("for multiple untyped objects", () => {
 			const schema = variant("type", [
-				object({ type: literal("foo"), other: bigint() }),
 				object({ type: literal("bar"), other: string() }),
 				object({ type: literal("bar"), other: number() }),
 				object({ type: literal("bar"), other: boolean() }),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: undefined };
 			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -792,7 +778,7 @@ describe("variant", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [
@@ -828,7 +814,7 @@ describe("variant", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [
@@ -849,8 +835,6 @@ describe("variant", () => {
 			const schema = variant("type", [
 				object({ type: literal("foo"), other: number() }),
 				object({ type: literal("foo"), other: pipe(string(), email()) }),
-				object({ type: literal("foo"), other: pipe(string(), url()) }),
-				object({ type: literal("foo"), other: pipe(string(), decimal()) }),
 				object({ type: literal("foo"), other: boolean() }),
 			]);
 			type Schema = typeof schema;
@@ -864,7 +848,7 @@ describe("variant", () => {
 						kind: "validation",
 						type: "email",
 						input: input.other,
-						expected: null,
+						expected: undefined,
 						received: `"${input.other}"`,
 						requirement: EMAIL_REGEX,
 						path: [

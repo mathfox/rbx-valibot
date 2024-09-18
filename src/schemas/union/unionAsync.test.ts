@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, email, minLength } from "../../actions";
+import { email, minLength } from "../../actions";
 import { pipe } from "../../methods";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
@@ -7,6 +7,7 @@ import { literal } from "../literal/literal";
 import { number } from "../number";
 import { string } from "../string";
 import { type UnionSchemaAsync, unionAsync } from "./unionAsync";
+import RegExp from "@rbxts/regexp";
 
 describe("unionAsync", () => {
 	describe("should return schema object", () => {
@@ -19,7 +20,7 @@ describe("unionAsync", () => {
 			expects: '("foo" | "bar" | number)',
 			options,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -55,7 +56,7 @@ describe("unionAsync", () => {
 
 	describe("should return dataset with issues", () => {
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			path: undefined,
 			issues: undefined,
@@ -85,7 +86,7 @@ describe("unionAsync", () => {
 		});
 
 		test("with multiple typed issues", async () => {
-			const schema = unionAsync([pipe(string(), email()), pipe(string(), url())]);
+			const schema = unionAsync([pipe(string(), email()), string()]);
 			type Schema = typeof schema;
 			expect(await schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
 				typed: true,
@@ -106,18 +107,9 @@ describe("unionAsync", () => {
 								kind: "validation",
 								type: "email",
 								input: "foo",
-								expected: null,
+								expected: undefined,
 								received: '"foo"',
 								requirement: expect.any(RegExp),
-							},
-							{
-								...baseInfo,
-								kind: "validation",
-								type: "url",
-								input: "foo",
-								expected: null,
-								received: '"foo"',
-								requirement: expect.any(Function),
 							},
 						],
 					},
@@ -132,9 +124,9 @@ describe("unionAsync", () => {
 					kind: "schema",
 					type: "union",
 					expected: "never",
-					message: expect.any(String),
+					message: expect.any("string"),
 				},
-				["foo", 123, null, undefined],
+				["foo", 123, undefined],
 			);
 		});
 
@@ -158,9 +150,9 @@ describe("unionAsync", () => {
 
 		test("with multiple typed issues", async () => {
 			const schema = unionAsync([string(), number()]);
-			expect(await schema._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 				issues: [
 					{
 						...baseInfo,

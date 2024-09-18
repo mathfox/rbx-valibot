@@ -19,7 +19,7 @@ describe("strictTupleAsync", () => {
 			expects: "Array",
 			items,
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -122,7 +122,7 @@ describe("strictTupleAsync", () => {
 		const schema = strictTupleAsync([string(), number(), boolean()]);
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

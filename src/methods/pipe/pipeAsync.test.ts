@@ -1,20 +1,10 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import {
-	type DecimalIssue,
-	type MinLengthIssue,
-	decimal,
-	description,
-	minLength,
-	minValue,
-	transform,
-	trim,
-} from "../../actions";
-import { DECIMAL_REGEX } from "../../regex";
+import { type MinLengthIssue, description, minLength, minValue, transform, trim } from "../../actions";
 import { string } from "../../schemas";
 import { pipeAsync } from "./pipeAsync";
 
 describe("pipeAsync", () => {
-	const schema = pipeAsync(string(), description("text"), trim(), minLength(1), decimal());
+	const schema = pipeAsync(string(), description("text"), trim(), minLength(1));
 
 	test("should return schema object", () => {
 		expect(schema).toStrictEqual({
@@ -24,14 +14,13 @@ describe("pipeAsync", () => {
 			expects: "string",
 			message: undefined,
 			pipe: [
-				{ ...string(), _run: expect.any(Function) },
+				{ ...string(), _run: expect.any("function") },
 				{ ...description("text") },
-				{ ...trim(), _run: expect.any(Function) },
-				{ ...minLength(1), _run: expect.any(Function) },
-				{ ...decimal(), _run: expect.any(Function) },
+				{ ...trim(), _run: expect.any("function") },
+				{ ...minLength(1), _run: expect.any("function") },
 			],
 			async: true,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		} satisfies typeof schema);
 	});
 
@@ -43,7 +32,7 @@ describe("pipeAsync", () => {
 	});
 
 	const baseInfo = {
-		message: expect.any(String),
+		message: expect.any("string"),
 		path: undefined,
 		issues: undefined,
 		lang: undefined,
@@ -61,21 +50,11 @@ describe("pipeAsync", () => {
 		requirement: 1,
 	};
 
-	const decimalIssue: DecimalIssue<string> = {
-		...baseInfo,
-		kind: "validation",
-		type: "decimal",
-		input: "",
-		expected: null,
-		received: '""',
-		requirement: DECIMAL_REGEX,
-	};
-
 	test("should return dataset with issues", async () => {
 		expect(await schema._run({ typed: false, value: "  " }, {})).toStrictEqual({
 			typed: true,
 			value: "",
-			issues: [minLengthIssue, decimalIssue],
+			issues: [minLengthIssue],
 		});
 	});
 
@@ -100,17 +79,7 @@ describe("pipeAsync", () => {
 			expect(await pipeAsync(schema, string(), minLength(10))._run({ typed: false, value: "  " }, {})).toStrictEqual({
 				typed: false,
 				value: "",
-				issues: [minLengthIssue, decimalIssue],
-			});
-		});
-
-		test("if next action is transformation", async () => {
-			expect(
-				await pipeAsync(schema, transform(parseInt), minValue(999))._run({ typed: false, value: "  " }, {}),
-			).toStrictEqual({
-				typed: false,
-				value: "",
-				issues: [minLengthIssue, decimalIssue],
+				issues: [minLengthIssue],
 			});
 		});
 	});

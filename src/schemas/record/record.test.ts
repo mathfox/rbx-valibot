@@ -22,7 +22,7 @@ describe("record", () => {
 			key,
 			value,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -118,7 +118,7 @@ describe("record", () => {
 		const schema = record(picklist(["foo", "bar", "baz"]), optional(number()));
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

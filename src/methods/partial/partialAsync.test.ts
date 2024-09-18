@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { boolean, nullishAsync, number, objectAsync, objectWithRestAsync, optionalAsync, string } from "../../schemas";
+import { boolean, number, objectAsync, objectWithRestAsync, optionalAsync, string } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
 import { partialAsync } from "./partialAsync";
@@ -9,10 +9,9 @@ describe("partialAsync", () => {
 		key1: string(),
 		key2: number(),
 		key3: string(),
-		key4: nullishAsync(number(), async () => 123),
 	};
 	const baseInfo = {
-		message: expect.any(String),
+		message: expect.any("string"),
 		requirement: undefined,
 		issues: undefined,
 		lang: undefined,
@@ -35,24 +34,20 @@ describe("partialAsync", () => {
 					entries: {
 						key1: {
 							...optionalAsync(entries.key1),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key2: {
 							...optionalAsync(entries.key2),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key3: {
 							...optionalAsync(entries.key3),
-							_run: expect.any(Function),
-						},
-						key4: {
-							...optionalAsync(entries.key4),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 					},
 					message: undefined,
 					async: true,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema1);
 			});
 
@@ -65,32 +60,31 @@ describe("partialAsync", () => {
 					entries: {
 						key1: {
 							...optionalAsync(entries.key1),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key2: entries.key2,
 						key3: {
 							...optionalAsync(entries.key3),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
-						key4: entries.key4,
 					},
 					message: undefined,
 					async: true,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema2);
 			});
 		});
 
 		describe("should return dataset without nested issues", () => {
 			test("if partialAsync keys are present", async () => {
-				const input = { key1: "foo", key2: 123, key3: "bar", key4: 123 };
+				const input = { key1: "foo", key2: 123, key3: "bar" };
 				await expectNoSchemaIssueAsync(schema1, [input]);
 				await expectNoSchemaIssueAsync(schema2, [input]);
 			});
 
 			test("if partialAsync keys are missing", async () => {
 				await expectNoSchemaIssueAsync(schema1, [{}]);
-				await expectNoSchemaIssueAsync(schema2, [{ key2: 123, key4: 123 }]);
+				await expectNoSchemaIssueAsync(schema2, [{ key2: 123 }]);
 			});
 		});
 
@@ -99,7 +93,7 @@ describe("partialAsync", () => {
 				for (const input of [{}, { key1: "foo", key3: "bar" }]) {
 					expect(await schema2._run({ typed: false, value: input }, {})).toStrictEqual({
 						typed: false,
-						value: { ...input, key4: 123 },
+						value: { ...input },
 						issues: [
 							{
 								...baseInfo,
@@ -141,25 +135,21 @@ describe("partialAsync", () => {
 					entries: {
 						key1: {
 							...optionalAsync(entries.key1),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key2: {
 							...optionalAsync(entries.key2),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key3: {
 							...optionalAsync(entries.key3),
-							_run: expect.any(Function),
-						},
-						key4: {
-							...optionalAsync(entries.key4),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 					},
 					rest,
 					message: undefined,
 					async: true,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema1);
 			});
 
@@ -173,18 +163,17 @@ describe("partialAsync", () => {
 						key1: entries.key1,
 						key2: {
 							...optionalAsync(entries.key2),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
 						key3: {
 							...optionalAsync(entries.key3),
-							_run: expect.any(Function),
+							_run: expect.any("function"),
 						},
-						key4: entries.key4,
 					},
 					rest,
 					message: undefined,
 					async: true,
-					_run: expect.any(Function),
+					_run: expect.any("function"),
 				} satisfies typeof schema2);
 			});
 		});
@@ -195,7 +184,6 @@ describe("partialAsync", () => {
 					key1: "foo",
 					key2: 123,
 					key3: "bar",
-					key4: 123,
 					other: true,
 				};
 				// @ts-expect-error
@@ -206,10 +194,7 @@ describe("partialAsync", () => {
 
 			test("if partialAsync keys are missing", async () => {
 				await expectNoSchemaIssueAsync(schema1, [{}]);
-				await expectNoSchemaIssueAsync(schema2, [
-					// @ts-expect-error
-					{ key1: "foo", key4: 123, other: true },
-				]);
+				await expectNoSchemaIssueAsync(schema2, [{ key1: "foo", other: true } as any]);
 			});
 		});
 
@@ -218,7 +203,7 @@ describe("partialAsync", () => {
 				for (const input of [{}, { key2: 123, key3: "bar", other: true }]) {
 					expect(await schema2._run({ typed: false, value: input }, {})).toStrictEqual({
 						typed: false,
-						value: { ...input, key4: 123 },
+						value: { ...input },
 						issues: [
 							{
 								...baseInfo,

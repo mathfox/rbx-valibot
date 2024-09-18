@@ -1,7 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { EmailIssue, UrlIssue } from "../../../../actions";
+import type { EmailIssue } from "../../../../actions";
 import type { TypedDataset } from "../../../../types";
 import { _subIssues } from "./_subIssues";
+import RegExp from "@rbxts/regexp";
 
 describe("_subIssues", () => {
 	describe("should return undefined", () => {
@@ -20,7 +21,7 @@ describe("_subIssues", () => {
 
 	describe("should return subissues", () => {
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			path: undefined,
 			issues: undefined,
@@ -34,19 +35,9 @@ describe("_subIssues", () => {
 			kind: "validation",
 			type: "email",
 			input: "foo",
-			expected: null,
+			expected: undefined,
 			received: '"foo"',
 			requirement: expect.any(RegExp),
-		};
-
-		const urlIssue: UrlIssue<string> = {
-			...baseInfo,
-			kind: "validation",
-			type: "url",
-			input: "foo",
-			expected: null,
-			received: '"foo"',
-			requirement: expect.any(Function),
 		};
 
 		test("for single dataset with single issue", () => {
@@ -67,10 +58,10 @@ describe("_subIssues", () => {
 					{
 						typed: true,
 						value: "foo",
-						issues: [emailIssue, urlIssue],
-					} satisfies TypedDataset<string, EmailIssue<string> | UrlIssue<string>>,
+						issues: [emailIssue],
+					} satisfies TypedDataset<string, EmailIssue<string>>,
 				]),
-			).toEqual([emailIssue, urlIssue]);
+			).toEqual([emailIssue]);
 		});
 
 		test("for multiple datasets with single issue", () => {
@@ -81,13 +72,8 @@ describe("_subIssues", () => {
 						value: "foo",
 						issues: [emailIssue],
 					},
-					{
-						typed: true,
-						value: "foo",
-						issues: [urlIssue],
-					},
-				] satisfies TypedDataset<string, EmailIssue<string> | UrlIssue<string>>[]),
-			).toEqual([emailIssue, urlIssue]);
+				] satisfies TypedDataset<string, EmailIssue<string>>[]),
+			).toEqual([emailIssue]);
 		});
 
 		test("for multiple datasets with multiple issues", () => {
@@ -96,15 +82,15 @@ describe("_subIssues", () => {
 					{
 						typed: true,
 						value: "foo",
-						issues: [emailIssue, urlIssue],
+						issues: [emailIssue],
 					},
 					{
 						typed: true,
 						value: "foo",
-						issues: [emailIssue, urlIssue],
+						issues: [emailIssue],
 					},
-				] satisfies TypedDataset<string, EmailIssue<string> | UrlIssue<string>>[]),
-			).toEqual([emailIssue, urlIssue, emailIssue, urlIssue]);
+				] satisfies TypedDataset<string, EmailIssue<string>>[]),
+			).toEqual([emailIssue, emailIssue]);
 		});
 	});
 });

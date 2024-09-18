@@ -10,7 +10,7 @@ describe("string", () => {
 			reference: string,
 			expects: "string",
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {

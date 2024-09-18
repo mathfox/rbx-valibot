@@ -18,7 +18,7 @@ describe("object", () => {
 			expects: "Object",
 			entries,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -115,17 +115,12 @@ describe("object", () => {
 		});
 
 		test("for optional entry", () => {
-			expectNoSchemaIssue(object({ key: optional(string()) }), [
-				{},
-				// @ts-expect-error
-				{ key: undefined },
-				{ key: "foo" },
-			]);
+			expectNoSchemaIssue(object({ key: optional(string()) }), [{}, { key: undefined }, { key: "foo" }]);
 		});
 
 		test("for unknown entries", () => {
 			expect(
-				object({ key1: string() })._run({ typed: false, value: { key1: "foo", key2: 123, key3: null } }, {}),
+				object({ key1: string() })._run({ typed: false, value: { key1: "foo", key2: 123, key3: undefined } }, {}),
 			).toStrictEqual({
 				typed: true,
 				value: { key1: "foo" },
@@ -137,7 +132,7 @@ describe("object", () => {
 		const schema = object({ key: string(), nested: object({ key: number() }) });
 
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

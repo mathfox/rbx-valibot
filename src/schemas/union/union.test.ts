@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { url, email, minLength } from "../../actions";
+import { email, minLength } from "../../actions";
 import { pipe } from "../../methods";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
@@ -7,6 +7,7 @@ import { literal } from "../literal/literal";
 import { number } from "../number";
 import { string } from "../string";
 import { type UnionSchema, union } from "./union";
+import RegExp from "@rbxts/regexp";
 
 describe("union", () => {
 	describe("should return schema object", () => {
@@ -19,7 +20,7 @@ describe("union", () => {
 			expects: '("foo" | "bar" | number)',
 			options,
 			async: false,
-			_run: expect.any(Function),
+			_run: expect.any("function"),
 		};
 
 		test("with undefined message", () => {
@@ -55,7 +56,7 @@ describe("union", () => {
 
 	describe("should return dataset with issues", () => {
 		const baseInfo = {
-			message: expect.any(String),
+			message: expect.any("string"),
 			requirement: undefined,
 			path: undefined,
 			issues: undefined,
@@ -85,7 +86,7 @@ describe("union", () => {
 		});
 
 		test("with multiple typed issues", () => {
-			const schema = union([pipe(string(), email()), pipe(string(), url())]);
+			const schema = union([pipe(string(), email()), string()]);
 			type Schema = typeof schema;
 			expect(schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
 				typed: true,
@@ -106,18 +107,9 @@ describe("union", () => {
 								kind: "validation",
 								type: "email",
 								input: "foo",
-								expected: null,
+								expected: undefined,
 								received: '"foo"',
 								requirement: expect.any(RegExp),
-							},
-							{
-								...baseInfo,
-								kind: "validation",
-								type: "url",
-								input: "foo",
-								expected: null,
-								received: '"foo"',
-								requirement: expect.any(Function),
 							},
 						],
 					},
@@ -132,7 +124,7 @@ describe("union", () => {
 					kind: "schema",
 					type: "union",
 					expected: "never",
-					message: expect.any(String),
+					message: expect.any("string"),
 				},
 				["foo", 123, null, undefined],
 			);
@@ -158,15 +150,15 @@ describe("union", () => {
 
 		test("with multiple typed issues", () => {
 			const schema = union([string(), number()]);
-			expect(schema._run({ typed: false, value: null }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: undefined }, {})).toStrictEqual({
 				typed: false,
-				value: null,
+				value: undefined,
 				issues: [
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "union",
-						input: null,
+						input: undefined,
 						expected: "(string | number)",
 						received: "null",
 						issues: [
@@ -174,7 +166,7 @@ describe("union", () => {
 								...baseInfo,
 								kind: "schema",
 								type: "string",
-								input: null,
+								input: undefined,
 								expected: "string",
 								received: "null",
 							},
@@ -182,7 +174,7 @@ describe("union", () => {
 								...baseInfo,
 								kind: "schema",
 								type: "number",
-								input: null,
+								input: undefined,
 								expected: "number",
 								received: "null",
 							},
