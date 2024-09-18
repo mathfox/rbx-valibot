@@ -112,7 +112,7 @@ export function array(
 							}
 							dataset.issues?.push(issue as never);
 						}
-						if (!dataset.issues) {
+						if (dataset.issues === undefined) {
 							dataset.issues = itemDataset.issues as never;
 						}
 
@@ -124,7 +124,7 @@ export function array(
 					}
 
 					// If not typed, set typed to `false`
-					if (!itemDataset.typed) {
+					if (itemDataset.typed === false) {
 						dataset.typed = false;
 					}
 

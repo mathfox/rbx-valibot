@@ -16,11 +16,7 @@ import type {
  * Schema with pipe type.
  */
 export type SchemaWithPipe<
-	TPipe extends [
-		BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...PipeItem<any, unknown, BaseIssue<unknown>>[],
-	],
+	TPipe extends [BaseSchema<unknown, unknown, BaseIssue<unknown>>, ...PipeItem<any, unknown, BaseIssue<unknown>>[]],
 > = Omit<FirstTupleItem<TPipe>, "_run" | "_types"> & {
 	/**
 	 * The pipe items.
