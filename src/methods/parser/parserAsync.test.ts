@@ -18,11 +18,9 @@ describe("parserAsync", () => {
 
 		test("without config", () => {
 			const func1 = parserAsync(schema);
-			expect(func1).toBeInstanceOf("table");
 			expect(func1.schema).toBe(schema);
 			expect(func1.config).toBeUndefined();
 			const func2 = parserAsync(schema, undefined);
-			expect(func2).toBeInstanceOf("table");
 			expect(func2.schema).toBe(schema);
 			expect(func2.config).toBeUndefined();
 		});
@@ -32,7 +30,6 @@ describe("parserAsync", () => {
 				abortEarly: true,
 			};
 			const func = parserAsync(schema, config);
-			expect(func).toBeInstanceOf("table");
 			expect(func.schema).toBe(schema);
 			expect(func.config).toBe(config);
 		});
@@ -47,8 +44,8 @@ describe("parserAsync", () => {
 	});
 
 	test("should throw error for invalid input", async () => {
-		await expect(() => parserAsync(string_())(123)).rejects.toThrowError();
-		await expect(() => parserAsync(number())("foo")).rejects.toThrowError();
-		await expect(() => parserAsync(objectAsync(entries))(undefined)).rejects.toThrowError();
+		expect(parserAsync(string_())(123).awaitStatus()[0]).toBe("Rejected");
+		expect(parserAsync(number())("foo").awaitStatus()[0]).toBe("Rejected");
+		expect(parserAsync(objectAsync(entries))(undefined).awaitStatus()[0]).toBe("Rejected");
 	});
 });

@@ -16,9 +16,10 @@ export async function parseAsync<
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(schema: TSchema, input: unknown, config?: Config<InferIssue<TSchema>>): Promise<InferOutput<TSchema>> {
-	const dataset = schema.async
-		? await schema._run({ typed: false, value: input }, getGlobalConfig(config))
-		: schema._run({ typed: false, value: input }, getGlobalConfig(config));
+	const dataset = await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+		{ typed: false, value: input },
+		getGlobalConfig(config),
+	);
 	if (dataset.issues) {
 		throw new ValiError(dataset.issues);
 	}

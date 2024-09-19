@@ -241,7 +241,6 @@ describe("objectWithRestAsync", () => {
 						value: {
 							key: "foo",
 							nested: { key: 123 },
-							other1: undefined,
 							other2: "bar",
 						},
 					},

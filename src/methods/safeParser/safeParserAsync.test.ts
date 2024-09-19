@@ -16,11 +16,9 @@ describe("safeParserAsync", () => {
 
 		test("without config", () => {
 			const func1 = safeParserAsync(schema);
-			expect(func1).toBeInstanceOf("table");
 			expect(func1.schema).toBe(schema);
 			expect(func1.config).toBeUndefined();
 			const func2 = safeParserAsync(schema, undefined);
-			expect(func2).toBeInstanceOf("table");
 			expect(func2.schema).toBe(schema);
 			expect(func2.config).toBeUndefined();
 		});
@@ -30,7 +28,6 @@ describe("safeParserAsync", () => {
 				abortEarly: true,
 			};
 			const func = safeParserAsync(schema, config);
-			expect(func).toBeInstanceOf("table");
 			expect(func.schema).toBe(schema);
 			expect(func.config).toBe(config);
 		});

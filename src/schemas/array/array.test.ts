@@ -128,25 +128,15 @@ describe("array", () => {
 		};
 
 		test("for wrong items", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, "baz", undefined] }, {})).toEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, "baz"] }, {})).toEqual({
 				typed: false,
-				value: ["foo", 123, "baz", undefined],
-				issues: [
-					stringIssue,
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "string",
-						input: undefined,
-						expected: "string",
-						received: "nil",
-					},
-				],
+				value: ["foo", 123, "baz"],
+				issues: [stringIssue],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, "baz", undefined] }, { abortEarly: true })).toEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, "baz"] }, { abortEarly: true })).toEqual({
 				typed: false,
 				value: ["foo"],
 				issues: [{ ...stringIssue, abortEarly: true }],

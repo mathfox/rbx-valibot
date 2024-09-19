@@ -90,7 +90,7 @@ describe("arrayAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 

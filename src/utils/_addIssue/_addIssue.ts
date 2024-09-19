@@ -100,7 +100,7 @@ export function _addIssue<const TContext extends Context>(
 	}
 
 	// Add issue to dataset
-	if (dataset.issues) {
+	if (dataset.issues !== undefined) {
 		dataset.issues.push(issue);
 	} else {
 		dataset.issues = [issue];
