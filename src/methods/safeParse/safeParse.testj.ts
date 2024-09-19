@@ -17,7 +17,7 @@
 //				}),
 //				{ key: "foobar" },
 //			),
-//		).toStrictEqual({
+//		).toEqual({
 //			typed: true,
 //			success: true,
 //			output: { key: 6 },

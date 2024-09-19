@@ -28,12 +28,12 @@
 //				...baseSchema,
 //				message: undefined,
 //			};
-//			expect(unionAsync(options)).toStrictEqual(schema);
-//			expect(unionAsync(options, undefined)).toStrictEqual(schema);
+//			expect(unionAsync(options)).toEqual(schema);
+//			expect(unionAsync(options, undefined)).toEqual(schema);
 //		});
 //
 //		test("with string message", () => {
-//			expect(unionAsync(options, "message")).toStrictEqual({
+//			expect(unionAsync(options, "message")).toEqual({
 //				...baseSchema,
 //				message: "message",
 //			} satisfies UnionSchemaAsync<Options, "message">);
@@ -41,7 +41,7 @@
 //
 //		test("with function message", () => {
 //			const message = () => "message";
-//			expect(unionAsync(options, message)).toStrictEqual({
+//			expect(unionAsync(options, message)).toEqual({
 //				...baseSchema,
 //				message,
 //			} satisfies UnionSchemaAsync<Options, typeof message>);
@@ -68,7 +68,7 @@
 //		test("with single typed issue", async () => {
 //			const schema = unionAsync([pipe(string(), minLength(5)), number()]);
 //			type Schema = typeof schema;
-//			expect(await schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+//			expect(await schema._run({ typed: false, value: "foo" }, {})).toEqual({
 //				typed: true,
 //				value: "foo",
 //				issues: [
@@ -88,7 +88,7 @@
 //		test("with multiple typed issues", async () => {
 //			const schema = unionAsync([pipe(string(), email()), string()]);
 //			type Schema = typeof schema;
-//			expect(await schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+//			expect(await schema._run({ typed: false, value: "foo" }, {})).toEqual({
 //				typed: true,
 //				value: "foo",
 //				issues: [
@@ -132,7 +132,7 @@
 //
 //		test("with single untyped issue", async () => {
 //			const schema = unionAsync([literal("foo")]);
-//			expect(await schema._run({ typed: false, value: "bar" }, {})).toStrictEqual({
+//			expect(await schema._run({ typed: false, value: "bar" }, {})).toEqual({
 //				typed: false,
 //				value: "bar",
 //				issues: [
@@ -150,7 +150,7 @@
 //
 //		test("with multiple typed issues", async () => {
 //			const schema = unionAsync([string(), number()]);
-//			expect(await schema._run({ typed: false, value: undefined }, {})).toStrictEqual({
+//			expect(await schema._run({ typed: false, value: undefined }, {})).toEqual({
 //				typed: false,
 //				value: undefined,
 //				issues: [

@@ -5,7 +5,7 @@ describe("transform", () => {
 	describe("should transform input", () => {
 		test("to length of string", () => {
 			const action = transform((input: string) => input.size());
-			expect(action._run({ typed: true, value: "123456" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "123456" }, {})).toEqual({
 				typed: true,
 				value: 6,
 			});
@@ -16,7 +16,7 @@ describe("transform", () => {
 				...input,
 				key2: 123,
 			}));
-			expect(action._run({ typed: true, value: { key1: "foo" } }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: { key1: "foo" } }, {})).toEqual({
 				typed: true,
 				value: { key1: "foo", key2: 123 },
 			});

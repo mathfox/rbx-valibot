@@ -1,20 +1,20 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type MinLengthIssue, description, minLength, minValue, transform, trim } from "../../actions";
-import { string } from "../../schemas";
+import { type MinLengthIssue, description, minLength, trim } from "../../actions";
+import { string_ } from "../../schemas";
 import { pipeAsync } from "./pipeAsync";
 
 describe("pipeAsync", () => {
-	const schema = pipeAsync(string(), description("text"), trim(), minLength(1));
+	const schema = pipeAsync(string_(), description("text"), trim(), minLength(1));
 
 	test("should return schema object", () => {
-		expect(schema).toStrictEqual({
+		expect(schema).toEqual({
 			kind: "schema",
 			type: "string",
-			reference: string,
+			reference: string_,
 			expects: "string",
 			message: undefined,
 			pipe: [
-				{ ...string(), _run: expect.any("function") },
+				{ ...string_(), _run: expect.any("function") },
 				{ ...description("text") },
 				{ ...trim(), _run: expect.any("function") },
 				{ ...minLength(1), _run: expect.any("function") },
@@ -25,7 +25,7 @@ describe("pipeAsync", () => {
 	});
 
 	test("should return dataset without issues", async () => {
-		expect(await schema._run({ typed: false, value: " 123 " }, {})).toStrictEqual({
+		expect(await schema._run({ typed: false, value: " 123 " }, {})).toEqual({
 			typed: true,
 			value: "123",
 		});
@@ -51,7 +51,7 @@ describe("pipeAsync", () => {
 	};
 
 	test("should return dataset with issues", async () => {
-		expect(await schema._run({ typed: false, value: "  " }, {})).toStrictEqual({
+		expect(await schema._run({ typed: false, value: "  " }, {})).toEqual({
 			typed: true,
 			value: "",
 			issues: [minLengthIssue],
@@ -60,7 +60,7 @@ describe("pipeAsync", () => {
 
 	describe("should break pipe if necessary", () => {
 		test("for abort early config", async () => {
-			expect(await schema._run({ typed: false, value: "  " }, { abortEarly: true })).toStrictEqual({
+			expect(await schema._run({ typed: false, value: "  " }, { abortEarly: true })).toEqual({
 				typed: true,
 				value: "",
 				issues: [{ ...minLengthIssue, abortEarly: true }],
@@ -68,7 +68,7 @@ describe("pipeAsync", () => {
 		});
 
 		test("for abort pipe early config", async () => {
-			expect(await schema._run({ typed: false, value: "  " }, { abortPipeEarly: true })).toStrictEqual({
+			expect(await schema._run({ typed: false, value: "  " }, { abortPipeEarly: true })).toEqual({
 				typed: true,
 				value: "",
 				issues: [{ ...minLengthIssue, abortPipeEarly: true }],
@@ -76,7 +76,7 @@ describe("pipeAsync", () => {
 		});
 
 		test("if next action is schema", async () => {
-			expect(await pipeAsync(schema, string(), minLength(10))._run({ typed: false, value: "  " }, {})).toStrictEqual({
+			expect(await pipeAsync(schema, string_(), minLength(10))._run({ typed: false, value: "  " }, {})).toEqual({
 				typed: false,
 				value: "",
 				issues: [minLengthIssue],

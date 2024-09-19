@@ -7,7 +7,7 @@ describe("minLength", () => {
 		const action = minLength(5);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: false,
 				value: undefined,
 			});

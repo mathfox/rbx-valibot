@@ -33,6 +33,7 @@ export type SchemaWithPipe<
 	 * @internal
 	 */
 	readonly _run: (
+		this: unknown,
 		dataset: Dataset<unknown, never>,
 		config: Config<InferIssue<FirstTupleItem<TPipe>>>,
 	) => Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>;

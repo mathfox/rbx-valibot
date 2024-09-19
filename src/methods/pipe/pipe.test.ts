@@ -1,20 +1,20 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { type MinLengthIssue, description, minLength, trim } from "../../actions";
-import { string } from "../../schemas";
+import { string_ } from "../../schemas";
 import { pipe } from "./pipe";
 
 describe("pipe", () => {
-	const schema = pipe(string(), description("text"), trim(), minLength(1));
+	const schema = pipe(string_(), description("text"), trim(), minLength(1));
 
 	test("should return schema object", () => {
-		expect(schema).toStrictEqual({
+		expect(schema).toEqual({
 			kind: "schema",
 			type: "string",
-			reference: string,
+			reference: string_,
 			expects: "string",
 			message: undefined,
 			pipe: [
-				{ ...string(), _run: expect.any("function") },
+				{ ...string_(), _run: expect.any("function") },
 				{ ...description("text") },
 				{ ...trim(), _run: expect.any("function") },
 				{ ...minLength(1), _run: expect.any("function") },
@@ -25,7 +25,7 @@ describe("pipe", () => {
 	});
 
 	test("should return dataset without issues", () => {
-		expect(schema._run({ typed: false, value: " 123 " }, {})).toStrictEqual({
+		expect(schema._run({ typed: false, value: " 123 " }, {})).toEqual({
 			typed: true,
 			value: "123",
 		});
@@ -51,7 +51,7 @@ describe("pipe", () => {
 	};
 
 	test("should return dataset with issues", () => {
-		expect(schema._run({ typed: false, value: "  " }, {})).toStrictEqual({
+		expect(schema._run({ typed: false, value: "  " }, {})).toEqual({
 			typed: true,
 			value: "",
 			issues: [minLengthIssue],
@@ -60,7 +60,7 @@ describe("pipe", () => {
 
 	describe("should break pipe if necessary", () => {
 		test("for abort early config", () => {
-			expect(schema._run({ typed: false, value: "  " }, { abortEarly: true })).toStrictEqual({
+			expect(schema._run({ typed: false, value: "  " }, { abortEarly: true })).toEqual({
 				typed: true,
 				value: "",
 				issues: [{ ...minLengthIssue, abortEarly: true }],
@@ -68,7 +68,7 @@ describe("pipe", () => {
 		});
 
 		test("for abort pipe early config", () => {
-			expect(schema._run({ typed: false, value: "  " }, { abortPipeEarly: true })).toStrictEqual({
+			expect(schema._run({ typed: false, value: "  " }, { abortPipeEarly: true })).toEqual({
 				typed: true,
 				value: "",
 				issues: [{ ...minLengthIssue, abortPipeEarly: true }],

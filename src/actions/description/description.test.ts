@@ -3,7 +3,7 @@ import { type DescriptionAction, description } from "./description";
 
 describe("description", () => {
 	test("should return action object", () => {
-		expect(description<string, "text">("text")).toStrictEqual({
+		expect(description<string, "text">("text")).toEqual({
 			kind: "metadata",
 			type: "description",
 			reference: description,

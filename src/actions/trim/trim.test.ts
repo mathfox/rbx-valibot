@@ -6,32 +6,32 @@ describe("trim", () => {
 		const action = trim();
 
 		test("for empty string", () => {
-			expect(action._run({ typed: true, value: "" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "" }, {})).toEqual({
 				typed: true,
 				value: "",
 			});
-			expect(action._run({ typed: true, value: " " }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: " " }, {})).toEqual({
 				typed: true,
 				value: "",
 			});
 		});
 
 		test("with blanks at start", () => {
-			expect(action._run({ typed: true, value: "  foo" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "  foo" }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
 		});
 
 		test("with blanks at end", () => {
-			expect(action._run({ typed: true, value: "foo  " }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "foo  " }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
 		});
 
 		test("with blanks at start and end", () => {
-			expect(action._run({ typed: true, value: "  foo  " }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "  foo  " }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});

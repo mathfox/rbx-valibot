@@ -21,10 +21,7 @@ import type {
 export type SchemaWithPipeAsync<
 	TPipe extends [
 		BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-		...(
-			| PipeItem<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
-			| PipeItemAsync<any, unknown, BaseIssue<unknown>> // eslint-disable-line @typescript-eslint/no-explicit-any
-		)[],
+		...(PipeItem<any, unknown, BaseIssue<unknown>> | PipeItemAsync<any, unknown, BaseIssue<unknown>>)[],
 	],
 > = Omit<FirstTupleItem<TPipe>, "async" | "_run" | "_types"> & {
 	/**
@@ -46,6 +43,7 @@ export type SchemaWithPipeAsync<
 	 * @internal
 	 */
 	readonly _run: (
+		this: unknown,
 		dataset: Dataset<unknown, never>,
 		config: Config<InferIssue<FirstTupleItem<TPipe>>>,
 	) => Promise<Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>>;
@@ -2022,8 +2020,10 @@ export function pipeAsync<
 
 					// Continue pipe execution if there is no reason to abort early
 					if (!dataset.issues || (!config.abortEarly && !config.abortPipeEarly)) {
-						// @ts-expect-error
-						dataset = await item._run(dataset, config);
+						dataset = (await (item as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+							dataset,
+							config,
+						)) as never;
 					}
 				}
 			}

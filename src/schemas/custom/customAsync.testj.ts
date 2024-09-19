@@ -23,12 +23,12 @@ describe("customAsync", () => {
 	//				...baseSchema,
 	//				message: undefined,
 	//			};
-	//			expect(customAsync(isPixelString)).toStrictEqual(schema);
-	//			expect(customAsync(isPixelString, undefined)).toStrictEqual(schema);
+	//			expect(customAsync(isPixelString)).toEqual(schema);
+	//			expect(customAsync(isPixelString, undefined)).toEqual(schema);
 	//		});
 	//
 	//		test("with string message", () => {
-	//			expect(customAsync(isPixelString, "message")).toStrictEqual({
+	//			expect(customAsync(isPixelString, "message")).toEqual({
 	//				...baseSchema,
 	//				message: "message",
 	//			} satisfies CustomSchemaAsync<PixelString, "message">);
@@ -36,7 +36,7 @@ describe("customAsync", () => {
 	//
 	//		test("with function message", () => {
 	//			const message = () => "message";
-	//			expect(customAsync(isPixelString, message)).toStrictEqual({
+	//			expect(customAsync(isPixelString, message)).toEqual({
 	//				...baseSchema,
 	//				message,
 	//			} satisfies CustomSchemaAsync<PixelString, typeof message>);

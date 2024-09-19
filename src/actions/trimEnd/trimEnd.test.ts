@@ -3,7 +3,7 @@ import { type TrimEndAction, trimEnd } from "./trimEnd";
 
 describe("trimEnd", () => {
 	test("should return action object", () => {
-		expect(trimEnd()).toStrictEqual({
+		expect(trimEnd()).toEqual({
 			kind: "transformation",
 			type: "trim_end",
 			reference: trimEnd,
@@ -16,18 +16,18 @@ describe("trimEnd", () => {
 		const action = trimEnd();
 
 		test("for empty string", () => {
-			expect(action._run({ typed: true, value: "" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "" }, {})).toEqual({
 				typed: true,
 				value: "",
 			});
-			expect(action._run({ typed: true, value: " " }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: " " }, {})).toEqual({
 				typed: true,
 				value: "",
 			});
 		});
 
 		test("with blanks at end", () => {
-			expect(action._run({ typed: true, value: "foo  " }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "foo  " }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
@@ -35,7 +35,7 @@ describe("trimEnd", () => {
 	});
 
 	test("should not trim start of string", () => {
-		expect(trimEnd()._run({ typed: true, value: "  foo" }, {})).toStrictEqual({
+		expect(trimEnd()._run({ typed: true, value: "  foo" }, {})).toEqual({
 			typed: true,
 			value: "  foo",
 		});

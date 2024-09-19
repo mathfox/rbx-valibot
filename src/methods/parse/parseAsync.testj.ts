@@ -15,7 +15,7 @@
 //	test("should return output for valid input", async () => {
 //		expect(await parseAsync(string(), "hello")).toBe("hello");
 //		expect(await parseAsync(number(), 123)).toBe(123);
-//		expect(await parseAsync(objectAsync(entries), { key: "foo" })).toStrictEqual({
+//		expect(await parseAsync(objectAsync(entries), { key: "foo" })).toEqual({
 //			key: 3,
 //		});
 //	});

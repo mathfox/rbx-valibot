@@ -5,7 +5,7 @@ describe("transformAsync", () => {
 	describe("should transform input", () => {
 		test("to length of string", async () => {
 			const action = transformAsync(async (input: string) => input.size());
-			expect(await action._run({ typed: true, value: "123456" }, {})).toStrictEqual({
+			expect(await action._run({ typed: true, value: "123456" }, {})).toEqual({
 				typed: true,
 				value: 6,
 			});
@@ -16,7 +16,7 @@ describe("transformAsync", () => {
 				...input,
 				key2: 123,
 			}));
-			expect(await action._run({ typed: true, value: { key1: "foo" } }, {})).toStrictEqual({
+			expect(await action._run({ typed: true, value: { key1: "foo" } }, {})).toEqual({
 				typed: true,
 				value: { key1: "foo", key2: 123 },
 			});

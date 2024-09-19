@@ -23,12 +23,12 @@ describe("custom", () => {
 	//				...baseSchema,
 	//				message: undefined,
 	//			};
-	//			expect(custom(isPixelString)).toStrictEqual(schema);
-	//			expect(custom(isPixelString, undefined)).toStrictEqual(schema);
+	//			expect(custom(isPixelString)).toEqual(schema);
+	//			expect(custom(isPixelString, undefined)).toEqual(schema);
 	//		});
 	//
 	//		test("with string message", () => {
-	//			expect(custom(isPixelString, "message")).toStrictEqual({
+	//			expect(custom(isPixelString, "message")).toEqual({
 	//				...baseSchema,
 	//				message: "message",
 	//			} satisfies CustomSchema<PixelString, "message">);
@@ -36,7 +36,7 @@ describe("custom", () => {
 	//
 	//		test("with function message", () => {
 	//			const message = () => "message";
-	//			expect(custom(isPixelString, message)).toStrictEqual({
+	//			expect(custom(isPixelString, message)).toEqual({
 	//				...baseSchema,
 	//				message,
 	//			} satisfies CustomSchema<PixelString, typeof message>);

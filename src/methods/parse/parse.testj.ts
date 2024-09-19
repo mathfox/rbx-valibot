@@ -15,7 +15,7 @@
 //	test("should return output for valid input", () => {
 //		expect(parse(string(), "hello")).toBe("hello");
 //		expect(parse(number(), 123)).toBe(123);
-//		expect(parse(object(entries), { key: "foo" })).toStrictEqual({
+//		expect(parse(object(entries), { key: "foo" })).toEqual({
 //			key: 3,
 //		});
 //	});

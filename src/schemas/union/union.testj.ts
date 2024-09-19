@@ -28,12 +28,12 @@
 //				...baseSchema,
 //				message: undefined,
 //			};
-//			expect(union(options)).toStrictEqual(schema);
-//			expect(union(options, undefined)).toStrictEqual(schema);
+//			expect(union(options)).toEqual(schema);
+//			expect(union(options, undefined)).toEqual(schema);
 //		});
 //
 //		test("with string message", () => {
-//			expect(union(options, "message")).toStrictEqual({
+//			expect(union(options, "message")).toEqual({
 //				...baseSchema,
 //				message: "message",
 //			} satisfies UnionSchema<Options, "message">);
@@ -41,7 +41,7 @@
 //
 //		test("with function message", () => {
 //			const message = () => "message";
-//			expect(union(options, message)).toStrictEqual({
+//			expect(union(options, message)).toEqual({
 //				...baseSchema,
 //				message,
 //			} satisfies UnionSchema<Options, typeof message>);
@@ -68,7 +68,7 @@
 //		test("with single typed issue", () => {
 //			const schema = union([pipe(string(), minLength(5)), number()]);
 //			type Schema = typeof schema;
-//			expect(schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+//			expect(schema._run({ typed: false, value: "foo" }, {})).toEqual({
 //				typed: true,
 //				value: "foo",
 //				issues: [
@@ -88,7 +88,7 @@
 //		test("with multiple typed issues", () => {
 //			const schema = union([pipe(string(), email()), string()]);
 //			type Schema = typeof schema;
-//			expect(schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+//			expect(schema._run({ typed: false, value: "foo" }, {})).toEqual({
 //				typed: true,
 //				value: "foo",
 //				issues: [
@@ -132,7 +132,7 @@
 //
 //		test("with single untyped issue", () => {
 //			const schema = union([literal("foo")]);
-//			expect(schema._run({ typed: false, value: "bar" }, {})).toStrictEqual({
+//			expect(schema._run({ typed: false, value: "bar" }, {})).toEqual({
 //				typed: false,
 //				value: "bar",
 //				issues: [
@@ -150,7 +150,7 @@
 //
 //		test("with multiple typed issues", () => {
 //			const schema = union([string(), number()]);
-//			expect(schema._run({ typed: false, value: undefined }, {})).toStrictEqual({
+//			expect(schema._run({ typed: false, value: undefined }, {})).toEqual({
 //				typed: false,
 //				value: undefined,
 //				issues: [

@@ -25,12 +25,12 @@
 //				...baseSchema,
 //				message: undefined,
 //			};
-//			expect(nonOptionalAsync(wrapped)).toStrictEqual(schema);
-//			expect(nonOptionalAsync(wrapped, undefined)).toStrictEqual(schema);
+//			expect(nonOptionalAsync(wrapped)).toEqual(schema);
+//			expect(nonOptionalAsync(wrapped, undefined)).toEqual(schema);
 //		});
 //
 //		test("with string message", () => {
-//			expect(nonOptionalAsync(wrapped, "message")).toStrictEqual({
+//			expect(nonOptionalAsync(wrapped, "message")).toEqual({
 //				...baseSchema,
 //				message: "message",
 //			} satisfies NonOptionalSchemaAsync<NullishSchemaAsync<StringSchema<undefined>, undefined>, "message">);
@@ -38,7 +38,7 @@
 //
 //		test("with function message", () => {
 //			const message = () => "message";
-//			expect(nonOptionalAsync(wrapped, message)).toStrictEqual({
+//			expect(nonOptionalAsync(wrapped, message)).toEqual({
 //				...baseSchema,
 //				message,
 //			} satisfies NonOptionalSchemaAsync<NullishSchemaAsync<StringSchema<undefined>, undefined>, typeof message>);

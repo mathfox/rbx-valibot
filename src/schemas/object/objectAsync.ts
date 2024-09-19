@@ -1,4 +1,3 @@
-import PhantomMap from "@rbxts/phantom/src/Map";
 import type {
 	BaseIssue,
 	BaseSchemaAsync,
@@ -101,27 +100,33 @@ export function objectAsync(
 				dataset.typed = true;
 				dataset.value = {};
 
+				const promises = new Array<Promise<unknown>>();
+
+				// roblox-ts requires manual cast
+				for (const [key, schema] of (
+					this as ObjectSchemaAsync<ObjectEntriesAsync, ErrorMessage<ObjectIssue> | undefined>
+				).entries as unknown as ReadonlyMap<unknown, unknown>) {
+					promises.push(
+						(async () => {
+							const value = input[key as keyof typeof input];
+
+							[
+								key,
+								value,
+								await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+									{ typed: false, value },
+									config,
+								),
+							] as const;
+						})(),
+					);
+				}
+
 				// Parse schema of each entry
 				// Hint: We do not distinguish between missing and `undefined` entries.
 				// The reason for this decision is that it reduces the bundle size, and
 				// we also expect that most users will expect this behavior.
-				const valueDatasets = await Promise.all(
-					PhantomMap.entries(
-						// roblox-ts requires manual cast
-						(this as ObjectSchemaAsync<ObjectEntriesAsync, ErrorMessage<ObjectIssue> | undefined>)
-							.entries as unknown as ReadonlyMap<unknown, unknown>,
-					).map(async ([key, schema]) => {
-						const value = input[key as keyof typeof input];
-						return [
-							key,
-							value,
-							await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
-								{ typed: false, value },
-								config,
-							),
-						] as const;
-					}),
-				);
+				const valueDatasets = await Promise.all(promises);
 
 				// Process each value dataset
 				for (const [key, value, valueDataset] of valueDatasets as [

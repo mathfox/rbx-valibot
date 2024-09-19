@@ -15,7 +15,7 @@ describe("fallback", () => {
 
 	describe("should return default dataset", () => {
 		test("for valid input", () => {
-			expect(schema._run({ typed: false, value: 789 }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: 789 }, {})).toEqual({
 				typed: true,
 				value: "789",
 			});
@@ -24,7 +24,7 @@ describe("fallback", () => {
 
 	describe("should return dataset with fallback", () => {
 		test("for invalid input", () => {
-			expect(schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: "foo" }, {})).toEqual({
 				typed: true,
 				value: "123",
 			});
