@@ -108,11 +108,9 @@ describe("objectWithRest", () => {
 
 	describe("should return dataset without nested issues", () => {
 		test("for simple object", () => {
-			expectNoSchemaIssue(
-				objectWithRest({ key1: string_(), key2: number() }, boolean()),
-				// @ts-expect-error
-				[{ key1: "foo", key2: 123, other: true }],
-			);
+			expectNoSchemaIssue(objectWithRest({ key1: string_(), key2: number() }, boolean()), [
+				{ key1: "foo", key2: 123, other: true } as any,
+			]);
 		});
 
 		test("for nested object", () => {

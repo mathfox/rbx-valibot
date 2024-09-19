@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { minLength, transform } from "../../actions";
-import { objectAsync, string } from "../../schemas";
+import { objectAsync, string_ } from "../../schemas";
 import type { Config, InferIssue } from "../../types";
 import { pipe } from "../pipe";
 import { safeParserAsync } from "./safeParserAsync";
@@ -9,18 +9,18 @@ describe("safeParserAsync", () => {
 	describe("should return function object", () => {
 		const schema = objectAsync({
 			key: pipe(
-				string(),
-				transform((input) => input.length),
+				string_(),
+				transform((input) => input.size()),
 			),
 		});
 
 		test("without config", () => {
 			const func1 = safeParserAsync(schema);
-			expect(func1).toBeInstanceOf(Function);
+			expect(func1).toBeInstanceOf("function");
 			expect(func1.schema).toBe(schema);
 			expect(func1.config).toBeUndefined();
 			const func2 = safeParserAsync(schema, undefined);
-			expect(func2).toBeInstanceOf(Function);
+			expect(func2).toBeInstanceOf("function");
 			expect(func2.schema).toBe(schema);
 			expect(func2.config).toBeUndefined();
 		});
@@ -30,7 +30,7 @@ describe("safeParserAsync", () => {
 				abortEarly: true,
 			};
 			const func = safeParserAsync(schema, config);
-			expect(func).toBeInstanceOf(Function);
+			expect(func).toBeInstanceOf("function");
 			expect(func.schema).toBe(schema);
 			expect(func.config).toBe(config);
 		});
@@ -41,9 +41,9 @@ describe("safeParserAsync", () => {
 			await safeParserAsync(
 				objectAsync({
 					key: pipe(
-						string(),
+						string_(),
 						minLength(5),
-						transform((input) => input.length),
+						transform((input) => input.size()),
 					),
 				}),
 			)({ key: "foobar" }),
@@ -57,7 +57,7 @@ describe("safeParserAsync", () => {
 
 	test("should return typed output with issues", async () => {
 		expect(
-			await safeParserAsync(objectAsync({ key: pipe(string(), minLength(5)) }))({
+			await safeParserAsync(objectAsync({ key: pipe(string_(), minLength(5)) }))({
 				key: "foo",
 			}),
 		).toEqual({
@@ -92,7 +92,7 @@ describe("safeParserAsync", () => {
 	});
 
 	test("should return untyped output with issues", async () => {
-		expect(await safeParserAsync(objectAsync({ key: string() }))({ key: 123 })).toEqual({
+		expect(await safeParserAsync(objectAsync({ key: string_() }))({ key: 123 })).toEqual({
 			typed: false,
 			success: false,
 			output: { key: 123 },

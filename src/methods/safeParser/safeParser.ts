@@ -50,12 +50,15 @@ export function safeParser(
 	schema: BaseSchema<unknown, unknown, BaseIssue<unknown>>,
 	config?: Config<InferIssue<BaseSchema<unknown, unknown, BaseIssue<unknown>>>>,
 ): SafeParser<BaseSchema<unknown, unknown, BaseIssue<unknown>>, Config<BaseIssue<unknown>> | undefined> {
-	const func: SafeParser<BaseSchema<unknown, unknown, BaseIssue<unknown>>, Config<BaseIssue<unknown>> | undefined> = (
-		input: unknown,
-	) => safeParse(schema, input, config);
-	// @ts-expect-error
-	func.schema = schema;
-	// @ts-expect-error
-	func.config = config;
+	const func = setmetatable(
+		{},
+		{
+			__call: (_, input: unknown) => safeParse(schema, input, config),
+		},
+	) as SafeParser<BaseSchema<unknown, unknown, BaseIssue<unknown>>, Config<BaseIssue<unknown>> | undefined>;
+
+	(func as { schema: unknown }).schema = schema;
+	(func as { config: unknown }).config = config;
+
 	return func;
 }

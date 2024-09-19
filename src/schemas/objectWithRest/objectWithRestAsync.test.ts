@@ -60,11 +60,9 @@ describe("objectWithRestAsync", () => {
 		});
 
 		test("for simple object", async () => {
-			await expectNoSchemaIssueAsync(
-				objectWithRestAsync({ key1: string_(), key2: number() }, boolean()),
-				// @ts-expect-error
-				[{ key1: "foo", key2: 123, other: true }],
-			);
+			await expectNoSchemaIssueAsync(objectWithRestAsync({ key1: string_(), key2: number() }, boolean()), [
+				{ key1: "foo", key2: 123, other: true } as any,
+			]);
 		});
 	});
 

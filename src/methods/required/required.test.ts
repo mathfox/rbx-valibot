@@ -88,15 +88,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -105,15 +96,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -122,15 +104,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -147,15 +120,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -164,15 +128,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
@@ -257,15 +212,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -274,15 +220,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -291,15 +228,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -316,15 +244,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -333,15 +252,6 @@ describe("required", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);

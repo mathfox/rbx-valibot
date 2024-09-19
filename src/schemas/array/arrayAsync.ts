@@ -9,7 +9,7 @@ import type {
 	InferOutput,
 } from "../../types";
 import { _addIssue } from "../../utils";
-import isArray from "./isArray";
+import isArray from "../../utils/isArray";
 import type { ArrayIssue } from "./types";
 
 /**

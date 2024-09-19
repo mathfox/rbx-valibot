@@ -27,6 +27,7 @@ import type {
 	ObjectKeys,
 	SchemaWithoutPipe,
 } from "../../types";
+import isArray from "../../utils/isArray";
 
 /**
  * Schema type.
@@ -83,6 +84,7 @@ export type SchemaWithRequiredAsync<
 			 * @internal
 			 */
 			_run(
+				this: unknown,
 				dataset: Dataset<unknown, never>,
 				config: Config<InferIssue<TSchema>>,
 			): Promise<
@@ -116,6 +118,7 @@ export type SchemaWithRequiredAsync<
 				 * @internal
 				 */
 				_run(
+					this: unknown,
 					dataset: Dataset<unknown, never>,
 					config: Config<InferIssue<TSchema>>,
 				): Promise<
@@ -162,6 +165,7 @@ export type SchemaWithRequiredAsync<
 					 * @internal
 					 */
 					_run(
+						this: unknown,
 						dataset: Dataset<unknown, never>,
 						config: Config<InferIssue<TSchema>>,
 					): Promise<
@@ -196,8 +200,6 @@ export type SchemaWithRequiredAsync<
  *
  * @returns An object schema.
  */
-// @ts-expect-error FIXME: TypeScript incorrectly claims that the overload
-// signature is not compatible with the implementation signature
 export function requiredAsync<const TSchema extends Schema>(
 	schema: TSchema,
 ): SchemaWithRequiredAsync<TSchema, undefined, undefined>;
@@ -249,10 +251,10 @@ export function requiredAsync(
 	schema: Schema,
 	arg2?: ErrorMessage<NonOptionalIssue> | ObjectKeys<Schema>,
 	arg3?: ErrorMessage<NonOptionalIssue>,
-): SchemaWithRequiredAsync<Schema, ObjectKeys<Schema> | undefined, ErrorMessage<NonOptionalIssue> | undefined> {
+): unknown {
 	// Get keys and message from arguments
-	const keys = Array.isArray(arg2) ? arg2 : undefined;
-	const message = (Array.isArray(arg2) ? arg3 : arg2) as ErrorMessage<NonOptionalIssue> | undefined;
+	const keys = isArray(arg2) ? arg2 : undefined;
+	const message = (isArray(arg2) ? arg3 : arg2) as ErrorMessage<NonOptionalIssue> | undefined;
 
 	// Create modified object entries
 	const entries: RequiredEntries<
@@ -261,8 +263,8 @@ export function requiredAsync(
 		ErrorMessage<NonOptionalIssue> | undefined
 	> = {};
 	for (const key in schema.entries) {
-		// @ts-expect-error
-		entries[key] = !keys || keys.includes(key) ? nonOptionalAsync(schema.entries[key], message) : schema.entries[key];
+		(entries as Record<string, unknown>)[key] =
+			!keys || keys.includes(key) ? nonOptionalAsync(schema.entries[key], message) : schema.entries[key];
 	}
 
 	// Return modified copy of schema

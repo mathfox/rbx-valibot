@@ -7,7 +7,7 @@ import {
 	objectWithRestAsync,
 	optional,
 	optionalAsync,
-	string,
+	string_,
 } from "../../schemas";
 import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
@@ -15,9 +15,9 @@ import { requiredAsync } from "./requiredAsync";
 
 describe("requiredAsync", () => {
 	const entries = {
-		key1: optional(string()),
+		key1: optional(string_()),
 		key2: optional(number()),
-		key3: optionalAsync(string()),
+		key3: optionalAsync(string_()),
 	};
 	const baseInfo = {
 		message: expect.any("string"),
@@ -112,15 +112,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -129,15 +120,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -146,15 +128,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -171,15 +144,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -188,15 +152,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
@@ -296,15 +251,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key1",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -313,15 +259,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -330,15 +267,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input: {},
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -355,15 +283,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key2",
-									value: undefined,
-								},
-							],
 						},
 						{
 							...baseInfo,
@@ -372,15 +291,6 @@ describe("requiredAsync", () => {
 							input: undefined,
 							expected: "!undefined",
 							received: "undefined",
-							path: [
-								{
-									type: "object",
-									origin: "value",
-									input,
-									key: "key3",
-									value: undefined,
-								},
-							],
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);

@@ -61,13 +61,18 @@ export function safeParserAsync(
 	BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 	Config<BaseIssue<unknown>> | undefined
 > {
-	const func: SafeParserAsync<
+	const func = setmetatable(
+		{},
+		{
+			__call: (_, input: unknown) => safeParseAsync(schema, input, config),
+		},
+	) as SafeParserAsync<
 		BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 		Config<BaseIssue<unknown>> | undefined
-	> = (input: unknown) => safeParseAsync(schema, input, config);
-	// @ts-expect-error
-	func.schema = schema;
-	// @ts-expect-error
-	func.config = config;
+	>;
+
+	(func as { schema: unknown }).schema = schema;
+	(func as { config: unknown }).config = config;
+
 	return func;
 }

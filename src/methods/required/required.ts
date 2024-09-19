@@ -26,6 +26,7 @@ import type {
 	ObjectKeys,
 	SchemaWithoutPipe,
 } from "../../types";
+import isArray from "../../utils/isArray";
 
 /**
  * Schema type.
@@ -82,6 +83,7 @@ export type SchemaWithRequired<
 			 * @internal
 			 */
 			_run(
+				this: unknown,
 				dataset: Dataset<unknown, never>,
 				config: Config<InferIssue<TSchema>>,
 			): Dataset<InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>, NonOptionalIssue | InferIssue<TSchema>>;
@@ -113,6 +115,7 @@ export type SchemaWithRequired<
 				 * @internal
 				 */
 				_run(
+					this: unknown,
 					dataset: Dataset<unknown, never>,
 					config: Config<InferIssue<TSchema>>,
 				): Dataset<
@@ -153,6 +156,7 @@ export type SchemaWithRequired<
 					 * @internal
 					 */
 					_run(
+						this: unknown,
 						dataset: Dataset<unknown, never>,
 						config: Config<InferIssue<TSchema>>,
 					): Dataset<
@@ -164,7 +168,7 @@ export type SchemaWithRequired<
 					/**
 					 * Input, output and issue type.
 					 *
-					 * @internal
+					 * @internalgg
 					 */
 					readonly _types?: {
 						readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
@@ -185,8 +189,6 @@ export type SchemaWithRequired<
  *
  * @returns An object schema.
  */
-// @ts-expect-error FIXME: TypeScript incorrectly claims that the overload
-// signature is not compatible with the implementation signature
 export function required<const TSchema extends Schema>(
 	schema: TSchema,
 ): SchemaWithRequired<TSchema, undefined, undefined>;
@@ -238,16 +240,16 @@ export function required(
 	schema: Schema,
 	arg2?: ErrorMessage<NonOptionalIssue> | ObjectKeys<Schema>,
 	arg3?: ErrorMessage<NonOptionalIssue>,
-): SchemaWithRequired<Schema, ObjectKeys<Schema> | undefined, ErrorMessage<NonOptionalIssue> | undefined> {
+): unknown {
 	// Get keys and message from arguments
-	const keys = Array.isArray(arg2) ? arg2 : undefined;
-	const message = (Array.isArray(arg2) ? arg3 : arg2) as ErrorMessage<NonOptionalIssue> | undefined;
+	const keys = isArray(arg2) ? arg2 : undefined;
+	const message = (isArray(arg2) ? arg3 : arg2) as ErrorMessage<NonOptionalIssue> | undefined;
 
 	// Create modified object entries
 	const entries: RequiredEntries<ObjectEntries, ObjectKeys<Schema>, ErrorMessage<NonOptionalIssue> | undefined> = {};
 	for (const key in schema.entries) {
-		// @ts-expect-error
-		entries[key] = !keys || keys.includes(key) ? nonOptional(schema.entries[key], message) : schema.entries[key];
+		(entries as Record<string, unknown>)[key] =
+			!keys || keys.includes(key) ? nonOptional(schema.entries[key], message) : schema.entries[key];
 	}
 
 	// Return modified copy of schema
