@@ -131,7 +131,7 @@ describe("omit", () => {
 			test("if an omitted key does not match rest", () => {
 				expect(schema._run({ typed: false, value: { key1: "foo", key4: 456, key_wtf: 1337 } }, {})).toEqual({
 					typed: false,
-					value: { key1: "foo", key4: 456 },
+					value: { key1: "foo", key4: 456, key_wtf: 1337 },
 					issues: [
 						{
 							...baseInfo,
@@ -139,7 +139,7 @@ describe("omit", () => {
 							type: "boolean",
 							input: 1337,
 							expected: "boolean",
-							received: '"1337"',
+							received: "1337",
 						} satisfies BooleanIssue,
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema>>);
