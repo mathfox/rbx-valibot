@@ -60,7 +60,7 @@ describe("looseObjectAsync", () => {
 
 		test("for unknown entries", async () => {
 			await expectNoSchemaIssueAsync(looseObjectAsync({ key1: string_(), key2: number() }), [
-				{ key1: "foo", key2: 123, other1: "bar", other2: null },
+				{ key1: "foo", key2: 123, other1: "bar", other2: undefined },
 			]);
 		});
 	});

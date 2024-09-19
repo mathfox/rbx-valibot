@@ -116,7 +116,7 @@ describe("objectWithRestAsync", () => {
 		test("for nested object", async () => {
 			await expectNoSchemaIssueAsync(
 				objectWithRestAsync({ nested: object({ key: string_() }) }, objectAsync({ key: number() })),
-				[{ nested: { key: "foo" }, other: { key: 123 } }],
+				[{ nested: { key: "foo" }, other: { key: 123 } } as any],
 			);
 		});
 

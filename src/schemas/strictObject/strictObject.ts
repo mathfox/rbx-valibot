@@ -93,8 +93,8 @@ export function strictObject(
 				// Hint: We do not distinguish between missing and `undefined` entries.
 				// The reason for this decision is that it reduces the bundle size, and
 				// we also expect that most users will expect this behavior.
-				for (const key in (this as StrictObjectSchema<ObjectEntries, ErrorMessage<StrictObjectIssue> | undefined>)
-					.entries) {
+				for (const [key] of (this as StrictObjectSchema<ObjectEntries, ErrorMessage<StrictObjectIssue> | undefined>)
+					.entries as unknown as Map<string, unknown>) {
 					// Get and parse value of key
 					const value = input[key as keyof typeof input];
 					const valueDataset = (
@@ -131,7 +131,7 @@ export function strictObject(
 
 				// Check input for unknown keys if necessary
 				if (!dataset.issues || !config.abortEarly) {
-					for (const key in input) {
+					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(key in (this as StrictObjectSchema<ObjectEntries, ErrorMessage<StrictObjectIssue> | undefined>).entries)
 						) {

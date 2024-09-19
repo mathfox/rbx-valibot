@@ -146,7 +146,7 @@ export function strictObjectAsync(
 
 				// Check input for unknown keys if necessary
 				if (!dataset.issues || !config.abortEarly) {
-					for (const key in input) {
+					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(
 								key in

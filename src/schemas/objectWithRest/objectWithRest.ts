@@ -112,13 +112,13 @@ export function objectWithRest(
 				// Hint: We do not distinguish between missing and `undefined` entries.
 				// The reason for this decision is that it reduces the bundle size, and
 				// we also expect that most users will expect this behavior.
-				for (const key in (
+				for (const [key] of (
 					this as ObjectWithRestSchema<
 						ObjectEntries,
 						BaseSchema<unknown, unknown, BaseIssue<unknown>>,
 						ErrorMessage<ObjectWithRestIssue> | undefined
 					>
-				).entries) {
+				).entries as unknown as Map<string, unknown>) {
 					// Get and parse value of key
 					const value = input[key as keyof typeof input];
 					const valueDataset = (
@@ -160,7 +160,7 @@ export function objectWithRest(
 				// Parse schema of each rest entry if necessary
 				// Hint: We exclude specific keys for security reasons
 				if (!dataset.issues || !config.abortEarly) {
-					for (const key in input) {
+					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(
 								key in

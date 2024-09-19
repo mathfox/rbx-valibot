@@ -58,7 +58,7 @@ describe("looseObject", () => {
 
 		test("for unknown entries", () => {
 			expectNoSchemaIssue(looseObject({ key1: string_(), key2: number() }), [
-				{ key1: "foo", key2: 123, other1: "bar", other2: null },
+				{ key1: "foo", key2: 123, other1: "bar", other2: undefined },
 			]);
 		});
 	});
@@ -118,7 +118,7 @@ describe("looseObject", () => {
 
 		test("for unknown entries", () => {
 			expectNoSchemaIssue(looseObject({ key1: string_(), key2: number() }), [
-				{ key1: "foo", key2: 123, other1: "bar", other2: null },
+				{ key1: "foo", key2: 123, other1: "bar", other2: undefined },
 			]);
 		});
 	});

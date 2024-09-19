@@ -115,16 +115,16 @@ describe("objectWithRest", () => {
 
 		test("for nested object", () => {
 			expectNoSchemaIssue(objectWithRest({ nested: object({ key: string_() }) }, object({ key: number() })), [
-				{ nested: { key: "foo" }, other: { key: 123 } },
+				{ nested: { key: "foo" }, other: { key: 123 } } as any,
 			]);
 		});
 
 		test("for optional entry", () => {
-			expectNoSchemaIssue(
-				objectWithRest({ key: optional(string_()) }, number()),
-				// @ts-expect-error
-				[{}, { key: undefined, other: 123 }, { key: "foo" }],
-			);
+			expectNoSchemaIssue(objectWithRest({ key: optional(string_()) }, number()), [
+				{},
+				{ key: undefined, other: 123 },
+				{ key: "foo" } as any,
+			]);
 		});
 	});
 

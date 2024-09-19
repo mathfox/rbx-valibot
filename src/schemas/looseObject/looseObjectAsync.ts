@@ -146,7 +146,7 @@ export function looseObjectAsync(
 				// Add rest to dataset if necessary
 				// Hint: We exclude specific keys for security reasons
 				if (!dataset.issues || !config.abortEarly) {
-					for (const key in input) {
+					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(
 								key in

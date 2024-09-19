@@ -247,7 +247,7 @@ export function required(
 
 	// Create modified object entries
 	const entries: RequiredEntries<ObjectEntries, ObjectKeys<Schema>, ErrorMessage<NonOptionalIssue> | undefined> = {};
-	for (const key in schema.entries) {
+	for (const [key] of schema.entries as unknown as Map<string, unknown>) {
 		(entries as Record<string, unknown>)[key] =
 			!keys || keys.includes(key) ? nonOptional(schema.entries[key], message) : schema.entries[key];
 	}
