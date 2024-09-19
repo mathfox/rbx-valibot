@@ -117,7 +117,7 @@ describe("objectAsync", () => {
 			type: "string",
 			input: undefined,
 			expected: "string",
-			received: "undefined",
+			received: "nil",
 		};
 
 		test("for missing entries", async () => {
@@ -132,7 +132,7 @@ describe("objectAsync", () => {
 						type: "object",
 						input: undefined,
 						expected: "Object",
-						received: "undefined",
+						received: "nil",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -149,7 +149,7 @@ describe("objectAsync", () => {
 						type: "number",
 						input: undefined,
 						expected: "number",
-						received: "undefined",
+						received: "nil",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);

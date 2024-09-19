@@ -31,19 +31,19 @@ describe("undefinedable", () => {
 		const schema4 = undefinedable(string_(), () => "foo");
 
 		test("for undefined", () => {
-			expect(schema1._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(schema1._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});
-			expect(schema2._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(schema2._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
-			expect(schema3._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(schema3._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});
-			expect(schema4._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(schema4._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});

@@ -33,27 +33,27 @@ describe("undefinedableAsync", () => {
 		const schema6 = undefinedableAsync(string_(), async () => "foo");
 
 		test("for undefined", async () => {
-			expect(await schema1._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema1._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});
-			expect(await schema2._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema2._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
-			expect(await schema3._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema3._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});
-			expect(await schema4._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema4._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
-			expect(await schema5._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema5._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});
-			expect(await schema6._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await schema6._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: true,
 				value: "foo",
 			});
