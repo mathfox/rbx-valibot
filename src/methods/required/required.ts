@@ -1,16 +1,16 @@
-import {
-	type LooseObjectIssue,
-	type LooseObjectSchema,
-	type NonOptionalIssue,
-	type NonOptionalSchema,
-	type ObjectIssue,
-	type ObjectSchema,
-	type ObjectWithRestIssue,
-	type ObjectWithRestSchema,
-	type StrictObjectIssue,
-	type StrictObjectSchema,
-	nonOptional,
+import type {
+	LooseObjectIssue,
+	LooseObjectSchema,
+	NonOptionalIssue,
+	NonOptionalSchema,
+	ObjectIssue,
+	ObjectSchema,
+	ObjectWithRestIssue,
+	ObjectWithRestSchema,
+	StrictObjectIssue,
+	StrictObjectSchema,
 } from "../../schemas";
+import { nonOptional } from "../../schemas/nonOptional";
 import type {
 	BaseIssue,
 	BaseSchema,

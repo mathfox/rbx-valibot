@@ -1,16 +1,16 @@
-import {
-	type LooseObjectIssue,
-	type LooseObjectSchemaAsync,
-	type NonOptionalIssue,
-	type NonOptionalSchemaAsync,
-	type ObjectIssue,
-	type ObjectSchemaAsync,
-	type ObjectWithRestIssue,
-	type ObjectWithRestSchemaAsync,
-	type StrictObjectIssue,
-	type StrictObjectSchemaAsync,
-	nonOptionalAsync,
+import type {
+	LooseObjectIssue,
+	LooseObjectSchemaAsync,
+	NonOptionalIssue,
+	NonOptionalSchemaAsync,
+	ObjectIssue,
+	ObjectSchemaAsync,
+	ObjectWithRestIssue,
+	ObjectWithRestSchemaAsync,
+	StrictObjectIssue,
+	StrictObjectSchemaAsync,
 } from "../../schemas";
+import { nonOptionalAsync } from "../../schemas/nonOptional";
 import type {
 	BaseIssue,
 	BaseSchema,

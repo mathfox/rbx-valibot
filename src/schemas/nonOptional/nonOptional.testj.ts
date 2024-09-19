@@ -18,7 +18,7 @@
 //		const baseIssue: Omit<NonOptionalIssue, "input" | "received"> = {
 //			kind: "schema",
 //			type: "non_optional",
-//			expected: "!undefined",
+//			received: "!nil",
 //			message: "message",
 //		};
 //

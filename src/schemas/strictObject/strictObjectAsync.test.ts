@@ -142,7 +142,7 @@ describe("strictObjectAsync", () => {
 			type: "string",
 			input: undefined,
 			expected: "string",
-			received: "undefined",
+			received: "nil",
 		};
 
 		test("for missing entries", async () => {
@@ -157,7 +157,7 @@ describe("strictObjectAsync", () => {
 						type: "object",
 						input: undefined,
 						expected: "Object",
-						received: "undefined",
+						received: "nil",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -175,7 +175,7 @@ describe("strictObjectAsync", () => {
 						type: "number",
 						input: undefined,
 						expected: "number",
-						received: "undefined",
+						received: "nil",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);

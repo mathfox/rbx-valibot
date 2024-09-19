@@ -5,7 +5,7 @@ import { type StringIssue, string_ } from "../string";
 import { type ArraySchemaAsync, arrayAsync } from "./arrayAsync";
 import type { ArrayIssue } from "./types";
 
-describe("array", () => {
+describe("arrayAsync", () => {
 	describe("should return schema object", () => {
 		const item = string_();
 		type Item = typeof item;

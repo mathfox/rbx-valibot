@@ -1,4 +1,4 @@
-import { getDefault } from "../../methods";
+import { getDefault } from "../../methods/getDefault";
 import type { BaseIssue, BaseSchema, Dataset, Default, InferInput, InferIssue } from "../../types";
 import type { InferOptionalOutput } from "./types";
 

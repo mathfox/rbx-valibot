@@ -87,7 +87,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -95,7 +95,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -103,7 +103,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -119,7 +119,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -127,7 +127,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
@@ -211,7 +211,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -219,7 +219,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -227,7 +227,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
@@ -243,7 +243,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 						{
 							...baseInfo,
@@ -251,7 +251,7 @@ describe("required", () => {
 							type: "non_optional",
 							input: undefined,
 							expected: "!undefined",
-							received: "undefined",
+							received: "nil",
 						},
 					],
 				} satisfies UntypedDataset<InferIssue<typeof schema2>>);

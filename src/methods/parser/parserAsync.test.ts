@@ -18,11 +18,11 @@ describe("parserAsync", () => {
 
 		test("without config", () => {
 			const func1 = parserAsync(schema);
-			expect(func1).toBeInstanceOf("function");
+			expect(func1).toBeInstanceOf("table");
 			expect(func1.schema).toBe(schema);
 			expect(func1.config).toBeUndefined();
 			const func2 = parserAsync(schema, undefined);
-			expect(func2).toBeInstanceOf("function");
+			expect(func2).toBeInstanceOf("table");
 			expect(func2.schema).toBe(schema);
 			expect(func2.config).toBeUndefined();
 		});
@@ -32,7 +32,7 @@ describe("parserAsync", () => {
 				abortEarly: true,
 			};
 			const func = parserAsync(schema, config);
-			expect(func).toBeInstanceOf("function");
+			expect(func).toBeInstanceOf("table");
 			expect(func.schema).toBe(schema);
 			expect(func.config).toBe(config);
 		});

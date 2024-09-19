@@ -90,7 +90,7 @@ describe("array", () => {
 		});
 
 		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
+			expectSchemaIssue(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
@@ -110,8 +110,7 @@ describe("array", () => {
 		const schema = array(string_());
 
 		const baseInfo = {
-			//message: expect.any(String),
-			message: expect.any(""),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,
@@ -140,7 +139,7 @@ describe("array", () => {
 						type: "string",
 						input: undefined,
 						expected: "string",
-						received: "undefined",
+						received: "nil",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
