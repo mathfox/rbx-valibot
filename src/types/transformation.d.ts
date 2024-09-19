@@ -32,7 +32,11 @@ export interface BaseTransformation<TInput, TOutput, TIssue extends BaseIssue<un
 	 *
 	 * @internal
 	 */
-	readonly _run: (dataset: TypedDataset<TInput, never>, config: Config<TIssue>) => Dataset<TOutput, TIssue>;
+	readonly _run: (
+		this: BaseTransformation<any, any, BaseIssue<unknown>>,
+		dataset: TypedDataset<TInput, never>,
+		config: Config<TIssue>,
+	) => Dataset<TOutput, TIssue>;
 	/**
 	 * Input, output and issue type.
 	 *
@@ -70,7 +74,11 @@ export interface BaseTransformationAsync<TInput, TOutput, TIssue extends BaseIss
 	 *
 	 * @internal
 	 */
-	readonly _run: (dataset: TypedDataset<TInput, never>, config: Config<TIssue>) => Promise<Dataset<TOutput, TIssue>>;
+	readonly _run: (
+		this: BaseTransformation<any, any, BaseIssue<unknown>> | BaseTransformationAsync<any, any, BaseIssue<unknown>>,
+		dataset: TypedDataset<TInput, never>,
+		config: Config<TIssue>,
+	) => Promise<Dataset<TOutput, TIssue>>;
 }
 
 /**

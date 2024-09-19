@@ -51,7 +51,7 @@ export function _addIssue<const TContext extends Context>(
 	context: TContext,
 	label: string,
 	dataset: Dataset<unknown, BaseIssue<unknown>>,
-	config: Config<InferIssue<TContext>>,
+	config: Config<any>, // InferIssue<TContext>
 	other?: Other<TContext>,
 ): void {
 	// Get expected and received string

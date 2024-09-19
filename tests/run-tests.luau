@@ -18,7 +18,7 @@ end)
 local status, result = runCLI(ReplicatedStorage, {
 	verbose = false,
 	ci = false,
-}, { ReplicatedStorage.WaitForChild("TS").WaitForChild("Shared").WaitForChild("jest.config") }):awaitStatus()
+}, { ReplicatedStorage:WaitForChild("src"):WaitForChild("jest.config") }):awaitStatus()
 
 task.wait(1)
 

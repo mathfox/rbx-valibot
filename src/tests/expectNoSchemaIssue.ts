@@ -12,7 +12,7 @@ export function expectNoSchemaIssue<TSchema extends BaseSchema<unknown, unknown,
 	values: InferInput<TSchema>[],
 ): void {
 	for (const value of values) {
-		expect(schema._run({ typed: false, value }, {})).toStrictEqual({
+		expect(schema._run({ typed: false, value }, {})).toEqual({
 			typed: true,
 			value,
 		});

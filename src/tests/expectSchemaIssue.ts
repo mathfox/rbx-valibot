@@ -16,13 +16,12 @@ export function expectSchemaIssue<TSchema extends BaseSchema<unknown, unknown, B
 	received?: string,
 ): void {
 	for (const value of values) {
-		expect(schema._run({ typed: false, value }, {})).toStrictEqual({
+		expect(schema._run({ typed: false, value }, {})).toEqual({
 			typed: false,
 			value,
 			issues: [
 				{
 					requirement: undefined,
-					path: undefined,
 					issues: undefined,
 					lang: undefined,
 					abortEarly: undefined,

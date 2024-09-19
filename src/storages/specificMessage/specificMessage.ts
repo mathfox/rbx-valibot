@@ -23,8 +23,10 @@ type Reference = (
 	| BaseTransformation<unknown, unknown, BaseIssue<unknown>>
 	| BaseTransformationAsync<unknown, unknown, BaseIssue<unknown>>;
 
+const UndefinedMarker = {};
+
 // Create specific message store
-let store: Map<Reference, Map<string | undefined, ErrorMessage<BaseIssue<unknown>>>> | undefined;
+let store: Map<Reference, Map<string | typeof UndefinedMarker, ErrorMessage<BaseIssue<unknown>>>> | undefined;
 
 /**
  * Sets a specific error message.
@@ -40,7 +42,7 @@ export function setSpecificMessage<const TReference extends Reference>(
 ): void {
 	if (!store) store = new Map();
 	if (!store.get(reference)) store.set(reference, new Map());
-	store.get(reference)!.set(lang, message);
+	store.get(reference)!.set(lang ?? UndefinedMarker, message);
 }
 
 /**
@@ -55,7 +57,7 @@ export function getSpecificMessage<const TReference extends Reference>(
 	reference: TReference,
 	lang?: string,
 ): ErrorMessage<InferIssue<ReturnType<TReference>>> | undefined {
-	return store?.get(reference)?.get(lang);
+	return store?.get(reference)?.get(lang ?? UndefinedMarker);
 }
 
 /**
@@ -65,5 +67,5 @@ export function getSpecificMessage<const TReference extends Reference>(
  * @param lang The language of the message.
  */
 export function deleteSpecificMessage(reference: Reference, lang?: string): void {
-	store?.get(reference)?.delete(lang);
+	store?.get(reference)?.delete(lang ?? UndefinedMarker);
 }

@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseSchema, BaseSchemaAsync } from "../../types";
-import { ValiError } from "../../utils";
+import { ValiError } from "../ValiError";
 
 /**
  * A type guard to check if an error is a ValiError.

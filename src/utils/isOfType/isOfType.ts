@@ -7,8 +7,8 @@
  * @returns Whether it matches.
  */
 export function isOfType<const TType extends TObject["type"], const TObject extends { type: string }>(
-	type: TType,
+	type_: TType,
 	object: TObject,
 ): object is Extract<TObject, { type: TType }> {
-	return object.type === type;
+	return object.type === type_;
 }
