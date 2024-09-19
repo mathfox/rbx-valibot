@@ -56,7 +56,7 @@ export function _addIssue<const TContext extends Context>(
 ): void {
 	// Get expected and received string
 	const input = other && "input" in other ? other.input : dataset.value;
-	const expected = other?.expected ?? (context as unknown as { expects: string }).expects; //?? undefined;
+	const expected = other?.expected ?? (context as unknown as { expects: string }).expects ?? undefined;
 	const received = other?.received ?? tostring(input);
 
 	// Create issue object

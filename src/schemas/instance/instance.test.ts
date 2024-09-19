@@ -1,4 +1,4 @@
-import { describe, test } from "@rbxts/jest-globals";
+import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type InstanceIssue, instance } from "./instance";
 
@@ -16,7 +16,7 @@ describe("instance", () => {
 		const baseIssue: Omit<InstanceIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "instance",
-			expected: "Date",
+			expected: expect.stringContaining("table:"),
 			message: "message",
 		};
 

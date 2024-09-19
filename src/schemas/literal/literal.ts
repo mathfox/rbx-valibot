@@ -2,11 +2,6 @@ import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
- * Literal type.
- */
-export type Literal = boolean | number | string;
-
-/**
  * Literal issue type.
  */
 export interface LiteralIssue extends BaseIssue<unknown> {
@@ -27,7 +22,7 @@ export interface LiteralIssue extends BaseIssue<unknown> {
 /**
  * Literal schema type.
  */
-export interface LiteralSchema<TLiteral extends Literal, TMessage extends ErrorMessage<LiteralIssue> | undefined>
+export interface LiteralSchema<TLiteral, TMessage extends ErrorMessage<LiteralIssue> | undefined>
 	extends BaseSchema<TLiteral, TLiteral, LiteralIssue> {
 	/**
 	 * The schema type.
@@ -54,7 +49,7 @@ export interface LiteralSchema<TLiteral extends Literal, TMessage extends ErrorM
  *
  * @returns A literal schema.
  */
-export function literal<const TLiteral extends Literal>(literal_: TLiteral): LiteralSchema<TLiteral, undefined>;
+export function literal<const TLiteral>(literal_: TLiteral): LiteralSchema<TLiteral, undefined>;
 
 /**
  * Creates a literal schema.
@@ -64,15 +59,15 @@ export function literal<const TLiteral extends Literal>(literal_: TLiteral): Lit
  *
  * @returns A literal schema.
  */
-export function literal<const TLiteral extends Literal, const TMessage extends ErrorMessage<LiteralIssue> | undefined>(
+export function literal<const TLiteral, const TMessage extends ErrorMessage<LiteralIssue> | undefined>(
 	literal_: TLiteral,
 	message: TMessage,
 ): LiteralSchema<TLiteral, TMessage>;
 
 export function literal(
-	literal_: Literal,
+	literal_: unknown,
 	message?: ErrorMessage<LiteralIssue>,
-): LiteralSchema<Literal, ErrorMessage<LiteralIssue> | undefined> {
+): LiteralSchema<unknown, ErrorMessage<LiteralIssue> | undefined> {
 	return {
 		kind: "schema",
 		type: "literal",
@@ -83,12 +78,12 @@ export function literal(
 		message,
 		_run(dataset, config) {
 			// roblox-ts macro system requires manual cast.
-			if (dataset.value === (this as LiteralSchema<Literal, ErrorMessage<LiteralIssue> | undefined>).literal) {
+			if (dataset.value === (this as LiteralSchema<unknown, ErrorMessage<LiteralIssue> | undefined>).literal) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
-			return dataset as Dataset<Literal, LiteralIssue>;
+			return dataset;
 		},
 	};
 }
