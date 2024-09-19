@@ -110,7 +110,7 @@ export function objectAsync(
 						(async () => {
 							const value = input[key as keyof typeof input];
 
-							[
+							return [
 								key,
 								value,
 								await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(

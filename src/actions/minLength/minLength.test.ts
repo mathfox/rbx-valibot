@@ -18,7 +18,7 @@ describe("minLength", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [[1, 2, 3, 4, 5], new Array(6), new Array(999)]);
+			expectNoActionIssue(action, [[1, 2, 3, 4, 5], new Array(6, 0), new Array(999, 0)]);
 		});
 	});
 
