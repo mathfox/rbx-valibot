@@ -1,5 +1,6 @@
 import { expect } from "@rbxts/jest-globals";
 import type { BaseIssue, BaseSchema, InferIssue, UntypedDataset } from "../types";
+import { _stringify } from "../utils";
 
 /**
  * Expect an schema issue to be returned.
@@ -29,7 +30,7 @@ export function expectSchemaIssue<TSchema extends BaseSchema<unknown, unknown, B
 
 					...baseIssue,
 					input: value,
-					received: received ?? tostring(value),
+					received: received ?? _stringify(value),
 				},
 			],
 		} satisfies UntypedDataset<InferIssue<TSchema>>);

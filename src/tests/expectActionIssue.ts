@@ -1,5 +1,6 @@
 import { expect } from "@rbxts/jest-globals";
 import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } from "../types";
+import { _stringify } from "../utils";
 
 /**
  * Expect an action issue to be returned.
@@ -29,7 +30,7 @@ export function expectActionIssue<TAction extends BaseValidation<any, unknown, B
 					abortPipeEarly: undefined,
 
 					input: value,
-					received: getReceived?.(value) ?? tostring(value),
+					received: getReceived?.(value) ?? _stringify(value),
 					...baseIssue,
 				},
 			],

@@ -13,6 +13,7 @@ import type {
 	InferInput,
 	InferIssue,
 } from "../../types";
+import { _stringify } from "../_stringify";
 
 /**
  * Context type.
@@ -57,7 +58,7 @@ export function _addIssue<const TContext extends Context>(
 	// Get expected and received string
 	const input = other && "input" in other ? other.input : dataset.value;
 	const expected = other?.expected ?? (context as unknown as { expects: string }).expects ?? undefined;
-	const received = other?.received ?? tostring(input);
+	const received = other?.received ?? _stringify(input);
 
 	// Create issue object
 	// Hint: The issue is deliberately not constructed with the spread operator

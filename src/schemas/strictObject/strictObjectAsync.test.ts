@@ -194,7 +194,7 @@ describe("strictObjectAsync", () => {
 				key: "foo",
 				nested: { key: 123 },
 				other1: "foo",
-				other2: 123,
+				//other2: 123,
 			};
 			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,

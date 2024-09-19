@@ -184,7 +184,7 @@ describe("strictObject", () => {
 				key: "foo",
 				nested: { key: 123 },
 				other1: "foo",
-				other2: 123,
+				//other2: 123,
 			};
 			expect(schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,

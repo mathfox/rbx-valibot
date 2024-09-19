@@ -110,8 +110,7 @@ describe("arrayAsync", () => {
 		const schema = arrayAsync(string_());
 
 		const baseInfo = {
-			//message: expect.any(String),
-			message: expect.any(""),
+			message: expect.any("string"),
 			requirement: undefined,
 			issues: undefined,
 			lang: undefined,

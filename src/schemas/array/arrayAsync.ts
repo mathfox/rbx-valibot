@@ -96,17 +96,23 @@ export function arrayAsync(
 				dataset.typed = true;
 				dataset.value = [];
 
+				const itemDatasetsPromises = new Array<Promise<unknown>>();
+
+				for (const value of input as defined[]) {
+					itemDatasetsPromises.push(
+						(async () => {
+							return (
+								this as ArraySchemaAsync<
+									BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+									ErrorMessage<ArrayIssue> | undefined
+								>
+							).item._run({ typed: false, value }, config);
+						})(),
+					);
+				}
+
 				// Parse schema of each item async
-				const itemDatasets = await Promise.all(
-					(input as defined[]).map((value) =>
-						(
-							this as ArraySchemaAsync<
-								BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-								ErrorMessage<ArrayIssue> | undefined
-							>
-						).item._run({ typed: false, value }, config),
-					),
-				);
+				const itemDatasets = await Promise.all(itemDatasetsPromises);
 
 				// Process each item dataset
 				for (let key = 0; key < itemDatasets.size(); key++) {
