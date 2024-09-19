@@ -212,14 +212,12 @@ describe("objectWithRest", () => {
 			const input = {
 				key: "foo",
 				nested: { key: 123 },
-				other1: undefined,
 				other2: "bar",
 			};
 			expect(schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
-					arrayIssue,
 					{
 						...baseInfo,
 						kind: "schema",
@@ -232,7 +230,7 @@ describe("objectWithRest", () => {
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
 
-		test("for worng rest with abort early", () => {
+		test("for wrong rest with abort early", () => {
 			expect(
 				schema._run(
 					{
@@ -240,7 +238,6 @@ describe("objectWithRest", () => {
 						value: {
 							key: "foo",
 							nested: { key: 123 },
-							other1: undefined,
 							other2: "bar",
 						},
 					},
@@ -252,7 +249,17 @@ describe("objectWithRest", () => {
 					key: "foo",
 					nested: { key: 123 },
 				},
-				issues: [{ ...arrayIssue, abortEarly: true }],
+				issues: [
+					{
+						...baseInfo,
+						kind: "schema",
+						type: "array",
+						input: "bar",
+						expected: "Array",
+						received: '"bar"',
+						abortEarly: true,
+					},
+				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
 
