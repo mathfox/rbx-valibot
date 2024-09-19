@@ -63,7 +63,7 @@ describe("literal", () => {
 				false,
 				-123,
 				undefined,
-				//"",
+				"",
 				"foo",
 				{},
 				[],

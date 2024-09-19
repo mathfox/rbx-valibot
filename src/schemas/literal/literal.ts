@@ -1,4 +1,4 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import type { BaseIssue, BaseSchema, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -72,7 +72,7 @@ export function literal(
 		kind: "schema",
 		type: "literal",
 		reference: literal,
-		expects: tostring(literal_),
+		expects: typeIs(literal_, "string") ? `"${literal_}"` : tostring(literal_),
 		async: false,
 		literal: literal_,
 		message,
