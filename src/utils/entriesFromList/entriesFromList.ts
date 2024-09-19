@@ -14,8 +14,8 @@ export function entriesFromList<
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(list: TList, schema: TSchema): Record<TList[number], TSchema> {
-	// @ts-expect-error
-	const entries: Record<TList[number], TSchema> = {};
+	const entries: Record<TList[number], TSchema> = {} as unknown as Record<TList[number], TSchema>;
+
 	for (const key of list) {
 		entries[key as TList[number]] = schema;
 	}

@@ -12,7 +12,6 @@ import type {
 	ErrorMessage,
 	InferInput,
 	InferIssue,
-	IssuePathItem,
 } from "../../types";
 
 /**
@@ -34,7 +33,6 @@ interface Other<TContext extends Context> {
 	expected?: string | undefined;
 	received?: string | undefined;
 	message?: ErrorMessage<InferIssue<TContext>> | undefined;
-	path?: [IssuePathItem, ...IssuePathItem[]] | undefined;
 	issues?: [BaseIssue<InferInput<TContext>>, ...BaseIssue<InferInput<TContext>>[]] | undefined;
 }
 
@@ -58,7 +56,7 @@ export function _addIssue<const TContext extends Context>(
 ): void {
 	// Get expected and received string
 	const input = other && "input" in other ? other.input : dataset.value;
-	const expected = other?.expected ?? context.expects ?? undefined;
+	const expected = other?.expected ?? (context as unknown as { expects: string }).expects; //?? undefined;
 	const received = other?.received ?? tostring(input);
 
 	// Create issue object
@@ -71,8 +69,7 @@ export function _addIssue<const TContext extends Context>(
 		expected,
 		received,
 		message: `Invalid ${label}: ${expected ? `Expected ${expected} but r` : "R"}eceived ${received}`,
-		requirement: context.requirement,
-		path: other?.path,
+		requirement: (context as unknown as { requirement: unknown | undefined }).requirement,
 		issues: other?.issues,
 		lang: config.lang,
 		abortEarly: config.abortEarly,
@@ -85,8 +82,7 @@ export function _addIssue<const TContext extends Context>(
 	// Get custom issue message
 	const message =
 		other?.message ??
-		// @ts-expect-error
-		context.message ??
+		(context as unknown as { message: string | undefined }).message ??
 		getSpecificMessage(context.reference, issue.lang) ??
 		(isSchema ? getSchemaMessage(issue.lang) : undefined) ??
 		config.message ??
@@ -94,8 +90,7 @@ export function _addIssue<const TContext extends Context>(
 
 	// If custom message if specified, override default message
 	if (message) {
-		// @ts-expect-error
-		issue.message = typeof message === "function" ? message(issue) : message;
+		(issue as { message: string }).message = typeIs(message, "function") ? message(issue) : message;
 	}
 
 	// If context is a schema, set typed to `false`

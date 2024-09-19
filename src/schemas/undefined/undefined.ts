@@ -70,11 +70,11 @@ export function undefined_(
 		expects: "undefined",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run: (this_, dataset, config) => {
 			if (dataset.value === undefined) {
 				dataset.typed = true;
 			} else {
-				_addIssue(this, "type", dataset, config);
+				_addIssue(this_, "type", dataset, config);
 			}
 			return dataset as Dataset<undefined, UndefinedIssue>;
 		},

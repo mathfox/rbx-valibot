@@ -12,6 +12,6 @@ export function isValiError<
 	TSchema extends
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
->(error: unknown): error is ValiError<TSchema> {
-	return error instanceof ValiError;
+>(errorValue: unknown): errorValue is ValiError<TSchema> {
+	return errorValue instanceof ValiError;
 }
