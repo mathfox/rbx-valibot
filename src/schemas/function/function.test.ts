@@ -1,22 +1,22 @@
 import { describe, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
-import { type UndefinedIssue, undefined_ } from "./undefined";
+import { type FunctionIssue, function_ } from "./function";
 
-describe("undefined", () => {
+describe("function", () => {
 	describe("should return dataset without issues", () => {
-		const schema = undefined_();
+		const schema = function_();
 
-		test("for undefined", () => {
-			expectNoSchemaIssue(schema, [undefined]);
+		test("for functions", () => {
+			expectNoSchemaIssue(schema, [() => {}, function () {}]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = undefined_("message");
-		const baseIssue: Omit<UndefinedIssue, "input" | "received"> = {
+		const schema = function_("message");
+		const baseIssue: Omit<FunctionIssue, "input" | "received"> = {
 			kind: "schema",
-			type: "undefined",
-			expected: "undefined",
+			type: "function",
+			expected: "Function",
 			message: "message",
 		};
 
@@ -30,6 +30,10 @@ describe("undefined", () => {
 			expectSchemaIssue(schema, baseIssue, [-1, 0, 123, 45.67]);
 		});
 
+		test("for undefined", () => {
+			expectSchemaIssue(schema, baseIssue, [undefined]);
+		});
+
 		test("for strings", () => {
 			expectSchemaIssue(schema, baseIssue, ["", "foo", "123"]);
 		});
@@ -38,10 +42,6 @@ describe("undefined", () => {
 
 		test("for arrays", () => {
 			expectSchemaIssue(schema, baseIssue, [[], ["value"]]);
-		});
-
-		test("for functions", () => {
-			expectSchemaIssue(schema, baseIssue, [() => {}, function () {}]);
 		});
 
 		test("for objects", () => {

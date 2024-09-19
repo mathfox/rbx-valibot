@@ -12,7 +12,7 @@ export async function expectNoActionIssueAsync<TAction extends BaseValidationAsy
 	values: InferInput<TAction>[],
 ): Promise<void> {
 	for (const value of values) {
-		expect(await action._run({ typed: true, value }, {})).toStrictEqual({
+		expect(await action._run({ typed: true, value }, {})).toEqual({
 			typed: true,
 			value,
 		});

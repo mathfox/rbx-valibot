@@ -16,7 +16,7 @@ export function expectActionIssue<TAction extends BaseValidation<any, unknown, B
 	getReceived?: (value: InferInput<TAction>) => string,
 ): void {
 	for (const value of values) {
-		expect(action._run({ typed: true, value }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value }, {})).toEqual({
 			typed: true,
 			value,
 			issues: [

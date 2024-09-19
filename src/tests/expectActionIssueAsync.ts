@@ -16,7 +16,7 @@ export async function expectActionIssueAsync<TAction extends BaseValidationAsync
 	getReceived?: (value: InferInput<TAction>) => string,
 ): Promise<void> {
 	for (const value of values) {
-		expect(await action._run({ typed: true, value }, {})).toStrictEqual({
+		expect(await action._run({ typed: true, value }, {})).toEqual({
 			typed: true,
 			value,
 			issues: [

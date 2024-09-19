@@ -1,37 +1,41 @@
 import { describe, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
-import { type UndefinedIssue, undefined_ } from "./undefined";
+import { type BooleanIssue, boolean } from "./boolean";
 
-describe("undefined", () => {
+describe("boolean", () => {
 	describe("should return dataset without issues", () => {
-		const schema = undefined_();
+		const schema = boolean();
 
-		test("for undefined", () => {
-			expectNoSchemaIssue(schema, [undefined]);
+		test("for true boolean", () => {
+			expectNoSchemaIssue(schema, [true]);
+		});
+
+		test("for false boolean", () => {
+			expectNoSchemaIssue(schema, [false]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = undefined_("message");
-		const baseIssue: Omit<UndefinedIssue, "input" | "received"> = {
+		const schema = boolean("message");
+		const baseIssue: Omit<BooleanIssue, "input" | "received"> = {
 			kind: "schema",
-			type: "undefined",
-			expected: "undefined",
+			type: "boolean",
+			expected: "boolean",
 			message: "message",
 		};
 
 		// Primitive types
 
-		test("for booleans", () => {
-			expectSchemaIssue(schema, baseIssue, [true, false]);
-		});
-
 		test("for numbers", () => {
 			expectSchemaIssue(schema, baseIssue, [-1, 0, 123, 45.67]);
 		});
 
+		test("for undefined", () => {
+			expectSchemaIssue(schema, baseIssue, [undefined]);
+		});
+
 		test("for strings", () => {
-			expectSchemaIssue(schema, baseIssue, ["", "foo", "123"]);
+			expectSchemaIssue(schema, baseIssue, ["", "0", "true", "false"]);
 		});
 
 		// Complex types
