@@ -25,15 +25,11 @@
 	"devDependencies": {
 		"@rbxts/compiler-types": "^3.0.0-types.0",
 		"@rbxts/types": "^1.0.805",
-		"@biomejs/biome": "^1.9.0",
 		"@rbxts/jest": "^0.1.0",
 		"@rbxts/jest-globals": "^0.1.0",
-		"roblox-ts": "^3.0.0-dev-834585a",
-		"typescript": "^5.7.0-dev.20240914"
+		"roblox-ts": "^3.0.0-dev-834585a"
 	},
 	"dependencies": {
-		"@rbxts/number": "0.0.2",
-		"@rbxts/phantom": "^0.2.0",
 		"@rbxts/regexp": "^0.2.1-ts.4"
 	}
 }

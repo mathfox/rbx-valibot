@@ -34,9 +34,12 @@ export type FirstTupleItem<TTuple extends [unknown, ...unknown[]]> = TTuple[0];
 /**
  * Extracts last tuple item.
  */
-//export type LastTupleItem<TTuple extends [unknown, ...unknown[]]> = TTuple[TTuple extends [unknown, ...infer TRest]
-//	? TRest["length"]
-//	: never];
+export type LastTupleItem<TTuple extends [unknown, ...unknown[]]> = TTuple extends [
+	...infer _ extends unknown[],
+	infer TLast,
+]
+	? TLast
+	: TTuple[never];
 
 /**
  * Converts union to intersection type.
