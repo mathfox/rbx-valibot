@@ -1,11 +1,11 @@
 import { describe, expect, jest, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
-import { type StringIssue, string } from "../string";
+import { type StringIssue, string_ } from "../string";
 import { lazyAsync } from "./lazyAsync";
 
 describe("lazyAsync", () => {
 	describe("should return dataset without issues", () => {
-		const schema = lazyAsync(() => string());
+		const schema = lazyAsync(() => string_());
 
 		test("for strings", async () => {
 			await expectNoSchemaIssueAsync(schema, ["", "foo", "123"]);
@@ -13,7 +13,7 @@ describe("lazyAsync", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = lazyAsync(() => string("message"));
+		const schema = lazyAsync(() => string_("message"));
 		const baseIssue: Omit<StringIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "string",
@@ -51,7 +51,7 @@ describe("lazyAsync", () => {
 	});
 
 	test("should call getter with input", () => {
-		const getter = jest.fn(() => string());
+		const getter = jest.fn(() => string_());
 		const dataset = { typed: false, value: "foo" };
 		lazyAsync(getter)._run(dataset, {});
 		expect(getter).toHaveBeenCalledWith(dataset.value);

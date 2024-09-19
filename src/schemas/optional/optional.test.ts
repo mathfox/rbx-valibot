@@ -1,11 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue } from "../../tests";
-import { string } from "../string";
+import { string_ } from "../string";
 import { optional } from "./optional";
 
 describe("optional", () => {
 	describe("should return dataset without issues", () => {
-		const schema = optional(string());
+		const schema = optional(string_());
 
 		test("for wrapper type", () => {
 			expectNoSchemaIssue(schema, ["", "foo", "#$%"]);
@@ -17,7 +17,7 @@ describe("optional", () => {
 	});
 
 	describe("should return dataset without default", () => {
-		const schema = optional(string(), "foo");
+		const schema = optional(string_(), "foo");
 
 		test("for wrapper type", () => {
 			expectNoSchemaIssue(schema, ["", "bar", "#$%"]);
@@ -25,10 +25,10 @@ describe("optional", () => {
 	});
 
 	describe("should return dataset with default", () => {
-		const schema1 = optional(string(), undefined);
-		const schema2 = optional(string(), "foo");
-		const schema3 = optional(string(), () => undefined);
-		const schema4 = optional(string(), () => "foo");
+		const schema1 = optional(string_(), undefined);
+		const schema2 = optional(string_(), "foo");
+		const schema3 = optional(string_(), () => undefined);
+		const schema4 = optional(string_(), () => "foo");
 
 		test("for undefined", () => {
 			expect(schema1._run({ typed: false, value: undefined }, {})).toEqual({

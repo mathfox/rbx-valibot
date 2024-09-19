@@ -3,7 +3,7 @@ import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { number } from "../number";
 import { optional } from "../optional";
-import { type StringIssue, string } from "../string";
+import { type StringIssue, string_ } from "../string";
 import { objectAsync } from "./objectAsync";
 import type { ObjectIssue } from "./types";
 
@@ -14,12 +14,12 @@ describe("objectAsync", () => {
 		});
 
 		test("for simple object", async () => {
-			await expectNoSchemaIssueAsync(objectAsync({ key1: string(), key2: number() }), [{ key1: "foo", key2: 123 }]);
+			await expectNoSchemaIssueAsync(objectAsync({ key1: string_(), key2: number() }), [{ key1: "foo", key2: 123 }]);
 		});
 
 		test("for unknown entries", async () => {
 			expect(
-				await objectAsync({ key1: string() })._run({ typed: false, value: { key1: "foo", key2: 123 } }, {}),
+				await objectAsync({ key1: string_() })._run({ typed: false, value: { key1: "foo", key2: 123 } }, {}),
 			).toEqual({
 				typed: true,
 				value: { key1: "foo" },
@@ -69,17 +69,17 @@ describe("objectAsync", () => {
 
 	describe("should return dataset without nested issues", () => {
 		test("for simple object", async () => {
-			await expectNoSchemaIssueAsync(objectAsync({ key1: string(), key2: number() }), [{ key1: "foo", key2: 123 }]);
+			await expectNoSchemaIssueAsync(objectAsync({ key1: string_(), key2: number() }), [{ key1: "foo", key2: 123 }]);
 		});
 
 		test("for nested object", async () => {
-			await expectNoSchemaIssueAsync(objectAsync({ nested: objectAsync({ key: string() }) }), [
+			await expectNoSchemaIssueAsync(objectAsync({ nested: objectAsync({ key: string_() }) }), [
 				{ nested: { key: "foo" } },
 			]);
 		});
 
 		test("for optional entry", async () => {
-			await expectNoSchemaIssueAsync(objectAsync({ key: optional(string()) }), [
+			await expectNoSchemaIssueAsync(objectAsync({ key: optional(string_()) }), [
 				{},
 				{ key: undefined },
 				{ key: "foo" },
@@ -88,7 +88,7 @@ describe("objectAsync", () => {
 
 		test("for unknown entries", async () => {
 			expect(
-				await objectAsync({ key1: string() })._run({ typed: false, value: { key1: "foo", key2: 123 } }, {}),
+				await objectAsync({ key1: string_() })._run({ typed: false, value: { key1: "foo", key2: 123 } }, {}),
 			).toEqual({
 				typed: true,
 				value: { key1: "foo" },
@@ -98,7 +98,7 @@ describe("objectAsync", () => {
 
 	describe("should return dataset with nested issues", () => {
 		const schema = objectAsync({
-			key: string(),
+			key: string_(),
 			nested: objectAsync({ key: number() }),
 		});
 

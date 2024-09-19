@@ -79,7 +79,13 @@ export function nonOptional(
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			return this.wrapped._run(dataset, config);
+			// roblox-ts requires manual cast.
+			return (
+				this as NonOptionalSchema<
+					BaseSchema<unknown, unknown, BaseIssue<unknown>>,
+					ErrorMessage<NonOptionalIssue> | undefined
+				>
+			).wrapped._run(dataset, config);
 		},
 	};
 }

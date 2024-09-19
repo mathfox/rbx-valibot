@@ -1,11 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue } from "../../tests";
-import { string } from "../string";
+import { string_ } from "../string";
 import { undefinedable } from "./undefinedable";
 
 describe("undefinedable", () => {
 	describe("should return dataset without issues", () => {
-		const schema = undefinedable(string());
+		const schema = undefinedable(string_());
 
 		test("for wrapper type", () => {
 			expectNoSchemaIssue(schema, ["", "foo", "#$%"]);
@@ -17,7 +17,7 @@ describe("undefinedable", () => {
 	});
 
 	describe("should return dataset without default", () => {
-		const schema = undefinedable(string(), "foo");
+		const schema = undefinedable(string_(), "foo");
 
 		test("for wrapper type", () => {
 			expectNoSchemaIssue(schema, ["", "bar", "#$%"]);
@@ -25,10 +25,10 @@ describe("undefinedable", () => {
 	});
 
 	describe("should return dataset with default", () => {
-		const schema1 = undefinedable(string(), undefined);
-		const schema2 = undefinedable(string(), "foo");
-		const schema3 = undefinedable(string(), () => undefined);
-		const schema4 = undefinedable(string(), () => "foo");
+		const schema1 = undefinedable(string_(), undefined);
+		const schema2 = undefinedable(string_(), "foo");
+		const schema3 = undefinedable(string_(), () => undefined);
+		const schema4 = undefinedable(string_(), () => "foo");
 
 		test("for undefined", () => {
 			expect(schema1._run({ typed: false, value: undefined }, {})).toStrictEqual({

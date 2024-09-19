@@ -1,10 +1,10 @@
 import { describe, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
-import { type StringIssue, string } from "./string";
+import { type StringIssue, string_ } from "./string";
 
 describe("string", () => {
 	describe("should return dataset without issues", () => {
-		const schema = string();
+		const schema = string_();
 
 		test("for empty strings", () => {
 			expectNoSchemaIssue(schema, ["", " ", "\n"]);
@@ -24,7 +24,7 @@ describe("string", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = string("message");
+		const schema = string_("message");
 		const baseIssue: Omit<StringIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "string",

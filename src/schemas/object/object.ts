@@ -100,7 +100,8 @@ export function object(
 				// The reason for this decision is that it reduces the bundle size, and
 				// we also expect that most users will expect this behavior.
 				// ! roblox-ts requires manual cast.
-				for (const key in (this as ObjectSchema<ObjectEntries, ErrorMessage<ObjectIssue> | undefined>).entries) {
+				for (const [key] of (this as ObjectSchema<ObjectEntries, ErrorMessage<ObjectIssue> | undefined>)
+					.entries as unknown as Map<string, unknown>) {
 					// Get and parse value of key
 					const value: unknown = input[key as keyof typeof input];
 					// roblox-ts requires manual cast.

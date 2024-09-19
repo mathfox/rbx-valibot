@@ -31,7 +31,7 @@ export interface StringSchema<TMessage extends ErrorMessage<StringIssue> | undef
 	/**
 	 * The schema reference.
 	 */
-	readonly reference: typeof string;
+	readonly reference: typeof string_;
 	/**
 	 * The expected property.
 	 */
@@ -47,7 +47,7 @@ export interface StringSchema<TMessage extends ErrorMessage<StringIssue> | undef
  *
  * @returns A string schema.
  */
-export function string(): StringSchema<undefined>;
+export function string_(): StringSchema<undefined>;
 
 /**
  * Creates a string schema.
@@ -56,15 +56,15 @@ export function string(): StringSchema<undefined>;
  *
  * @returns A string schema.
  */
-export function string<const TMessage extends ErrorMessage<StringIssue> | undefined>(
+export function string_<const TMessage extends ErrorMessage<StringIssue> | undefined>(
 	message: TMessage,
 ): StringSchema<TMessage>;
 
-export function string(message?: ErrorMessage<StringIssue>): StringSchema<ErrorMessage<StringIssue> | undefined> {
+export function string_(message?: ErrorMessage<StringIssue>): StringSchema<ErrorMessage<StringIssue> | undefined> {
 	return {
 		kind: "schema",
 		type: "string",
-		reference: string,
+		reference: string_,
 		expects: "string",
 		async: false,
 		message,

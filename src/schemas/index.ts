@@ -15,5 +15,6 @@ export * from "./promise";
 export * from "./string";
 export * from "./undefined";
 export * from "./undefinedable";
+export * from "./union";
 export * from "./unknown";
 export * from "./void";

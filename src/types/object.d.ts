@@ -159,8 +159,7 @@ type OutputWithQuestionMarks<
  */
 type ReadonlyOutputKeys<TEntries extends ObjectEntries | ObjectEntriesAsync> = {
 	[TKey in keyof TEntries]: TEntries[TKey] extends SchemaWithPipe<infer TPipe> | SchemaWithPipeAsync<infer TPipe>
-		? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-			ReadonlyAction<any> extends TPipe[number]
+		? ReadonlyAction<any> extends TPipe[number]
 			? TKey
 			: never
 		: never;
