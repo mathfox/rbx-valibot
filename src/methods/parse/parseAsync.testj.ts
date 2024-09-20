@@ -23,6 +23,6 @@
 //	test("should throw error for invalid input", async () => {
 //		await expect(() => parseAsync(string(), 123)).rejects.toThrowError();
 //		await expect(() => parseAsync(number(), "foo")).rejects.toThrowError();
-//		await expect(() => parseAsync(objectAsync(entries), null)).rejects.toThrowError();
+//		await expect(() => parseAsync(objectAsync(entries), undefined)).rejects.toThrowError();
 //	});
 //});

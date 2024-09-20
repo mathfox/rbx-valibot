@@ -23,6 +23,6 @@
 //	test("should throw error for invalid input", () => {
 //		expect(() => parse(string(), 123)).toThrowError();
 //		expect(() => parse(number(), "foo")).toThrowError();
-//		expect(() => parse(object(entries), null)).toThrowError();
+//		expect(() => parse(object(entries), undefined)).toThrowError();
 //	});
 //});
