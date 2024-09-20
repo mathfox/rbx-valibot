@@ -91,7 +91,9 @@ export function intersect(
 					// If there are issues, capture them
 					if (optionDataset.issues) {
 						if (dataset.issues) {
-							dataset.issues.push(...(optionDataset.issues as unknown as never[]));
+							for (const issue of optionDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						} else {
 							dataset.issues = optionDataset.issues as never;
 						}

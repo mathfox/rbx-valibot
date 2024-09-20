@@ -97,15 +97,15 @@ export function intersectAsync(
 				);
 
 				// Collect outputs of option datasets
-				for (const optionDataset of optionDatasets) {
+				for (const optionDataset of optionDatasets as Dataset<unknown, BaseIssue<unknown>>[]) {
 					// If there are issues, capture them
-					if ((optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues) {
+					if (optionDataset.issues) {
 						if (dataset.issues) {
-							dataset.issues.push(
-								...((optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues as unknown as never[]),
-							);
+							for (const issue of optionDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						} else {
-							dataset.issues = (optionDataset as Dataset<unknown, BaseIssue<unknown>>).issues as never;
+							(dataset as { issues: defined[] }).issues = optionDataset.issues;
 						}
 
 						// If necessary, abort early
@@ -123,9 +123,9 @@ export function intersectAsync(
 					// Add output of option if necessary
 					if (dataset.typed) {
 						if (outputs) {
-							(outputs as defined[]).push((optionDataset as Dataset<unknown, BaseIssue<unknown>>).value as defined);
+							(outputs as defined[]).push(optionDataset.value as defined);
 						} else {
-							outputs = [(optionDataset as Dataset<unknown, BaseIssue<unknown>>).value];
+							outputs = [optionDataset.value];
 						}
 					}
 				}

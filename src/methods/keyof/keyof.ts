@@ -74,5 +74,11 @@ export function keyof(
 	schema: Schema,
 	message?: ErrorMessage<PicklistIssue>,
 ): PicklistSchema<ObjectKeys<Schema>, ErrorMessage<PicklistIssue> | undefined> {
-	return picklist(Object.keys(schema.entries) as ObjectKeys<Schema>, message);
+	const keys = new Array<defined>();
+
+	for (const [key] of schema.entries as unknown as Map<defined, unknown>) {
+		keys.push(key);
+	}
+
+	return picklist(keys as ObjectKeys<Schema>, message);
 }

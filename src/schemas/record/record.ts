@@ -99,7 +99,7 @@ export function record(
 				// Parse schema of each record entry
 				// Hint: for...in loop always returns keys as strings
 				// Hint: We exclude specific keys for security reasons
-				for (const entryKey in input) {
+				for (const [entryKey] of input as Map<unknown, unknown>) {
 					//if (_isValidObjectKey(input, entryKey)) {
 					// Get value of record entry
 					const entryValue: unknown = input[entryKey as keyof typeof input];
