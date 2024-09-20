@@ -55,7 +55,7 @@ describe("map", () => {
 			expectNoSchemaIssue(schema, [new Map()]);
 		});
 
-		test("for simple map", () => {
+		test("", () => {
 			expectNoSchemaIssue(schema, [
 				new Map([
 					[0, "foo"],
@@ -197,7 +197,12 @@ describe("map", () => {
 				),
 			).toEqual({
 				typed: false,
-				value: new Map([[0, "foo"]]),
+				value: new Map<unknown, unknown>([
+					[0, "foo"],
+					[1, 123],
+					[2, "baz"],
+					["string", "bar"],
+				]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});

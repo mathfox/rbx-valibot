@@ -119,6 +119,7 @@ export function setAsync(
 						for (const issue of valueDataset.issues) {
 							(dataset.issues as defined[] | undefined)?.push(issue);
 						}
+
 						if (!dataset.issues) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
 						}

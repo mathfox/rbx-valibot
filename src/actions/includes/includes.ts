@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ContentInput, ContentRequirement } from "../types";
 
 /**
@@ -88,7 +88,7 @@ export function includes(
 	ContentRequirement<ContentInput>,
 	ErrorMessage<IncludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
 > {
-	const expects = tostring(requirement);
+	const expects = _stringify(requirement);
 
 	return {
 		kind: "validation",

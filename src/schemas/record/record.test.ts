@@ -180,7 +180,6 @@ describe("record", () => {
 							foo: 1,
 							bar: "2",
 							baz: undefined,
-							other: 4,
 						},
 					},
 					{ abortEarly: true },

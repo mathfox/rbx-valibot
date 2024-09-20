@@ -120,14 +120,14 @@ export function recordAsync(
 							return [
 								entryKey,
 								entryValue,
-								(
+								await (
 									this as RecordSchemaAsync<
 										BaseSchemaAsync<string, string | number | symbol, BaseIssue<unknown>>,
 										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 										ErrorMessage<RecordIssue> | undefined
 									>
 								).key._run({ typed: false, value: entryKey }, config),
-								(
+								await (
 									this as RecordSchemaAsync<
 										BaseSchemaAsync<string, string | number | symbol, BaseIssue<unknown>>,
 										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,

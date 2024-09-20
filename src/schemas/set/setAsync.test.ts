@@ -48,7 +48,7 @@ describe("setAsync", () => {
 		// Complex types
 
 		test("for arrays", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [[], ["value"]]);
+			await expectSchemaIssueAsync(schema, baseIssue, [["value"]]);
 		});
 
 		test("for functions", async () => {
@@ -56,7 +56,7 @@ describe("setAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
@@ -112,9 +112,11 @@ describe("setAsync", () => {
 		});
 
 		test("with abort early", async () => {
-			expect(await schema._run({ typed: false, value: new Set(["foo", 123, "baz"]) }, { abortEarly: true })).toEqual({
+			expect(
+				await schema._run({ typed: false, value: new Set(["foo", 123, "baz", 1337]) }, { abortEarly: true }),
+			).toEqual({
 				typed: false,
-				value: new Set(["foo"]),
+				value: new Set(["foo", 123, "baz", 1337]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});

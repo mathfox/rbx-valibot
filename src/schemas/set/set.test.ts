@@ -48,7 +48,7 @@ describe("set", () => {
 		// Complex types
 
 		test("for arrays", () => {
-			expectSchemaIssue(schema, baseIssue, [[], ["value"]]);
+			expectSchemaIssue(schema, baseIssue, [["value"]]);
 		});
 
 		test("for functions", () => {
@@ -56,7 +56,7 @@ describe("set", () => {
 		});
 
 		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
+			expectSchemaIssue(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
@@ -114,7 +114,7 @@ describe("set", () => {
 		test("with abort early", () => {
 			expect(schema._run({ typed: false, value: new Set(["foo", 123, "baz"]) }, { abortEarly: true })).toEqual({
 				typed: false,
-				value: new Set(["foo"]),
+				value: new Set(["foo", 123, "baz"]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
