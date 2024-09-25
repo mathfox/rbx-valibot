@@ -197,7 +197,7 @@ describe("mapAsync", () => {
 				),
 			).toEqual({
 				typed: false,
-				value: new Map([[0, "foo"]]),
+				value: new Map<unknown, unknown>([[0, "foo"]]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});

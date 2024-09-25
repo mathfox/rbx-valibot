@@ -107,29 +107,35 @@ export function mapAsync(
 				dataset.typed = true;
 				dataset.value = new Map();
 
+				const datasetsPromises = new Array<Promise<unknown>>();
+
+				for (const [inputKey, inputValue] of input) {
+					datasetsPromises.push(
+						(async () => {
+							return [
+								inputKey,
+								inputValue,
+								await (
+									this as MapSchemaAsync<
+										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+										ErrorMessage<MapIssue> | undefined
+									>
+								).key._run({ typed: false, value: inputKey }, config),
+								await (
+									this as MapSchemaAsync<
+										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+										ErrorMessage<MapIssue> | undefined
+									>
+								).value._run({ typed: false, value: inputValue }, config),
+							];
+						})(),
+					);
+				}
+
 				// Parse schema of each map entry
-				const datasets = await Promise.all(
-					[...input].map(([inputKey, inputValue]) =>
-						Promise.all([
-							inputKey,
-							inputValue,
-							(
-								this as MapSchemaAsync<
-									BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-									BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-									ErrorMessage<MapIssue> | undefined
-								>
-							).key._run({ typed: false, value: inputKey }, config),
-							(
-								this as MapSchemaAsync<
-									BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-									BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-									ErrorMessage<MapIssue> | undefined
-								>
-							).value._run({ typed: false, value: inputValue }, config),
-						]),
-					),
-				);
+				const datasets = await Promise.all(datasetsPromises);
 
 				// Process datasets of each map entry
 				for (const [inputKey, inputValue, keyDataset, valueDataset] of datasets as [
