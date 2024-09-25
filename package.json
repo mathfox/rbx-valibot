@@ -30,6 +30,7 @@
 		"roblox-ts": "^3.0.0-dev-834585a"
 	},
 	"dependencies": {
+		"@rbxts/phantom": "^0.4.0",
 		"@rbxts/regexp": "^0.2.1-ts.4"
 	}
 }

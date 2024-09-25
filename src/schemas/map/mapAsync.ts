@@ -1,6 +1,5 @@
 import type { BaseIssue, BaseSchema, BaseSchemaAsync, Dataset, ErrorMessage, InferIssue } from "../../types";
 import { _addIssue } from "../../utils";
-import isMap from "../../utils/isMap";
 import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
 /**
@@ -102,14 +101,14 @@ export function mapAsync(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (isMap(input)) {
+			if (typeIs(input, "table")) {
 				// Set typed to `true` and value to empty map
 				dataset.typed = true;
 				dataset.value = new Map();
 
 				const datasetsPromises = new Array<Promise<unknown>>();
 
-				for (const [inputKey, inputValue] of input) {
+				for (const [inputKey, inputValue] of input as Map<unknown, unknown>) {
 					datasetsPromises.push(
 						(async () => {
 							return [
@@ -150,6 +149,7 @@ export function mapAsync(
 						for (const issue of keyDataset.issues) {
 							(dataset.issues as defined[] | undefined)?.push(issue);
 						}
+
 						if (!dataset.issues) {
 							(dataset as { issues: defined[] }).issues = keyDataset.issues;
 						}

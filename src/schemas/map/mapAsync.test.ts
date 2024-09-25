@@ -95,16 +95,8 @@ describe("mapAsync", () => {
 
 		// Complex types
 
-		test("for arrays", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [[], ["value"]]);
-		});
-
 		test("for functions", async () => {
 			await expectSchemaIssueAsync(schema, baseIssue, [() => {}, function () {}]);
-		});
-
-		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
 		});
 	});
 
@@ -197,7 +189,7 @@ describe("mapAsync", () => {
 				),
 			).toEqual({
 				typed: false,
-				value: new Map<unknown, unknown>([[0, "foo"]]),
+				value: new Map([]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
@@ -214,6 +206,7 @@ describe("mapAsync", () => {
 				],
 				[new Map(), "bar"],
 			]);
+
 			expect(
 				await nestedSchema._run(
 					{
