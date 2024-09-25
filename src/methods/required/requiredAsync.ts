@@ -1,3 +1,4 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	LooseObjectIssue,
 	LooseObjectSchemaAsync,
@@ -27,7 +28,6 @@ import type {
 	ObjectKeys,
 	SchemaWithoutPipe,
 } from "../../types";
-import isArray from "../../utils/isArray";
 
 /**
  * Schema type.
@@ -262,6 +262,7 @@ export function requiredAsync(
 		ObjectKeys<Schema>,
 		ErrorMessage<NonOptionalIssue> | undefined
 	> = {};
+
 	for (const [key] of schema.entries as unknown as Map<string, unknown>) {
 		(entries as Record<string, unknown>)[key] =
 			!keys || keys.includes(key) ? nonOptionalAsync(schema.entries[key], message) : schema.entries[key];

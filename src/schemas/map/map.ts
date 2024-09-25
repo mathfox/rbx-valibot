@@ -1,6 +1,5 @@
 import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
 import { _addIssue } from "../../utils";
-import isMap from "../../utils/isMap";
 import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
 /**
@@ -92,13 +91,13 @@ export function map(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (isMap(input)) {
+			if (typeIs(input, "table")) {
 				// Set typed to `true` and value to empty map
 				dataset.typed = true;
 				dataset.value = new Map();
 
 				// Parse schema of each map entry
-				for (const [inputKey, inputValue] of input) {
+				for (const [inputKey, inputValue] of input as Map<unknown, unknown>) {
 					// Get dataset of key schema
 					const keyDataset = (
 						this as MapSchema<

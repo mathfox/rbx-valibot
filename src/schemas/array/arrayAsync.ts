@@ -1,3 +1,4 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	BaseIssue,
 	BaseSchema,
@@ -9,7 +10,6 @@ import type {
 	InferOutput,
 } from "../../types";
 import { _addIssue } from "../../utils";
-import isArray from "../../utils/isArray";
 import type { ArrayIssue } from "./types";
 
 /**

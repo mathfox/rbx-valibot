@@ -1,4 +1,4 @@
-import isArray from "../../../../utils/isArray";
+import isArray from "@rbxts/phantom/src/Array/isArray";
 
 /**
  * Merge dataset type.
