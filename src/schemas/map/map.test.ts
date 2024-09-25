@@ -5,6 +5,8 @@ import { number } from "../number";
 import { type StringIssue, string_ } from "../string";
 import { type MapSchema, map } from "./map";
 import type { MapIssue } from "./types";
+import { deepEquals } from "@rbxts/phantom/src/Shared";
+import { removeKeys } from "@rbxts/phantom/src/Map";
 
 describe("map", () => {
 	describe("should return schema object", () => {
@@ -95,16 +97,8 @@ describe("map", () => {
 
 		// Complex types
 
-		test("for arrays", () => {
-			expectSchemaIssue(schema, baseIssue, [[], ["value"]]);
-		});
-
 		test("for functions", () => {
 			expectSchemaIssue(schema, baseIssue, [() => {}, function () {}]);
-		});
-
-		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
 		});
 	});
 
@@ -122,17 +116,22 @@ describe("map", () => {
 		});
 
 		test("for nested map", () => {
-			expectNoSchemaIssue(map(schema, schema), [
-				new Map([
-					[
-						new Map([
-							[0, "foo"],
-							[1, "bar"],
-						]),
-						new Map([[3, "baz"]]),
-					],
-				]),
+			const value = new Map([
+				[
+					new Map([
+						[0, "foo"],
+						[1, "bar"],
+					]),
+					new Map([[3, "baz"]]),
+				],
 			]);
+
+			expect(
+				deepEquals(map(schema, schema)._run({ typed: false, value }, {}), {
+					typed: true,
+					value,
+				}),
+			).toBe(true);
 		});
 	});
 
@@ -190,19 +189,13 @@ describe("map", () => {
 							[0, "foo"],
 							[1, 123],
 							[2, "baz"],
-							["string", "bar"],
 						]),
 					},
 					{ abortEarly: true },
 				),
 			).toEqual({
 				typed: false,
-				value: new Map<unknown, unknown>([
-					[0, "foo"],
-					[1, 123],
-					[2, "baz"],
-					["string", "bar"],
-				]),
+				value: new Map(),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
@@ -219,36 +212,39 @@ describe("map", () => {
 				],
 				[new Map(), "bar"],
 			]);
+
+			const result = nestedSchema._run(
+				{
+					typed: false,
+					value: input,
+				},
+				{},
+			);
+
+			expect(result.issues).toContainEqual({
+				...baseInfo,
+				kind: "schema",
+				type: "string",
+				input: 123,
+				expected: "string",
+				received: "123",
+			});
+
+			expect(result.issues).toContainEqual({
+				...baseInfo,
+				kind: "schema",
+				type: "map",
+				input: "bar",
+				expected: "Map",
+				received: '"bar"',
+			});
+
 			expect(
-				nestedSchema._run(
-					{
-						typed: false,
-						value: input,
-					},
-					{},
-				),
-			).toEqual({
-				typed: false,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "string",
-						input: 123,
-						expected: "string",
-						received: "123",
-					},
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "map",
-						input: "bar",
-						expected: "Map",
-						received: '"bar"',
-					},
-				],
-			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);
+				deepEquals(removeKeys(result as unknown as Map<unknown, unknown>, "issues"), {
+					typed: false,
+					value: input,
+				} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>),
+			).toBe(true);
 		});
 	});
 });

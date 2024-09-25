@@ -2,6 +2,7 @@ export * from "./config";
 export * from "./fallback";
 export * from "./getDefault";
 export * from "./getFallback";
+export * from "./keyof";
 export * from "./omit";
 export * from "./parse";
 export * from "./parser";
