@@ -1,6 +1,6 @@
+import isInteger from "@rbxts/phantom/src/Number/isInteger";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
-import isInteger from "./isInteger";
 
 /**
  * Integer issue type.

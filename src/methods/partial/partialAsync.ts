@@ -76,11 +76,11 @@ export type SchemaWithPartialAsync<
 			 *
 			 * @internal
 			 */
-			_run(
+			readonly _run: (
 				this: unknown,
 				dataset: Dataset<unknown, never>,
-				config: Config<InferIssue<TSchema>>,
-			): Promise<Dataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>>;
+				config: Config<BaseIssue<unknown>>,
+			) => Promise<Dataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>>;
 			/**
 			 * Input, output and issue type.
 			 *
@@ -108,11 +108,11 @@ export type SchemaWithPartialAsync<
 				 *
 				 * @internal
 				 */
-				_run(
+				readonly _run: (
 					this: unknown,
 					dataset: Dataset<unknown, never>,
-					config: Config<InferIssue<TSchema>>,
-				): Promise<
+					config: Config<BaseIssue<unknown>>,
+				) => Promise<
 					Dataset<
 						InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 							[key: string]: unknown;
@@ -155,11 +155,11 @@ export type SchemaWithPartialAsync<
 					 *
 					 * @internal
 					 */
-					_run(
+					readonly _run: (
 						this: unknown,
 						dataset: Dataset<unknown, never>,
-						config: Config<InferIssue<TSchema>>,
-					): Promise<
+						config: Config<BaseIssue<unknown>>,
+					) => Promise<
 						Dataset<
 							InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 								[key: string]: InferOutput<TRest>;
@@ -211,11 +211,12 @@ export function partialAsync(
 ): SchemaWithPartialAsync<Schema, ObjectKeys<Schema> | undefined> {
 	// Create modified object entries
 	const entries: PartialEntries<ObjectEntriesAsync, ObjectKeys<Schema>> = {};
+
 	for (const [key] of schema.entries as unknown as Map<string, unknown>) {
 		(entries as Record<string, unknown>)[key] =
 			!keys || keys.includes(key) ? optionalAsync(schema.entries[key]) : schema.entries[key];
 	}
 
 	// Return modified copy of schema
-	return { ...schema, entries };
+	return { ...schema, entries } as SchemaWithPartialAsync<Schema, ObjectKeys<Schema> | undefined>;
 }

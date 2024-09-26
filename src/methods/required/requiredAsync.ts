@@ -83,11 +83,11 @@ export type SchemaWithRequiredAsync<
 			 *
 			 * @internal
 			 */
-			_run(
+			readonly _run: (
 				this: unknown,
 				dataset: Dataset<unknown, never>,
-				config: Config<InferIssue<TSchema>>,
-			): Promise<
+				config: Config<BaseIssue<unknown>>,
+			) => Promise<
 				Dataset<InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>, NonOptionalIssue | InferIssue<TSchema>>
 			>;
 			/**
@@ -117,11 +117,11 @@ export type SchemaWithRequiredAsync<
 				 *
 				 * @internal
 				 */
-				_run(
+				readonly _run: (
 					this: unknown,
 					dataset: Dataset<unknown, never>,
-					config: Config<InferIssue<TSchema>>,
-				): Promise<
+					config: Config<BaseIssue<unknown>>,
+				) => Promise<
 					Dataset<
 						InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 							[key: string]: unknown;
@@ -164,11 +164,11 @@ export type SchemaWithRequiredAsync<
 					 *
 					 * @internal
 					 */
-					_run(
+					readonly _run: (
 						this: unknown,
 						dataset: Dataset<unknown, never>,
-						config: Config<InferIssue<TSchema>>,
-					): Promise<
+						config: Config<BaseIssue<unknown>>,
+					) => Promise<
 						Dataset<
 							InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 								[key: string]: InferOutput<TRest>;

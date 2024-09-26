@@ -39,7 +39,7 @@ export interface BaseValidation<TInput, TOutput, TIssue extends BaseIssue<unknow
 	readonly _run: (
 		this: BaseValidation<any, any, BaseIssue<unknown>>,
 		dataset: Dataset<TInput, BaseIssue<unknown>>,
-		config: Config<TIssue>,
+		config: Config<BaseIssue<unknown>>,
 	) => Dataset<TOutput, BaseIssue<unknown> | TIssue>;
 	/**
 	 * Input, output and issue type.
@@ -81,7 +81,7 @@ export interface BaseValidationAsync<TInput, TOutput, TIssue extends BaseIssue<u
 	readonly _run: (
 		this: BaseValidation<any, any, BaseIssue<unknown>> | BaseValidationAsync<any, any, BaseIssue<unknown>>,
 		dataset: Dataset<TInput, BaseIssue<unknown>>,
-		config: Config<TIssue>,
+		config: Config<BaseIssue<unknown>>,
 	) => Promise<Dataset<TOutput, BaseIssue<unknown> | TIssue>>;
 }
 

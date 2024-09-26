@@ -49,7 +49,11 @@ interface Other<TContext extends Context> {
  * @internal
  */
 export function _addIssue<const TContext extends Context>(
-	context: TContext,
+	context: TContext & {
+		expects?: string | undefined;
+		requirement?: unknown;
+		message?: ErrorMessage<Extract<InferIssue<TContext>, { type: TContext["type"] }>> | undefined;
+	},
 	label: string,
 	dataset: Dataset<unknown, BaseIssue<unknown>>,
 	config: Config<any>, // InferIssue<TContext>

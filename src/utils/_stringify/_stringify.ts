@@ -11,5 +11,6 @@ export function _stringify(input: unknown): string {
 	if (typeIs(input, "string")) {
 		return `"${input}"`;
 	}
+
 	return tostring(input);
 }

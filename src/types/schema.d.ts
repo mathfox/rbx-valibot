@@ -39,7 +39,7 @@ export interface BaseSchema<TInput, TOutput, TIssue extends BaseIssue<unknown>> 
 	readonly _run: (
 		this: BaseSchema<unknown, unknown, BaseIssue<unknown>>,
 		dataset: Dataset<unknown, never>,
-		config: Config<TIssue>,
+		config: Config<BaseIssue<unknown>>,
 	) => Dataset<TOutput, TIssue>;
 	/**
 	 * Input, output and issue type.
@@ -81,7 +81,7 @@ export interface BaseSchemaAsync<TInput, TOutput, TIssue extends BaseIssue<unkno
 	readonly _run: (
 		this: BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 		dataset: Dataset<unknown, never>,
-		config: Config<TIssue>,
+		config: Config<BaseIssue<unknown>>,
 	) => Promise<Dataset<TOutput, TIssue>>;
 }
 

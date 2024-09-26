@@ -72,11 +72,11 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 			 *
 			 * @internal
 			 */
-			_run(
+			readonly _run: (
 				this: unknown,
 				dataset: Dataset<unknown, never>,
-				config: Config<InferIssue<TSchema>>,
-			): Dataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>;
+				config: Config<BaseIssue<unknown>>,
+			) => Dataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>;
 			/**
 			 * Input, output and issue type.
 			 *
@@ -104,11 +104,11 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 				 *
 				 * @internal
 				 */
-				_run(
+				readonly _run: (
 					this: unknown,
 					dataset: Dataset<unknown, never>,
-					config: Config<InferIssue<TSchema>>,
-				): Dataset<
+					config: Config<BaseIssue<unknown>>,
+				) => Dataset<
 					InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 						[key: string]: unknown;
 					},
@@ -145,11 +145,11 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 					 *
 					 * @internal
 					 */
-					_run(
+					readonly _run: (
 						this: unknown,
 						dataset: Dataset<unknown, never>,
-						config: Config<InferIssue<TSchema>>,
-					): Dataset<
+						config: Config<BaseIssue<unknown>>,
+					) => Dataset<
 						InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 							[key: string]: InferOutput<TRest>;
 						},
@@ -199,11 +199,12 @@ export function partial(
 ): SchemaWithPartial<Schema, ObjectKeys<Schema> | undefined> {
 	// Create modified object entries
 	const entries: PartialEntries<ObjectEntries, ObjectKeys<Schema>> = {};
+
 	for (const [key] of schema.entries as unknown as Map<string, unknown>) {
 		(entries as Record<string, unknown>)[key] =
 			!keys || keys.includes(key) ? optional(schema.entries[key]) : schema.entries[key];
 	}
 
 	// Return modified copy of schema
-	return { ...schema, entries };
+	return { ...schema, entries } as SchemaWithPartial<Schema, ObjectKeys<Schema> | undefined>;
 }

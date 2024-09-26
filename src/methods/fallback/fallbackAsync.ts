@@ -54,7 +54,7 @@ export type SchemaWithFallbackAsync<
 	readonly _run: (
 		this: unknown,
 		dataset: Dataset<unknown, never>,
-		config: Config<InferIssue<TSchema>>,
+		config: Config<BaseIssue<unknown>>,
 	) => Promise<Dataset<InferOutput<TSchema>, InferIssue<TSchema>>>;
 };
 

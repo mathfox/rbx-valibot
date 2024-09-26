@@ -8,7 +8,7 @@
  *
  * @internal
  */
-export function _joinExpects(values: string[], separator: "&" | "|"): string {
+export function _joinExpects(values: ReadonlyArray<string>, separator: "&" | "|"): string {
 	let uniqueValuesCount = 0;
 	const metValues = new Set<string>();
 	const uniqueValues = new Array<string>();
