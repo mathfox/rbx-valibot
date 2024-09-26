@@ -37,7 +37,7 @@ export function rawTransformAsync<TInput, TOutput>(
 			const output = await action({
 				dataset,
 				config,
-				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
+				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info as any),
 				NEVER: undefined as never,
 			});
 

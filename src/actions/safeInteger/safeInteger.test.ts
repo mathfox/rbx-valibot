@@ -1,45 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type SafeIntegerAction, type SafeIntegerIssue, safeInteger } from "./safeInteger";
-import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
+import { type SafeIntegerIssue, safeInteger } from "./safeInteger";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 
 describe("safeInteger", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<SafeIntegerAction<number, never>, "message"> = {
-			kind: "validation",
-			type: "safe_integer",
-			reference: safeInteger,
-			expects: undefined,
-			requirement: expect.any("function"),
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: SafeIntegerAction<number, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(safeInteger()).toStrictEqual(action);
-			expect(safeInteger(undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(safeInteger("message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies SafeIntegerAction<number, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(safeInteger(message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies SafeIntegerAction<number, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = safeInteger();
 

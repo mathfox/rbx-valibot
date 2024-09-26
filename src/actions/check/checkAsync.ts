@@ -66,7 +66,12 @@ export function checkAsync(
 		requirement,
 		message,
 		async _run(dataset, config) {
-			if (dataset.typed && !(await this.requirement(dataset.value))) {
+			if (
+				dataset.typed &&
+				!(await (this as CheckActionAsync<unknown, ErrorMessage<CheckIssue<unknown>> | undefined>).requirement(
+					dataset.value,
+				))
+			) {
 				_addIssue(this, "input", dataset, config);
 			}
 			return dataset;

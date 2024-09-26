@@ -96,11 +96,18 @@ export function minSize(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ReadonlySet<unknown>).size() < this.requirement) {
+			const typedThis = this as MinSizeAction<
+				SizeInput,
+				number,
+				ErrorMessage<MinSizeIssue<SizeInput, number>> | undefined
+			>;
+
+			if (dataset.typed && (dataset.value as ReadonlySet<unknown>).size() < typedThis.requirement) {
 				_addIssue(this, "size", dataset, config, {
 					received: `${(dataset.value as ReadonlySet<unknown>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

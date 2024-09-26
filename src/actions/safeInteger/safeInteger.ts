@@ -1,4 +1,4 @@
-import { isSafeInteger } from "@rbxts/number";
+import { isSafeInteger } from "@rbxts/phantom/src/Number";
 import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -88,7 +88,12 @@ export function safeInteger(
 		requirement: isSafeInteger,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !this.requirement(dataset.value)) {
+			if (
+				dataset.typed &&
+				!(this as SafeIntegerAction<number, ErrorMessage<SafeIntegerIssue<number>> | undefined>).requirement(
+					dataset.value,
+				)
+			) {
 				_addIssue(this, "safe integer", dataset, config);
 			}
 			return dataset as Dataset<number, SafeIntegerIssue<number>>;

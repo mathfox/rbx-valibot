@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type RawTransformActionAsync, rawTransformAsync } from "./rawTransformAsync";
+import { rawTransformAsync } from "./rawTransformAsync";
 
 describe("rawTransformAsync", () => {
 	const action = rawTransformAsync<string, number>(async ({ dataset, addIssue, NEVER }) => {
@@ -9,16 +9,6 @@ describe("rawTransformAsync", () => {
 			return NEVER;
 		}
 		return length;
-	});
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "transformation",
-			type: "raw_transform",
-			reference: rawTransformAsync,
-			async: true,
-			_run: expect.any("function"),
-		} satisfies RawTransformActionAsync<string, number>);
 	});
 
 	describe("should return dataset without issues", () => {

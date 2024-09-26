@@ -36,7 +36,10 @@ export function filterItems(operation: ArrayRequirement<unknown[]>): FilterItems
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = (dataset.value as defined[]).filter(this.operation as ArrayRequirement<MaybeReadonly<defined[]>>);
+			dataset.value = (dataset.value as defined[]).filter(
+				(this as FilterItemsAction<unknown[]>).operation as ArrayRequirement<MaybeReadonly<defined[]>>,
+			);
+
 			return dataset;
 		},
 	};

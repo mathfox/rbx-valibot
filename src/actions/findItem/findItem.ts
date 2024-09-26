@@ -38,8 +38,9 @@ export function findItem(operation: ArrayRequirement<unknown[]>): FindItemAction
 		operation,
 		_run(dataset) {
 			dataset.value = (dataset.value as defined[]).find(
-				this.operation as ArrayRequirement<MaybeReadonly<defined[]>>,
+				(this as FindItemAction<unknown[]>).operation as ArrayRequirement<MaybeReadonly<defined[]>>,
 			) as defined[];
+
 			return dataset as TypedDataset<unknown, never>;
 		},
 	};

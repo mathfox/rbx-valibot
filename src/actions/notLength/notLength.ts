@@ -96,11 +96,17 @@ export function notLength(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ArrayLike<unknown>).size() === this.requirement) {
+			if (
+				dataset.typed &&
+				(dataset.value as ArrayLike<unknown>).size() ===
+					(this as NotLengthAction<LengthInput, number, ErrorMessage<NotLengthIssue<LengthInput, number>> | undefined>)
+						.requirement
+			) {
 				_addIssue(this, "length", dataset, config, {
 					received: `${(dataset.value as ArrayLike<unknown>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

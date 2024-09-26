@@ -95,18 +95,16 @@ export function checkItems(
 			if (dataset.typed) {
 				for (let index = 0; index < dataset.value.size(); index++) {
 					const item = dataset.value[index];
-					if (!this.requirement(item, index, dataset.value)) {
+
+					if (
+						!(this as CheckItemsAction<unknown[], ErrorMessage<CheckItemsIssue<unknown[]>> | undefined>).requirement(
+							item,
+							index,
+							dataset.value,
+						)
+					) {
 						_addIssue(this, "item", dataset, config, {
 							input: item,
-							path: [
-								{
-									type: "array",
-									origin: "value",
-									input: dataset.value,
-									key: index,
-									value: item,
-								},
-							],
 						});
 					}
 				}

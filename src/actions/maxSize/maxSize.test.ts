@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type MaxSizeAction, type MaxSizeIssue, maxSize } from "./maxSize";
+import { type MaxSizeIssue, maxSize } from "./maxSize";
 
 describe("maxSize", () => {
 	describe("should return dataset without issues", () => {

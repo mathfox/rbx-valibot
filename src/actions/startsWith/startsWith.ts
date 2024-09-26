@@ -95,11 +95,16 @@ export function startsWith(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value.sub(1, this.requirement.size()) !== this.requirement) {
+			const requirement = (
+				this as StartsWithAction<string, string, ErrorMessage<StartsWithIssue<string, string>> | undefined>
+			).requirement;
+
+			if (dataset.typed && dataset.value.sub(1, requirement.size()) !== requirement) {
 				_addIssue(this, "start", dataset, config, {
-					received: `"${dataset.value.sub(1, this.requirement.size())}"`,
+					received: `"${dataset.value.sub(1, requirement.size())}"`,
 				});
 			}
+
 			return dataset;
 		},
 	};

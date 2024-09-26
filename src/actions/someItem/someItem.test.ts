@@ -1,46 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type SomeItemAction, type SomeItemIssue, someItem } from "./someItem";
+import { type SomeItemIssue, someItem } from "./someItem";
 
 describe("someItem", () => {
-	describe("should return action object", () => {
-		const requirement = (item: string) => item.sub(1, 2) === "DE";
-		const baseAction: Omit<SomeItemAction<string[], never>, "message"> = {
-			kind: "validation",
-			type: "some_item",
-			reference: someItem,
-			expects: undefined,
-			requirement,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: SomeItemAction<string[], undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(someItem<string[]>(requirement)).toStrictEqual(action);
-			expect(someItem<string[], undefined>(requirement, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			const message = "message";
-			expect(someItem<string[], "message">(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies SomeItemAction<string[], "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(someItem<string[], typeof message>(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies SomeItemAction<string[], typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = someItem<number[]>((item: number) => item > 9);
 

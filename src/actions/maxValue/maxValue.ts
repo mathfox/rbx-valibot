@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ValueInput } from "../types";
 
 /**
@@ -88,15 +88,26 @@ export function maxValue(
 		type: "max_value",
 		reference: maxValue,
 		async: false,
-		expects: `<=${tostring(requirement)}`,
+		expects: `<=${_stringify(requirement)}`,
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value > this.requirement) {
+			if (
+				dataset.typed &&
+				dataset.value >
+					(
+						this as MaxValueAction<
+							ValueInput,
+							ValueInput,
+							ErrorMessage<MaxValueIssue<ValueInput, ValueInput>> | undefined
+						>
+					).requirement
+			) {
 				_addIssue(this, "value", dataset, config, {
-					received: tostring(dataset.value),
+					received: _stringify(dataset.value),
 				});
 			}
+
 			return dataset;
 		},
 	};

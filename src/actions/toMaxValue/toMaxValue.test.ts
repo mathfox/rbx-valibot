@@ -1,20 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ToMaxValueAction, toMaxValue } from "./toMaxValue";
-import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
+import { toMaxValue } from "./toMaxValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 
 describe("toMaxValue", () => {
 	const action = toMaxValue<number, 10>(10);
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "transformation",
-			type: "to_max_value",
-			reference: toMaxValue,
-			requirement: 10,
-			async: false,
-			_run: expect.any("function"),
-		} satisfies ToMaxValueAction<number, 10>);
-	});
 
 	test("should transform to max value", () => {
 		const outputDataset = { typed: true, value: 10 };

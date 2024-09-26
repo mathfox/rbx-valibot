@@ -1,3 +1,4 @@
+import PhantomString from "@rbxts/phantom/src/String";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -95,9 +96,15 @@ export function endsWith(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !dataset.value.match(`${this.requirement}$`)) {
+			if (
+				dataset.typed &&
+				!PhantomString.endsWith(
+					dataset.value,
+					(this as EndsWithAction<string, string, ErrorMessage<EndsWithIssue<string, string>> | undefined>).requirement,
+				)
+			) {
 				_addIssue(this, "end", dataset, config, {
-					received: `"${dataset.value.sub(-this.requirement.size())}"`,
+					received: `"${dataset.value.sub(-(this as EndsWithAction<string, string, ErrorMessage<EndsWithIssue<string, string>> | undefined>).requirement.size())}"`,
 				});
 			}
 			return dataset;

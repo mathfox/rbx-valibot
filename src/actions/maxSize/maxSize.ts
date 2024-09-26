@@ -96,11 +96,17 @@ export function maxSize(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ReadonlySet<unknown>).size() > this.requirement) {
+			if (
+				dataset.typed &&
+				(dataset.value as ReadonlySet<unknown>).size() >
+					(this as MaxSizeAction<SizeInput, number, ErrorMessage<MaxSizeIssue<SizeInput, number>> | undefined>)
+						.requirement
+			) {
 				_addIssue(this, "size", dataset, config, {
 					received: `${(dataset.value as ReadonlySet<unknown>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

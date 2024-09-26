@@ -92,10 +92,14 @@ export function someItem(
 		_run(dataset, config) {
 			if (
 				dataset.typed &&
-				!(dataset.value as Array<defined>).some(this.requirement as ArrayRequirement<MaybeReadonly<defined[]>>)
+				!(dataset.value as Array<defined>).some(
+					(this as SomeItemAction<unknown[], ErrorMessage<SomeItemIssue<unknown[]>> | undefined>)
+						.requirement as ArrayRequirement<MaybeReadonly<defined[]>>,
+				)
 			) {
 				_addIssue(this, "item", dataset, config);
 			}
+
 			return dataset;
 		},
 	};

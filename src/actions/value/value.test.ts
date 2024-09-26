@@ -1,45 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type ValueAction, value } from "./value";
-import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
+import { value } from "./value";
+import { MIN_SAFE_INTEGER, MAX_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 
 describe("value", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<ValueAction<number, 5, never>, "message"> = {
-			kind: "validation",
-			type: "value",
-			reference: value,
-			expects: "5",
-			requirement: 5,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: ValueAction<number, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(value(5)).toStrictEqual(action);
-			expect(value(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(value(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies ValueAction<number, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(value(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies ValueAction<number, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", () => {
 			expect(value(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({

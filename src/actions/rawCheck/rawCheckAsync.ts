@@ -40,7 +40,7 @@ export function rawCheckAsync<TInput>(
 			await action({
 				dataset,
 				config,
-				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
+				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info as any),
 			});
 			return dataset;
 		},

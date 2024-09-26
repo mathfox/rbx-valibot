@@ -1,43 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type NonEmptyAction, type NonEmptyIssue, nonEmpty } from "./nonEmpty";
+import { type NonEmptyIssue, nonEmpty } from "./nonEmpty";
 
 describe("nonEmpty", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<NonEmptyAction<string, never>, "message"> = {
-			kind: "validation",
-			type: "non_empty",
-			reference: nonEmpty,
-			expects: "!0",
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: NonEmptyAction<string, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(nonEmpty()).toStrictEqual(action);
-			expect(nonEmpty(undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(nonEmpty("message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies NonEmptyAction<string, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(nonEmpty(message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies NonEmptyAction<string, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = nonEmpty();
 

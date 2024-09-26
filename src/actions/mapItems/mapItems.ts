@@ -45,8 +45,9 @@ export function mapItems(operation: ArrayAction<unknown[], unknown>): MapItemsAc
 		operation,
 		_run(dataset) {
 			dataset.value = (dataset.value as defined[]).map(
-				this.operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
+				(this as MapItemsAction<unknown[], unknown>).operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
 			);
+
 			return dataset;
 		},
 	};

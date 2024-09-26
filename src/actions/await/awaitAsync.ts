@@ -28,6 +28,7 @@ export function awaitAsync<TInput extends Promise<unknown>>(): AwaitActionAsync<
 		async: true,
 		async _run(dataset) {
 			dataset.value = (await dataset.value) as TInput;
+
 			return dataset as TypedDataset<Awaited<TInput>, never>;
 		},
 	};

@@ -37,12 +37,12 @@ export function rawTransform<TInput, TOutput>(
 			const output = action({
 				dataset,
 				config,
-				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
+				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info as any),
 				NEVER: undefined as never,
 			});
 
 			// Update dataset depending on issues
-			if (dataset.issues) {
+			if (dataset.issues !== undefined) {
 				dataset.typed = false as true;
 			} else {
 				dataset.value = output as unknown as TInput;

@@ -64,7 +64,10 @@ export function check(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !this.requirement(dataset.value)) {
+			if (
+				dataset.typed &&
+				!(this as CheckAction<unknown, ErrorMessage<CheckIssue<unknown>> | undefined>).requirement(dataset.value)
+			) {
 				_addIssue(this, "input", dataset, config);
 			}
 			return dataset;

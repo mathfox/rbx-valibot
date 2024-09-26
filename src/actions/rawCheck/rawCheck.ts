@@ -38,8 +38,9 @@ export function rawCheck<TInput>(action: (context: Context<TInput>) => void): Ra
 			action({
 				dataset,
 				config,
-				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info),
+				addIssue: (info) => _addIssue(this, info?.label ?? "input", dataset, config, info as any),
 			});
+
 			return dataset;
 		},
 	};

@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ContentInput, ContentRequirement } from "../types";
 
 /**
@@ -88,7 +88,7 @@ export function excludes(
 	ContentRequirement<ContentInput>,
 	ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
 > {
-	const received = tostring(requirement);
+	const received = _stringify(requirement);
 
 	return {
 		kind: "validation",
@@ -101,8 +101,25 @@ export function excludes(
 		_run(dataset, config) {
 			if (dataset.typed) {
 				if (
-					(typeIs(dataset.value, "string") && dataset.value.match(this.requirement as string)[0] !== undefined) ||
-					(dataset.value as defined[]).includes(this.requirement as defined)
+					(typeIs(dataset.value, "string") &&
+						dataset.value.match(
+							(
+								this as ExcludesAction<
+									ContentInput,
+									ContentRequirement<ContentInput>,
+									ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+								>
+							).requirement as string,
+						)[0] !== undefined) ||
+					(dataset.value as defined[]).includes(
+						(
+							this as ExcludesAction<
+								ContentInput,
+								ContentRequirement<ContentInput>,
+								ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+							>
+						).requirement as defined,
+					)
 				) {
 					_addIssue(this, "content", dataset, config, { received });
 				}

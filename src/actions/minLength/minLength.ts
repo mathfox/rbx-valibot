@@ -101,12 +101,13 @@ export function minLength(
 				number,
 				ErrorMessage<MinLengthIssue<LengthInput, number>> | undefined
 			>;
-			// roblox-ts: we assure both will compile to #value
+
 			if (dataset.typed && (dataset.value as ArrayLike<unknown>).size() < typedThis.requirement) {
 				_addIssue(this, "length", dataset, config, {
 					received: `${(dataset.value as ArrayLike<unknown>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

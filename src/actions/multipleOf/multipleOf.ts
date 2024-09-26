@@ -95,9 +95,16 @@ export function multipleOf(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value % this.requirement !== 0) {
+			if (
+				dataset.typed &&
+				dataset.value %
+					(this as MultipleOfAction<number, number, ErrorMessage<MultipleOfIssue<number, number>> | undefined>)
+						.requirement !==
+					0
+			) {
 				_addIssue(this, "multiple", dataset, config);
 			}
+
 			return dataset;
 		},
 	};

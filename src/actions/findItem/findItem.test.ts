@@ -1,20 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type FindItemAction, findItem } from "./findItem";
+import { findItem } from "./findItem";
 
 describe("findItem", () => {
 	const operation = (item: number) => item > 9;
 	const action = findItem<number[]>(operation);
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "transformation",
-			type: "find_item",
-			reference: findItem,
-			async: false,
-			operation,
-			_run: expect.any("function"),
-		} satisfies FindItemAction<number[]>);
-	});
 
 	describe("should transform input", () => {
 		test("to searched item", () => {

@@ -27,6 +27,7 @@ export function toLowerCase(): ToLowerCaseAction {
 		async: false,
 		_run(dataset) {
 			dataset.value = dataset.value.lower();
+
 			return dataset;
 		},
 	};

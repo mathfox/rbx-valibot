@@ -81,6 +81,7 @@ export function empty(
 					received: `${(dataset.value as ArrayLike<unknown>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

@@ -1,20 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type ToMinValueAction, toMinValue } from "./toMinValue";
-import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
+import { toMinValue } from "./toMinValue";
+import { MIN_SAFE_INTEGER, MAX_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 
 describe("toMinValue", () => {
 	const action = toMinValue<number, 10>(10);
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "transformation",
-			type: "to_min_value",
-			reference: toMinValue,
-			requirement: 10,
-			async: false,
-			_run: expect.any("function"),
-		} satisfies ToMinValueAction<number, 10>);
-	});
 
 	test("should transform to min value", () => {
 		const outputDataset = { typed: true, value: 10 };

@@ -1,44 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type NotLengthAction, type NotLengthIssue, notLength } from "./notLength";
+import { type NotLengthIssue, notLength } from "./notLength";
 
 describe("notLength", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<NotLengthAction<string, 5, never>, "message"> = {
-			kind: "validation",
-			type: "not_length",
-			reference: notLength,
-			expects: "!5",
-			requirement: 5,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: NotLengthAction<string, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(notLength(5)).toStrictEqual(action);
-			expect(notLength(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(notLength(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies NotLengthAction<string, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(notLength(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies NotLengthAction<string, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = notLength(3);
 

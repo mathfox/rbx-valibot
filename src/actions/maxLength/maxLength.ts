@@ -96,11 +96,17 @@ export function maxLength(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ArrayLike<defined>).size() > this.requirement) {
+			if (
+				dataset.typed &&
+				(dataset.value as ArrayLike<defined>).size() >
+					(this as MaxLengthAction<LengthInput, number, ErrorMessage<MaxLengthIssue<LengthInput, number>> | undefined>)
+						.requirement
+			) {
 				_addIssue(this, "length", dataset, config, {
 					received: `${(dataset.value as ArrayLike<defined>).size()}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

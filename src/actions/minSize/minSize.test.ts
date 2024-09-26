@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type MinSizeAction, type MinSizeIssue, minSize } from "./minSize";
+import { type MinSizeIssue, minSize } from "./minSize";
 
 describe("minSize", () => {
 	describe("should return dataset without issues", () => {

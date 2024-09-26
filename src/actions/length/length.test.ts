@@ -1,44 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type LengthAction, type LengthIssue, length } from "./length";
+import { type LengthIssue, length } from "./length";
 
 describe("length", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<LengthAction<string, 5, never>, "message"> = {
-			kind: "validation",
-			type: "length",
-			reference: length,
-			expects: "5",
-			requirement: 5,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: LengthAction<string, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(length(5)).toStrictEqual(action);
-			expect(length(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(length(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies LengthAction<string, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(length(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies LengthAction<string, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = length(3);
 

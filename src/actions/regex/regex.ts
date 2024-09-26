@@ -96,6 +96,7 @@ export function regex(
 			) {
 				_addIssue(this, "format", dataset, config);
 			}
+
 			return dataset as Dataset<string, RegexIssue<string>>;
 		},
 	};

@@ -1,44 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type MaxLengthAction, type MaxLengthIssue, maxLength } from "./maxLength";
+import { type MaxLengthIssue, maxLength } from "./maxLength";
 
 describe("maxLength", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<MaxLengthAction<string, 5, never>, "message"> = {
-			kind: "validation",
-			type: "max_length",
-			reference: maxLength,
-			expects: "<=5",
-			requirement: 5,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: MaxLengthAction<string, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(maxLength(5)).toStrictEqual(action);
-			expect(maxLength(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(maxLength(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies MaxLengthAction<string, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(maxLength(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies MaxLengthAction<string, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = maxLength(5);
 

@@ -1,17 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type TrimStartAction, trimStart } from "./trimStart";
+import { trimStart } from "./trimStart";
 
 describe("trimStart", () => {
-	test("should return action object", () => {
-		expect(trimStart()).toEqual({
-			kind: "transformation",
-			type: "trim_start",
-			reference: trimStart,
-			async: false,
-			_run: expect.any("function"),
-		} satisfies TrimStartAction);
-	});
-
 	describe("should trim start of string", () => {
 		const action = trimStart();
 

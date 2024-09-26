@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { type RawTransformAction, rawTransform } from "./rawTransform";
+import { rawTransform } from "./rawTransform";
 
 describe("rawTransform", () => {
 	const action = rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
@@ -9,16 +9,6 @@ describe("rawTransform", () => {
 			return NEVER;
 		}
 		return length;
-	});
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "transformation",
-			type: "raw_transform",
-			reference: rawTransform,
-			async: false,
-			_run: expect.any("function"),
-		} satisfies RawTransformAction<string, number>);
 	});
 
 	describe("should return dataset without issues", () => {

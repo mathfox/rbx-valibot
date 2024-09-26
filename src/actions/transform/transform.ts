@@ -33,8 +33,8 @@ export function transform<TInput, TOutput>(operation: (input: TInput) => TOutput
 		async: false,
 		operation,
 		_run(dataset) {
-			// roblox-ts requires manual cast
 			dataset.value = (this as TransformAction<TInput, TOutput>).operation(dataset.value) as unknown as TInput;
+
 			return dataset as unknown as TypedDataset<TOutput, never>;
 		},
 	};

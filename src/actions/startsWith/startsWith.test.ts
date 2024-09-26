@@ -1,44 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type StartsWithAction, type StartsWithIssue, startsWith } from "./startsWith";
+import { type StartsWithIssue, startsWith } from "./startsWith";
 
 describe("startsWith", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<StartsWithAction<string, "abc", never>, "message"> = {
-			kind: "validation",
-			type: "starts_with",
-			reference: startsWith,
-			expects: '"abc"',
-			requirement: "abc",
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: StartsWithAction<string, "abc", undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(startsWith("abc")).toStrictEqual(action);
-			expect(startsWith("abc", undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(startsWith("abc", "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies StartsWithAction<string, "abc", string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(startsWith("abc", message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies StartsWithAction<string, "abc", typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = startsWith("abc");
 

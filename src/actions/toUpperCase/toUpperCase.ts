@@ -27,6 +27,7 @@ export function toUpperCase(): ToUpperCaseAction {
 		async: false,
 		_run(dataset) {
 			dataset.value = dataset.value.upper();
+
 			return dataset;
 		},
 	};

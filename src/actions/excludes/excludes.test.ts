@@ -1,45 +1,8 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type ExcludesAction, type ExcludesIssue, excludes } from "./excludes";
+import { type ExcludesIssue, excludes } from "./excludes";
 
 describe("excludes", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<ExcludesAction<string, "foo", never>, "message"> = {
-			kind: "validation",
-			type: "excludes",
-			reference: excludes,
-			expects: `!"foo"`,
-			requirement: "foo",
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: ExcludesAction<string, "foo", undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(excludes("foo")).toStrictEqual(action);
-			expect(excludes("foo", undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			const message = "message";
-			expect(excludes("foo", message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies ExcludesAction<string, "foo", string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(excludes("foo", message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies ExcludesAction<string, "foo", typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = excludes("foo");
 

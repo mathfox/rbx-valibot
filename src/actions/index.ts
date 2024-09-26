@@ -25,7 +25,6 @@ export * from "./nonEmpty";
 export * from "./notLength";
 export * from "./notSize";
 export * from "./notValue";
-export * from "./partialCheck";
 export * from "./rawCheck";
 export * from "./rawTransform";
 export * from "./readonly";

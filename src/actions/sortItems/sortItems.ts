@@ -41,7 +41,8 @@ export function sortItems(operation?: ArrayAction<unknown[]>): SortItemsAction<u
 		async: false,
 		operation,
 		_run(dataset) {
-			dataset.value = (dataset.value as defined[]).sort(this.operation as any);
+			dataset.value = (dataset.value as defined[]).sort((this as SortItemsAction<unknown[]>).operation as any);
+
 			return dataset;
 		},
 	};

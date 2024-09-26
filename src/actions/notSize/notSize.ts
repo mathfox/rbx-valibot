@@ -96,11 +96,17 @@ export function notSize(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ReadonlySet<unknown>).size() === this.requirement) {
+			if (
+				dataset.typed &&
+				(dataset.value as ReadonlySet<unknown>).size() ===
+					(this as NotSizeAction<SizeInput, number, ErrorMessage<NotSizeIssue<SizeInput, number>> | undefined>)
+						.requirement
+			) {
 				_addIssue(this, "size", dataset, config, {
 					received: `${dataset.value.size}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

@@ -91,6 +91,7 @@ export function integer(
 			) {
 				_addIssue(this, "integer", dataset, config);
 			}
+
 			return dataset as Dataset<number, IntegerIssue<number>>;
 		},
 	};

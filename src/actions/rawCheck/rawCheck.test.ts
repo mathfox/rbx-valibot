@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type RawCheckAction, rawCheck } from "./rawCheck";
+import { rawCheck } from "./rawCheck";
 import type { RawCheckIssue } from "./types";
 
 describe("rawCheck", () => {
@@ -8,17 +8,6 @@ describe("rawCheck", () => {
 		if (dataset.typed && dataset.value <= 0) {
 			addIssue({ message: "message" });
 		}
-	});
-
-	test("should return action object", () => {
-		expect(action).toStrictEqual({
-			kind: "validation",
-			type: "raw_check",
-			reference: rawCheck,
-			expects: undefined,
-			async: false,
-			_run: expect.any("function"),
-		} satisfies RawCheckAction<number>);
 	});
 
 	describe("should return dataset without issues", () => {

@@ -96,11 +96,16 @@ export function size(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && (dataset.value as ReadonlySet<unknown>).size() !== this.requirement) {
+			if (
+				dataset.typed &&
+				(dataset.value as ReadonlySet<unknown>).size() !==
+					(this as SizeAction<SizeInput, number, ErrorMessage<SizeIssue<SizeInput, number>> | undefined>).requirement
+			) {
 				_addIssue(this, "size", dataset, config, {
 					received: `${dataset.value.size}`,
 				});
 			}
+
 			return dataset;
 		},
 	};

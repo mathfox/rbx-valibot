@@ -37,7 +37,10 @@ export function toMaxValue<TInput extends ValueInput, const TRequirement extends
 		async: false,
 		requirement,
 		_run(dataset) {
-			dataset.value = dataset.value > this.requirement ? this.requirement : dataset.value;
+			const requirement = (this as ToMaxValueAction<TInput, TRequirement>).requirement;
+
+			dataset.value = dataset.value > requirement ? requirement : dataset.value;
+
 			return dataset;
 		},
 	};

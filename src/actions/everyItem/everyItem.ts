@@ -92,7 +92,10 @@ export function everyItem(
 		_run(dataset, config) {
 			if (
 				dataset.typed &&
-				!(dataset.value as defined[]).every(this.requirement as unknown as ArrayRequirement<MaybeReadonly<defined[]>>)
+				!(dataset.value as defined[]).every(
+					(this as EveryItemAction<unknown[], ErrorMessage<EveryItemIssue<unknown[]>> | undefined>)
+						.requirement as unknown as ArrayRequirement<MaybeReadonly<defined[]>>,
+				)
 			) {
 				_addIssue(this, "item", dataset, config);
 			}

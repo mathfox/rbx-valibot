@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ValueInput } from "../types";
 
 /**
@@ -88,15 +88,22 @@ export function minValue(
 		type: "min_value",
 		reference: minValue,
 		async: false,
-		expects: `>=${tostring(requirement)}`,
+		expects: `>=${_stringify(requirement)}`,
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && dataset.value < this.requirement) {
+			const typedThis = this as MinValueAction<
+				ValueInput,
+				ValueInput,
+				ErrorMessage<MinValueIssue<ValueInput, ValueInput>> | undefined
+			>;
+
+			if (dataset.typed && dataset.value < typedThis.requirement) {
 				_addIssue(this, "value", dataset, config, {
-					received: tostring(dataset.value),
+					received: _stringify(dataset.value),
 				});
 			}
+
 			return dataset;
 		},
 	};

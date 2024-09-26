@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ValueInput } from "../types";
 
 /**
@@ -88,15 +88,20 @@ export function value(
 		type: "value",
 		reference: value,
 		async: false,
-		expects: tostring(requirement),
+		expects: _stringify(requirement),
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && !(this.requirement <= dataset.value && this.requirement >= dataset.value)) {
+			const requirement = (
+				this as ValueAction<ValueInput, ValueInput, ErrorMessage<ValueIssue<ValueInput, ValueInput>> | undefined>
+			).requirement;
+
+			if (dataset.typed && !(requirement <= dataset.value && requirement >= dataset.value)) {
 				_addIssue(this, "value", dataset, config, {
-					received: tostring(dataset.value),
+					received: _stringify(dataset.value),
 				});
 			}
+
 			return dataset;
 		},
 	};

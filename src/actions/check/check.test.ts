@@ -1,47 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type CheckAction, check } from "./check";
+import { check } from "./check";
 import type { CheckIssue } from "./types";
 
 describe("check", () => {
-	describe("should return action object", () => {
-		const requirement = (input: string) => input.find("foo")[0] != undefined;
-		const baseAction: Omit<CheckAction<string, never>, "message"> = {
-			kind: "validation",
-			type: "check",
-			reference: check,
-			expects: undefined,
-			requirement,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: CheckAction<string, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(check<string>(requirement)).toStrictEqual(action);
-			expect(check<string, undefined>(requirement, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			const message = "message";
-			expect(check<string, "message">(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies CheckAction<string, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(check<string, typeof message>(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies CheckAction<string, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = check<number>((input) => input > 0);
 

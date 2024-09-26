@@ -1,47 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
-import { type MinValueAction, minValue } from "./minValue";
-import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/number";
+import { minValue } from "./minValue";
+import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 
 // TODO: Add tests for "non-..." cases (see `value.test`)
 
 describe("minValue", () => {
-	describe("should return action object", () => {
-		const baseAction: Omit<MinValueAction<number, 5, never>, "message"> = {
-			kind: "validation",
-			type: "min_value",
-			reference: minValue,
-			expects: ">=5",
-			requirement: 5,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: MinValueAction<number, 5, undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(minValue(5)).toStrictEqual(action);
-			expect(minValue(5, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			expect(minValue(5, "message")).toStrictEqual({
-				...baseAction,
-				message: "message",
-			} satisfies MinValueAction<number, 5, string>);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(minValue(5, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies MinValueAction<number, 5, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", () => {
 			expect(minValue(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({

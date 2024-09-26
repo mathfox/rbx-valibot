@@ -60,9 +60,10 @@ export function reduceItems(
 		initial,
 		_run(dataset) {
 			dataset.value = (dataset.value as Array<defined>).reduce(
-				this.operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
-				this.initial as defined,
+				(this as ReduceItemsAction<unknown[], unknown>).operation as ArrayAction<MaybeReadonly<defined[]>, defined>,
+				(this as ReduceItemsAction<unknown[], unknown>).initial as defined,
 			) as defined[];
+
 			return dataset as TypedDataset<unknown, never>;
 		},
 	};

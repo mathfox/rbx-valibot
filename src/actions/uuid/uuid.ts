@@ -92,6 +92,7 @@ export function uuid(
 			) {
 				_addIssue(this, "UUID", dataset, config);
 			}
+
 			return dataset as Dataset<string, UuidIssue<string>>;
 		},
 	};

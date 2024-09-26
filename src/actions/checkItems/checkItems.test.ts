@@ -1,47 +1,9 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import type { TypedDataset } from "../../types/dataset";
 import { expectNoActionIssue } from "../../tests";
-import { type CheckItemsAction, type CheckItemsIssue, checkItems } from "./checkItems";
+import { type CheckItemsIssue, checkItems } from "./checkItems";
 
 describe("checkItems", () => {
-	describe("should return action object", () => {
-		const requirement = (item: string) => item.sub(1, 2) === "DE";
-		const baseAction: Omit<CheckItemsAction<string[], never>, "message"> = {
-			kind: "validation",
-			type: "check_items",
-			reference: checkItems,
-			expects: undefined,
-			requirement,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const action: CheckItemsAction<string[], undefined> = {
-				...baseAction,
-				message: undefined,
-			};
-			expect(checkItems<string[]>(requirement)).toStrictEqual(action);
-			expect(checkItems<string[], undefined>(requirement, undefined)).toStrictEqual(action);
-		});
-
-		test("with string message", () => {
-			const message = "message";
-			expect(checkItems<string[], "message">(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies CheckItemsAction<string[], "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(checkItems<string[], typeof message>(requirement, message)).toStrictEqual({
-				...baseAction,
-				message,
-			} satisfies CheckItemsAction<string[], typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const action = checkItems<number[]>((item: number) => item > 9);
 

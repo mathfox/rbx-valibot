@@ -1,5 +1,5 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
-import { _addIssue } from "../../utils";
+import { _addIssue, _stringify } from "../../utils";
 import type { ValueInput } from "../types";
 
 /**
@@ -88,15 +88,32 @@ export function notValue(
 		type: "not_value",
 		reference: notValue,
 		async: false,
-		expects: `!${tostring(requirement)}`,
+		expects: `!${_stringify(requirement)}`,
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (dataset.typed && this.requirement <= dataset.value && this.requirement >= dataset.value) {
+			if (
+				dataset.typed &&
+				(
+					this as NotValueAction<
+						ValueInput,
+						ValueInput,
+						ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined
+					>
+				).requirement <= dataset.value &&
+				(
+					this as NotValueAction<
+						ValueInput,
+						ValueInput,
+						ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined
+					>
+				).requirement >= dataset.value
+			) {
 				_addIssue(this, "value", dataset, config, {
-					received: tostring(dataset.value),
+					received: _stringify(dataset.value),
 				});
 			}
+
 			return dataset;
 		},
 	};
