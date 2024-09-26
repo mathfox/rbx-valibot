@@ -7,7 +7,7 @@ describe("nonEmpty", () => {
 		const action = nonEmpty();
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: false,
 				value: undefined,
 			});

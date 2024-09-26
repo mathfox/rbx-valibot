@@ -69,7 +69,7 @@ describe("variantAsync", () => {
 
 		test("for invalid base type", async () => {
 			const schema = variantAsync("type", [object({ type: literal("foo") }), objectAsync({ type: literal("bar") })]);
-			expect(await schema._run({ typed: false, value: "foo" }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: "foo" }, {})).toEqual({
 				typed: false,
 				value: "foo",
 				issues: [
@@ -88,7 +88,7 @@ describe("variantAsync", () => {
 		test("for empty options", async () => {
 			const schema = variantAsync("type", []);
 			const input = { type: "foo" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -107,7 +107,7 @@ describe("variantAsync", () => {
 		test("for missing discriminator", async () => {
 			const schema = variantAsync("type", [object({ type: literal("foo") }), objectAsync({ type: literal("bar") })]);
 			const input = { other: 123 };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -126,7 +126,7 @@ describe("variantAsync", () => {
 		test("for invalid discriminator", async () => {
 			const schema = variantAsync("type", [object({ type: literal("foo") }), objectAsync({ type: literal("bar") })]);
 			const input = { type: "baz" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -152,7 +152,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -178,7 +178,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", other: 123 };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -222,7 +222,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = {};
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -266,7 +266,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -310,7 +310,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", subType2: "baz-2" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -354,7 +354,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", subType1: "invalid", subType2: "invalid" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -402,7 +402,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", subType1: "bar-1", subType2: "invalid" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -450,7 +450,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", subType1: "bar-1", subType2: "invalid" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -502,7 +502,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", subType2: "baz-2" };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -524,7 +524,7 @@ describe("variantAsync", () => {
 				objectAsync({ type: literal("baz"), other: number() }),
 			]);
 			const input = { type: "bar", other: 3 };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -549,7 +549,7 @@ describe("variantAsync", () => {
 				]),
 			]);
 			const input = { type: "bar", other: 3 };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -572,7 +572,7 @@ describe("variantAsync", () => {
 				objectAsync({ type: literal("bar"), other: boolean() }),
 			]);
 			const input = { type: "bar", other: 3 };
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [

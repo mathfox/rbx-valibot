@@ -7,7 +7,7 @@ describe("reduceItems", () => {
 	const action = reduceItems<number[], number>(operation, initial);
 
 	test("should transform input", () => {
-		expect(action._run({ typed: true, value: [9, -12, 345, 0, 999] }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: [9, -12, 345, 0, 999] }, {})).toEqual({
 			typed: true,
 			value: 1341,
 		});

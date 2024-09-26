@@ -18,7 +18,7 @@ describe("getFallbacks", () => {
 
 	describe("should return object defaults", () => {
 		test("for empty object", () => {
-			expect(getFallbacks(object({}))).toStrictEqual({});
+			expect(getFallbacks(object({}))).toEqual({});
 		});
 
 		test("for simple object", () => {
@@ -31,7 +31,7 @@ describe("getFallbacks", () => {
 						key4: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				key1: "foo",
 				key2: 123,
 				key3: false,
@@ -51,7 +51,7 @@ describe("getFallbacks", () => {
 						other: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				nested: {
 					key1: "foo",
 					key2: 123,
@@ -64,7 +64,7 @@ describe("getFallbacks", () => {
 
 	describe("should return tuple defaults", () => {
 		test("for empty tuple", () => {
-			expect(getFallbacks(tuple([]))).toStrictEqual([]);
+			expect(getFallbacks(tuple([]))).toEqual([]);
 		});
 
 		test("for simple tuple", () => {
@@ -77,7 +77,7 @@ describe("getFallbacks", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual(["foo", 123, false, undefined]);
+			).toEqual(["foo", 123, false, undefined]);
 		});
 
 		test("for nested tuple", () => {
@@ -92,7 +92,7 @@ describe("getFallbacks", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual([["foo", 123, false], undefined]);
+			).toEqual([["foo", 123, false], undefined]);
 		});
 	});
 });

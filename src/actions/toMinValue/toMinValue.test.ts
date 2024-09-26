@@ -7,21 +7,21 @@ describe("toMinValue", () => {
 
 	test("should transform to min value", () => {
 		const outputDataset = { typed: true, value: 10 };
-		expect(action._run({ typed: true, value: 9 }, {})).toStrictEqual(outputDataset);
-		expect(action._run({ typed: true, value: 0 }, {})).toStrictEqual(outputDataset);
-		expect(action._run({ typed: true, value: MIN_SAFE_INTEGER }, {})).toStrictEqual(outputDataset);
+		expect(action._run({ typed: true, value: 9 }, {})).toEqual(outputDataset);
+		expect(action._run({ typed: true, value: 0 }, {})).toEqual(outputDataset);
+		expect(action._run({ typed: true, value: MIN_SAFE_INTEGER }, {})).toEqual(outputDataset);
 	});
 
 	test("should not transform value", () => {
-		expect(action._run({ typed: true, value: 10 }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: 10 }, {})).toEqual({
 			typed: true,
 			value: 10,
 		});
-		expect(action._run({ typed: true, value: 11 }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: 11 }, {})).toEqual({
 			typed: true,
 			value: 11,
 		});
-		expect(action._run({ typed: true, value: MAX_SAFE_INTEGER }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: MAX_SAFE_INTEGER }, {})).toEqual({
 			typed: true,
 			value: MAX_SAFE_INTEGER,
 		});

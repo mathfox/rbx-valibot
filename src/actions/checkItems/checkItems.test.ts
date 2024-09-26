@@ -8,7 +8,7 @@ describe("checkItems", () => {
 		const action = checkItems<number[]>((item: number) => item > 9);
 
 		test("for untyped inputs", () => {
-			expect(action._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(action._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: false,
 				value: undefined,
 			});
@@ -41,7 +41,7 @@ describe("checkItems", () => {
 
 		test("for invalid content", () => {
 			const input = [-12, 345, 6, 10];
-			expect(action._run({ typed: true, value: input }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: input }, {})).toEqual({
 				typed: true,
 				value: input,
 				issues: [

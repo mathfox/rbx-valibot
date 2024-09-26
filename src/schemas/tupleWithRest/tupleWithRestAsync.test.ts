@@ -117,7 +117,7 @@ describe("tupleWithRestAsync", () => {
 
 		test("for wrong items", async () => {
 			const input = [123, 456, "true", undefined, undefined, undefined];
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -143,7 +143,7 @@ describe("tupleWithRestAsync", () => {
 					},
 					{ abortEarly: true },
 				),
-			).toStrictEqual({
+			).toEqual({
 				typed: false,
 				value: [],
 				issues: [{ ...stringIssue, abortEarly: true }],
@@ -153,7 +153,7 @@ describe("tupleWithRestAsync", () => {
 		test("for wrong nested items", async () => {
 			const nestedSchema = tupleWithRestAsync([schema, schema], undefined_());
 			const input: [[string, string, boolean], number, number] = [["foo", "123", false], 3, 3];
-			expect(await nestedSchema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await nestedSchema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [

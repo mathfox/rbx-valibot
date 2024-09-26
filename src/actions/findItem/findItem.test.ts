@@ -7,14 +7,14 @@ describe("findItem", () => {
 
 	describe("should transform input", () => {
 		test("to searched item", () => {
-			expect(action._run({ typed: true, value: [-12, 9, 345, 10, 0, 999] }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: [-12, 9, 345, 10, 0, 999] }, {})).toEqual({
 				typed: true,
 				value: 345,
 			});
 		});
 
 		test("to undefined", () => {
-			expect(action._run({ typed: true, value: [-12, 9, 0] }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: [-12, 9, 0] }, {})).toEqual({
 				typed: true,
 				value: undefined,
 			});

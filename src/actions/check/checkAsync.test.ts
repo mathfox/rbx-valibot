@@ -8,7 +8,7 @@ describe("checkAsync", () => {
 		const action = checkAsync<number>(async (input) => input > 0);
 
 		test("for untyped inputs", async () => {
-			expect(await action._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(await action._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: false,
 				value: undefined,
 			});

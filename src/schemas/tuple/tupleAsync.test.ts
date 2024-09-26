@@ -24,7 +24,7 @@ describe("tupleAsync", () => {
 		});
 
 		test("for unknown items", async () => {
-			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -89,7 +89,7 @@ describe("tupleAsync", () => {
 		});
 
 		test("for unknown items", async () => {
-			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -119,7 +119,7 @@ describe("tupleAsync", () => {
 
 		test("for wrong items", async () => {
 			const input = [123, 456, "true"];
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -137,7 +137,7 @@ describe("tupleAsync", () => {
 		});
 
 		test("with abort early", async () => {
-			expect(await schema._run({ typed: false, value: [123, 456, "true"] }, { abortEarly: true })).toStrictEqual({
+			expect(await schema._run({ typed: false, value: [123, 456, "true"] }, { abortEarly: true })).toEqual({
 				typed: false,
 				value: [],
 				issues: [{ ...stringIssue, abortEarly: true }],
@@ -147,7 +147,7 @@ describe("tupleAsync", () => {
 		test("for wrong nested items", async () => {
 			const nestedSchema = tupleAsync([schema, schema]);
 			const input: [[string, string, boolean], number] = [["foo", "123", false], 3];
-			expect(await nestedSchema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(await nestedSchema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [

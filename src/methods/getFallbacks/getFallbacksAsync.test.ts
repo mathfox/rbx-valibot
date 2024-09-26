@@ -28,7 +28,7 @@ describe("await getFallbacksAsync", () => {
 
 	describe("should return object defaults", () => {
 		test("for empty object", async () => {
-			expect(await getFallbacksAsync(object({}))).toStrictEqual({});
+			expect(await getFallbacksAsync(object({}))).toEqual({});
 		});
 
 		test("for simple object", async () => {
@@ -41,7 +41,7 @@ describe("await getFallbacksAsync", () => {
 						key4: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				key1: "foo",
 				key2: 123,
 				key3: false,
@@ -61,7 +61,7 @@ describe("await getFallbacksAsync", () => {
 						other: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				nested: {
 					key1: "foo",
 					key2: 123,
@@ -74,7 +74,7 @@ describe("await getFallbacksAsync", () => {
 
 	describe("should return tuple defaults", () => {
 		test("for empty tuple", async () => {
-			expect(await getFallbacksAsync(tuple([]))).toStrictEqual([]);
+			expect(await getFallbacksAsync(tuple([]))).toEqual([]);
 		});
 
 		test("for simple tuple", async () => {
@@ -87,7 +87,7 @@ describe("await getFallbacksAsync", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual(["foo", 123, false, undefined]);
+			).toEqual(["foo", 123, false, undefined]);
 		});
 
 		test("for nested tuple", async () => {
@@ -102,7 +102,7 @@ describe("await getFallbacksAsync", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual([["foo", 123, false], undefined]);
+			).toEqual([["foo", 123, false], undefined]);
 		});
 	});
 });

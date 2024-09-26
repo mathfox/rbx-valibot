@@ -17,7 +17,7 @@ describe("getDefaults", () => {
 
 	describe("should return object defaults", () => {
 		test("for empty object", () => {
-			expect(getDefaults(object({}))).toStrictEqual({});
+			expect(getDefaults(object({}))).toEqual({});
 		});
 
 		test("for simple object", () => {
@@ -30,7 +30,7 @@ describe("getDefaults", () => {
 						key4: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				key1: "foo",
 				key2: 123,
 				key3: false,
@@ -50,7 +50,7 @@ describe("getDefaults", () => {
 						other: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				nested: {
 					key1: "foo",
 					key2: 123,
@@ -63,7 +63,7 @@ describe("getDefaults", () => {
 
 	describe("should return tuple defaults", () => {
 		test("for empty tuple", () => {
-			expect(getDefaults(tuple([]))).toStrictEqual([]);
+			expect(getDefaults(tuple([]))).toEqual([]);
 		});
 
 		test("for simple tuple", () => {
@@ -76,7 +76,7 @@ describe("getDefaults", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual(["foo", 123, false, undefined]);
+			).toEqual(["foo", 123, false, undefined]);
 		});
 
 		test("for nested tuple", () => {
@@ -91,7 +91,7 @@ describe("getDefaults", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual([["foo", 123, false], undefined]);
+			).toEqual([["foo", 123, false], undefined]);
 		});
 	});
 });

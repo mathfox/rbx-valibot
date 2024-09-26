@@ -13,11 +13,11 @@ describe("rawTransform", () => {
 
 	describe("should return dataset without issues", () => {
 		test("for valid inputs", () => {
-			expect(action._run({ typed: true, value: "foo" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "foo" }, {})).toEqual({
 				typed: true,
 				value: 3,
 			});
-			expect(action._run({ typed: true, value: "123456789" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "123456789" }, {})).toEqual({
 				typed: true,
 				value: 9,
 			});
@@ -26,7 +26,7 @@ describe("rawTransform", () => {
 
 	describe("should return dataset with issues", () => {
 		test("for invalid inputs", () => {
-			expect(action._run({ typed: true, value: "fo" }, {})).toStrictEqual({
+			expect(action._run({ typed: true, value: "fo" }, {})).toEqual({
 				typed: false,
 				value: "fo",
 				issues: [

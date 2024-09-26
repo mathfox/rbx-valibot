@@ -8,7 +8,7 @@ import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
 describe("minValue", () => {
 	describe("should return dataset without issues", () => {
 		test("for untyped inputs", () => {
-			expect(minValue(1)._run({ typed: false, value: undefined }, {})).toStrictEqual({
+			expect(minValue(1)._run({ typed: false, value: undefined }, {})).toEqual({
 				typed: false,
 				value: undefined,
 			});

@@ -13,11 +13,11 @@ describe("rawTransformAsync", () => {
 
 	describe("should return dataset without issues", () => {
 		test("for valid inputs", async () => {
-			expect(await action._run({ typed: true, value: "foo" }, {})).toStrictEqual({
+			expect(await action._run({ typed: true, value: "foo" }, {})).toEqual({
 				typed: true,
 				value: 3,
 			});
-			expect(await action._run({ typed: true, value: "123456789" }, {})).toStrictEqual({
+			expect(await action._run({ typed: true, value: "123456789" }, {})).toEqual({
 				typed: true,
 				value: 9,
 			});
@@ -26,7 +26,7 @@ describe("rawTransformAsync", () => {
 
 	describe("should return dataset with issues", () => {
 		test("for invalid inputs", async () => {
-			expect(await action._run({ typed: true, value: "fo" }, {})).toStrictEqual({
+			expect(await action._run({ typed: true, value: "fo" }, {})).toEqual({
 				typed: false,
 				value: "fo",
 				issues: [

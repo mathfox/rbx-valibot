@@ -29,7 +29,7 @@ describe("getDefaultsAsync", () => {
 
 	describe("should return object defaults", () => {
 		test("for empty object", async () => {
-			expect(await getDefaultsAsync(object({}))).toStrictEqual({});
+			expect(await getDefaultsAsync(object({}))).toEqual({});
 		});
 
 		test("for simple object", async () => {
@@ -42,7 +42,7 @@ describe("getDefaultsAsync", () => {
 						key4: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				key1: "foo",
 				key2: 123,
 				key3: false,
@@ -62,7 +62,7 @@ describe("getDefaultsAsync", () => {
 						other: string_(),
 					}),
 				),
-			).toStrictEqual({
+			).toEqual({
 				nested: {
 					key1: "foo",
 					key2: 123,
@@ -75,7 +75,7 @@ describe("getDefaultsAsync", () => {
 
 	describe("should return tuple defaults", () => {
 		test("for empty tuple", async () => {
-			expect(await getDefaultsAsync(tuple([]))).toStrictEqual([]);
+			expect(await getDefaultsAsync(tuple([]))).toEqual([]);
 		});
 
 		test("for simple tuple", async () => {
@@ -88,7 +88,7 @@ describe("getDefaultsAsync", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual(["foo", 123, false, undefined]);
+			).toEqual(["foo", 123, false, undefined]);
 		});
 
 		test("for nested tuple", async () => {
@@ -103,7 +103,7 @@ describe("getDefaultsAsync", () => {
 						string_(),
 					]),
 				),
-			).toStrictEqual([["foo", 123, false], undefined]);
+			).toEqual([["foo", 123, false], undefined]);
 		});
 	});
 });

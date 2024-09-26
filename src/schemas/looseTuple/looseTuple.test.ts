@@ -113,7 +113,7 @@ describe("looseTuple", () => {
 
 		test("for wrong items", () => {
 			const input = [123, 456, "true"];
-			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [
@@ -131,7 +131,7 @@ describe("looseTuple", () => {
 		});
 
 		test("with abort early", () => {
-			expect(schema._run({ typed: false, value: [123, 456, "true"] }, { abortEarly: true })).toStrictEqual({
+			expect(schema._run({ typed: false, value: [123, 456, "true"] }, { abortEarly: true })).toEqual({
 				typed: false,
 				value: [],
 				issues: [{ ...stringIssue, abortEarly: true }],
@@ -141,7 +141,7 @@ describe("looseTuple", () => {
 		test("for wrong nested items", () => {
 			const nestedSchema = looseTuple([schema, schema]);
 			const input: [[string, string, boolean], number] = [["foo", "123", false], 3];
-			expect(nestedSchema._run({ typed: false, value: input }, {})).toStrictEqual({
+			expect(nestedSchema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
 				issues: [

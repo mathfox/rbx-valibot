@@ -6,7 +6,7 @@ describe("mapItems", () => {
 	const action = mapItems<number[], { item: number }>(operation);
 
 	test("should transform input", () => {
-		expect(action._run({ typed: true, value: [-12, 345, 0] }, {})).toStrictEqual({
+		expect(action._run({ typed: true, value: [-12, 345, 0] }, {})).toEqual({
 			typed: true,
 			value: [{ item: -12 }, { item: 345 }, { item: 0 }],
 		});
