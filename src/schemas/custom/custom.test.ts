@@ -1,34 +1,28 @@
 import { describe, test } from "@rbxts/jest-globals";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
-import { type PicklistIssue, picklist } from "./picklist";
+import { custom } from "./custom";
+import type { CustomIssue } from "./types";
 
-describe("picklist", () => {
-	const options = ["foo", "bar", "baz"] as const;
+describe("custom", () => {
+	const isEven = (input: unknown) => typeIs(input, "number") && input % 2 === 0;
 
 	describe("should return dataset without issues", () => {
-		test("for valid options", () => {
-			expectNoSchemaIssue(picklist(options), ["foo", "bar", "baz"]);
+		const schema = custom(isEven);
+
+		test("for numbers", () => {
+			expectNoSchemaIssue(schema, [2, 4, 10, 22]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = picklist(options, "message");
-		const baseIssue: Omit<PicklistIssue, "input" | "received"> = {
+		const schema = custom(isEven, "message");
+
+		const baseIssue: Omit<CustomIssue, "input" | "received"> = {
 			kind: "schema",
-			type: "picklist",
-			expected: '("foo" | "bar" | "baz")',
+			type: "custom",
+			expected: "unknown",
 			message: "message",
 		};
-
-		// Special values
-
-		test("for empty options", () => {
-			expectSchemaIssue(picklist([], "message"), { ...baseIssue, expected: "never" }, ["foo", "bar", "baz"]);
-		});
-
-		test("for invalid options", () => {
-			expectSchemaIssue(schema, baseIssue, ["fo", "fooo", "foobar"]);
-		});
 
 		// Primitive types
 
@@ -37,7 +31,7 @@ describe("picklist", () => {
 		});
 
 		test("for numbers", () => {
-			expectSchemaIssue(schema, baseIssue, [-1, 0, 123, 45.67]);
+			expectSchemaIssue(schema, baseIssue, [-1, 1, 123, 45.67]);
 		});
 
 		test("for undefined", () => {
@@ -45,7 +39,7 @@ describe("picklist", () => {
 		});
 
 		test("for strings", () => {
-			expectSchemaIssue(schema, baseIssue, ["", "hello", "123"]);
+			expectSchemaIssue(schema, baseIssue, ["", "foo", "123"]);
 		});
 
 		// Complex types

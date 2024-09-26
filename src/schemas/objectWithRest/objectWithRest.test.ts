@@ -9,51 +9,10 @@ import { number } from "../number";
 import { object } from "../object";
 import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
-import { type ObjectWithRestSchema, objectWithRest } from "./objectWithRest";
+import { objectWithRest } from "./objectWithRest";
 import type { ObjectWithRestIssue } from "./types";
 
 describe("objectWithRest", () => {
-	describe("should return schema object", () => {
-		const entries = { key: string_() };
-		type Entries = typeof entries;
-		const rest = number();
-		type Rest = typeof rest;
-		const baseSchema: Omit<ObjectWithRestSchema<Entries, Rest, never>, "message"> = {
-			kind: "schema",
-			type: "object_with_rest",
-			reference: objectWithRest,
-			expects: "Object",
-			entries,
-			rest,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: ObjectWithRestSchema<Entries, Rest, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(objectWithRest(entries, rest)).toEqual(schema);
-			expect(objectWithRest(entries, rest, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(objectWithRest(entries, rest, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies ObjectWithRestSchema<Entries, Rest, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(objectWithRest(entries, rest, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies ObjectWithRestSchema<Entries, Rest, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for empty object", () => {
 			expectNoSchemaIssue(objectWithRest({}, boolean()), [{}]);

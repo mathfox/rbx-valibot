@@ -15,7 +15,7 @@ export function _subIssues(
 	let issues: [BaseIssue<unknown>, ...BaseIssue<unknown>[]] | undefined;
 	if (datasets) {
 		for (const dataset of datasets) {
-			if (issues) {
+			if (issues !== undefined) {
 				// Hint: According to the implementation of `union` and `unionAsync`,
 				// `dataset.issues` can never be `undefined`.
 				for (const issue of dataset.issues!) {

@@ -1,5 +1,5 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
-	ArrayPathItem,
 	BaseIssue,
 	BaseSchema,
 	Dataset,
@@ -80,52 +80,38 @@ export function strictTuple(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (Array.isArray(input)) {
+			if (isArray(input)) {
 				// Set typed to `true` and value to empty array
 				dataset.typed = true;
 				dataset.value = [];
 
+				const items = (this as StrictTupleSchema<TupleItems, ErrorMessage<StrictTupleIssue> | undefined>).items;
+
 				// Parse schema of each tuple item
-				for (let key = 0; key < this.items.length; key++) {
+				for (let key = 0; key < items.size(); key++) {
 					const value = input[key];
-					const itemDataset = this.items[key]._run({ typed: false, value }, config);
+					const itemDataset = items[key]._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (itemDataset.issues) {
-						// Create tuple path item
-						const pathItem: ArrayPathItem = {
-							type: "array",
-							origin: "value",
-							input,
-							key,
-							value,
-						};
-
-						// Add modified item dataset issues to issues
-						for (const issue of itemDataset.issues) {
-							if (issue.path) {
-								issue.path.unshift(pathItem);
-							} else {
-								// @ts-expect-error
-								issue.path = [pathItem];
+					if (itemDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of itemDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
-						}
-						if (!dataset.issues) {
-							// @ts-expect-error
-							dataset.issues = itemDataset.issues;
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!itemDataset.typed) {
+					if (itemDataset.typed === false) {
 						dataset.typed = false;
 					}
 
@@ -135,20 +121,12 @@ export function strictTuple(
 				}
 
 				// Check input for unknown items if necessary
-				if (!(dataset.issues && config.abortEarly) && this.items.length < input.length) {
-					const value = input[items.length];
+				if (!(dataset.issues !== undefined && config.abortEarly === true) && items.size() < input.size()) {
+					const value = input[items.size()];
+
 					_addIssue(this, "type", dataset, config, {
 						input: value,
 						expected: "never",
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input,
-								key: this.items.length,
-								value,
-							},
-						],
 					});
 
 					// Hint: We intentionally only add one issue for unknown items.

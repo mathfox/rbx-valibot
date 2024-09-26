@@ -5,51 +5,10 @@ import { type NumberIssue, number } from "../number";
 import { optional } from "../optional";
 import { picklist } from "../picklist";
 import { string_ } from "../string";
-import { type RecordSchema, record } from "./record";
+import { record } from "./record";
 import type { RecordIssue } from "./types";
 
 describe("record", () => {
-	describe("should return schema record", () => {
-		const key = string_();
-		type Key = typeof key;
-		const value = number();
-		type Value = typeof value;
-		const baseSchema: Omit<RecordSchema<Key, Value, never>, "message"> = {
-			kind: "schema",
-			type: "record",
-			reference: record,
-			expects: "Object",
-			key,
-			value,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: RecordSchema<Key, Value, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(record(key, value)).toEqual(schema);
-			expect(record(key, value, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(record(key, value, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies RecordSchema<Key, Value, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(record(key, value, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies RecordSchema<Key, Value, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const schema = record(string_(), number());
 

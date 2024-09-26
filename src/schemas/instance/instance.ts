@@ -82,12 +82,12 @@ export function instance(
 		class: class_,
 		message,
 		_run(dataset, config) {
-			// roblox-ts macro system requires manual cast.
 			if (dataset.value instanceof (this as InstanceSchema<Class, ErrorMessage<InstanceIssue> | undefined>).class) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<InstanceType<Class>, InstanceIssue>;
 		},
 	};

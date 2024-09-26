@@ -1,6 +1,6 @@
+import isSet from "@rbxts/phantom/src/Set/isSet";
 import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
 import { _addIssue } from "../../utils";
-import isSet from "./isSet";
 import type { InferSetInput, InferSetOutput, SetIssue } from "./types";
 
 /**
@@ -85,24 +85,25 @@ export function set(
 					).value._run({ typed: false, value: inputValue }, config);
 
 					// If there are issues, capture them
-					if (valueDataset.issues) {
-						// Add modified item dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as defined[] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+					if (valueDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!valueDataset.typed) {
+					if (valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 

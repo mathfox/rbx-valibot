@@ -69,12 +69,12 @@ export function custom<TInput>(
 		check,
 		message,
 		_run(dataset, config) {
-			// roblox-ts macro system requires manual cast
 			if ((this as CustomSchema<TInput, ErrorMessage<CustomIssue> | undefined>).check(dataset.value)) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<TInput, CustomIssue>;
 		},
 	};

@@ -32,6 +32,7 @@ export function unknown(): UnknownSchema {
 		async: false,
 		_run(dataset) {
 			dataset.typed = true;
+
 			return dataset;
 		},
 	};

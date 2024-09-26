@@ -1,5 +1,5 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
-	ArrayPathItem,
 	BaseIssue,
 	BaseSchemaAsync,
 	Dataset,
@@ -86,70 +86,66 @@ export function looseTupleAsync(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (Array.isArray(input)) {
+			if (isArray(input)) {
 				// Set typed to `true` and value to empty array
 				dataset.typed = true;
 				dataset.value = [];
 
+				const items = (this as LooseTupleSchemaAsync<TupleItemsAsync, ErrorMessage<LooseTupleIssue> | undefined>).items;
+
 				// Parse schema of each tuple item
 				const itemDatasets = await Promise.all(
-					this.items.map(async (item, key) => {
+					items.map(async (item, key) => {
 						const value = input[key];
-						return [key, value, await item._run({ typed: false, value }, config)] as const;
+
+						return [
+							key,
+							value,
+							await (item as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+								{ typed: false, value },
+								config,
+							),
+						];
 					}),
 				);
 
 				// Process each tuple item dataset
-				for (const [key, value, itemDataset] of itemDatasets) {
+				for (const [key, value, itemDataset] of itemDatasets as [
+					key: unknown,
+					value: unknown,
+					itemDataset: Dataset<unknown, BaseIssue<unknown>>,
+				][]) {
 					// If there are issues, capture them
-					if (itemDataset.issues) {
-						// Create tuple path item
-						const pathItem: ArrayPathItem = {
-							type: "array",
-							origin: "value",
-							input,
-							key,
-							value,
-						};
-
-						// Add modified item dataset issues to issues
-						for (const issue of itemDataset.issues) {
-							if (issue.path) {
-								issue.path.unshift(pathItem);
-							} else {
-								// @ts-expect-error
-								issue.path = [pathItem];
+					if (itemDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of itemDataset.issues) {
+								(dataset.issues as defined[]).push(issue as defined);
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
-						}
-						if (!dataset.issues) {
-							// @ts-expect-error
-							dataset.issues = itemDataset.issues;
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!itemDataset.typed) {
+					if (itemDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// Add item to dataset
-					// @ts-expect-error
-					dataset.value.push(itemDataset.value);
+					(dataset.value as defined[]).push(itemDataset.value as defined);
 				}
 
 				// Add rest to dataset if necessary
-				if (!dataset.issues || !config.abortEarly) {
-					for (let key = this.items.length; key < input.length; key++) {
-						// @ts-expect-error
-						dataset.value.push(input[key]);
+				if (dataset.issues === undefined || config.abortEarly === false) {
+					for (let key = items.size(); key < input.size(); key++) {
+						(dataset.value as defined[]).push(input[key] as defined);
 					}
 				}
 

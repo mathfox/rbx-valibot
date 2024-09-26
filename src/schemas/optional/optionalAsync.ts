@@ -104,7 +104,6 @@ export function optionalAsync(
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			// roblox-ts requires manual cast
 			return (this as OptionalSchemaAsync<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>).wrapped._run(
 				dataset,
 				config,

@@ -74,6 +74,7 @@ export function boolean(message?: ErrorMessage<BooleanIssue>): BooleanSchema<Err
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<boolean, BooleanIssue>;
 		},
 	};

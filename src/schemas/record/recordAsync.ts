@@ -151,46 +151,48 @@ export function recordAsync(
 					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (keyDataset.issues) {
-						// Add modified item dataset issues to issues
-						for (const issue of keyDataset.issues) {
-							(dataset.issues as defined[] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+					if (keyDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = keyDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of keyDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If there are issues, capture them
-					if (valueDataset.issues) {
-						// Add modified item dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as defined[] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+					if (valueDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!keyDataset.typed || !valueDataset.typed) {
+					if (keyDataset.typed === false || valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// If key is typed, add entry to dataset
-					if (keyDataset.typed) {
+					if (keyDataset.typed === true) {
 						(dataset.value as Record<string, unknown>)[keyDataset.value as string] = valueDataset.value;
 					}
 				}

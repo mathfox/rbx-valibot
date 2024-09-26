@@ -99,35 +99,34 @@ export function object(
 				// Hint: We do not distinguish between missing and `undefined` entries.
 				// The reason for this decision is that it reduces the bundle size, and
 				// we also expect that most users will expect this behavior.
-				// ! roblox-ts requires manual cast.
 				for (const [key] of (this as ObjectSchema<ObjectEntries, ErrorMessage<ObjectIssue> | undefined>)
 					.entries as unknown as Map<string, unknown>) {
 					// Get and parse value of key
 					const value: unknown = input[key as keyof typeof input];
-					// roblox-ts requires manual cast.
 					const valueDataset = (this as ObjectSchema<ObjectEntries, ErrorMessage<ObjectIssue> | undefined>).entries[
 						key
 					]._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (valueDataset.issues) {
-						// Add modified entry dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as [defined, defined[]] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+					if (valueDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified entry dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!valueDataset.typed) {
+					if (valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 

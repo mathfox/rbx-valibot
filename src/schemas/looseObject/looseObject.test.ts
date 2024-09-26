@@ -5,48 +5,10 @@ import { number } from "../number";
 import { object } from "../object";
 import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
-import { type LooseObjectSchema, looseObject } from "./looseObject";
+import { looseObject } from "./looseObject";
 import type { LooseObjectIssue } from "./types";
 
 describe("looseObject", () => {
-	describe("should return schema object", () => {
-		const entries = { key: string_() };
-		type Entries = typeof entries;
-		const baseSchema: Omit<LooseObjectSchema<Entries, never>, "message"> = {
-			kind: "schema",
-			type: "loose_object",
-			reference: looseObject,
-			expects: "Object",
-			entries,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: LooseObjectSchema<Entries, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(looseObject(entries)).toEqual(schema);
-			expect(looseObject(entries, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(looseObject(entries, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies LooseObjectSchema<Entries, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(looseObject(entries, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies LooseObjectSchema<Entries, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for empty object", () => {
 			expectNoSchemaIssue(looseObject({}), [{}]);

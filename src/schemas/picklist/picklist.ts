@@ -95,6 +95,7 @@ export function picklist(
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<PicklistOptions[number], PicklistIssue>;
 		},
 	};

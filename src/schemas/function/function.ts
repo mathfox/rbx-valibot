@@ -76,6 +76,7 @@ export function function_(
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<(...args: unknown[]) => unknown, FunctionIssue>;
 		},
 	};

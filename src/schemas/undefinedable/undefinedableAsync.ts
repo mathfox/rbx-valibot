@@ -104,7 +104,6 @@ export function undefinedableAsync(
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			// roblox-ts manual cast
 			return (this as UndefinedableSchemaAsync<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>).wrapped._run(
 				dataset,
 				config,

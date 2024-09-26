@@ -74,8 +74,7 @@ type WithReadonly<
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 	TObject extends WithQuestionMarks<Record<string | number | symbol, unknown>>,
 > = TValue extends SchemaWithPipe<infer TPipe> | SchemaWithPipeAsync<infer TPipe>
-	? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-		ReadonlyAction<any> extends TPipe[number]
+	? ReadonlyAction<any> extends TPipe[number]
 		? Readonly<TObject>
 		: TObject
 	: TObject;

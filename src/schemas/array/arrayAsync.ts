@@ -117,32 +117,33 @@ export function arrayAsync(
 				// Process each item dataset
 				for (let key = 0; key < itemDatasets.size(); key++) {
 					// Get item dataset
-					const itemDataset = itemDatasets[key];
+					const itemDataset = itemDatasets[key] as Dataset<unknown, BaseIssue<unknown>>;
 
 					// If there are issues, capture them
-					if ((itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues) {
-						// Add modified item dataset issues to issues
-						for (const issue of (itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues!) {
-							dataset.issues?.push(issue as never);
-						}
-						if (!dataset.issues) {
-							dataset.issues = (itemDataset as Dataset<unknown, BaseIssue<unknown>>).issues as never;
+					if (itemDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of itemDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!(itemDataset as Dataset<unknown, BaseIssue<unknown>>).typed) {
+					if (itemDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// Add item to dataset
-					(dataset.value as defined[]).push((itemDataset as Dataset<unknown, BaseIssue<unknown>>).value as defined);
+					(dataset.value as defined[]).push(itemDataset.value as defined);
 				}
 
 				// Otherwise, add array issue

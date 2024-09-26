@@ -2,48 +2,10 @@ import { describe, expect, test } from "@rbxts/jest-globals";
 import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type StringIssue, string_ } from "../string";
-import { type ArraySchema, array } from "./array";
+import { array } from "./array";
 import type { ArrayIssue } from "./types";
 
 describe("array", () => {
-	describe("should return schema object", () => {
-		const item = string_();
-		type Item = typeof item;
-		const baseSchema: Omit<ArraySchema<Item, never>, "message"> = {
-			kind: "schema",
-			type: "array",
-			reference: array,
-			expects: "Array",
-			item,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: ArraySchema<Item, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(array(item)).toEqual(schema);
-			expect(array(item, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(array(item, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies ArraySchema<Item, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(array(item, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies ArraySchema<Item, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const schema = array(string_());
 

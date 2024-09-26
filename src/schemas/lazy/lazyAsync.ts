@@ -54,7 +54,6 @@ export function lazyAsync<
 		async: true,
 		getter,
 		async _run(dataset, config) {
-			// roblox-ts casts to make it work
 			return (
 				await (this as LazySchemaAsync<BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>>).getter(dataset.value)
 			)._run(dataset, config);

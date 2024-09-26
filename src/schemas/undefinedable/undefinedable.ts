@@ -87,7 +87,6 @@ export function undefinedable(
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			// roblox-ts manual cast
 			return (this as UndefinedableSchema<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>).wrapped._run(
 				dataset,
 				config,

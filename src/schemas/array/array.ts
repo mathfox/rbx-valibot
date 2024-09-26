@@ -86,17 +86,18 @@ export function array(
 					).item._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (itemDataset.issues) {
-						// Add modified item dataset issues to issues
-						for (const issue of itemDataset.issues) {
-							dataset.issues?.push(issue as never);
-						}
+					if (itemDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
-							dataset.issues = itemDataset.issues as never;
+							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of itemDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}

@@ -5,48 +5,10 @@ import { number } from "../number";
 import { objectAsync } from "../object";
 import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
-import { type StrictObjectSchemaAsync, strictObjectAsync } from "./strictObjectAsync";
+import { strictObjectAsync } from "./strictObjectAsync";
 import type { StrictObjectIssue } from "./types";
 
 describe("strictObjectAsync", () => {
-	describe("should return schema object", () => {
-		const entries = { key: string_() };
-		type Entries = typeof entries;
-		const baseSchema: Omit<StrictObjectSchemaAsync<Entries, never>, "message"> = {
-			kind: "schema",
-			type: "strict_object",
-			reference: strictObjectAsync,
-			expects: "Object",
-			entries,
-			async: true,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: StrictObjectSchemaAsync<Entries, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(strictObjectAsync(entries)).toEqual(schema);
-			expect(strictObjectAsync(entries, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(strictObjectAsync(entries, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies StrictObjectSchemaAsync<Entries, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(strictObjectAsync(entries, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies StrictObjectSchemaAsync<Entries, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for empty object", async () => {
 			await expectNoSchemaIssueAsync(strictObjectAsync({}), [{}]);

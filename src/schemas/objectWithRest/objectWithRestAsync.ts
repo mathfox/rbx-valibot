@@ -116,6 +116,7 @@ export function objectWithRestAsync(
 				dataset.value = {};
 
 				const normalDatasetsPromises = new Array<Promise<unknown>>();
+
 				// Parse schema of each normal entry
 				// Hint: We do not distinguish between missing and `undefined` entries.
 				// The reason for this decision is that it reduces the bundle size, and
@@ -136,6 +137,7 @@ export function objectWithRestAsync(
 				}
 
 				const restDatasetsPromises = new Array<Promise<unknown>>();
+
 				// Parse other entries with rest schema
 				// Hint: We exclude specific keys for security reasons
 				for (const [key, value] of input as unknown as Map<string, BaseSchema<unknown, unknown, BaseIssue<unknown>>>) {
@@ -164,7 +166,7 @@ export function objectWithRestAsync(
 											ErrorMessage<ObjectWithRestIssue> | undefined
 										>
 									).rest._run({ typed: false, value }, config),
-								] as const;
+								];
 							})(),
 						);
 					}
@@ -183,24 +185,25 @@ export function objectWithRestAsync(
 					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (valueDataset.issues) {
-						// Add modified entry dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as defined[] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+					if (valueDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified entry dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!valueDataset.typed) {
+					if (valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 
@@ -211,7 +214,7 @@ export function objectWithRestAsync(
 				}
 
 				// Parse schema of each rest entry if necessary
-				if (!dataset.issues || !config.abortEarly) {
+				if (dataset.issues === undefined || config.abortEarly === false) {
 					// Process each normal dataset
 					for (const [key, value, valueDataset] of restDatasets as [
 						key: string,
@@ -219,24 +222,25 @@ export function objectWithRestAsync(
 						valueDataset: Dataset<unknown, BaseIssue<unknown>>,
 					][]) {
 						// If there are issues, capture them
-						if (valueDataset.issues) {
-							// Add modified entry dataset issues to issues
-							for (const issue of valueDataset.issues) {
-								(dataset.issues as defined[] | undefined)?.push(issue);
-							}
-							if (!dataset.issues) {
+						if (valueDataset.issues !== undefined) {
+							if (dataset.issues === undefined) {
 								(dataset as { issues: defined[] }).issues = valueDataset.issues;
+							} else {
+								// Add modified entry dataset issues to issues
+								for (const issue of valueDataset.issues) {
+									(dataset.issues as defined[]).push(issue);
+								}
 							}
 
 							// If necessary, abort early
-							if (config.abortEarly) {
+							if (config.abortEarly === true) {
 								dataset.typed = false;
 								break;
 							}
 						}
 
 						// If not typed, set typed to `false`
-						if (!valueDataset.typed) {
+						if (valueDataset.typed === false) {
 							dataset.typed = false;
 						}
 

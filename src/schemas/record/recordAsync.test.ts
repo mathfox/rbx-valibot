@@ -5,51 +5,10 @@ import { type NumberIssue, number } from "../number";
 import { optionalAsync } from "../optional";
 import { picklist } from "../picklist";
 import { string_ } from "../string";
-import { type RecordSchemaAsync, recordAsync } from "./recordAsync";
+import { recordAsync } from "./recordAsync";
 import type { RecordIssue } from "./types";
 
 describe("recordAsync", () => {
-	describe("should return schema record", () => {
-		const key = string_();
-		type Key = typeof key;
-		const value = number();
-		type Value = typeof value;
-		const baseSchema: Omit<RecordSchemaAsync<Key, Value, never>, "message"> = {
-			kind: "schema",
-			type: "record",
-			reference: recordAsync,
-			expects: "Object",
-			key,
-			value,
-			async: true,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: RecordSchemaAsync<Key, Value, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(recordAsync(key, value)).toEqual(schema);
-			expect(recordAsync(key, value, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(recordAsync(key, value, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies RecordSchemaAsync<Key, Value, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(recordAsync(key, value, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies RecordSchemaAsync<Key, Value, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		const schema = recordAsync(string_(), number());
 

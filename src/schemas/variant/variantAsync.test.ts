@@ -1,61 +1,17 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { email } from "../../actions";
 import { pipe } from "../../methods";
-import { EMAIL_REGEX } from "../../regex";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
 import { number } from "../number";
 import { object, objectAsync } from "../object";
-import { strictObjectAsync } from "../strictObject";
-import { string } from "../string";
-import { type VariantSchemaAsync, variantAsync } from "./variantAsync";
+import { string_ } from "../string";
+import { variantAsync } from "./variantAsync";
 
 // TODO: Add test for invalid type inputs
 
 describe("variantAsync", () => {
-	describe("should return schema object", () => {
-		const key = "type" as const;
-		type Key = typeof key;
-		const options = [object({ type: literal("foo") }), strictObjectAsync({ type: literal("bar") })] as const;
-		type Options = typeof options;
-		const baseSchema: Omit<VariantSchemaAsync<Key, Options, never>, "message"> = {
-			kind: "schema",
-			type: "variant",
-			reference: variantAsync,
-			expects: "Object",
-			key,
-			options,
-			async: true,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: VariantSchemaAsync<Key, Options, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(variantAsync(key, options)).toStrictEqual(schema);
-			expect(variantAsync(key, options, undefined)).toStrictEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(variantAsync(key, options, "message")).toStrictEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies VariantSchemaAsync<Key, Options, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(variantAsync(key, options, message)).toStrictEqual({
-				...baseSchema,
-				message,
-			} satisfies VariantSchemaAsync<Key, Options, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for simple variants", async () => {
 			await expectNoSchemaIssueAsync(
@@ -67,7 +23,7 @@ describe("variantAsync", () => {
 		test("for same discriminators", async () => {
 			await expectNoSchemaIssueAsync(
 				variantAsync("type", [
-					object({ type: literal("foo"), other: string() }),
+					object({ type: literal("foo"), other: string_() }),
 					object({ type: literal("foo"), other: number() }),
 					objectAsync({ type: literal("foo"), other: boolean() }),
 				]),
@@ -143,15 +99,6 @@ describe("variantAsync", () => {
 						input: input.type,
 						expected: "never",
 						received: `"${input.type}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: input.type,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -171,15 +118,6 @@ describe("variantAsync", () => {
 						input: undefined,
 						expected: '("foo" | "bar")',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -199,15 +137,6 @@ describe("variantAsync", () => {
 						input: input.type,
 						expected: '("foo" | "bar")',
 						received: `"${input.type}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: input.type,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -217,7 +146,7 @@ describe("variantAsync", () => {
 			const schema = variantAsync("type", [
 				object({ type: literal("foo") }),
 				variantAsync("other", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					object({ type: literal("bar"), other: boolean() }),
 					object({ type: literal("baz"), other: number() }),
 				]),
@@ -234,15 +163,6 @@ describe("variantAsync", () => {
 						input: undefined,
 						expected: "(string | boolean)",
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -252,7 +172,7 @@ describe("variantAsync", () => {
 			const schema = variantAsync("type", [
 				object({ type: literal("foo") }),
 				variantAsync("other", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					object({ type: literal("bar"), other: boolean() }),
 					object({ type: literal("baz"), other: number() }),
 				]),
@@ -269,15 +189,6 @@ describe("variantAsync", () => {
 						input: input.other,
 						expected: "(string | boolean)",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -289,24 +200,24 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variantAsync("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -322,15 +233,6 @@ describe("variantAsync", () => {
 						input: undefined,
 						expected: '("foo" | "bar")',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -342,24 +244,24 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variantAsync("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -375,15 +277,6 @@ describe("variantAsync", () => {
 						input: undefined,
 						expected: '"bar-1"',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType1",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -395,24 +288,24 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variantAsync("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -428,15 +321,6 @@ describe("variantAsync", () => {
 						input: input.subType2,
 						expected: '"bar-2"',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -448,24 +332,24 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variantAsync("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -481,15 +365,6 @@ describe("variantAsync", () => {
 						input: input.subType1,
 						expected: '"bar-1"',
 						received: `"${input.subType1}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType1",
-								value: input.subType1,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -503,13 +378,13 @@ describe("variantAsync", () => {
 							type: literal("foo"),
 							subType1: literal("foo-1"),
 							subType2: literal("foo-2"),
-							other1: string(),
+							other1: string_(),
 						}),
 						object({
 							type: literal("bar"),
 							subType1: literal("bar-1"),
 							subType2: literal("bar-2"),
-							other2: string(),
+							other2: string_(),
 						}),
 					]),
 				]),
@@ -517,12 +392,12 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foz-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("baz-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -538,15 +413,6 @@ describe("variantAsync", () => {
 						input: input.subType2,
 						expected: '("bar-2" | "baz-2")',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -558,12 +424,12 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foz-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("baz-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 				variantAsync("subType1", [
@@ -572,13 +438,13 @@ describe("variantAsync", () => {
 							type: literal("foo"),
 							subType1: literal("foo-1"),
 							subType2: literal("foo-2"),
-							other1: string(),
+							other1: string_(),
 						}),
 						object({
 							type: literal("bar"),
 							subType1: literal("bar-1"),
 							subType2: literal("bar-2"),
-							other2: string(),
+							other2: string_(),
 						}),
 					]),
 				]),
@@ -595,15 +461,6 @@ describe("variantAsync", () => {
 						input: input.subType2,
 						expected: '("baz-2" | "bar-2")',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -615,19 +472,19 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 					variantAsync("subType2", [
 						object({
 							type: literal("bar"),
 							subType1: literal("baz-1"),
 							subType2: literal("baz-2"),
-							other5: string(),
+							other5: string_(),
 						}),
 					]),
 				]),
@@ -635,12 +492,12 @@ describe("variantAsync", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -656,15 +513,6 @@ describe("variantAsync", () => {
 						input: input.subType2,
 						expected: '"bar-2"',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -672,10 +520,10 @@ describe("variantAsync", () => {
 
 		test("for untyped object", async () => {
 			const schema = variantAsync("type", [
-				object({ type: literal("bar"), other: string() }),
+				object({ type: literal("bar"), other: string_() }),
 				objectAsync({ type: literal("baz"), other: number() }),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: 3 };
 			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -687,15 +535,6 @@ describe("variantAsync", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -705,11 +544,11 @@ describe("variantAsync", () => {
 			const schema = variantAsync("type", [
 				object({ type: literal("foo") }),
 				variantAsync("type", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					objectAsync({ type: literal("baz"), other: number() }),
 				]),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: 3 };
 			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -721,15 +560,6 @@ describe("variantAsync", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -737,11 +567,11 @@ describe("variantAsync", () => {
 
 		test("for multiple untyped objects", async () => {
 			const schema = variantAsync("type", [
-				object({ type: literal("bar"), other: string() }),
+				object({ type: literal("bar"), other: string_() }),
 				object({ type: literal("bar"), other: number() }),
 				objectAsync({ type: literal("bar"), other: boolean() }),
 			]);
-			const input = { type: "bar", other: null };
+			const input = { type: "bar", other: 3 };
 			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -753,122 +583,9 @@ describe("variantAsync", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
-		});
-
-		test("for typed objects", async () => {
-			const schema = variantAsync("type", [
-				object({ type: literal("foo"), other: number() }),
-				object({ type: literal("bar"), other: pipe(string(), email()) }),
-				objectAsync({ type: literal("baz"), other: boolean() }),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "bar", other: "hello" } as const;
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
-		});
-
-		test("for nested typed objects", async () => {
-			const schema = variantAsync("type", [
-				object({ type: literal("foo"), other: number() }),
-				variantAsync("type", [
-					object({ type: literal("bar"), other: pipe(string(), email()) }),
-					objectAsync({ type: literal("baz"), other: boolean() }),
-				]),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "bar", other: "hello" } as const;
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
-		});
-
-		test("for multiple typed objects", async () => {
-			const schema = variantAsync("type", [
-				object({ type: literal("foo"), other: number() }),
-				object({ type: literal("foo"), other: pipe(string(), email()) }),
-				objectAsync({ type: literal("foo"), other: boolean() }),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "foo", other: "hello" } as const;
-			expect(await schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
 		});
 	});
 });

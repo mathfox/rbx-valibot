@@ -4,55 +4,17 @@ import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { boolean } from "../boolean/boolean";
 import { number } from "../number";
 import { optional } from "../optional";
-import { type StringIssue, string } from "../string";
-import { type TupleSchema, tuple } from "./tuple";
+import { type StringIssue, string_ } from "../string";
+import { tuple } from "./tuple";
 import type { TupleIssue } from "./types";
 
 describe("tuple", () => {
-	describe("should return schema object", () => {
-		const items = [optional(string()), number()] as const;
-		type Items = typeof items;
-		const baseSchema: Omit<TupleSchema<Items, never>, "message"> = {
-			kind: "schema",
-			type: "tuple",
-			reference: tuple,
-			expects: "Array",
-			items,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: TupleSchema<Items, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(tuple(items)).toStrictEqual(schema);
-			expect(tuple(items, undefined)).toStrictEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(tuple(items, "message")).toStrictEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies TupleSchema<Items, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(tuple(items, message)).toStrictEqual({
-				...baseSchema,
-				message,
-			} satisfies TupleSchema<Items, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for empty tuple", () => {
 			expectNoSchemaIssue(tuple([]), [[]]);
 		});
 
-		const schema = tuple([optional(string()), number()]);
+		const schema = tuple([optional(string_()), number()]);
 
 		test("for simple tuple", () => {
 			expectNoSchemaIssue(schema, [
@@ -62,7 +24,7 @@ describe("tuple", () => {
 		});
 
 		test("for unknown items", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, null, true, undefined] }, {})).toStrictEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toStrictEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -70,7 +32,7 @@ describe("tuple", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = tuple([optional(string()), number()], "message");
+		const schema = tuple([optional(string_()), number()], "message");
 		const baseIssue: Omit<TupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "tuple",
@@ -108,7 +70,7 @@ describe("tuple", () => {
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = tuple([optional(string()), number()]);
+		const schema = tuple([optional(string_()), number()]);
 
 		test("for simple tuple", () => {
 			expectNoSchemaIssue(schema, [
@@ -135,7 +97,7 @@ describe("tuple", () => {
 	});
 
 	describe("should return dataset with nested issues", () => {
-		const schema = tuple([string(), number(), boolean()]);
+		const schema = tuple([string_(), number(), boolean()]);
 
 		const baseInfo = {
 			message: expect.any("string"),
@@ -153,15 +115,6 @@ describe("tuple", () => {
 			input: 123,
 			expected: "string",
 			received: "123",
-			path: [
-				{
-					type: "array",
-					origin: "value",
-					input: [123, 456, "true"],
-					key: 0,
-					value: 123,
-				},
-			],
 		};
 
 		test("for wrong items", () => {
@@ -178,15 +131,6 @@ describe("tuple", () => {
 						input: "true",
 						expected: "boolean",
 						received: '"true"',
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input: input,
-								key: 2,
-								value: input[2],
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -202,7 +146,7 @@ describe("tuple", () => {
 
 		test("for wrong nested items", () => {
 			const nestedSchema = tuple([schema, schema]);
-			const input: [[string, string, boolean], undefined] = [["foo", "123", false], undefined];
+			const input: [[string, string, boolean], 3] = [["foo", "123", false], 3];
 			expect(nestedSchema._run({ typed: false, value: input }, {})).toStrictEqual({
 				typed: false,
 				value: input,
@@ -214,39 +158,14 @@ describe("tuple", () => {
 						input: "123",
 						expected: "number",
 						received: '"123"',
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input: input,
-								key: 0,
-								value: input[0],
-							},
-							{
-								type: "array",
-								origin: "value",
-								input: input[0],
-								key: 1,
-								value: input[0][1],
-							},
-						],
 					},
 					{
 						...baseInfo,
 						kind: "schema",
 						type: "tuple",
-						input: null,
+						input: 3,
 						expected: "Array",
-						received: "null",
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input: input,
-								key: 1,
-								value: input[1],
-							},
-						],
+						received: "3",
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);

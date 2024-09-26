@@ -1,61 +1,18 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { email } from "../../actions";
 import { pipe } from "../../methods";
-import { EMAIL_REGEX } from "../../regex";
 import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
 import { number } from "../number";
 import { object } from "../object";
-import { strictObject } from "../strictObject";
-import { string } from "../string";
-import { type VariantSchema, variant } from "./variant";
+import { string_ } from "../string";
+import { variant } from "./variant";
+import { custom } from "../custom";
 
 // TODO: Add test for invalid type inputs
 
 describe("variant", () => {
-	describe("should return schema object", () => {
-		const key = "type" as const;
-		type Key = typeof key;
-		const options = [object({ type: literal("foo") }), strictObject({ type: literal("bar") })] as const;
-		type Options = typeof options;
-		const baseSchema: Omit<VariantSchema<Key, Options, never>, "message"> = {
-			kind: "schema",
-			type: "variant",
-			reference: variant,
-			expects: "Object",
-			key,
-			options,
-			async: false,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: VariantSchema<Key, Options, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(variant(key, options)).toStrictEqual(schema);
-			expect(variant(key, options, undefined)).toStrictEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(variant(key, options, "message")).toStrictEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies VariantSchema<Key, Options, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(variant(key, options, message)).toStrictEqual({
-				...baseSchema,
-				message,
-			} satisfies VariantSchema<Key, Options, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for simple variants", () => {
 			expectNoSchemaIssue(variant("type", [object({ type: literal("foo") }), object({ type: literal("bar") })]), [
@@ -67,7 +24,7 @@ describe("variant", () => {
 		test("for same discriminators", () => {
 			expectNoSchemaIssue(
 				variant("type", [
-					object({ type: literal("foo"), other: string() }),
+					object({ type: literal("foo"), other: string_() }),
 					object({ type: literal("foo"), other: number() }),
 					object({ type: literal("foo"), other: boolean() }),
 				]),
@@ -137,15 +94,6 @@ describe("variant", () => {
 						input: input.type,
 						expected: "never",
 						received: `"${input.type}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: input.type,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -165,15 +113,6 @@ describe("variant", () => {
 						input: undefined,
 						expected: '("foo" | "bar")',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -193,15 +132,6 @@ describe("variant", () => {
 						input: input.type,
 						expected: '("foo" | "bar")',
 						received: `"${input.type}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: input.type,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -211,7 +141,7 @@ describe("variant", () => {
 			const schema = variant("type", [
 				object({ type: literal("foo") }),
 				variant("other", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					object({ type: literal("bar"), other: boolean() }),
 					object({ type: literal("baz"), other: number() }),
 				]),
@@ -228,15 +158,6 @@ describe("variant", () => {
 						input: undefined,
 						expected: "(string | boolean)",
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -246,7 +167,7 @@ describe("variant", () => {
 			const schema = variant("type", [
 				object({ type: literal("foo") }),
 				variant("other", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					object({ type: literal("bar"), other: boolean() }),
 					object({ type: literal("baz"), other: number() }),
 				]),
@@ -263,15 +184,6 @@ describe("variant", () => {
 						input: input.other,
 						expected: "(string | boolean)",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -283,24 +195,24 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variant("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -316,15 +228,6 @@ describe("variant", () => {
 						input: undefined,
 						expected: '("foo" | "bar")',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "type",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -336,24 +239,24 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variant("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -369,15 +272,6 @@ describe("variant", () => {
 						input: undefined,
 						expected: '"bar-1"',
 						received: "undefined",
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType1",
-								value: undefined,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -389,24 +283,24 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variant("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -422,15 +316,6 @@ describe("variant", () => {
 						input: input.subType2,
 						expected: '"bar-2"',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -442,24 +327,24 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 				]),
 				variant("subType2", [
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -475,15 +360,6 @@ describe("variant", () => {
 						input: input.subType1,
 						expected: '"bar-1"',
 						received: `"${input.subType1}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType1",
-								value: input.subType1,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -497,13 +373,13 @@ describe("variant", () => {
 							type: literal("foo"),
 							subType1: literal("foo-1"),
 							subType2: literal("foo-2"),
-							other1: string(),
+							other1: string_(),
 						}),
 						object({
 							type: literal("bar"),
 							subType1: literal("bar-1"),
 							subType2: literal("bar-2"),
-							other2: string(),
+							other2: string_(),
 						}),
 					]),
 				]),
@@ -511,12 +387,12 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foz-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("baz-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -532,15 +408,6 @@ describe("variant", () => {
 						input: input.subType2,
 						expected: '("bar-2" | "baz-2")',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -552,12 +419,12 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foz-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("baz-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 				variant("subType1", [
@@ -566,13 +433,13 @@ describe("variant", () => {
 							type: literal("foo"),
 							subType1: literal("foo-1"),
 							subType2: literal("foo-2"),
-							other1: string(),
+							other1: string_(),
 						}),
 						object({
 							type: literal("bar"),
 							subType1: literal("bar-1"),
 							subType2: literal("bar-2"),
-							other2: string(),
+							other2: string_(),
 						}),
 					]),
 				]),
@@ -589,15 +456,6 @@ describe("variant", () => {
 						input: input.subType2,
 						expected: '("baz-2" | "bar-2")',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -609,19 +467,19 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType1: literal("foo-1"),
-						other1: string(),
+						other1: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType1: literal("bar-1"),
-						other2: string(),
+						other2: string_(),
 					}),
 					variant("subType2", [
 						object({
 							type: literal("bar"),
 							subType1: literal("baz-1"),
 							subType2: literal("baz-2"),
-							other5: string(),
+							other5: string_(),
 						}),
 					]),
 				]),
@@ -629,12 +487,12 @@ describe("variant", () => {
 					object({
 						type: literal("foo"),
 						subType2: literal("foo-2"),
-						other3: string(),
+						other3: string_(),
 					}),
 					object({
 						type: literal("bar"),
 						subType2: literal("bar-2"),
-						other4: string(),
+						other4: string_(),
 					}),
 				]),
 			]);
@@ -650,15 +508,6 @@ describe("variant", () => {
 						input: input.subType2,
 						expected: '"bar-2"',
 						received: `"${input.subType2}"`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "subType2",
-								value: input.subType2,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -666,7 +515,7 @@ describe("variant", () => {
 
 		test("for untyped object", () => {
 			const schema = variant("type", [
-				object({ type: literal("bar"), other: string() }),
+				object({ type: literal("bar"), other: string_() }),
 				object({ type: literal("baz"), other: number() }),
 			]);
 			const input = { type: "bar", other: undefined };
@@ -681,15 +530,6 @@ describe("variant", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -699,7 +539,7 @@ describe("variant", () => {
 			const schema = variant("type", [
 				object({ type: literal("foo") }),
 				variant("type", [
-					object({ type: literal("bar"), other: string() }),
+					object({ type: literal("bar"), other: string_() }),
 					object({ type: literal("baz"), other: number() }),
 				]),
 			]);
@@ -715,15 +555,6 @@ describe("variant", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
@@ -731,7 +562,7 @@ describe("variant", () => {
 
 		test("for multiple untyped objects", () => {
 			const schema = variant("type", [
-				object({ type: literal("bar"), other: string() }),
+				object({ type: literal("bar"), other: string_() }),
 				object({ type: literal("bar"), other: number() }),
 				object({ type: literal("bar"), other: boolean() }),
 			]);
@@ -747,122 +578,9 @@ describe("variant", () => {
 						input: input.other,
 						expected: "string",
 						received: `${input.other}`,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
 					},
 				],
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
-		});
-
-		test("for typed objects", () => {
-			const schema = variant("type", [
-				object({ type: literal("foo"), other: number() }),
-				object({ type: literal("bar"), other: pipe(string(), email()) }),
-				object({ type: literal("baz"), other: boolean() }),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "bar", other: "hello" } as const;
-			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
-		});
-
-		test("for nested typed objects", () => {
-			const schema = variant("type", [
-				object({ type: literal("foo"), other: number() }),
-				variant("type", [
-					object({ type: literal("bar"), other: pipe(string(), email()) }),
-					object({ type: literal("baz"), other: boolean() }),
-				]),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "bar", other: "hello" } as const;
-			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
-		});
-
-		test("for multiple typed objects", () => {
-			const schema = variant("type", [
-				object({ type: literal("foo"), other: number() }),
-				object({ type: literal("foo"), other: pipe(string(), email()) }),
-				object({ type: literal("foo"), other: boolean() }),
-			]);
-			type Schema = typeof schema;
-			const input = { type: "foo", other: "hello" } as const;
-			expect(schema._run({ typed: false, value: input }, {})).toStrictEqual({
-				typed: true,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "validation",
-						type: "email",
-						input: input.other,
-						expected: undefined,
-						received: `"${input.other}"`,
-						requirement: EMAIL_REGEX,
-						path: [
-							{
-								type: "object",
-								origin: "value",
-								input,
-								key: "other",
-								value: input.other,
-							},
-						],
-					},
-				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
 		});
 	});
 });

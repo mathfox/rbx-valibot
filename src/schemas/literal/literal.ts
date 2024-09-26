@@ -77,12 +77,12 @@ export function literal(
 		literal: literal_,
 		message,
 		_run(dataset, config) {
-			// roblox-ts macro system requires manual cast.
 			if (dataset.value === (this as LiteralSchema<unknown, ErrorMessage<LiteralIssue> | undefined>).literal) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset;
 		},
 	};

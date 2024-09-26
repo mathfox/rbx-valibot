@@ -1,3 +1,4 @@
+import { toArray } from "@rbxts/phantom/src/Set";
 import type { BaseIssue, BaseSchemaAsync, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type {
@@ -93,13 +94,15 @@ export function variantAsync(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (input && typeof input === "object") {
+			if (typeIs(input, "table")) {
 				// Create output dataset variable
 				let outputDataset: Dataset<unknown, BaseIssue<unknown>> | undefined;
 
 				// Create variables to store invalid discriminator information
 				let maxDiscriminatorPriority = 0;
-				let invalidDiscriminatorKey = this.key;
+				let invalidDiscriminatorKey = (
+					this as VariantSchemaAsync<string, VariantOptionsAsync<string>, ErrorMessage<VariantIssue> | undefined>
+				).key;
 				let expectedDiscriminators: string[] = [];
 
 				// Create recursive function to parse nested variant options
@@ -110,7 +113,7 @@ export function variantAsync(
 					for (const schema of variant.options) {
 						// If it is a variant schema, parse its options recursively
 						if (schema.type === "variant") {
-							await parseOptions(schema, new Set(allKeys).add(schema.key));
+							await parseOptions(schema, new Set<string>(toArray(allKeys)).add(schema.key));
 
 							// Otherwise, check discriminators and parse object schema
 						} else {
@@ -124,9 +127,8 @@ export function variantAsync(
 								// If any discriminator is invalid, mark keys as invalid
 								if (
 									(
-										await schema.entries[currentKey]._run(
-											// @ts-expect-error
-											{ typed: false, value: input[currentKey] },
+										await (schema.entries[currentKey] as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+											{ typed: false, value: input[currentKey as keyof typeof input] },
 											config,
 										)
 									).issues
@@ -165,12 +167,15 @@ export function variantAsync(
 
 							// If all discriminators are valid, parse input with schema of option
 							if (keysAreValid) {
-								const optionDataset = await schema._run({ typed: false, value: input }, config);
+								const optionDataset = await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+									{ typed: false, value: input },
+									config,
+								);
 
 								// Store output dataset if necessary
 								// Hint: Only the first untyped or typed dataset is returned, and
 								// typed datasets take precedence over untyped ones.
-								if (!outputDataset || (!outputDataset.typed && optionDataset.typed)) {
+								if (outputDataset === undefined || (outputDataset.typed === false && optionDataset.typed === true)) {
 									outputDataset = optionDataset;
 								}
 							}
@@ -179,14 +184,20 @@ export function variantAsync(
 						// If valid option is found, break loop
 						// Hint: The `break` statement is intentionally placed at the end of
 						// the loop to break any outer loops in case of recursive execution.
-						if (outputDataset && !outputDataset.issues) {
+						if (outputDataset !== undefined && outputDataset.issues === undefined) {
 							break;
 						}
 					}
 				};
 
 				// Parse input with nested variant options recursively
-				await parseOptions(this, new Set([this.key]));
+				await parseOptions(
+					this as VariantSchemaAsync<string, VariantOptionsAsync<string>, ErrorMessage<VariantIssue> | undefined>,
+					new Set([
+						(this as VariantSchemaAsync<string, VariantOptionsAsync<string>, ErrorMessage<VariantIssue> | undefined>)
+							.key,
+					]),
+				);
 
 				// If any output dataset is available, return it
 				if (outputDataset) {
@@ -195,19 +206,8 @@ export function variantAsync(
 
 				// Otherwise, add discriminator issue
 				_addIssue(this, "type", dataset, config, {
-					// @ts-expect-error
-					input: input[invalidDiscriminatorKey],
+					input: input[invalidDiscriminatorKey as keyof typeof input],
 					expected: _joinExpects(expectedDiscriminators, "|"),
-					path: [
-						{
-							type: "object",
-							origin: "value",
-							input: input as Record<string, unknown>,
-							key: invalidDiscriminatorKey,
-							// @ts-expect-error
-							value: input[invalidDiscriminatorKey],
-						},
-					],
 				});
 
 				// Otherwise, add variant issue

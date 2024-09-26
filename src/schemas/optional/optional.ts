@@ -83,7 +83,6 @@ export function optional(
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			// roblox-ts requires manual cast
 			return (this as OptionalSchema<BaseSchema<unknown, unknown, BaseIssue<unknown>>, unknown>).wrapped._run(
 				dataset,
 				config,

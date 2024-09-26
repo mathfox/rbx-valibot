@@ -74,6 +74,7 @@ export function number(message?: ErrorMessage<NumberIssue>): NumberSchema<ErrorM
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<number, NumberIssue>;
 		},
 	};

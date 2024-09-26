@@ -96,21 +96,19 @@ export function unionAsync(
 			let untypedDatasets: UntypedDataset<BaseIssue<unknown>>[] | undefined;
 
 			// Parse schema of each option and collect datasets
-			// roblox-ts requires manual cast.
 			for (const schema of (
 				this as UnionSchemaAsync<UnionOptionsAsync, ErrorMessage<UnionIssue<BaseIssue<unknown>>> | undefined>
 			).options) {
-				// roblox-ts requires manual cast
 				const optionDataset = await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
 					{ typed: false, value: dataset.value },
 					config,
 				);
 
 				// If typed, add it to valid or typed datasets
-				if (optionDataset.typed) {
+				if (optionDataset.typed === true) {
 					// If there are issues, add it to typed datasets
-					if (optionDataset.issues) {
-						if (typedDatasets) {
+					if (optionDataset.issues !== undefined) {
+						if (typedDatasets !== undefined) {
 							typedDatasets.push(optionDataset);
 						} else {
 							typedDatasets = [optionDataset];
@@ -124,7 +122,7 @@ export function unionAsync(
 
 					// Otherwise, add it to untyped datasets
 				} else {
-					if (untypedDatasets) {
+					if (untypedDatasets !== undefined) {
 						untypedDatasets.push(optionDataset);
 					} else {
 						untypedDatasets = [optionDataset];
@@ -133,12 +131,12 @@ export function unionAsync(
 			}
 
 			// If there is a valid dataset, return it
-			if (validDataset) {
+			if (validDataset !== undefined) {
 				return validDataset;
 			}
 
 			// If there are typed datasets process only those
-			if (typedDatasets) {
+			if (typedDatasets !== undefined) {
 				// If there is only one typed dataset, return it
 				if (typedDatasets.size() === 1) {
 					return typedDatasets[0];

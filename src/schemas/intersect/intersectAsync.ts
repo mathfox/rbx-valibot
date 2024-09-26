@@ -74,7 +74,9 @@ export function intersectAsync(
 		async _run(dataset, config) {
 			// Parse input with schema of options, if not empty
 			if (
-				(this as IntersectSchemaAsync<IntersectOptionsAsync, ErrorMessage<IntersectIssue> | undefined>).options.size()
+				(
+					this as IntersectSchemaAsync<IntersectOptionsAsync, ErrorMessage<IntersectIssue> | undefined>
+				).options.size() !== 0
 			) {
 				// Get input value from dataset
 				const input = dataset.value;
@@ -99,8 +101,8 @@ export function intersectAsync(
 				// Collect outputs of option datasets
 				for (const optionDataset of optionDatasets as Dataset<unknown, BaseIssue<unknown>>[]) {
 					// If there are issues, capture them
-					if (optionDataset.issues) {
-						if (dataset.issues) {
+					if (optionDataset.issues !== undefined) {
+						if (dataset.issues !== undefined) {
 							for (const issue of optionDataset.issues) {
 								(dataset.issues as defined[]).push(issue);
 							}
@@ -109,20 +111,20 @@ export function intersectAsync(
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!(optionDataset as Dataset<unknown, BaseIssue<unknown>>).typed) {
+					if (optionDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// Add output of option if necessary
-					if (dataset.typed) {
-						if (outputs) {
+					if (dataset.typed === true) {
+						if (outputs !== undefined) {
 							(outputs as defined[]).push(optionDataset.value as defined);
 						} else {
 							outputs = [optionDataset.value];
@@ -131,7 +133,7 @@ export function intersectAsync(
 				}
 
 				// If outputs are typed, merge them
-				if (dataset.typed) {
+				if (dataset.typed === true) {
 					// Set first output as initial output
 					dataset.value = outputs![0];
 
@@ -144,6 +146,7 @@ export function intersectAsync(
 							_addIssue(this, "type", dataset, config, {
 								received: "unknown",
 							});
+
 							break;
 						}
 

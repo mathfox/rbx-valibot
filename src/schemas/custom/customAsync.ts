@@ -69,12 +69,12 @@ export function customAsync<TInput>(
 		check,
 		message,
 		async _run(dataset, config) {
-			// roblox-ts macro system requires manual cast.
 			if (await (this as CustomSchemaAsync<TInput, ErrorMessage<CustomIssue> | undefined>).check(dataset.value)) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<TInput, CustomIssue>;
 		},
 	};

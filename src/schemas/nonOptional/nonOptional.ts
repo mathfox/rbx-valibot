@@ -75,11 +75,11 @@ export function nonOptional(
 			// If value is `undefined`, add issue and return dataset
 			if (dataset.value === undefined) {
 				_addIssue(this, "type", dataset, config);
+
 				return dataset;
 			}
 
 			// Otherwise, return dataset of wrapped schema
-			// roblox-ts requires manual cast.
 			return (
 				this as NonOptionalSchema<
 					BaseSchema<unknown, unknown, BaseIssue<unknown>>,

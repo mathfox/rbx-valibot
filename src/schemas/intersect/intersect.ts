@@ -73,7 +73,7 @@ export function intersect(
 		message,
 		_run(dataset, config) {
 			// Parse input with schema of options, if not empty
-			if ((this as IntersectSchema<IntersectOptions, ErrorMessage<IntersectIssue> | undefined>).options.size()) {
+			if ((this as IntersectSchema<IntersectOptions, ErrorMessage<IntersectIssue> | undefined>).options.size() !== 0) {
 				// Get input value from dataset
 				const input = dataset.value;
 
@@ -89,30 +89,30 @@ export function intersect(
 					const optionDataset = schema._run({ typed: false, value: input }, config);
 
 					// If there are issues, capture them
-					if (optionDataset.issues) {
+					if (optionDataset.issues !== undefined) {
 						if (dataset.issues) {
 							for (const issue of optionDataset.issues) {
 								(dataset.issues as defined[]).push(issue);
 							}
 						} else {
-							dataset.issues = optionDataset.issues as never;
+							(dataset as { issues: defined[] }).issues = optionDataset.issues;
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!optionDataset.typed) {
+					if (optionDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// Add output of option if necessary
-					if (dataset.typed) {
-						if (outputs) {
+					if (dataset.typed === true) {
+						if (outputs !== undefined) {
 							(outputs as defined[]).push(optionDataset.value as defined);
 						} else {
 							outputs = [optionDataset.value];
@@ -121,7 +121,7 @@ export function intersect(
 				}
 
 				// If outputs are typed, merge them
-				if (dataset.typed) {
+				if (dataset.typed === true) {
 					// Set first output as initial output
 					dataset.value = outputs![0];
 
@@ -130,10 +130,11 @@ export function intersect(
 						const mergeDataset = _merge(dataset.value, outputs![index]);
 
 						// If outputs can't be merged, add issue and break loop
-						if (mergeDataset.issue) {
+						if (mergeDataset.issue !== undefined) {
 							_addIssue(this, "type", dataset, config, {
 								received: "unknown",
 							});
+
 							break;
 						}
 

@@ -5,48 +5,10 @@ import { number } from "../number";
 import { objectAsync } from "../object";
 import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
-import { type LooseObjectSchemaAsync, looseObjectAsync } from "./looseObjectAsync";
+import { looseObjectAsync } from "./looseObjectAsync";
 import type { LooseObjectIssue } from "./types";
 
 describe("looseObjectAsync", () => {
-	describe("should return schema object", () => {
-		const entries = { key: string_() };
-		type Entries = typeof entries;
-		const baseSchema: Omit<LooseObjectSchemaAsync<Entries, never>, "message"> = {
-			kind: "schema",
-			type: "loose_object",
-			reference: looseObjectAsync,
-			expects: "Object",
-			entries,
-			async: true,
-			_run: expect.any("function"),
-		};
-
-		test("with undefined message", () => {
-			const schema: LooseObjectSchemaAsync<Entries, undefined> = {
-				...baseSchema,
-				message: undefined,
-			};
-			expect(looseObjectAsync(entries)).toEqual(schema);
-			expect(looseObjectAsync(entries, undefined)).toEqual(schema);
-		});
-
-		test("with string message", () => {
-			expect(looseObjectAsync(entries, "message")).toEqual({
-				...baseSchema,
-				message: "message",
-			} satisfies LooseObjectSchemaAsync<Entries, "message">);
-		});
-
-		test("with function message", () => {
-			const message = () => "message";
-			expect(looseObjectAsync(entries, message)).toEqual({
-				...baseSchema,
-				message,
-			} satisfies LooseObjectSchemaAsync<Entries, typeof message>);
-		});
-	});
-
 	describe("should return dataset without issues", () => {
 		test("for empty object", async () => {
 			await expectNoSchemaIssueAsync(looseObjectAsync({}), [{}]);

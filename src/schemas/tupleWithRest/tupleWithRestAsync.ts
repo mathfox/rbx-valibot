@@ -1,5 +1,5 @@
+import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
-	ArrayPathItem,
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
@@ -15,6 +15,7 @@ import type {
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { TupleWithRestIssue } from "./types";
+import slice from "@rbxts/phantom/src/Array/slice";
 
 /**
  * Tuple with rest schema async type.
@@ -111,120 +112,120 @@ export function tupleWithRestAsync(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (Array.isArray(input)) {
+			if (isArray(input)) {
 				// Set typed to `true` and value to empty array
 				dataset.typed = true;
 				dataset.value = [];
+
+				const items = (
+					this as TupleWithRestSchemaAsync<
+						TupleItemsAsync,
+						BaseSchema<unknown, unknown, BaseIssue<unknown>> | BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+						ErrorMessage<TupleWithRestIssue> | undefined
+					>
+				).items;
 
 				// Parse each normal and rest item
 				const [normalDatasets, restDatasets] = await Promise.all([
 					// Parse schema of each normal item
 					Promise.all(
-						this.items.map(async (item, key) => {
+						items.map(async (item, key) => {
 							const value = input[key];
-							return [key, value, await item._run({ typed: false, value }, config)] as const;
+
+							return [
+								key,
+								value,
+								await (item as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+									{ typed: false, value },
+									config,
+								),
+							];
 						}),
 					),
 
 					// Parse other items with rest schema
 					Promise.all(
-						input.slice(this.items.length).map(async (value, key) => {
-							return [key + this.items.length, value, await this.rest._run({ typed: false, value }, config)] as const;
+						(slice(input, items.size()) as defined[]).map(async (value, key) => {
+							return [
+								key + items.size(),
+								value,
+								await (
+									this as TupleWithRestSchemaAsync<
+										TupleItemsAsync,
+										BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
+										ErrorMessage<TupleWithRestIssue> | undefined
+									>
+								).rest._run({ typed: false, value }, config),
+							] as const;
 						}),
 					),
 				]);
 
 				// Process each tuple item dataset
-				for (const [key, value, itemDataset] of normalDatasets) {
+				for (const [key, value, itemDataset] of normalDatasets as [
+					key: unknown,
+					value: unknown,
+					itemDataset: Dataset<unknown, BaseIssue<unknown>>,
+				][]) {
 					// If there are issues, capture them
-					if (itemDataset.issues) {
-						// Create tuple path item
-						const pathItem: ArrayPathItem = {
-							type: "array",
-							origin: "value",
-							input,
-							key,
-							value,
-						};
-
-						// Add modified item dataset issues to issues
-						for (const issue of itemDataset.issues) {
-							if (issue.path) {
-								issue.path.unshift(pathItem);
-							} else {
-								// @ts-expect-error
-								issue.path = [pathItem];
+					if (itemDataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+						} else {
+							// Add modified item dataset issues to issues
+							for (const issue of itemDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
 							}
-							// @ts-expect-error
-							dataset.issues?.push(issue);
-						}
-						if (!dataset.issues) {
-							// @ts-expect-error
-							dataset.issues = itemDataset.issues;
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!itemDataset.typed) {
+					if (itemDataset.typed === false) {
 						dataset.typed = false;
 					}
 
 					// Add item to dataset
-					// @ts-expect-error
-					dataset.value.push(itemDataset.value);
+					(dataset.value as defined[]).push(itemDataset.value as defined);
 				}
 
 				// Parse rest with schema if necessary
-				if (!dataset.issues || !config.abortEarly) {
-					for (const [key, value, itemDataset] of restDatasets) {
+				if (dataset.issues === undefined || config.abortEarly === false) {
+					for (const [key, value, itemDataset] of restDatasets as [
+						key: unknown,
+						value: unknown,
+						itemDataset: Dataset<unknown, BaseIssue<unknown>>,
+					][]) {
 						// If there are issues, capture them
-						if (itemDataset.issues) {
-							// Create tuple path item
-							const pathItem: ArrayPathItem = {
-								type: "array",
-								origin: "value",
-								input,
-								key,
-								value,
-							};
-
-							// Add modified item dataset issues to issues
-							for (const issue of itemDataset.issues) {
-								if (issue.path) {
-									issue.path.unshift(pathItem);
-								} else {
-									// @ts-expect-error
-									issue.path = [pathItem];
+						if (itemDataset.issues !== undefined) {
+							if (dataset.issues === undefined) {
+								(dataset as { issues: defined[] }).issues = itemDataset.issues;
+							} else {
+								// Add modified item dataset issues to issues
+								for (const issue of itemDataset.issues) {
+									(dataset.issues as defined[]).push(issue);
 								}
-								// @ts-expect-error
-								dataset.issues?.push(issue);
-							}
-							if (!dataset.issues) {
-								// @ts-expect-error
-								dataset.issues = itemDataset.issues;
 							}
 
 							// If necessary, abort early
-							if (config.abortEarly) {
+							if (config.abortEarly === true) {
 								dataset.typed = false;
 								break;
 							}
 						}
 
 						// If not typed, set typed to `false`
-						if (!itemDataset.typed) {
+						if (itemDataset.typed === false) {
 							dataset.typed = false;
 						}
 
 						// Add item to dataset
-						// @ts-expect-error
-						dataset.value.push(itemDataset.value);
+						(dataset.value as defined[]).push(itemDataset.value as defined);
 					}
 				}
 

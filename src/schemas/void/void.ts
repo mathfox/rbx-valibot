@@ -74,6 +74,7 @@ export function void_(message?: ErrorMessage<VoidIssue>): VoidSchema<ErrorMessag
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<void, VoidIssue>;
 		},
 	};

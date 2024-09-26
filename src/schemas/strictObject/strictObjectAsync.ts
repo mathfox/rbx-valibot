@@ -99,7 +99,8 @@ export function strictObjectAsync(
 					promises.push(
 						(async () => {
 							const value = input[key as keyof typeof input];
-							return [key, value, await schema._run({ typed: false, value }, config)] as const;
+
+							return [key, value, await schema._run({ typed: false, value }, config)];
 						})(),
 					);
 				}
@@ -118,23 +119,24 @@ export function strictObjectAsync(
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues) {
-						// Add modified entry dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as defined[] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified entry dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!valueDataset.typed) {
+					if (valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 
@@ -145,7 +147,7 @@ export function strictObjectAsync(
 				}
 
 				// Check input for unknown keys if necessary
-				if (!dataset.issues || !config.abortEarly) {
+				if (dataset.issues === undefined || config.abortEarly === false) {
 					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(
@@ -155,6 +157,7 @@ export function strictObjectAsync(
 							)
 						) {
 							const value: unknown = input[key as keyof typeof input];
+
 							_addIssue(this, "type", dataset, config, {
 								input: value,
 								expected: "never",

@@ -41,7 +41,6 @@ export function lazy<const TWrapped extends BaseSchema<unknown, unknown, BaseIss
 		async: false,
 		getter,
 		_run(dataset, config) {
-			// roblox-ts macro system requires manual cast.
 			return (this as LazySchema<TWrapped>).getter(dataset.value)._run(dataset, config);
 		},
 	};

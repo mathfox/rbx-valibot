@@ -74,6 +74,7 @@ export function promise(message?: ErrorMessage<PromiseIssue>): PromiseSchema<Err
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<Promise<unknown>, PromiseIssue>;
 		},
 	};

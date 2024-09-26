@@ -1,3 +1,4 @@
+import { toArray } from "@rbxts/phantom/src/Set";
 import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type { InferVariantIssue, VariantIssue, VariantOptionSchema, VariantOptions } from "./types";
@@ -87,13 +88,15 @@ export function variant(
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
-			if (input && typeof input === "object") {
+			if (typeIs(input, "table")) {
 				// Create output dataset variable
 				let outputDataset: Dataset<unknown, BaseIssue<unknown>> | undefined;
 
 				// Create variables to store invalid discriminator information
 				let maxDiscriminatorPriority = 0;
-				let invalidDiscriminatorKey = this.key;
+				let invalidDiscriminatorKey = (
+					this as VariantSchema<string, VariantOptions<string>, ErrorMessage<VariantIssue> | undefined>
+				).key;
 				let expectedDiscriminators: string[] = [];
 
 				// Create recursive function to parse nested variant options
@@ -101,7 +104,7 @@ export function variant(
 					for (const schema of variant.options) {
 						// If it is a variant schema, parse its options recursively
 						if (schema.type === "variant") {
-							parseOptions(schema, new Set(allKeys).add(schema.key));
+							parseOptions(schema, new Set<string>(toArray(allKeys)).add(schema.key));
 
 							// Otherwise, check discriminators and parse object schema
 						} else {
@@ -115,8 +118,7 @@ export function variant(
 								// If any discriminator is invalid, mark keys as invalid
 								if (
 									schema.entries[currentKey]._run(
-										// @ts-expect-error
-										{ typed: false, value: input[currentKey] },
+										{ typed: false, value: input[currentKey as keyof typeof input] },
 										config,
 									).issues
 								) {
@@ -168,35 +170,29 @@ export function variant(
 						// If valid option is found, break loop
 						// Hint: The `break` statement is intentionally placed at the end of
 						// the loop to break any outer loops in case of recursive execution.
-						if (outputDataset && !outputDataset.issues) {
+						if (outputDataset && outputDataset.issues === undefined) {
 							break;
 						}
 					}
 				};
 
 				// Parse input with nested variant options recursively
-				parseOptions(this, new Set([this.key]));
+				parseOptions(
+					this as VariantSchema<string, VariantOptions<string>, ErrorMessage<VariantIssue> | undefined>,
+					new Set([
+						(this as VariantSchema<string, VariantOptions<string>, ErrorMessage<VariantIssue> | undefined>).key,
+					]),
+				);
 
 				// If any output dataset is available, return it
-				if (outputDataset) {
+				if (outputDataset !== undefined) {
 					return outputDataset;
 				}
 
 				// Otherwise, add discriminator issue
 				_addIssue(this, "type", dataset, config, {
-					// @ts-expect-error
-					input: input[invalidDiscriminatorKey],
+					input: input[invalidDiscriminatorKey as keyof typeof input],
 					expected: _joinExpects(expectedDiscriminators, "|"),
-					path: [
-						{
-							type: "object",
-							origin: "value",
-							input: input as Record<string, unknown>,
-							key: invalidDiscriminatorKey,
-							// @ts-expect-error
-							value: input[invalidDiscriminatorKey],
-						},
-					],
 				});
 
 				// Otherwise, add variant issue

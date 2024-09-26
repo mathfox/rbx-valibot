@@ -72,6 +72,7 @@ export function nan(message?: ErrorMessage<NanIssue>): NanSchema<ErrorMessage<Na
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<number, NanIssue>;
 		},
 	};

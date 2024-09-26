@@ -102,7 +102,6 @@ export function objectAsync(
 
 				const promises = new Array<Promise<unknown>>();
 
-				// roblox-ts requires manual cast
 				for (const [key, schema] of (
 					this as ObjectSchemaAsync<ObjectEntriesAsync, ErrorMessage<ObjectIssue> | undefined>
 				).entries as unknown as ReadonlyMap<unknown, unknown>) {
@@ -117,7 +116,7 @@ export function objectAsync(
 									{ typed: false, value },
 									config,
 								),
-							] as const;
+							];
 						})(),
 					);
 				}
@@ -136,23 +135,24 @@ export function objectAsync(
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues) {
-						// Add modified entry dataset issues to issues
-						for (const issue of valueDataset.issues) {
-							(dataset.issues as [defined, defined[]] | undefined)?.push(issue);
-						}
-						if (!dataset.issues) {
+						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+						} else {
+							// Add modified entry dataset issues to issues
+							for (const issue of valueDataset.issues) {
+								(dataset.issues as defined[]).push(issue);
+							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly) {
+						if (config.abortEarly === true) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (!valueDataset.typed) {
+					if (valueDataset.typed === false) {
 						dataset.typed = false;
 					}
 

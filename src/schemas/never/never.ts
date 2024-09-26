@@ -70,6 +70,7 @@ export function never(message?: ErrorMessage<NeverIssue>): NeverSchema<ErrorMess
 		message,
 		_run(dataset, config) {
 			_addIssue(this, "type", dataset, config);
+
 			return dataset as Dataset<never, NeverIssue>;
 		},
 	};

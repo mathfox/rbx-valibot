@@ -74,6 +74,7 @@ export function string_(message?: ErrorMessage<StringIssue>): StringSchema<Error
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
+
 			return dataset as Dataset<string, StringIssue>;
 		},
 	};
