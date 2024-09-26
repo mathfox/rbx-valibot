@@ -1,4 +1,4 @@
-import type { BaseIssue, Config, Dataset, ErrorMessage, IssuePathItem } from "../../types";
+import type { BaseIssue, Config, Dataset, ErrorMessage } from "../../types";
 
 /**
  * Raw check issue type.
@@ -23,7 +23,6 @@ interface IssueInfo<TInput> {
 	expected?: string | undefined;
 	received?: string | undefined;
 	message?: ErrorMessage<RawCheckIssue<TInput>> | undefined;
-	path?: [IssuePathItem, ...IssuePathItem[]] | undefined;
 }
 
 /**

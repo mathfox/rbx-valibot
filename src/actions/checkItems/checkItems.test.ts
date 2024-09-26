@@ -49,29 +49,11 @@ describe("checkItems", () => {
 						...baseIssue,
 						input: input[0],
 						received: `${input[0]}`,
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input,
-								key: 0,
-								value: input[0],
-							},
-						],
 					},
 					{
 						...baseIssue,
 						input: input[2],
 						received: `${input[2]}`,
-						path: [
-							{
-								type: "array",
-								origin: "value",
-								input,
-								key: 2,
-								value: input[2],
-							},
-						],
 					},
 				],
 			} satisfies TypedDataset<number[], CheckItemsIssue<number[]>>);

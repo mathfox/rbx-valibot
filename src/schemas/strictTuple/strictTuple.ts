@@ -116,8 +116,7 @@ export function strictTuple(
 					}
 
 					// Add item to dataset
-					// @ts-expect-error
-					dataset.value.push(itemDataset.value);
+					(dataset.value as defined[]).push(itemDataset.value as defined);
 				}
 
 				// Check input for unknown items if necessary

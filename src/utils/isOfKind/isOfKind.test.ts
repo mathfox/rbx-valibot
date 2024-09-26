@@ -14,9 +14,7 @@ describe("isOfKind", () => {
 	test("should check trim action", () => {
 		const action = trim();
 		expect(isOfKind("transformation", action)).toBe(true);
-		// @ts-expect-error
-		expect(isOfKind("schema", action)).toBe(false);
-		// @ts-expect-error
-		expect(isOfKind("validation", action)).toBe(false);
+		expect(isOfKind("schema" as any, action)).toBe(false);
+		expect(isOfKind("validation" as any, action)).toBe(false);
 	});
 });
