@@ -131,7 +131,7 @@ export function variantAsync(
 											{ typed: false, value: input[currentKey as keyof typeof input] },
 											config,
 										)
-									).issues
+									).issues !== undefined
 								) {
 									keysAreValid = false;
 
