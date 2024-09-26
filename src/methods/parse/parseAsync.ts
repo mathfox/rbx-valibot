@@ -20,8 +20,10 @@ export async function parseAsync<
 		{ typed: false, value: input },
 		getGlobalConfig(config),
 	);
-	if (dataset.issues) {
+
+	if (dataset.issues !== undefined) {
 		throw new ValiError(dataset.issues);
 	}
+
 	return dataset.value;
 }

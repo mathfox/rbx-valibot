@@ -54,9 +54,11 @@ export function getDefaults<
 	// If it is an object schema, return defaults of entries
 	if ("entries" in schema) {
 		const object: Record<string, unknown> = {};
+
 		for (const key in schema.entries) {
 			object[key] = getDefaults(schema.entries[key]);
 		}
+
 		return object as InferDefaults<TSchema>;
 	}
 
@@ -66,6 +68,5 @@ export function getDefaults<
 	}
 
 	// Otherwise, return default or `undefined`
-	// @ts-expect-error
-	return getDefault(schema);
+	return getDefault(schema) as InferDefaults<TSchema>;
 }

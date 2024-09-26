@@ -1,24 +1,23 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { boolean, number, object, strictObject, strictTuple, string, tuple } from "../../schemas";
+import { boolean, number, object, strictObject, strictTuple, string_, tuple } from "../../schemas";
 import { fallback } from "../fallback";
 import { getFallbacks } from "./getFallbacks";
 
 describe("getFallbacks", () => {
 	test("should return undefined", () => {
-		expect(getFallbacks(string())).toBeUndefined();
+		expect(getFallbacks(string_())).toBeUndefined();
 		expect(getFallbacks(number())).toBeUndefined();
 		expect(getFallbacks(boolean())).toBeUndefined();
 	});
 
 	test("should return default", () => {
-		expect(getFallbacks(fallback(string(), "foo" as const))).toBe("foo");
+		expect(getFallbacks(fallback(string_(), "foo" as const))).toBe("foo");
 		expect(getFallbacks(fallback(number(), () => 123 as const))).toBe(123);
 		expect(getFallbacks(fallback(boolean(), false as const))).toBe(false);
 	});
 
 	describe("should return object defaults", () => {
 		test("for empty object", () => {
-			// eslint-disable-next-line @typescript-eslint/ban-types
 			expect(getFallbacks(object({}))).toStrictEqual({});
 		});
 
@@ -26,10 +25,10 @@ describe("getFallbacks", () => {
 			expect(
 				getFallbacks(
 					object({
-						key1: fallback(string(), "foo" as const),
+						key1: fallback(string_(), "foo" as const),
 						key2: fallback(number(), () => 123 as const),
 						key3: fallback(boolean(), false as const),
-						key4: string(),
+						key4: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -45,11 +44,11 @@ describe("getFallbacks", () => {
 				getFallbacks(
 					object({
 						nested: strictObject({
-							key1: fallback(string(), "foo" as const),
+							key1: fallback(string_(), "foo" as const),
 							key2: fallback(number(), () => 123 as const),
 							key3: fallback(boolean(), false as const),
 						}),
-						other: string(),
+						other: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -72,10 +71,10 @@ describe("getFallbacks", () => {
 			expect(
 				getFallbacks(
 					tuple([
-						fallback(string(), "foo" as const),
+						fallback(string_(), "foo" as const),
 						fallback(number(), () => 123 as const),
 						fallback(boolean(), false as const),
-						string(),
+						string_(),
 					]),
 				),
 			).toStrictEqual(["foo", 123, false, undefined]);
@@ -86,11 +85,11 @@ describe("getFallbacks", () => {
 				getFallbacks(
 					tuple([
 						strictTuple([
-							fallback(string(), "foo" as const),
+							fallback(string_(), "foo" as const),
 							fallback(number(), () => 123 as const),
 							fallback(boolean(), false as const),
 						]),
-						string(),
+						string_(),
 					]),
 				),
 			).toStrictEqual([["foo", 123, false], undefined]);

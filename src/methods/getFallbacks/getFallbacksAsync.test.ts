@@ -6,7 +6,7 @@ import {
 	objectAsync,
 	strictObjectAsync,
 	strictTupleAsync,
-	string,
+	string_,
 	tuple,
 	tupleAsync,
 } from "../../schemas";
@@ -15,20 +15,19 @@ import { getFallbacksAsync } from "./getFallbacksAsync";
 
 describe("await getFallbacksAsync", () => {
 	test("should return undefined", async () => {
-		expect(await getFallbacksAsync(string())).toBeUndefined();
+		expect(await getFallbacksAsync(string_())).toBeUndefined();
 		expect(await getFallbacksAsync(number())).toBeUndefined();
 		expect(await getFallbacksAsync(boolean())).toBeUndefined();
 	});
 
 	test("should return default", async () => {
-		expect(await getFallbacksAsync(fallback(string(), "foo" as const))).toBe("foo");
+		expect(await getFallbacksAsync(fallback(string_(), "foo" as const))).toBe("foo");
 		expect(await getFallbacksAsync(fallback(number(), () => 123 as const))).toBe(123);
 		expect(await getFallbacksAsync(fallbackAsync(boolean(), async () => false as const))).toBe(false);
 	});
 
 	describe("should return object defaults", () => {
 		test("for empty object", async () => {
-			// eslint-disable-next-line @typescript-eslint/ban-types
 			expect(await getFallbacksAsync(object({}))).toStrictEqual({});
 		});
 
@@ -36,10 +35,10 @@ describe("await getFallbacksAsync", () => {
 			expect(
 				await getFallbacksAsync(
 					objectAsync({
-						key1: fallback(string(), "foo" as const),
+						key1: fallback(string_(), "foo" as const),
 						key2: fallback(number(), () => 123 as const),
 						key3: fallbackAsync(boolean(), false as const),
-						key4: string(),
+						key4: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -55,11 +54,11 @@ describe("await getFallbacksAsync", () => {
 				await getFallbacksAsync(
 					objectAsync({
 						nested: strictObjectAsync({
-							key1: fallback(string(), "foo" as const),
+							key1: fallback(string_(), "foo" as const),
 							key2: fallback(number(), () => 123 as const),
 							key3: fallbackAsync(boolean(), false as const),
 						}),
-						other: string(),
+						other: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -82,10 +81,10 @@ describe("await getFallbacksAsync", () => {
 			expect(
 				await getFallbacksAsync(
 					tupleAsync([
-						fallback(string(), "foo" as const),
+						fallback(string_(), "foo" as const),
 						fallback(number(), () => 123 as const),
 						fallbackAsync(boolean(), false as const),
-						string(),
+						string_(),
 					]),
 				),
 			).toStrictEqual(["foo", 123, false, undefined]);
@@ -96,11 +95,11 @@ describe("await getFallbacksAsync", () => {
 				await getFallbacksAsync(
 					tupleAsync([
 						strictTupleAsync([
-							fallback(string(), "foo" as const),
+							fallback(string_(), "foo" as const),
 							fallback(number(), () => 123 as const),
 							fallbackAsync(boolean(), false as const),
 						]),
-						string(),
+						string_(),
 					]),
 				),
 			).toStrictEqual([["foo", 123, false], undefined]);

@@ -54,9 +54,11 @@ export function getFallbacks<
 	// If it is an object schema, return fallbacks of entries
 	if ("entries" in schema) {
 		const object: Record<string, unknown> = {};
+
 		for (const key in schema.entries) {
 			object[key] = getFallbacks(schema.entries[key]);
 		}
+
 		return object as InferFallbacks<TSchema>;
 	}
 
@@ -66,6 +68,5 @@ export function getFallbacks<
 	}
 
 	// Otherwise, return fallback or `undefined`
-	// @ts-expect-error
-	return getFallback(schema);
+	return getFallback(schema) as InferFallbacks<TSchema>;
 }

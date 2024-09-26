@@ -41,6 +41,7 @@ export function fallback<
 		fallback,
 		_run(dataset, config) {
 			const outputDataset = schema._run(dataset, config);
+
 			return outputDataset.issues ? { typed: true, value: getFallback(this, outputDataset, config) } : outputDataset;
 		},
 	};

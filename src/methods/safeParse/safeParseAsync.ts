@@ -16,9 +16,11 @@ export async function safeParseAsync<
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
 >(schema: TSchema, input: unknown, config?: Config<InferIssue<TSchema>>): Promise<SafeParseResult<TSchema>> {
-	const dataset = schema.async
-		? await schema._run({ typed: false, value: input }, getGlobalConfig(config))
-		: schema._run({ typed: false, value: input }, getGlobalConfig(config));
+	const dataset = await (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+		{ typed: false, value: input },
+		getGlobalConfig(config),
+	);
+
 	return {
 		typed: dataset.typed,
 		success: !dataset.issues,

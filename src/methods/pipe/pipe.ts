@@ -1088,13 +1088,13 @@ export function pipe<
 				if (item.kind !== "metadata") {
 					// Mark dataset as untyped and break pipe if there are issues and pipe
 					// item is schema or transformation
-					if (dataset.issues && (item.kind === "schema" || item.kind === "transformation")) {
+					if (dataset.issues !== undefined && (item.kind === "schema" || item.kind === "transformation")) {
 						dataset.typed = false;
 						break;
 					}
 
 					// Continue pipe execution if there is no reason to abort early
-					if (!dataset.issues || (!config.abortEarly && !config.abortPipeEarly)) {
+					if (dataset.issues === undefined || (!config.abortEarly && !config.abortPipeEarly)) {
 						dataset = (item as BaseSchema<unknown, unknown, BaseIssue<unknown>>)._run(dataset, config) as never;
 					}
 				}

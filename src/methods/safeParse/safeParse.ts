@@ -17,6 +17,7 @@ export function safeParse<const TSchema extends BaseSchema<unknown, unknown, Bas
 	config?: Config<InferIssue<TSchema>>,
 ): SafeParseResult<TSchema> {
 	const dataset = schema._run({ typed: false, value: input }, getGlobalConfig(config));
+
 	return {
 		typed: dataset.typed,
 		success: !dataset.issues,

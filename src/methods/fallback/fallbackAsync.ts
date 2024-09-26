@@ -77,10 +77,10 @@ export function fallbackAsync<
 		fallback,
 		async: true,
 		async _run(dataset, config) {
-			// roblox-ts: we are casting to async because TS.await will return a value if it's not a promise
 			const outputDataset = await (
 				schema as SchemaWithFallbackAsync<BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>, TFallback>
 			)._run(dataset, config);
+
 			return outputDataset.issues
 				? { typed: true, value: await getFallback(this as unknown as TSchema, outputDataset, config) }
 				: outputDataset;

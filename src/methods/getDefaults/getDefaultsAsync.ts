@@ -1,3 +1,4 @@
+import { entries } from "@rbxts/phantom/src/Shared";
 import type {
 	LooseObjectIssue,
 	LooseObjectSchema,
@@ -87,11 +88,15 @@ export async function getDefaultsAsync<
 >(schema: TSchema): Promise<InferDefaults<TSchema>> {
 	// If it is an object schema, return defaults of entries
 	if ("entries" in schema) {
-		return Object.fromEntries(
-			await Promise.all(
-				Object.entries(schema.entries).map(async ([key, value]) => [key, await getDefaultsAsync(value)]),
-			),
-		) as InferDefaults<TSchema>;
+		const object: Record<string, unknown> = {};
+
+		for (const [key, value] of (await Promise.all(
+			entries(schema.entries).map(async ([key, value]) => [key, await getDefaultsAsync(value)]),
+		)) as unknown as Map<string, unknown>) {
+			object[key] = value;
+		}
+
+		return object as InferDefaults<TSchema>;
 	}
 
 	// If it is a tuple schema, return defaults of items
@@ -100,6 +105,5 @@ export async function getDefaultsAsync<
 	}
 
 	// Otherwise, return default or `undefined`
-	// @ts-expect-error
-	return getDefault(schema);
+	return getDefault(schema) as Promise<InferDefaults<TSchema>>;
 }

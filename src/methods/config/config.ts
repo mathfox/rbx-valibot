@@ -17,7 +17,6 @@ export function config<
 		...schema,
 		_run(dataset, config_) {
 			// Here we just assume it's non-async schema, in which case Promise will be returned.
-			// This is due to roblox-ts macro system.
 			return (schema as BaseSchema<unknown, unknown, BaseIssue<unknown>>)._run(dataset, { ...config_, ...config });
 		},
 	};

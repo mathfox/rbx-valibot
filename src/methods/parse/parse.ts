@@ -17,8 +17,10 @@ export function parse<const TSchema extends BaseSchema<unknown, unknown, BaseIss
 	config?: Config<InferIssue<TSchema>>,
 ): InferOutput<TSchema> {
 	const dataset = schema._run({ typed: false, value: input }, getGlobalConfig(config));
-	if (dataset.issues) {
+
+	if (dataset.issues !== undefined) {
 		throw new ValiError(dataset.issues);
 	}
+
 	return dataset.value;
 }

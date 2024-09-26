@@ -1,29 +1,18 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import {
-	boolean,
-	nullable,
-	nullish,
-	number,
-	object,
-	optional,
-	strictObject,
-	strictTuple,
-	string,
-	tuple,
-} from "../../schemas";
+import { boolean, number, object, optional, strictObject, strictTuple, string_, tuple } from "../../schemas";
 import { getDefaults } from "./getDefaults";
 
 describe("getDefaults", () => {
 	test("should return undefined", () => {
-		expect(getDefaults(string())).toBeUndefined();
+		expect(getDefaults(string_())).toBeUndefined();
 		expect(getDefaults(number())).toBeUndefined();
 		expect(getDefaults(boolean())).toBeUndefined();
 	});
 
 	test("should return default", () => {
-		expect(getDefaults(optional(string(), "foo"))).toBe("foo");
-		expect(getDefaults(nullish(number(), () => 123 as const))).toBe(123);
-		expect(getDefaults(nullable(boolean(), false))).toBe(false);
+		expect(getDefaults(optional(string_(), "foo"))).toBe("foo");
+		expect(getDefaults(optional(number(), () => 123 as const))).toBe(123);
+		expect(getDefaults(optional(boolean(), false))).toBe(false);
 	});
 
 	describe("should return object defaults", () => {
@@ -35,10 +24,10 @@ describe("getDefaults", () => {
 			expect(
 				getDefaults(
 					object({
-						key1: optional(string(), "foo"),
-						key2: nullish(number(), () => 123 as const),
-						key3: nullable(boolean(), false),
-						key4: string(),
+						key1: optional(string_(), "foo"),
+						key2: optional(number(), () => 123 as const),
+						key3: optional(boolean(), false),
+						key4: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -54,11 +43,11 @@ describe("getDefaults", () => {
 				getDefaults(
 					object({
 						nested: strictObject({
-							key1: optional(string(), "foo"),
-							key2: nullish(number(), () => 123 as const),
-							key3: nullable(boolean(), false),
+							key1: optional(string_(), "foo"),
+							key2: optional(number(), () => 123 as const),
+							key3: optional(boolean(), false),
 						}),
-						other: string(),
+						other: string_(),
 					}),
 				),
 			).toStrictEqual({
@@ -81,10 +70,10 @@ describe("getDefaults", () => {
 			expect(
 				getDefaults(
 					tuple([
-						optional(string(), "foo"),
-						nullish(number(), () => 123 as const),
-						nullable(boolean(), false),
-						string(),
+						optional(string_(), "foo"),
+						optional(number(), () => 123 as const),
+						optional(boolean(), false),
+						string_(),
 					]),
 				),
 			).toStrictEqual(["foo", 123, false, undefined]);
@@ -94,8 +83,12 @@ describe("getDefaults", () => {
 			expect(
 				getDefaults(
 					tuple([
-						strictTuple([optional(string(), "foo"), nullish(number(), () => 123 as const), nullable(boolean(), false)]),
-						string(),
+						strictTuple([
+							optional(string_(), "foo"),
+							optional(number(), () => 123 as const),
+							optional(boolean(), false),
+						]),
+						string_(),
 					]),
 				),
 			).toStrictEqual([["foo", 123, false], undefined]);
