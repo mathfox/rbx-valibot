@@ -102,7 +102,7 @@ export function size(
 					(this as SizeAction<SizeInput, number, ErrorMessage<SizeIssue<SizeInput, number>> | undefined>).requirement
 			) {
 				_addIssue(this, "size", dataset, config, {
-					received: `${dataset.value.size}`,
+					received: `${(dataset.value as ReadonlySet<unknown>).size()}`,
 				});
 			}
 

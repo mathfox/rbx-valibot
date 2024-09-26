@@ -55,7 +55,7 @@ export function getFallbacks<
 	if ("entries" in schema) {
 		const object: Record<string, unknown> = {};
 
-		for (const key in schema.entries) {
+		for (const [key] of schema.entries as unknown as Map<string, unknown>) {
 			object[key] = getFallbacks(schema.entries[key]);
 		}
 

@@ -45,4 +45,3 @@ export * from "./trimEnd";
 export * from "./trimStart";
 export * from "./types";
 export * from "./uuid";
-export * from "./value";

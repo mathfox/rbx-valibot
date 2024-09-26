@@ -78,7 +78,7 @@ describe("size", () => {
 						[4, undefined],
 					]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
 		});
 
@@ -93,7 +93,7 @@ describe("size", () => {
 					new Set(["1234"]),
 					new Set([[1, 2, 3, 4], [5, 6], [7], [8, 9]]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
 		});
 	});

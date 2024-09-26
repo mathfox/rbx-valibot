@@ -103,7 +103,7 @@ export function notSize(
 						.requirement
 			) {
 				_addIssue(this, "size", dataset, config, {
-					received: `${dataset.value.size}`,
+					received: `${(dataset.value as ReadonlyMap<unknown, unknown>).size()}`,
 				});
 			}
 

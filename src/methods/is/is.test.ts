@@ -21,6 +21,6 @@ describe("is", () => {
 	test("should return false for invalid input", () => {
 		expect(is(string_(), 123)).toBe(false);
 		expect(is(number(), "foo")).toBe(false);
-		expect(is(object(entries), null)).toBe(false);
+		expect(is(object(entries), undefined)).toBe(false);
 	});
 });

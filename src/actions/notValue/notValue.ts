@@ -1,6 +1,8 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
-import type { ValueInput } from "../types";
+//import type { ValueInput } from "../types";
+
+type ValueInput = number | string | boolean;
 
 /**
  * Not value issue type.
@@ -92,22 +94,16 @@ export function notValue(
 		requirement,
 		message,
 		_run(dataset, config) {
+			const requirement = (
+				this as NotValueAction<ValueInput, ValueInput, ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined>
+			).requirement;
+
 			if (
-				dataset.typed &&
-				(
-					this as NotValueAction<
-						ValueInput,
-						ValueInput,
-						ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined
-					>
-				).requirement <= dataset.value &&
-				(
-					this as NotValueAction<
-						ValueInput,
-						ValueInput,
-						ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined
-					>
-				).requirement >= dataset.value
+				dataset.typed && typeIs(dataset.value, "boolean")
+					? dataset.value === (requirement as boolean)
+					: typeIs(dataset.value, "string")
+						? dataset.value === (requirement as string)
+						: (dataset.value as number) === (requirement as number)
 			) {
 				_addIssue(this, "value", dataset, config, {
 					received: _stringify(dataset.value),

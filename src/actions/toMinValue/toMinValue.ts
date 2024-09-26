@@ -1,5 +1,6 @@
 import type { BaseTransformation } from "../../types";
-import type { ValueInput } from "../types";
+
+type ValueInput = number;
 
 /**
  * To min value action type.

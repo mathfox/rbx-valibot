@@ -14,10 +14,10 @@ describe("ValiError", () => {
 			requirement: 10,
 		};
 
-		const error = new ValiError([minLengthIssue]);
-		expect(error).toBeInstanceOf(ValiError);
-		expect(error.name).toBe("ValiError");
-		expect(error.message).toBe(minLengthIssue.message);
-		expect(error.issues).toEqual([minLengthIssue]);
+		const err = new ValiError([minLengthIssue]);
+		expect(err).toBeInstanceOf(ValiError);
+		expect(err.name).toBe("ValiError");
+		expect(err.message).toBe(minLengthIssue.message);
+		expect(err.issues).toEqual([minLengthIssue]);
 	});
 });

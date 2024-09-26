@@ -16,7 +16,7 @@ describe("maxSize", () => {
 		test("for valid maps", () => {
 			expectNoActionIssue(action, [
 				new Map(),
-				new Map([[1, null]]),
+				new Map([[1, undefined]]),
 				new Map<string | number, string>([
 					[1, "one"],
 					["2", "two"],
@@ -65,7 +65,7 @@ describe("maxSize", () => {
 						["seven", []],
 					]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});
 
@@ -73,8 +73,8 @@ describe("maxSize", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[new Set([1, 2, 3, 4]), new Set([1, null, "3", true, undefined, [], {}])],
-				(value) => `${value.size}`,
+				[new Set([1, 2, 3, 4]), new Set([1, "3", true, undefined, [], {}])],
+				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});
 	});

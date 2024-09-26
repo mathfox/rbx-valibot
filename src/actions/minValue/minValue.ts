@@ -1,6 +1,7 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
-import type { ValueInput } from "../types";
+
+type ValueInput = number;
 
 /**
  * Min value issue type.

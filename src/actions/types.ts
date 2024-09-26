@@ -35,8 +35,3 @@ export type LengthInput = string | ArrayLike<any>;
  * Size input type.
  */
 export type SizeInput = Map<unknown, unknown> | Set<unknown>;
-
-/**
- * Value input type.
- */
-export type ValueInput = string | number | boolean;

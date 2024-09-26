@@ -1,6 +1,7 @@
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
-import type { ValueInput } from "../types";
+
+type ValueInput = number;
 
 /**
  * Max value issue type.
@@ -92,17 +93,11 @@ export function maxValue(
 		requirement,
 		message,
 		_run(dataset, config) {
-			if (
-				dataset.typed &&
-				dataset.value >
-					(
-						this as MaxValueAction<
-							ValueInput,
-							ValueInput,
-							ErrorMessage<MaxValueIssue<ValueInput, ValueInput>> | undefined
-						>
-					).requirement
-			) {
+			const requirement = (
+				this as MaxValueAction<ValueInput, ValueInput, ErrorMessage<MaxValueIssue<ValueInput, ValueInput>> | undefined>
+			).requirement;
+
+			if (dataset.typed && dataset.value > requirement) {
 				_addIssue(this, "value", dataset, config, {
 					received: _stringify(dataset.value),
 				});

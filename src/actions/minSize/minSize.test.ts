@@ -67,7 +67,7 @@ describe("minSize", () => {
 						["two", 2],
 					]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});
 
@@ -76,7 +76,7 @@ describe("minSize", () => {
 				action,
 				baseIssue,
 				[new Set(), new Set([1]), new Set(["one", undefined])],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});
 	});

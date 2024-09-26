@@ -77,7 +77,7 @@ describe("notSize", () => {
 						[true, undefined],
 					]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
 		});
 
@@ -93,7 +93,7 @@ describe("notSize", () => {
 					new Set([1, "two", undefined]),
 					new Set(["1", { value: "5" }, undefined]),
 				],
-				(value) => `${value.size}`,
+				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
 		});
 	});

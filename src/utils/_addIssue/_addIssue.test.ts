@@ -39,10 +39,10 @@ describe("_addIssue", () => {
 		test("with expected and received", () => {
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {});
-			expect(dataset.issues?.[0].message).toBe("Invalid type: Expected string but received null");
+			expect(dataset.issues?.[0].message).toBe("Invalid type: Expected string but received nil");
 		});
 	});
 
@@ -65,7 +65,7 @@ describe("_addIssue", () => {
 			setGlobalMessage(globalMessage);
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(contextMessage), "type", dataset, {
 				message: () => configMessage,
@@ -79,7 +79,7 @@ describe("_addIssue", () => {
 			setGlobalMessage(globalMessage);
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
@@ -92,7 +92,7 @@ describe("_addIssue", () => {
 			setGlobalMessage(globalMessage);
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
@@ -104,7 +104,7 @@ describe("_addIssue", () => {
 			setGlobalMessage(globalMessage);
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
@@ -116,7 +116,7 @@ describe("_addIssue", () => {
 			setGlobalMessage(globalMessage);
 			const dataset: UntypedDataset<StringIssue> = {
 				typed: false,
-				value: null,
+				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {});
 			expect(dataset.issues?.[0].message).toBe(globalMessage);
@@ -126,7 +126,7 @@ describe("_addIssue", () => {
 	test("should include configuration", () => {
 		const dataset: UntypedDataset<StringIssue> = {
 			typed: false,
-			value: null,
+			value: undefined,
 		};
 		const config = {
 			lang: "en",
@@ -140,7 +140,7 @@ describe("_addIssue", () => {
 	test("should include other information", () => {
 		const dataset: UntypedDataset<StringIssue> = {
 			typed: false,
-			value: null,
+			value: undefined,
 		};
 		const other = {
 			received: '"foo"',
