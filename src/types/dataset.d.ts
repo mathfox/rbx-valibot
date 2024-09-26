@@ -14,6 +14,7 @@ export interface TypedDataset<TValue, TIssue extends BaseIssue<unknown>> {
 	value: TValue;
 	/**
 	 * The dataset issues.
+	 * At least one issue is required for the issues array to be considered valid.
 	 */
 	issues?: [TIssue, ...TIssue[]];
 }
@@ -32,6 +33,7 @@ export interface UntypedDataset<TIssue extends BaseIssue<unknown>> {
 	value: unknown;
 	/**
 	 * The dataset issues.
+	 * At least one issue is required for the issues array to be considered valid.
 	 */
 	issues?: [TIssue, ...TIssue[]];
 }
