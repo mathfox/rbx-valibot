@@ -131,7 +131,8 @@ export function objectWithRestAsync(
 					normalDatasetsPromises.push(
 						(async () => {
 							const value = input[key as keyof typeof input];
-							return [key, value, await schema._run({ typed: false, value }, config)] as const;
+
+							return [key, value, await schema._run({ typed: false, value }, config)];
 						})(),
 					);
 				}
@@ -214,7 +215,7 @@ export function objectWithRestAsync(
 				}
 
 				// Parse schema of each rest entry if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					// Process each normal dataset
 					for (const [key, value, valueDataset] of restDatasets as [
 						key: string,

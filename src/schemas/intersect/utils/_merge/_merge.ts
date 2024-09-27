@@ -32,7 +32,7 @@ export function _merge(value1: unknown, value2: unknown): MergeDataset {
 					const dataset = _merge(value1[index], value2[index]);
 
 					// If dataset has issue, return it
-					if (dataset.issue) {
+					if (dataset.issue !== undefined) {
 						return dataset;
 					}
 
@@ -54,7 +54,7 @@ export function _merge(value1: unknown, value2: unknown): MergeDataset {
 				const dataset = _merge((value1 as Record<string, unknown>)[key], (value2 as Record<string, unknown>)[key]);
 
 				// If dataset has issue, return it
-				if (dataset.issue) {
+				if (dataset.issue !== undefined) {
 					return dataset;
 				}
 

@@ -36,6 +36,7 @@ export function any(): AnySchema {
 		async: false,
 		_run(dataset) {
 			dataset.typed = true;
+
 			return dataset;
 		},
 	};

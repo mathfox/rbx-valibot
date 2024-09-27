@@ -118,7 +118,7 @@ export function strictObjectAsync(
 					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (valueDataset.issues) {
+					if (valueDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
@@ -147,7 +147,7 @@ export function strictObjectAsync(
 				}
 
 				// Check input for unknown keys if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(

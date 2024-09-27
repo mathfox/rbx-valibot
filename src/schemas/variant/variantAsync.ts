@@ -200,7 +200,7 @@ export function variantAsync(
 				);
 
 				// If any output dataset is available, return it
-				if (outputDataset) {
+				if (outputDataset !== undefined) {
 					return outputDataset;
 				}
 

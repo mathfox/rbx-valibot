@@ -134,7 +134,7 @@ export function objectAsync(
 					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (valueDataset.issues) {
+					if (valueDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = valueDataset.issues;
 						} else {

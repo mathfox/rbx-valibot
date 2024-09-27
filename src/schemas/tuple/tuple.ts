@@ -101,7 +101,7 @@ export function tuple(
 					const itemDataset = items[key]._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (itemDataset.issues) {
+					if (itemDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
 							(dataset as { issues: defined[] }).issues = itemDataset.issues;
 						} else {

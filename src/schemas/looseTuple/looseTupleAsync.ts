@@ -143,7 +143,7 @@ export function looseTupleAsync(
 				}
 
 				// Add rest to dataset if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (let key = items.size(); key < input.size(); key++) {
 						(dataset.value as defined[]).push(input[key] as defined);
 					}

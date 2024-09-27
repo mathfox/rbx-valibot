@@ -102,12 +102,12 @@ export function intersectAsync(
 				for (const optionDataset of optionDatasets as Dataset<unknown, BaseIssue<unknown>>[]) {
 					// If there are issues, capture them
 					if (optionDataset.issues !== undefined) {
-						if (dataset.issues !== undefined) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = optionDataset.issues;
+						} else {
 							for (const issue of optionDataset.issues) {
 								(dataset.issues as defined[]).push(issue);
 							}
-						} else {
-							(dataset as { issues: defined[] }).issues = optionDataset.issues;
 						}
 
 						// If necessary, abort early
@@ -142,7 +142,7 @@ export function intersectAsync(
 						const mergeDataset = _merge(dataset.value, outputs![index]);
 
 						// If outputs can't be merged, add issue and break loop
-						if (mergeDataset.issue) {
+						if (mergeDataset.issue !== undefined) {
 							_addIssue(this, "type", dataset, config, {
 								received: "unknown",
 							});

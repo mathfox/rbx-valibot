@@ -160,7 +160,7 @@ export function objectWithRest(
 
 				// Parse schema of each rest entry if necessary
 				// Hint: We exclude specific keys for security reasons
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(

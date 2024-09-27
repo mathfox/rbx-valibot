@@ -195,7 +195,7 @@ export function tupleWithRestAsync(
 				}
 
 				// Parse rest with schema if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (const [key, value, itemDataset] of restDatasets as [
 						key: unknown,
 						value: unknown,

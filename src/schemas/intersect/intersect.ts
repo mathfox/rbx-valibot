@@ -90,12 +90,12 @@ export function intersect(
 
 					// If there are issues, capture them
 					if (optionDataset.issues !== undefined) {
-						if (dataset.issues) {
+						if (dataset.issues === undefined) {
+							(dataset as { issues: defined[] }).issues = optionDataset.issues;
+						} else {
 							for (const issue of optionDataset.issues) {
 								(dataset.issues as defined[]).push(issue);
 							}
-						} else {
-							(dataset as { issues: defined[] }).issues = optionDataset.issues;
 						}
 
 						// If necessary, abort early

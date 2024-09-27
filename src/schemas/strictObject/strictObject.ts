@@ -131,7 +131,7 @@ export function strictObject(
 				}
 
 				// Check input for unknown keys if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(key in (this as StrictObjectSchema<ObjectEntries, ErrorMessage<StrictObjectIssue> | undefined>).entries)
