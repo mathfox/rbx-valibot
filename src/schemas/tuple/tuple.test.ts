@@ -3,7 +3,6 @@ import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { boolean } from "../boolean/boolean";
 import { number } from "../number";
-import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { tuple } from "./tuple";
 import type { TupleIssue } from "./types";
@@ -14,17 +13,14 @@ describe("tuple", () => {
 			expectNoSchemaIssue(tuple([]), [[]]);
 		});
 
-		const schema = tuple([optional(string_()), number()]);
+		const schema = tuple([string_(), number()]);
 
 		test("for simple tuple", () => {
-			expectNoSchemaIssue(schema, [
-				["foo", 123],
-				[undefined, 123],
-			]);
+			expectNoSchemaIssue(schema, [["foo", 123]]);
 		});
 
 		test("for unknown items", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, true] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -32,7 +28,7 @@ describe("tuple", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = tuple([optional(string_()), number()], "message");
+		const schema = tuple([string_(), number()], "message");
 		const baseIssue: Omit<TupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "tuple",
@@ -65,31 +61,28 @@ describe("tuple", () => {
 		});
 
 		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
+			expectSchemaIssue(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = tuple([optional(string_()), number()]);
+		const schema = tuple([string_(), number()]);
 
 		test("for simple tuple", () => {
-			expectNoSchemaIssue(schema, [
-				["foo", 123],
-				[undefined, 123],
-			]);
+			expectNoSchemaIssue(schema, [["foo", 123]]);
 		});
 
 		test("for nested tuple", () => {
 			expectNoSchemaIssue(tuple([schema, schema]), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});
 
 		test("for unknown items", () => {
-			expect(schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
+			expect(schema._run({ typed: false, value: ["foo", 123, true] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});

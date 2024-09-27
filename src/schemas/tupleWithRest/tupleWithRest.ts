@@ -150,7 +150,7 @@ export function tupleWithRest(
 				}
 
 				// Parse rest with schema if necessary
-				if (dataset.issues === undefined || config.abortEarly === false) {
+				if (dataset.issues === undefined || !config.abortEarly) {
 					for (let key = items.size(); key < input.size(); key++) {
 						const value = input[key];
 						const itemDataset = (

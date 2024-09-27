@@ -3,7 +3,6 @@ import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
-import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { tupleWithRest } from "./tupleWithRest";
 import type { TupleWithRestIssue } from "./types";
@@ -15,25 +14,19 @@ describe("tupleWithRest", () => {
 			expectNoSchemaIssue(tupleWithRest([], undefined_()), [[]]);
 		});
 
-		const schema = tupleWithRest([optional(string_()), number()], undefined_());
+		const schema = tupleWithRest([string_(), number()], number());
 
 		test("for simple tuple", () => {
-			expectNoSchemaIssue(schema, [
-				["foo", 123],
-				[undefined, 123],
-			]);
+			expectNoSchemaIssue(schema, [["foo", 123]]);
 		});
 
 		test("for rest items", () => {
-			expectNoSchemaIssue(schema, [
-				[undefined, 123, undefined],
-				["foo", 123, undefined, undefined, undefined],
-			]);
+			expectNoSchemaIssue(schema, [["foo", 123, 3, 3, 3]]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = tupleWithRest([optional(string_()), number()], undefined_(), "message");
+		const schema = tupleWithRest([string_(), number()], number(), "message");
 		const baseIssue: Omit<TupleWithRestIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "tuple_with_rest",
@@ -66,32 +59,29 @@ describe("tupleWithRest", () => {
 		});
 
 		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
+			expectSchemaIssue(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = tupleWithRest([optional(string_()), number()], undefined_());
+		const schema = tupleWithRest([string_(), number()], undefined_());
 
 		test("for simple tuple", () => {
-			expectNoSchemaIssue(schema, [
-				["foo", 123],
-				[undefined, 123],
-			]);
+			expectNoSchemaIssue(schema, [["foo", 123]]);
 		});
 
 		test("for nested tuple", () => {
 			expectNoSchemaIssue(tupleWithRest([schema, schema], undefined_()), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});
 
 		test("for rest items", () => {
 			expectNoSchemaIssue(schema, [
-				[undefined, 123],
+				["test", 123],
 				["foo", 123],
 			]);
 		});
@@ -154,8 +144,9 @@ describe("tupleWithRest", () => {
 		});
 
 		test("for wrong nested items", () => {
-			const nestedSchema = tupleWithRest([schema, schema], undefined_());
+			const nestedSchema = tupleWithRest([schema, schema], number());
 			const input: [[string, string, boolean], number, number] = [["foo", "123", false], 3, 3];
+
 			expect(nestedSchema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,

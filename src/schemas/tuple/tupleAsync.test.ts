@@ -3,7 +3,6 @@ import type { InferIssue, UntypedDataset } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean/boolean";
 import { number } from "../number";
-import { optionalAsync } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { tupleAsync } from "./tupleAsync";
 import type { TupleIssue } from "./types";
@@ -14,17 +13,17 @@ describe("tupleAsync", () => {
 			await await expectNoSchemaIssueAsync(tupleAsync([]), [[]]);
 		});
 
-		const schema = tupleAsync([optionalAsync(string_()), number()]);
+		const schema = tupleAsync([string_(), number()]);
 
 		test("for simple tuple", async () => {
 			await await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
 		test("for unknown items", async () => {
-			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
+			expect(await schema._run({ typed: false, value: ["foo", 123, true] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
@@ -32,7 +31,7 @@ describe("tupleAsync", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = tupleAsync([optionalAsync(string_()), number()], "message");
+		const schema = tupleAsync([string_(), number()], "message");
 		const baseIssue: Omit<TupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "tuple",
@@ -65,17 +64,17 @@ describe("tupleAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = tupleAsync([optionalAsync(string_()), number()]);
+		const schema = tupleAsync([string_(), number()]);
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -83,13 +82,13 @@ describe("tupleAsync", () => {
 			await expectNoSchemaIssueAsync(tupleAsync([schema, schema]), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});
 
 		test("for unknown items", async () => {
-			expect(await schema._run({ typed: false, value: ["foo", 123, true, undefined] }, {})).toEqual({
+			expect(await schema._run({ typed: false, value: ["foo", 123, true] }, {})).toEqual({
 				typed: true,
 				value: ["foo", 123],
 			});
