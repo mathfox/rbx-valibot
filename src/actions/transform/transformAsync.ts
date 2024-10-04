@@ -1,4 +1,4 @@
-import type { BaseTransformationAsync, TypedDataset } from "../../types";
+import type { BaseTransformationAsync, OutputDataset } from "../../types";
 
 /**
  * Transform action async type.
@@ -39,7 +39,7 @@ export function transformAsync<TInput, TOutput>(
 				dataset.value,
 			)) as unknown as TInput;
 
-			return dataset as unknown as TypedDataset<TOutput, never>;
+			return dataset as unknown as OutputDataset<TOutput, never>;
 		},
 	};
 }

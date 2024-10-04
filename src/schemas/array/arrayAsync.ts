@@ -3,14 +3,15 @@ import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
 	InferOutput,
+	OutputDataset,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ArrayIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Array schema type.
@@ -86,7 +87,7 @@ export function arrayAsync(
 		async: true,
 		item,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -117,7 +118,7 @@ export function arrayAsync(
 				// Process each item dataset
 				for (let key = 0; key < itemDatasets.size(); key++) {
 					// Get item dataset
-					const itemDataset = itemDatasets[key] as Dataset<unknown, BaseIssue<unknown>>;
+					const itemDataset = itemDatasets[key] as OutputDataset<unknown, BaseIssue<unknown>>;
 
 					// If there are issues, capture them
 					if (itemDataset.issues !== undefined) {
@@ -152,7 +153,7 @@ export function arrayAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<unknown[], ArrayIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<unknown[], ArrayIssue | BaseIssue<unknown>>;
 		},
 	};
 }

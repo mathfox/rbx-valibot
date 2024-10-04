@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, nonOptional, number, object, objectWithRest, optional, string_ } from "../../schemas";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { required } from "./required";
 
@@ -106,7 +106,7 @@ describe("required", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
+				} satisfies FailureDataset<InferIssue<typeof schema1>>);
 
 				const input = { key2: 123 };
 				expect(schema2._run({ typed: false, value: input }, {})).toEqual({
@@ -130,7 +130,7 @@ describe("required", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+				} satisfies FailureDataset<InferIssue<typeof schema2>>);
 			});
 		});
 	});
@@ -230,7 +230,7 @@ describe("required", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
+				} satisfies FailureDataset<InferIssue<typeof schema1>>);
 
 				const input = { key1: "foo", other: true };
 				expect(schema2._run({ typed: false, value: input }, {})).toEqual({
@@ -254,7 +254,7 @@ describe("required", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+				} satisfies FailureDataset<InferIssue<typeof schema2>>);
 			});
 		});
 	});

@@ -1,18 +1,20 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
 	Config,
-	Dataset,
 	FirstTupleItem,
 	InferInput,
 	InferIssue,
 	InferOutput,
 	LastTupleItem,
+	OutputDataset,
 	PipeAction,
 	PipeActionAsync,
 	PipeItem,
 	PipeItemAsync,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -44,19 +46,21 @@ export type SchemaWithPipeAsync<
 	 */
 	readonly _run: (
 		this: unknown,
-		dataset: Dataset<unknown, never>,
+		dataset: UnknownDataset,
 		config: Config<BaseIssue<unknown>>,
-	) => Promise<Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>>;
+	) => Promise<OutputDataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>>;
 	/**
 	 * Input, output and issue type.
 	 *
 	 * @internal
 	 */
-	readonly _types?: {
-		readonly input: InferInput<FirstTupleItem<TPipe>>;
-		readonly output: InferOutput<LastTupleItem<TPipe>>;
-		readonly issue: InferIssue<TPipe[number]>;
-	};
+	readonly _types?:
+		| {
+				readonly input: InferInput<FirstTupleItem<TPipe>>;
+				readonly output: InferOutput<LastTupleItem<TPipe>>;
+				readonly issue: InferIssue<TPipe[number]>;
+		  }
+		| undefined;
 };
 
 /**
@@ -2006,7 +2010,7 @@ export function pipeAsync<
 		...pipe[0],
 		pipe,
 		async: true,
-		async _run(dataset, config) {
+		async _run(dataset: UnknownDataset, config = getGlobalConfig()) {
 			// Execute pipeline items in sequence
 			for (const item of pipe) {
 				// Exclude metadata items from execution
@@ -2014,16 +2018,13 @@ export function pipeAsync<
 					// Mark dataset as untyped and break pipe if there are issues and pipe
 					// item is schema or transformation
 					if (dataset.issues !== undefined && (item.kind === "schema" || item.kind === "transformation")) {
-						dataset.typed = false;
+						(dataset as unknown as { typed: boolean }).typed = false;
 						break;
 					}
 
 					// Continue pipe execution if there is no reason to abort early
 					if (dataset.issues === undefined || (!config.abortEarly && !config.abortPipeEarly)) {
-						dataset = (await (item as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
-							dataset,
-							config,
-						)) as never;
+						dataset = await (item as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(dataset, config);
 					}
 				}
 			}
@@ -2031,5 +2032,5 @@ export function pipeAsync<
 			// Return output dataset
 			return dataset;
 		},
-	};
+	} as unknown as SchemaWithPipeAsync<[TSchema, ...TItems]>;
 }

@@ -1,11 +1,11 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
 import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
-import { type LooseTupleSchema, looseTuple } from "./looseTuple";
+import { looseTuple } from "./looseTuple";
 import type { LooseTupleIssue } from "./types";
 
 describe("looseTuple", () => {
@@ -127,7 +127,7 @@ describe("looseTuple", () => {
 						received: '"true"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", () => {
@@ -135,7 +135,7 @@ describe("looseTuple", () => {
 				typed: false,
 				value: [],
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested items", () => {
@@ -162,7 +162,7 @@ describe("looseTuple", () => {
 						received: "3",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);
+			} satisfies FailureDataset<InferIssue<typeof nestedSchema>>);
 		});
 	});
 });

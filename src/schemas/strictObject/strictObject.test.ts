@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { number } from "../number";
 import { object } from "../object";
@@ -112,7 +112,7 @@ describe("strictObject", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing nested entries", () => {
@@ -130,7 +130,7 @@ describe("strictObject", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", () => {
@@ -138,7 +138,7 @@ describe("strictObject", () => {
 				typed: false,
 				value: {},
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for unknown entries", () => {
@@ -161,7 +161,7 @@ describe("strictObject", () => {
 						received: `"${input.other1}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

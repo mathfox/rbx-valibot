@@ -1,4 +1,4 @@
-import type { BaseTransformationAsync, Dataset, MaybePromise } from "../../types";
+import type { BaseTransformationAsync, MaybePromise, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawTransformIssue } from "./types";
 
@@ -49,7 +49,7 @@ export function rawTransformAsync<TInput, TOutput>(
 			}
 
 			// Return output dataset
-			return dataset as unknown as Dataset<TOutput, RawTransformIssue<TInput>>;
+			return dataset as unknown as OutputDataset<TOutput, RawTransformIssue<TInput>>;
 		},
 	};
 }

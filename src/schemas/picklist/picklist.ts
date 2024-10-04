@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, MaybeReadonly } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, MaybeReadonly, OutputDataset } from "../../types";
 import { _addIssue, _joinExpects, _stringify } from "../../utils";
 
 /**
@@ -85,7 +86,7 @@ export function picklist(
 		async: false,
 		options,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				(this as PicklistSchema<PicklistOptions, ErrorMessage<PicklistIssue> | undefined>).options.includes(
 					dataset.value as string | number,
@@ -96,7 +97,7 @@ export function picklist(
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<PicklistOptions[number], PicklistIssue>;
+			return dataset as OutputDataset<PicklistOptions[number], PicklistIssue>;
 		},
 	};
 }

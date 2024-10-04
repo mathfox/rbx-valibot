@@ -3,7 +3,6 @@ import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -11,11 +10,13 @@ import type {
 	InferTupleInput,
 	InferTupleIssue,
 	InferTupleOutput,
+	OutputDataset,
 	TupleItemsAsync,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { TupleWithRestIssue } from "./types";
 import slice from "@rbxts/phantom/src/Array/slice";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Tuple with rest schema async type.
@@ -107,7 +108,7 @@ export function tupleWithRestAsync(
 		items,
 		rest,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -165,7 +166,7 @@ export function tupleWithRestAsync(
 				for (const [key, value, itemDataset] of normalDatasets as [
 					key: unknown,
 					value: unknown,
-					itemDataset: Dataset<unknown, BaseIssue<unknown>>,
+					itemDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (itemDataset.issues !== undefined) {
@@ -199,7 +200,7 @@ export function tupleWithRestAsync(
 					for (const [key, value, itemDataset] of restDatasets as [
 						key: unknown,
 						value: unknown,
-						itemDataset: Dataset<unknown, BaseIssue<unknown>>,
+						itemDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 					][]) {
 						// If there are issues, capture them
 						if (itemDataset.issues !== undefined) {
@@ -235,7 +236,7 @@ export function tupleWithRestAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<unknown[], TupleWithRestIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<unknown[], TupleWithRestIssue | BaseIssue<unknown>>;
 		},
 	};
 }

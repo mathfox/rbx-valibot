@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseSchema, BaseSchemaAsync, Config, InferIssue } from "../../types";
 
 /**
@@ -15,7 +16,7 @@ export function config<
 >(schema: TSchema, config: Config<InferIssue<TSchema>>): TSchema {
 	return {
 		...schema,
-		_run(dataset, config_) {
+		_run(dataset, config_ = getGlobalConfig()) {
 			// Here we just assume it's non-async schema, in which case Promise will be returned.
 			return (schema as BaseSchema<unknown, unknown, BaseIssue<unknown>>)._run(dataset, { ...config_, ...config });
 		},

@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
@@ -96,7 +97,7 @@ export function mapAsync(
 		key,
 		value,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -140,8 +141,8 @@ export function mapAsync(
 				for (const [inputKey, inputValue, keyDataset, valueDataset] of datasets as [
 					inputKey: unknown,
 					inputValue: unknown,
-					keyDataset: Dataset<unknown, BaseIssue<unknown>>,
-					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+					keyDataset: OutputDataset<unknown, BaseIssue<unknown>>,
+					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (keyDataset.issues !== undefined) {
@@ -194,7 +195,7 @@ export function mapAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Map<unknown, unknown>, MapIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Map<unknown, unknown>, MapIssue | BaseIssue<unknown>>;
 		},
 	};
 }

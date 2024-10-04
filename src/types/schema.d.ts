@@ -1,5 +1,5 @@
 import type { Config } from "./config";
-import type { Dataset } from "./dataset";
+import type { OutputDataset, UnknownDataset } from "./dataset";
 import type { BaseIssue } from "./issue";
 
 /**
@@ -38,19 +38,21 @@ export interface BaseSchema<TInput, TOutput, TIssue extends BaseIssue<unknown>> 
 	 */
 	readonly _run: (
 		this: BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-		dataset: Dataset<unknown, never>,
+		dataset: UnknownDataset,
 		config: Config<BaseIssue<unknown>>,
-	) => Dataset<TOutput, TIssue>;
+	) => OutputDataset<TOutput, TIssue>;
 	/**
 	 * Input, output and issue type.
 	 *
 	 * @internal
 	 */
-	readonly _types?: {
-		readonly input: TInput;
-		readonly output: TOutput;
-		readonly issue: TIssue;
-	};
+	readonly _types?:
+		| {
+				readonly input: TInput;
+				readonly output: TOutput;
+				readonly issue: TIssue;
+		  }
+		| undefined;
 }
 
 /**
@@ -80,9 +82,9 @@ export interface BaseSchemaAsync<TInput, TOutput, TIssue extends BaseIssue<unkno
 	 */
 	readonly _run: (
 		this: BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
-		dataset: Dataset<unknown, never>,
+		dataset: UnknownDataset,
 		config: Config<BaseIssue<unknown>>,
-	) => Promise<Dataset<TOutput, TIssue>>;
+	) => Promise<OutputDataset<TOutput, TIssue>>;
 }
 
 /**

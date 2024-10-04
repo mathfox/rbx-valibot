@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { array } from "../array/array";
 import type { ArrayIssue } from "../array/types";
@@ -129,7 +129,7 @@ describe("objectWithRest", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing nested entries", () => {
@@ -147,7 +147,7 @@ describe("objectWithRest", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", () => {
@@ -155,7 +155,7 @@ describe("objectWithRest", () => {
 				typed: false,
 				value: {},
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		const arrayIssue: ArrayIssue = {
@@ -186,7 +186,7 @@ describe("objectWithRest", () => {
 						received: '"bar"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong rest with abort early", () => {
@@ -219,7 +219,7 @@ describe("objectWithRest", () => {
 						abortEarly: true,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested rest", () => {
@@ -241,7 +241,7 @@ describe("objectWithRest", () => {
 						received: '"true"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

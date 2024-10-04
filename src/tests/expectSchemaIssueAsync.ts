@@ -1,5 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseSchemaAsync, InferIssue, UntypedDataset } from "../types";
+import type { BaseIssue, BaseSchemaAsync, FailureDataset, InferIssue } from "../types";
 import { _stringify } from "../utils";
 
 /**
@@ -15,7 +15,7 @@ export async function expectSchemaIssueAsync<TSchema extends BaseSchemaAsync<unk
 	values: unknown[],
 ): Promise<void> {
 	for (const value of values) {
-		expect(await schema._run({ typed: false, value }, {})).toEqual({
+		expect(await schema._run({ value }, {})).toEqual({
 			typed: false,
 			value,
 			issues: [
@@ -32,6 +32,6 @@ export async function expectSchemaIssueAsync<TSchema extends BaseSchemaAsync<unk
 					received: _stringify(value),
 				},
 			],
-		} satisfies UntypedDataset<InferIssue<TSchema>>);
+		} satisfies FailureDataset<InferIssue<TSchema>>);
 	}
 }

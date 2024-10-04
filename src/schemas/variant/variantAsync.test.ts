@@ -1,6 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { pipe } from "../../methods";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
@@ -82,7 +81,7 @@ describe("variantAsync", () => {
 						received: '"foo"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for empty options", async () => {
@@ -101,7 +100,7 @@ describe("variantAsync", () => {
 						received: `"${input.type}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing discriminator", async () => {
@@ -120,7 +119,7 @@ describe("variantAsync", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for invalid discriminator", async () => {
@@ -139,7 +138,7 @@ describe("variantAsync", () => {
 						received: `"${input.type}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested missing discriminator", async () => {
@@ -165,7 +164,7 @@ describe("variantAsync", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested invalid discriminator", async () => {
@@ -191,7 +190,7 @@ describe("variantAsync", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first missing invalid discriminator", async () => {
@@ -235,7 +234,7 @@ describe("variantAsync", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested missing discriminator", async () => {
@@ -279,7 +278,7 @@ describe("variantAsync", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test.only("for first nested invalid discriminator", async () => {
@@ -325,7 +324,7 @@ describe("variantAsync", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", async () => {
@@ -369,7 +368,7 @@ describe("variantAsync", () => {
 						received: `"${input.subType1}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", async () => {
@@ -417,7 +416,7 @@ describe("variantAsync", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", async () => {
@@ -467,7 +466,7 @@ describe("variantAsync", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", async () => {
@@ -519,7 +518,7 @@ describe("variantAsync", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for untyped object", async () => {
@@ -541,7 +540,7 @@ describe("variantAsync", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested untyped object", async () => {
@@ -566,7 +565,7 @@ describe("variantAsync", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for multiple untyped objects", async () => {
@@ -591,7 +590,7 @@ describe("variantAsync", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

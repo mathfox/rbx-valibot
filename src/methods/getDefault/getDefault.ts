@@ -4,10 +4,10 @@ import type {
 	BaseSchema,
 	BaseSchemaAsync,
 	Config,
-	Dataset,
 	InferInput,
 	InferIssue,
 	MaybePromise,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -58,7 +58,7 @@ export function getDefault<
 	const TSchema extends
 		| BaseSchema<unknown, unknown, BaseIssue<unknown>>
 		| BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>,
->(schema: TSchema, dataset?: Dataset<undefined, never>, config?: Config<InferIssue<TSchema>>): InferDefault<TSchema> {
+>(schema: TSchema, dataset?: UnknownDataset, config?: Config<InferIssue<TSchema>>): InferDefault<TSchema> {
 	return typeIs((schema as unknown as { default: unknown }).default, "function")
 		? (schema as unknown as { default: Callback }).default(dataset, config)
 		: (schema as unknown as { default: unknown }).default;

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { boolean, number, object, objectWithRest, optional, string_ } from "../../schemas";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { partial } from "./partial";
 
@@ -89,7 +89,7 @@ describe("partial", () => {
 								received: "nil",
 							},
 						],
-					} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+					} satisfies FailureDataset<InferIssue<typeof schema2>>);
 				}
 			});
 		});
@@ -173,7 +173,7 @@ describe("partial", () => {
 								received: "nil",
 							},
 						],
-					} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+					} satisfies FailureDataset<InferIssue<typeof schema2>>);
 				}
 			});
 		});

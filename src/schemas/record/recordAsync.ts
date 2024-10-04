@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types";
 
@@ -101,7 +102,7 @@ export function recordAsync(
 		key,
 		value,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -147,8 +148,8 @@ export function recordAsync(
 				for (const [entryKey, entryValue, keyDataset, valueDataset] of datasets as [
 					entryKey: unknown,
 					entryValue: unknown,
-					keyDataset: Dataset<unknown, BaseIssue<unknown>>,
-					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+					keyDataset: OutputDataset<unknown, BaseIssue<unknown>>,
+					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (keyDataset.issues !== undefined) {
@@ -203,7 +204,7 @@ export function recordAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Record<string | number | symbol, unknown>, RecordIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Record<string | number | symbol, unknown>, RecordIssue | BaseIssue<unknown>>;
 		},
 	};
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type StringIssue, string_ } from "../string";
 import { set } from "./set";
@@ -108,7 +108,7 @@ describe("set", () => {
 						received: "1337",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", () => {
@@ -116,7 +116,7 @@ describe("set", () => {
 				typed: false,
 				value: new Set(["foo", 123, "baz"]),
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested values", () => {
@@ -151,7 +151,7 @@ describe("set", () => {
 						received: '"bar"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);
+			} satisfies FailureDataset<InferIssue<typeof nestedSchema>>);
 		});
 	});
 });

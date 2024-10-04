@@ -1,4 +1,4 @@
-import type { BaseTransformation, MaybeReadonly, TypedDataset } from "../../types";
+import type { BaseTransformation, MaybeReadonly, OutputDataset } from "../../types";
 import type { ArrayInput, ArrayRequirement } from "../types";
 
 /**
@@ -41,7 +41,7 @@ export function findItem(operation: ArrayRequirement<unknown[]>): FindItemAction
 				(this as FindItemAction<unknown[]>).operation as ArrayRequirement<MaybeReadonly<defined[]>>,
 			) as defined[];
 
-			return dataset as TypedDataset<unknown, never>;
+			return dataset as OutputDataset<unknown, never>;
 		},
 	};
 }

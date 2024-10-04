@@ -1,7 +1,8 @@
 import { toArray } from "@rbxts/phantom/src/Set";
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
+import type { BaseIssue, BaseSchema, ErrorMessage, InferInput, InferOutput, OutputDataset } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type { InferVariantIssue, VariantIssue, VariantOptionSchema, VariantOptions } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Variant schema type.
@@ -83,14 +84,14 @@ export function variant(
 		key,
 		options,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
 			if (typeIs(input, "table")) {
 				// Create output dataset variable
-				let outputDataset: Dataset<unknown, BaseIssue<unknown>> | undefined;
+				let outputDataset: OutputDataset<unknown, BaseIssue<unknown>> | undefined;
 
 				// Create variables to store invalid discriminator information
 				let maxDiscriminatorPriority = 0;
@@ -201,7 +202,7 @@ export function variant(
 			}
 
 			// Finally, return  output dataset
-			return dataset as Dataset<InferOutput<VariantOptions<string>[number]>, VariantIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<InferOutput<VariantOptions<string>[number]>, VariantIssue | BaseIssue<unknown>>;
 		},
 	};
 }

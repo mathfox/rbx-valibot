@@ -1,12 +1,14 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
 	Config,
-	Dataset,
 	InferIssue,
 	InferOutput,
 	MaybePromise,
+	OutputDataset,
+	UnknownDataset,
 } from "../../types";
 import { getFallback } from "../getFallback";
 
@@ -20,7 +22,7 @@ export type FallbackAsync<
 > =
 	| InferOutput<TSchema>
 	| ((
-			dataset?: Dataset<InferOutput<TSchema>, InferIssue<TSchema>>,
+			dataset?: OutputDataset<InferOutput<TSchema>, InferIssue<TSchema>>,
 			config?: Config<InferIssue<TSchema>>,
 	  ) => MaybePromise<InferOutput<TSchema>>);
 
@@ -53,9 +55,9 @@ export type SchemaWithFallbackAsync<
 	 */
 	readonly _run: (
 		this: unknown,
-		dataset: Dataset<unknown, never>,
+		dataset: UnknownDataset,
 		config: Config<BaseIssue<unknown>>,
-	) => Promise<Dataset<InferOutput<TSchema>, InferIssue<TSchema>>>;
+	) => Promise<OutputDataset<InferOutput<TSchema>, InferIssue<TSchema>>>;
 };
 
 /**
@@ -76,7 +78,7 @@ export function fallbackAsync<
 		...schema,
 		fallback,
 		async: true,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			const outputDataset = await (
 				schema as SchemaWithFallbackAsync<BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>, TFallback>
 			)._run(dataset, config);

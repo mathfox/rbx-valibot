@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { TypedDataset } from "../../types/dataset";
 import { expectNoActionIssue } from "../../tests";
 import { type CheckItemsIssue, checkItems } from "./checkItems";
+import type { PartialDataset } from "../../types";
 
 describe("checkItems", () => {
 	describe("should return dataset without issues", () => {
@@ -56,7 +56,7 @@ describe("checkItems", () => {
 						received: `${input[2]}`,
 					},
 				],
-			} satisfies TypedDataset<number[], CheckItemsIssue<number[]>>);
+			} satisfies PartialDataset<number[], CheckItemsIssue<number[]>>);
 		});
 	});
 });

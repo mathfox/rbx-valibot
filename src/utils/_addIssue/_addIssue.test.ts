@@ -9,7 +9,7 @@ import {
 	setSchemaMessage,
 	setSpecificMessage,
 } from "../../storages";
-import type { BaseIssue, UntypedDataset } from "../../types";
+import type { BaseIssue, FailureDataset, PartialDataset, UnknownDataset } from "../../types";
 import { _addIssue } from "./_addIssue";
 
 describe("_addIssue", () => {
@@ -37,12 +37,13 @@ describe("_addIssue", () => {
 
 	describe("should generate default message", () => {
 		test("with expected and received", () => {
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {});
-			expect(dataset.issues?.[0].message).toBe("Invalid type: Expected string but received nil");
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(
+				"Invalid type: Expected string but received nil",
+			);
 		});
 	});
 
@@ -63,69 +64,63 @@ describe("_addIssue", () => {
 			setSpecificMessage(string_, specificMessage);
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(contextMessage), "type", dataset, {
 				message: () => configMessage,
 			});
-			expect(dataset.issues?.[0].message).toBe(contextMessage);
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(contextMessage);
 		});
 
 		test("from specific storage", () => {
 			setSpecificMessage(string_, specificMessage);
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
 			});
-			expect(dataset.issues?.[0].message).toBe(specificMessage);
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(specificMessage);
 		});
 
 		test("from schema storage", () => {
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
 			});
-			expect(dataset.issues?.[0].message).toBe(schemaMessage);
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(schemaMessage);
 		});
 
 		test("from config object", () => {
 			setGlobalMessage(globalMessage);
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
 			});
-			expect(dataset.issues?.[0].message).toBe(configMessage);
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(configMessage);
 		});
 
 		test("from global storage", () => {
 			setGlobalMessage(globalMessage);
-			const dataset: UntypedDataset<StringIssue> = {
-				typed: false,
+			const dataset: UnknownDataset = {
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {});
-			expect(dataset.issues?.[0].message).toBe(globalMessage);
+			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(globalMessage);
 		});
 	});
 
 	test("should include configuration", () => {
-		const dataset: UntypedDataset<StringIssue> = {
-			typed: false,
+		const dataset: UnknownDataset = {
 			value: undefined,
 		};
 		const config = {
@@ -138,8 +133,7 @@ describe("_addIssue", () => {
 	});
 
 	test("should include other information", () => {
-		const dataset: UntypedDataset<StringIssue> = {
-			typed: false,
+		const dataset: UnknownDataset = {
 			value: undefined,
 		};
 		const other = {

@@ -1,5 +1,6 @@
 import { getDefault } from "../../methods/getDefault";
-import type { BaseIssue, BaseSchema, Dataset, Default, InferInput, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, Default, InferInput, InferIssue } from "../../types";
 import type { InferUndefinedableOutput } from "./types";
 
 /**
@@ -71,12 +72,12 @@ export function undefinedable(
 		async: false,
 		wrapped,
 		default: args[0],
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// If value is `undefined`, override it with default or return dataset
 			if (dataset.value === undefined) {
 				// If default is specified, override value of dataset
 				if ("default" in this) {
-					dataset.value = getDefault(this, dataset as Dataset<undefined, never>, config);
+					dataset.value = getDefault(this, dataset, config);
 				}
 
 				// If value is still `undefined`, return dataset

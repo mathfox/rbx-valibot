@@ -1,6 +1,6 @@
 import type RegExp from "@rbxts/regexp";
 import { UUID_REGEX } from "../../regex";
-import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -93,7 +93,7 @@ export function uuid(
 				_addIssue(this, "UUID", dataset, config);
 			}
 
-			return dataset as Dataset<string, UuidIssue<string>>;
+			return dataset as OutputDataset<string, UuidIssue<string>>;
 		},
 	};
 }

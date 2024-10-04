@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { minLength } from "../../actions";
 import { pipe } from "../../methods";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue, InferOutput, PartialDataset } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { literal } from "../literal/literal";
 import { number } from "../number";
@@ -44,7 +44,7 @@ describe("union", () => {
 						requirement: 5,
 					},
 				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
+			} satisfies PartialDataset<InferOutput<Schema>, InferIssue<Schema>>);
 		});
 
 		test("with zero untyped issue", () => {
@@ -75,7 +75,7 @@ describe("union", () => {
 						received: '"bar"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with multiple typed issues", () => {
@@ -111,7 +111,7 @@ describe("union", () => {
 						],
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

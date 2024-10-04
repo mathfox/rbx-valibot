@@ -9,7 +9,7 @@ import {
 	optionalAsync,
 	string_,
 } from "../../schemas";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync } from "../../tests";
 import { requiredAsync } from "./requiredAsync";
 
@@ -130,7 +130,7 @@ describe("requiredAsync", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
+				} satisfies FailureDataset<InferIssue<typeof schema1>>);
 
 				const input = { key2: 123 };
 				expect(await schema2._run({ typed: false, value: input }, {})).toEqual({
@@ -154,7 +154,7 @@ describe("requiredAsync", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+				} satisfies FailureDataset<InferIssue<typeof schema2>>);
 			});
 		});
 	});
@@ -269,7 +269,7 @@ describe("requiredAsync", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema1>>);
+				} satisfies FailureDataset<InferIssue<typeof schema1>>);
 
 				const input = { key1: "foo", other: true };
 				expect(await schema2._run({ typed: false, value: input }, {})).toEqual({
@@ -293,7 +293,7 @@ describe("requiredAsync", () => {
 							received: "nil",
 						},
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema2>>);
+				} satisfies FailureDataset<InferIssue<typeof schema2>>);
 			});
 		});
 	});

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { type NumberIssue, number } from "../number";
 import { optionalAsync } from "../optional";
@@ -129,7 +129,7 @@ describe("recordAsync", () => {
 						received: '"other"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", async () => {
@@ -150,7 +150,7 @@ describe("recordAsync", () => {
 				typed: false,
 				value: { foo: 1 },
 				issues: [{ ...numberIssue1, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested values", async () => {
@@ -184,7 +184,7 @@ describe("recordAsync", () => {
 						received: "123",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);
+			} satisfies FailureDataset<InferIssue<typeof nestedSchema>>);
 		});
 	});
 });

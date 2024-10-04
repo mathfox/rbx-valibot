@@ -2,15 +2,16 @@ import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	BaseIssue,
 	BaseSchema,
-	Dataset,
 	ErrorMessage,
 	InferTupleInput,
 	InferTupleIssue,
 	InferTupleOutput,
+	OutputDataset,
 	TupleItems,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { StrictTupleIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Strict tuple schema type.
@@ -75,7 +76,7 @@ export function strictTuple(
 		async: false,
 		items,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -141,7 +142,7 @@ export function strictTuple(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<unknown[], StrictTupleIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<unknown[], StrictTupleIssue | BaseIssue<unknown>>;
 		},
 	};
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { number } from "../number";
 import { type StringIssue, string_ } from "../string";
@@ -177,7 +177,7 @@ describe("mapAsync", () => {
 						received: '"string"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", async () => {
@@ -198,7 +198,7 @@ describe("mapAsync", () => {
 				typed: false,
 				value: new Map([]),
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested values", async () => {
@@ -243,7 +243,7 @@ describe("mapAsync", () => {
 				deepEquals(removeKeys(result as unknown as Map<unknown, unknown>, "issues"), {
 					typed: false,
 					value: input,
-				} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>),
+				} satisfies Omit<FailureDataset<InferIssue<typeof nestedSchema>>, "issues">),
 			).toBe(true);
 		});
 	});

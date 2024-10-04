@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -81,14 +82,14 @@ export function instance(
 		async: false,
 		class: class_,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.value instanceof (this as InstanceSchema<Class, ErrorMessage<InstanceIssue> | undefined>).class) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<InstanceType<Class>, InstanceIssue>;
+			return dataset as OutputDataset<InstanceType<Class>, InstanceIssue>;
 		},
 	};
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { number } from "../number";
 import { objectAsync } from "../object";
@@ -122,7 +122,7 @@ describe("strictObjectAsync", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing nested entries", async () => {
@@ -140,7 +140,7 @@ describe("strictObjectAsync", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", async () => {
@@ -148,7 +148,7 @@ describe("strictObjectAsync", () => {
 				typed: false,
 				value: {},
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for unknown entries", async () => {
@@ -171,7 +171,7 @@ describe("strictObjectAsync", () => {
 						received: `"${input.other1}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

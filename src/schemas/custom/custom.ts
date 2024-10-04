@@ -1,4 +1,5 @@
-import type { BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { CustomIssue } from "./types";
 
@@ -68,14 +69,14 @@ export function custom<TInput>(
 		async: false,
 		check,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if ((this as CustomSchema<TInput, ErrorMessage<CustomIssue> | undefined>).check(dataset.value)) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<TInput, CustomIssue>;
+			return dataset as OutputDataset<TInput, CustomIssue>;
 		},
 	};
 }

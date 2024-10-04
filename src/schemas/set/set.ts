@@ -1,7 +1,8 @@
 import isSet from "@rbxts/phantom/src/Set/isSet";
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
+import type { BaseIssue, BaseSchema, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferSetInput, InferSetOutput, SetIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Set schema type.
@@ -68,7 +69,7 @@ export function set(
 		async: false,
 		value,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -117,7 +118,7 @@ export function set(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Set<unknown>, SetIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Set<unknown>, SetIssue | BaseIssue<unknown>>;
 		},
 	};
 }

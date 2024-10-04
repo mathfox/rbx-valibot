@@ -14,7 +14,6 @@ import type {
 	BaseIssue,
 	BaseSchema,
 	Config,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -23,7 +22,9 @@ import type {
 	InferOutput,
 	ObjectEntries,
 	ObjectKeys,
+	OutputDataset,
 	SchemaWithoutPipe,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -74,19 +75,21 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 			 */
 			readonly _run: (
 				this: unknown,
-				dataset: Dataset<unknown, never>,
+				dataset: UnknownDataset,
 				config: Config<BaseIssue<unknown>>,
-			) => Dataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>;
+			) => OutputDataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>;
 			/**
 			 * Input, output and issue type.
 			 *
 			 * @internal
 			 */
-			readonly _types?: {
-				readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>>;
-				readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>>;
-				readonly issue: InferIssue<TSchema>;
-			};
+			readonly _types?:
+				| {
+						readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>>;
+						readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>>;
+						readonly issue: InferIssue<TSchema>;
+				  }
+				| undefined;
 		}
 	: TSchema extends LooseObjectSchema<infer TEntries, ErrorMessage<LooseObjectIssue> | undefined>
 		? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -106,9 +109,9 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 				 */
 				readonly _run: (
 					this: unknown,
-					dataset: Dataset<unknown, never>,
+					dataset: UnknownDataset,
 					config: Config<BaseIssue<unknown>>,
-				) => Dataset<
+				) => OutputDataset<
 					InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 						[key: string]: unknown;
 					},
@@ -119,15 +122,17 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 				 *
 				 * @internal
 				 */
-				readonly _types?: {
-					readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>> & {
-						[key: string]: unknown;
-					};
-					readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
-						[key: string]: unknown;
-					};
-					readonly issue: InferIssue<TSchema>;
-				};
+				readonly _types?:
+					| {
+							readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>> & {
+								[key: string]: unknown;
+							};
+							readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
+								[key: string]: unknown;
+							};
+							readonly issue: InferIssue<TSchema>;
+					  }
+					| undefined;
 			}
 		: TSchema extends ObjectWithRestSchema<infer TEntries, infer TRest, ErrorMessage<ObjectWithRestIssue> | undefined>
 			? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -147,9 +152,9 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 					 */
 					readonly _run: (
 						this: unknown,
-						dataset: Dataset<unknown, never>,
+						dataset: UnknownDataset,
 						config: Config<BaseIssue<unknown>>,
-					) => Dataset<
+					) => OutputDataset<
 						InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 							[key: string]: InferOutput<TRest>;
 						},
@@ -160,13 +165,17 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 					 *
 					 * @internal
 					 */
-					readonly _types?: {
-						readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>> & {
-							[key: string]: InferInput<TRest>;
-						};
-						readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>> & { [key: string]: InferOutput<TRest> };
-						readonly issue: InferIssue<TSchema>;
-					};
+					readonly _types?:
+						| {
+								readonly input: InferObjectInput<PartialEntries<TEntries, TKeys>> & {
+									[key: string]: InferInput<TRest>;
+								};
+								readonly output: InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
+									[key: string]: InferOutput<TRest>;
+								};
+								readonly issue: InferIssue<TSchema>;
+						  }
+						| undefined;
 				}
 			: never;
 

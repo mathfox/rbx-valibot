@@ -1,15 +1,17 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	Config,
-	Dataset,
 	FirstTupleItem,
 	InferInput,
 	InferIssue,
 	InferOutput,
 	LastTupleItem,
+	OutputDataset,
 	PipeAction,
 	PipeItem,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -34,19 +36,21 @@ export type SchemaWithPipe<
 	 */
 	readonly _run: (
 		this: unknown,
-		dataset: Dataset<unknown, never>,
+		dataset: UnknownDataset,
 		config: Config<BaseIssue<unknown>>,
-	) => Dataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>;
+	) => OutputDataset<InferOutput<LastTupleItem<TPipe>>, InferIssue<TPipe[number]>>;
 	/**
 	 * Input, output and issue type.
 	 *
 	 * @internal
 	 */
-	readonly _types?: {
-		readonly input: InferInput<FirstTupleItem<TPipe>>;
-		readonly output: InferOutput<LastTupleItem<TPipe>>;
-		readonly issue: InferIssue<TPipe[number]>;
-	};
+	readonly _types?:
+		| {
+				readonly input: InferInput<FirstTupleItem<TPipe>>;
+				readonly output: InferOutput<LastTupleItem<TPipe>>;
+				readonly issue: InferIssue<TPipe[number]>;
+		  }
+		| undefined;
 };
 
 /**
@@ -1081,7 +1085,7 @@ export function pipe<
 	return {
 		...pipe[0],
 		pipe,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Execute pipeline items in sequence
 			for (const item of pipe) {
 				// Exclude metadata items from execution
@@ -1089,13 +1093,13 @@ export function pipe<
 					// Mark dataset as untyped and break pipe if there are issues and pipe
 					// item is schema or transformation
 					if (dataset.issues !== undefined && (item.kind === "schema" || item.kind === "transformation")) {
-						dataset.typed = false;
+						(dataset as unknown as { typed: boolean }).typed = false;
 						break;
 					}
 
 					// Continue pipe execution if there is no reason to abort early
 					if (dataset.issues === undefined || (!config.abortEarly && !config.abortPipeEarly)) {
-						dataset = (item as BaseSchema<unknown, unknown, BaseIssue<unknown>>)._run(dataset, config) as never;
+						dataset = (item as BaseSchema<unknown, unknown, BaseIssue<unknown>>)._run(dataset, config);
 					}
 				}
 			}
@@ -1103,5 +1107,5 @@ export function pipe<
 			// Return output dataset
 			return dataset;
 		},
-	};
+	} as SchemaWithPipe<[TSchema, ...TItems]>;
 }

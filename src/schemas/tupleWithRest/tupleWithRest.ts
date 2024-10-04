@@ -2,7 +2,6 @@ import isArray from "@rbxts/phantom/src/Array/isArray";
 import type {
 	BaseIssue,
 	BaseSchema,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -10,10 +9,12 @@ import type {
 	InferTupleInput,
 	InferTupleIssue,
 	InferTupleOutput,
+	OutputDataset,
 	TupleItems,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { TupleWithRestIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Tuple with rest schema type.
@@ -99,7 +100,7 @@ export function tupleWithRest(
 		items,
 		rest,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -195,7 +196,7 @@ export function tupleWithRest(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<unknown[], TupleWithRestIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<unknown[], TupleWithRestIssue | BaseIssue<unknown>>;
 		},
 	};
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
@@ -117,7 +117,7 @@ describe("strictTupleAsync", () => {
 						received: '"true"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", async () => {
@@ -125,7 +125,7 @@ describe("strictTupleAsync", () => {
 				typed: false,
 				value: [],
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested items", async () => {
@@ -152,7 +152,7 @@ describe("strictTupleAsync", () => {
 						received: "3",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof nestedSchema>>);
+			} satisfies FailureDataset<InferIssue<typeof nestedSchema>>);
 		});
 
 		test("for unknown items", async () => {
@@ -170,7 +170,7 @@ describe("strictTupleAsync", () => {
 						received: "3",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

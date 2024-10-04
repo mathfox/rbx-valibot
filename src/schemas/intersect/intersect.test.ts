@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { minLength, minValue, transform } from "../../actions";
 import { pipe } from "../../methods";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue, InferOutput, PartialDataset } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { array } from "../array/array";
 import { number } from "../number";
@@ -51,7 +51,7 @@ describe("intersect", () => {
 						received: `"${input}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with untyped output", () => {
@@ -70,7 +70,7 @@ describe("intersect", () => {
 						received: `"${input}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with typed output", () => {
@@ -103,7 +103,7 @@ describe("intersect", () => {
 						requirement: 100,
 					},
 				],
-			} satisfies TypedDataset<InferOutput<Schema>, InferIssue<Schema>>);
+			} satisfies PartialDataset<InferOutput<Schema>, InferIssue<Schema>>);
 		});
 
 		test("with abort early", () => {
@@ -127,7 +127,7 @@ describe("intersect", () => {
 						requirement: 10,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for merge error", () => {
@@ -154,7 +154,7 @@ describe("intersect", () => {
 						received: "unknown",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

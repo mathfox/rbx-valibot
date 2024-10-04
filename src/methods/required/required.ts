@@ -16,7 +16,6 @@ import type {
 	BaseIssue,
 	BaseSchema,
 	Config,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -25,7 +24,9 @@ import type {
 	InferOutput,
 	ObjectEntries,
 	ObjectKeys,
+	OutputDataset,
 	SchemaWithoutPipe,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -84,9 +85,9 @@ export type SchemaWithRequired<
 			 */
 			readonly _run: (
 				this: unknown,
-				dataset: Dataset<unknown, never>,
+				dataset: UnknownDataset,
 				config: Config<BaseIssue<unknown>>,
-			) => Dataset<
+			) => OutputDataset<
 				InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>,
 				NonOptionalIssue | InferIssue<TSchema>
 			>;
@@ -95,11 +96,13 @@ export type SchemaWithRequired<
 			 *
 			 * @internal
 			 */
-			readonly _types?: {
-				readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>>;
-				readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>;
-				readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-			};
+			readonly _types?:
+				| {
+						readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>>;
+						readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>;
+						readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+				  }
+				| undefined;
 		}
 	: TSchema extends LooseObjectSchema<infer TEntries, ErrorMessage<LooseObjectIssue> | undefined>
 		? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -119,9 +122,9 @@ export type SchemaWithRequired<
 				 */
 				readonly _run: (
 					this: unknown,
-					dataset: Dataset<unknown, never>,
+					dataset: UnknownDataset,
 					config: Config<BaseIssue<unknown>>,
-				) => Dataset<
+				) => OutputDataset<
 					InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 						[key: string]: unknown;
 					},
@@ -132,15 +135,17 @@ export type SchemaWithRequired<
 				 *
 				 * @internal
 				 */
-				readonly _types?: {
-					readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-						[key: string]: unknown;
-					};
-					readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-						[key: string]: unknown;
-					};
-					readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-				};
+				readonly _types?:
+					| {
+							readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+								[key: string]: unknown;
+							};
+							readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+								[key: string]: unknown;
+							};
+							readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+					  }
+					| undefined;
 			}
 		: TSchema extends ObjectWithRestSchema<infer TEntries, infer TRest, ErrorMessage<ObjectWithRestIssue> | undefined>
 			? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -160,9 +165,9 @@ export type SchemaWithRequired<
 					 */
 					readonly _run: (
 						this: unknown,
-						dataset: Dataset<unknown, never>,
+						dataset: UnknownDataset,
 						config: Config<BaseIssue<unknown>>,
-					) => Dataset<
+					) => OutputDataset<
 						InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 							[key: string]: InferOutput<TRest>;
 						},
@@ -173,15 +178,17 @@ export type SchemaWithRequired<
 					 *
 					 * @internalgg
 					 */
-					readonly _types?: {
-						readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-							[key: string]: InferInput<TRest>;
-						};
-						readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-							[key: string]: InferOutput<TRest>;
-						};
-						readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-					};
+					readonly _types?:
+						| {
+								readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+									[key: string]: InferInput<TRest>;
+								};
+								readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+									[key: string]: InferOutput<TRest>;
+								};
+								readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+						  }
+						| undefined;
 				}
 			: never;
 

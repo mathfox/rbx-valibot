@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
 
 /**
@@ -76,7 +77,7 @@ export function literal(
 		async: false,
 		literal: literal_,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.value === (this as LiteralSchema<unknown, ErrorMessage<LiteralIssue> | undefined>).literal) {
 				dataset.typed = true;
 			} else {

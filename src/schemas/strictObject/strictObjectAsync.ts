@@ -1,13 +1,14 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
-	Dataset,
 	ErrorMessage,
 	InferObjectInput,
 	InferObjectIssue,
 	InferObjectOutput,
 	ObjectEntriesAsync,
+	OutputDataset,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { StrictObjectIssue } from "./types";
@@ -81,7 +82,7 @@ export function strictObjectAsync(
 		async: true,
 		entries,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -115,7 +116,7 @@ export function strictObjectAsync(
 				for (const [key, value, valueDataset] of valueDatasets as [
 					key: string,
 					value: unknown,
-					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
@@ -179,7 +180,7 @@ export function strictObjectAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<
+			return dataset as OutputDataset<
 				InferObjectOutput<ObjectEntriesAsync>,
 				StrictObjectIssue | InferObjectIssue<ObjectEntriesAsync>
 			>;

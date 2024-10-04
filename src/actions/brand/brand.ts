@@ -1,4 +1,4 @@
-import type { BaseTransformation, TypedDataset } from "../../types";
+import type { BaseTransformation, OutputDataset } from "../../types";
 
 /**
  * Brand symbol.
@@ -51,7 +51,7 @@ export function brand<TInput, TName extends BrandName>(name: TName): BrandAction
 		async: false,
 		name,
 		_run(dataset) {
-			return dataset as TypedDataset<TInput & Brand<TName>, never>;
+			return dataset as OutputDataset<TInput & Brand<TName>, never>;
 		},
 	};
 }

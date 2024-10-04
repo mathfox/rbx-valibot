@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferMapInput, InferMapOutput, MapIssue } from "./types";
 
@@ -86,7 +87,7 @@ export function map(
 		key,
 		value,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -167,7 +168,7 @@ export function map(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Map<unknown, unknown>, MapIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Map<unknown, unknown>, MapIssue | BaseIssue<unknown>>;
 		},
 	};
 }

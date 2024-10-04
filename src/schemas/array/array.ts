@@ -1,7 +1,16 @@
 import isArray from "@rbxts/phantom/src/Array/isArray";
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferInput, InferIssue, InferOutput } from "../../types";
+import type {
+	BaseIssue,
+	BaseSchema,
+	ErrorMessage,
+	InferInput,
+	InferIssue,
+	InferOutput,
+	OutputDataset,
+} from "../../types";
 import { _addIssue } from "../../utils";
 import type { ArrayIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Array schema type.
@@ -68,7 +77,7 @@ export function array(
 		async: false,
 		item,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -118,7 +127,7 @@ export function array(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<unknown[], ArrayIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<unknown[], ArrayIssue | BaseIssue<unknown>>;
 		},
 	};
 }

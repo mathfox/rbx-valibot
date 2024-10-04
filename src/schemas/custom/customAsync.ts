@@ -1,4 +1,5 @@
-import type { BaseSchemaAsync, Dataset, ErrorMessage, MaybePromise } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseSchemaAsync, ErrorMessage, MaybePromise, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { CustomIssue } from "./types";
 
@@ -68,14 +69,14 @@ export function customAsync<TInput>(
 		async: true,
 		check,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			if (await (this as CustomSchemaAsync<TInput, ErrorMessage<CustomIssue> | undefined>).check(dataset.value)) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<TInput, CustomIssue>;
+			return dataset as OutputDataset<TInput, CustomIssue>;
 		},
 	};
 }

@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseSchema, InferInput, InferIssue, InferOutput } from "../../types";
 
 /**
@@ -40,7 +41,7 @@ export function lazy<const TWrapped extends BaseSchema<unknown, unknown, BaseIss
 		expects: "unknown",
 		async: false,
 		getter,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			return (this as LazySchema<TWrapped>).getter(dataset.value)._run(dataset, config);
 		},
 	};

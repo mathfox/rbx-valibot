@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -68,10 +69,10 @@ export function never(message?: ErrorMessage<NeverIssue>): NeverSchema<ErrorMess
 		expects: "never",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			_addIssue(this, "type", dataset, config);
 
-			return dataset as Dataset<never, NeverIssue>;
+			return dataset as OutputDataset<never, NeverIssue>;
 		},
 	};
 }

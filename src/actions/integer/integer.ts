@@ -1,5 +1,5 @@
 import isInteger from "@rbxts/phantom/src/Number/isInteger";
-import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -92,7 +92,7 @@ export function integer(
 				_addIssue(this, "integer", dataset, config);
 			}
 
-			return dataset as Dataset<number, IntegerIssue<number>>;
+			return dataset as OutputDataset<number, IntegerIssue<number>>;
 		},
 	};
 }

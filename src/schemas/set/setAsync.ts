@@ -1,7 +1,8 @@
 import isSet from "@rbxts/phantom/src/Set/isSet";
-import type { BaseIssue, BaseSchema, BaseSchemaAsync, Dataset, ErrorMessage, InferIssue } from "../../types";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferSetInput, InferSetOutput, SetIssue } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Set schema async type.
@@ -77,7 +78,7 @@ export function setAsync(
 		async: true,
 		value,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -111,7 +112,7 @@ export function setAsync(
 				// Process dataset of each set value
 				for (const [inputValue, valueDataset] of valueDatasets as [
 					inputValue: unknown,
-					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
@@ -146,7 +147,7 @@ export function setAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Set<unknown>, SetIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Set<unknown>, SetIssue | BaseIssue<unknown>>;
 		},
 	};
 }

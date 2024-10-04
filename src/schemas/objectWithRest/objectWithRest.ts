@@ -1,7 +1,7 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -10,6 +10,7 @@ import type {
 	InferObjectOutput,
 	InferOutput,
 	ObjectEntries,
+	OutputDataset,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ObjectWithRestIssue } from "./types";
@@ -98,7 +99,7 @@ export function objectWithRest(
 		entries,
 		rest,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -218,7 +219,7 @@ export function objectWithRest(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<
+			return dataset as OutputDataset<
 				InferObjectOutput<ObjectEntries> & { [key: string]: unknown },
 				ObjectWithRestIssue | InferObjectIssue<ObjectEntries> | BaseIssue<unknown>
 			>;

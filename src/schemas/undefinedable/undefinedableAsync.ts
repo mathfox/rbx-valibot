@@ -1,13 +1,6 @@
 import { getDefault } from "../../methods/getDefault";
-import type {
-	BaseIssue,
-	BaseSchema,
-	BaseSchemaAsync,
-	Dataset,
-	DefaultAsync,
-	InferInput,
-	InferIssue,
-} from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, DefaultAsync, InferInput, InferIssue } from "../../types";
 import type { InferUndefinedableOutput } from "./types";
 
 /**
@@ -88,12 +81,12 @@ export function undefinedableAsync(
 		async: true,
 		wrapped,
 		default: args[0],
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// If value is `undefined`, override it with default or return dataset
 			if (dataset.value === undefined) {
 				// If default is specified, override value of dataset
 				if ("default" in this) {
-					dataset.value = await getDefault(this, dataset as Dataset<undefined, never>, config);
+					dataset.value = await getDefault(this, dataset, config);
 				}
 
 				// If value is still `undefined`, return dataset

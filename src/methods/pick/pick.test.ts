@@ -9,7 +9,7 @@ import {
 	objectWithRest,
 	string_,
 } from "../../schemas";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { pick } from "./pick";
 
@@ -84,7 +84,7 @@ describe("pick", () => {
 							received: "nil",
 						} satisfies StringIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 		});
 	});
@@ -134,7 +134,7 @@ describe("pick", () => {
 							received: "nil",
 						} satisfies NumberIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 
 			test("if a not picked key does not match rest", () => {
@@ -151,7 +151,7 @@ describe("pick", () => {
 							received: '"foo"',
 						} satisfies BooleanIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 		});
 	});

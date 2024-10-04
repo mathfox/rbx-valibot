@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type { InferIntersectInput, InferIntersectOutput, IntersectIssue, IntersectOptions } from "./types";
 import { _merge } from "./utils";
@@ -71,7 +72,7 @@ export function intersect(
 		async: false,
 		options,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Parse input with schema of options, if not empty
 			if ((this as IntersectSchema<IntersectOptions, ErrorMessage<IntersectIssue> | undefined>).options.size() !== 0) {
 				// Get input value from dataset
@@ -149,7 +150,7 @@ export function intersect(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<never, IntersectIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<never, IntersectIssue | BaseIssue<unknown>>;
 		},
 	};
 }

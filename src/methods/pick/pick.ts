@@ -17,7 +17,6 @@ import type {
 	BaseSchema,
 	BaseSchemaAsync,
 	Config,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -28,7 +27,9 @@ import type {
 	ObjectEntries,
 	ObjectEntriesAsync,
 	ObjectKeys,
+	OutputDataset,
 	SchemaWithoutPipe,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -76,9 +77,9 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 			 */
 			readonly _run: (
 				this: unknown,
-				dataset: Dataset<unknown, never>,
+				dataset: UnknownDataset,
 				config: Config<BaseIssue<unknown>>,
-			) => Dataset<
+			) => OutputDataset<
 				InferObjectOutput<Pick<TEntries, TKeys[number]>>,
 				Extract<InferIssue<TSchema>, { type: TSchema["type"] }> | InferObjectIssue<Pick<TEntries, TKeys[number]>>
 			>;
@@ -87,13 +88,15 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 			 *
 			 * @internal
 			 */
-			readonly _types?: {
-				readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>>;
-				readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>>;
-				readonly issue:
-					| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-					| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
-			};
+			readonly _types?:
+				| {
+						readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>>;
+						readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>>;
+						readonly issue:
+							| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+							| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
+				  }
+				| undefined;
 		}
 	: TSchema extends
 				| ObjectSchemaAsync<infer TEntries, ErrorMessage<ObjectIssue> | undefined>
@@ -115,10 +118,10 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 				 */
 				readonly _run: (
 					this: unknown,
-					dataset: Dataset<unknown, never>,
+					dataset: UnknownDataset,
 					config: Config<BaseIssue<unknown>>,
 				) => Promise<
-					Dataset<
+					OutputDataset<
 						InferObjectOutput<Pick<TEntries, TKeys[number]>>,
 						Extract<InferIssue<TSchema>, { type: TSchema["type"] }> | InferObjectIssue<Pick<TEntries, TKeys[number]>>
 					>
@@ -128,13 +131,15 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 				 *
 				 * @internal
 				 */
-				readonly _types?: {
-					readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>>;
-					readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>>;
-					readonly issue:
-						| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-						| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
-				};
+				readonly _types?:
+					| {
+							readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>>;
+							readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>>;
+							readonly issue:
+								| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+								| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
+					  }
+					| undefined;
 			}
 		: TSchema extends LooseObjectSchema<infer TEntries, ErrorMessage<LooseObjectIssue> | undefined>
 			? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -154,9 +159,9 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 					 */
 					readonly _run: (
 						this: unknown,
-						dataset: Dataset<unknown, never>,
+						dataset: UnknownDataset,
 						config: Config<BaseIssue<unknown>>,
-					) => Dataset<
+					) => OutputDataset<
 						InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 							[key: string]: unknown;
 						},
@@ -167,17 +172,19 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 					 *
 					 * @internal
 					 */
-					readonly _types?: {
-						readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
-							[key: string]: unknown;
-						};
-						readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
-							[key: string]: unknown;
-						};
-						readonly issue:
-							| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-							| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
-					};
+					readonly _types?:
+						| {
+								readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
+									[key: string]: unknown;
+								};
+								readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
+									[key: string]: unknown;
+								};
+								readonly issue:
+									| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+									| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
+						  }
+						| undefined;
 				}
 			: TSchema extends LooseObjectSchemaAsync<infer TEntries, ErrorMessage<LooseObjectIssue> | undefined>
 				? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -197,10 +204,10 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 						 */
 						readonly _run: (
 							this: unknown,
-							dataset: Dataset<unknown, never>,
+							dataset: UnknownDataset,
 							config: Config<BaseIssue<unknown>>,
 						) => Promise<
-							Dataset<
+							OutputDataset<
 								InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 									[key: string]: unknown;
 								},
@@ -213,17 +220,19 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 						 *
 						 * @internal
 						 */
-						readonly _types?: {
-							readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
-								[key: string]: unknown;
-							};
-							readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
-								[key: string]: unknown;
-							};
-							readonly issue:
-								| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-								| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
-						};
+						readonly _types?:
+							| {
+									readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
+										[key: string]: unknown;
+									};
+									readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
+										[key: string]: unknown;
+									};
+									readonly issue:
+										| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+										| InferObjectIssue<Pick<TEntries, TKeys[number]>>;
+							  }
+							| undefined;
 					}
 				: TSchema extends ObjectWithRestSchema<
 							infer TEntries,
@@ -247,9 +256,9 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 							 */
 							readonly _run: (
 								this: unknown,
-								dataset: Dataset<unknown, never>,
+								dataset: UnknownDataset,
 								config: Config<BaseIssue<unknown>>,
-							) => Dataset<
+							) => OutputDataset<
 								InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 									[key: string]: InferOutput<TSchema["rest"]>;
 								},
@@ -262,18 +271,20 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 							 *
 							 * @internal
 							 */
-							readonly _types?: {
-								readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
-									[key: string]: InferInput<TSchema["rest"]>;
-								};
-								readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
-									[key: string]: InferOutput<TSchema["rest"]>;
-								};
-								readonly issue:
-									| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-									| InferObjectIssue<Pick<TEntries, TKeys[number]>>
-									| InferIssue<TSchema["rest"]>;
-							};
+							readonly _types?:
+								| {
+										readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
+											[key: string]: InferInput<TSchema["rest"]>;
+										};
+										readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
+											[key: string]: InferOutput<TSchema["rest"]>;
+										};
+										readonly issue:
+											| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+											| InferObjectIssue<Pick<TEntries, TKeys[number]>>
+											| InferIssue<TSchema["rest"]>;
+								  }
+								| undefined;
 						}
 					: TSchema extends ObjectWithRestSchemaAsync<
 								infer TEntries,
@@ -297,10 +308,10 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 								 */
 								readonly _run: (
 									this: unknown,
-									dataset: Dataset<unknown, never>,
+									dataset: UnknownDataset,
 									config: Config<BaseIssue<unknown>>,
 								) => Promise<
-									Dataset<
+									OutputDataset<
 										InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 											[key: string]: InferOutput<TSchema["rest"]>;
 										},
@@ -314,18 +325,20 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 								 *
 								 * @internal
 								 */
-								readonly _types?: {
-									readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
-										[key: string]: InferInput<TSchema["rest"]>;
-									};
-									readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
-										[key: string]: InferOutput<TSchema["rest"]>;
-									};
-									readonly issue:
-										| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
-										| InferObjectIssue<Pick<TEntries, TKeys[number]>>
-										| InferIssue<TSchema["rest"]>;
-								};
+								readonly _types?:
+									| {
+											readonly input: InferObjectInput<Pick<TEntries, TKeys[number]>> & {
+												[key: string]: InferInput<TSchema["rest"]>;
+											};
+											readonly output: InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
+												[key: string]: InferOutput<TSchema["rest"]>;
+											};
+											readonly issue:
+												| Extract<InferIssue<TSchema>, { type: TSchema["type"] }>
+												| InferObjectIssue<Pick<TEntries, TKeys[number]>>
+												| InferIssue<TSchema["rest"]>;
+									  }
+									| undefined;
 							}
 						: never;
 

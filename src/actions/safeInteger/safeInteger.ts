@@ -1,5 +1,5 @@
 import { isSafeInteger } from "@rbxts/phantom/src/Number";
-import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -96,7 +96,7 @@ export function safeInteger(
 			) {
 				_addIssue(this, "safe integer", dataset, config);
 			}
-			return dataset as Dataset<number, SafeIntegerIssue<number>>;
+			return dataset as OutputDataset<number, SafeIntegerIssue<number>>;
 		},
 	};
 }

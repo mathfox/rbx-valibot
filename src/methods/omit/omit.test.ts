@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
 import { type BooleanIssue, type NumberIssue, boolean, number, object, objectWithRest, string_ } from "../../schemas";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { omit } from "./omit";
 
@@ -75,7 +75,7 @@ describe("omit", () => {
 							received: "nil",
 						} satisfies NumberIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 		});
 	});
@@ -125,7 +125,7 @@ describe("omit", () => {
 							received: "nil",
 						} satisfies NumberIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 
 			test("if an omitted key does not match rest", () => {
@@ -142,7 +142,7 @@ describe("omit", () => {
 							received: "1337",
 						} satisfies BooleanIssue,
 					],
-				} satisfies UntypedDataset<InferIssue<typeof schema>>);
+				} satisfies FailureDataset<InferIssue<typeof schema>>);
 			});
 		});
 	});

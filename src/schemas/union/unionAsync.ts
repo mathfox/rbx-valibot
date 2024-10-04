@@ -1,14 +1,16 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
 	ErrorMessage,
+	FailureDataset,
 	InferInput,
 	InferIssue,
 	InferOutput,
 	MaybeReadonly,
-	TypedDataset,
-	UntypedDataset,
+	PartialDataset,
+	SuccessDataset,
 } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type { UnionIssue } from "./types";
@@ -89,11 +91,11 @@ export function unionAsync(
 		async: true,
 		options,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Create variables to collect datasets
-			let validDataset: TypedDataset<unknown, BaseIssue<unknown>> | undefined;
-			let typedDatasets: TypedDataset<unknown, BaseIssue<unknown>>[] | undefined;
-			let untypedDatasets: UntypedDataset<BaseIssue<unknown>>[] | undefined;
+			let validDataset: SuccessDataset<unknown> | undefined;
+			let typedDatasets: PartialDataset<unknown, BaseIssue<unknown>>[] | undefined;
+			let untypedDatasets: FailureDataset<BaseIssue<unknown>>[] | undefined;
 
 			// Parse schema of each option and collect datasets
 			for (const schema of (

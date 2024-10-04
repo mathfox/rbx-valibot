@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -68,14 +69,14 @@ export function string_(message?: ErrorMessage<StringIssue>): StringSchema<Error
 		expects: "string",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (typeIs(dataset.value, "string")) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<string, StringIssue>;
+			return dataset as OutputDataset<string, StringIssue>;
 		},
 	};
 }

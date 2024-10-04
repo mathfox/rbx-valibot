@@ -1,4 +1,4 @@
-import type { BaseTransformation, TypedDataset } from "../../types";
+import type { BaseTransformation, OutputDataset } from "../../types";
 
 /**
  * Transform action type.
@@ -35,7 +35,7 @@ export function transform<TInput, TOutput>(operation: (input: TInput) => TOutput
 		_run(dataset) {
 			dataset.value = (this as TransformAction<TInput, TOutput>).operation(dataset.value) as unknown as TInput;
 
-			return dataset as unknown as TypedDataset<TOutput, never>;
+			return dataset as unknown as OutputDataset<TOutput, never>;
 		},
 	};
 }

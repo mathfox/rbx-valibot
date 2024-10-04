@@ -1,6 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import { pipe } from "../../methods";
-import type { InferIssue, InferOutput, TypedDataset, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue } from "../../tests";
 import { boolean } from "../boolean";
 import { literal } from "../literal/literal";
@@ -8,7 +7,6 @@ import { number } from "../number";
 import { object } from "../object";
 import { string_ } from "../string";
 import { variant } from "./variant";
-import { custom } from "../custom";
 
 // TODO: Add test for invalid type inputs
 
@@ -77,7 +75,7 @@ describe("variant", () => {
 						received: '"foo"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for empty options", () => {
@@ -96,7 +94,7 @@ describe("variant", () => {
 						received: `"${input.type}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing discriminator", () => {
@@ -115,7 +113,7 @@ describe("variant", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for invalid discriminator", () => {
@@ -134,7 +132,7 @@ describe("variant", () => {
 						received: `"${input.type}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested missing discriminator", () => {
@@ -160,7 +158,7 @@ describe("variant", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested invalid discriminator", () => {
@@ -186,7 +184,7 @@ describe("variant", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first missing invalid discriminator", () => {
@@ -230,7 +228,7 @@ describe("variant", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested missing discriminator", () => {
@@ -274,7 +272,7 @@ describe("variant", () => {
 						received: "undefined",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", () => {
@@ -318,7 +316,7 @@ describe("variant", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", () => {
@@ -362,7 +360,7 @@ describe("variant", () => {
 						received: `"${input.subType1}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", () => {
@@ -410,7 +408,7 @@ describe("variant", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", () => {
@@ -458,7 +456,7 @@ describe("variant", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for first nested invalid discriminator", () => {
@@ -510,7 +508,7 @@ describe("variant", () => {
 						received: `"${input.subType2}"`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for untyped object", () => {
@@ -532,7 +530,7 @@ describe("variant", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for nested untyped object", () => {
@@ -557,7 +555,7 @@ describe("variant", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for multiple untyped objects", () => {
@@ -580,7 +578,7 @@ describe("variant", () => {
 						received: `${input.other}`,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@rbxts/jest-globals";
-import type { InferIssue, UntypedDataset } from "../../types";
+import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { array } from "../array/array";
 import type { ArrayIssue } from "../array/types";
@@ -130,7 +130,7 @@ describe("objectWithRestAsync", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for missing nested entries", async () => {
@@ -148,7 +148,7 @@ describe("objectWithRestAsync", () => {
 						received: "nil",
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("with abort early", async () => {
@@ -156,7 +156,7 @@ describe("objectWithRestAsync", () => {
 				typed: false,
 				value: {},
 				issues: [{ ...stringIssue, abortEarly: true }],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		const arrayIssue: ArrayIssue = {
@@ -187,7 +187,7 @@ describe("objectWithRestAsync", () => {
 						received: '"bar"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong rest with abort early", async () => {
@@ -220,7 +220,7 @@ describe("objectWithRestAsync", () => {
 						abortEarly: true,
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
 		test("for wrong nested rest", async () => {
@@ -242,7 +242,7 @@ describe("objectWithRestAsync", () => {
 						received: '"true"',
 					},
 				],
-			} satisfies UntypedDataset<InferIssue<typeof schema>>);
+			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 	});
 });

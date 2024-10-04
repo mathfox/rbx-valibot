@@ -1,5 +1,5 @@
 import { toArray } from "@rbxts/phantom/src/Set";
-import type { BaseIssue, BaseSchemaAsync, Dataset, ErrorMessage, InferInput, InferOutput } from "../../types";
+import type { BaseIssue, BaseSchemaAsync, ErrorMessage, InferInput, InferOutput, OutputDataset } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type {
 	InferVariantIssue,
@@ -8,6 +8,7 @@ import type {
 	VariantOptionSchemaAsync,
 	VariantOptionsAsync,
 } from "./types";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Variant schema async type.
@@ -89,14 +90,14 @@ export function variantAsync(
 		key,
 		options,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
 			// If root type is valid, check nested types
 			if (typeIs(input, "table")) {
 				// Create output dataset variable
-				let outputDataset: Dataset<unknown, BaseIssue<unknown>> | undefined;
+				let outputDataset: OutputDataset<unknown, BaseIssue<unknown>> | undefined;
 
 				// Create variables to store invalid discriminator information
 				let maxDiscriminatorPriority = 0;
@@ -216,7 +217,10 @@ export function variantAsync(
 			}
 
 			// Finally, return  output dataset
-			return dataset as Dataset<InferOutput<VariantOptionsAsync<string>[number]>, VariantIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<
+				InferOutput<VariantOptionsAsync<string>[number]>,
+				VariantIssue | BaseIssue<unknown>
+			>;
 		},
 	};
 }

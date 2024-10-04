@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchemaAsync, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchemaAsync, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue, _joinExpects } from "../../utils";
 import type { InferIntersectInput, InferIntersectOutput, IntersectIssue, IntersectOptionsAsync } from "./types";
 import { _merge } from "./utils";
@@ -71,7 +72,7 @@ export function intersectAsync(
 		async: true,
 		options,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Parse input with schema of options, if not empty
 			if (
 				(
@@ -99,7 +100,7 @@ export function intersectAsync(
 				);
 
 				// Collect outputs of option datasets
-				for (const optionDataset of optionDatasets as Dataset<unknown, BaseIssue<unknown>>[]) {
+				for (const optionDataset of optionDatasets as OutputDataset<unknown, BaseIssue<unknown>>[]) {
 					// If there are issues, capture them
 					if (optionDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
@@ -161,7 +162,7 @@ export function intersectAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<never, IntersectIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<never, IntersectIssue | BaseIssue<unknown>>;
 		},
 	};
 }

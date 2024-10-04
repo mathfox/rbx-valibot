@@ -1,12 +1,13 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchemaAsync,
-	Dataset,
 	ErrorMessage,
 	InferObjectInput,
 	InferObjectIssue,
 	InferObjectOutput,
 	ObjectEntriesAsync,
+	OutputDataset,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { LooseObjectIssue } from "./types";
@@ -80,7 +81,7 @@ export function looseObjectAsync(
 		async: true,
 		entries,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -113,7 +114,7 @@ export function looseObjectAsync(
 				for (const [key, value, valueDataset] of valueDatasets as [
 					key: string,
 					value: unknown,
-					valueDataSet: Dataset<unknown, BaseIssue<unknown>>,
+					valueDataSet: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
@@ -165,7 +166,7 @@ export function looseObjectAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<
+			return dataset as OutputDataset<
 				InferObjectOutput<ObjectEntriesAsync> & { [key: string]: unknown },
 				LooseObjectIssue | InferObjectIssue<ObjectEntriesAsync>
 			>;

@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage, InferIssue } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferRecordInput, InferRecordOutput, RecordIssue } from "./types";
 
@@ -86,7 +87,7 @@ export function record(
 		key,
 		value,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -176,7 +177,7 @@ export function record(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<Record<string | number | symbol, unknown>, RecordIssue | BaseIssue<unknown>>;
+			return dataset as OutputDataset<Record<string | number | symbol, unknown>, RecordIssue | BaseIssue<unknown>>;
 		},
 	};
 }

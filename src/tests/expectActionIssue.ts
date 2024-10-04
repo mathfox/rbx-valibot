@@ -1,5 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseValidation, InferInput, InferIssue, TypedDataset } from "../types";
+import type { BaseIssue, BaseValidation, InferInput, InferIssue, PartialDataset } from "../types";
 import { _stringify } from "../utils";
 
 /**
@@ -34,6 +34,6 @@ export function expectActionIssue<TAction extends BaseValidation<any, unknown, B
 					...baseIssue,
 				},
 			],
-		} satisfies TypedDataset<typeof value, InferIssue<TAction>>);
+		} satisfies PartialDataset<typeof value, InferIssue<TAction>>);
 	}
 }

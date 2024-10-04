@@ -1,9 +1,30 @@
-import type { BaseIssue } from "./issue";
+import type { BaseIssue } from "./issue.ts";
 
 /**
- * Typed dataset type.
+ * Unknown dataset type.
  */
-export interface TypedDataset<TValue, TIssue extends BaseIssue<unknown>> {
+export interface UnknownDataset {
+	/**
+	 * Whether is's typed.
+	 * TODO: Should we keep this?
+	 */
+	typed?: never;
+	// typed?: false;
+	/**
+	 * The dataset value.
+	 */
+	value: unknown;
+	/**
+	 * The dataset issues.
+	 * TODO: Should we keep this?
+	 */
+	issues?: never;
+}
+
+/**
+ * Success dataset type.
+ */
+export interface SuccessDataset<TValue> {
 	/**
 	 * Whether is's typed.
 	 */
@@ -14,15 +35,32 @@ export interface TypedDataset<TValue, TIssue extends BaseIssue<unknown>> {
 	value: TValue;
 	/**
 	 * The dataset issues.
-	 * At least one issue is required for the issues array to be considered valid.
 	 */
-	issues?: [TIssue, ...TIssue[]];
+	issues?: never;
 }
 
 /**
- * Untyped dataset type.
+ * Partial dataset type.
  */
-export interface UntypedDataset<TIssue extends BaseIssue<unknown>> {
+export interface PartialDataset<TValue, TIssue extends BaseIssue<unknown>> {
+	/**
+	 * Whether is's typed.
+	 */
+	typed: true;
+	/**
+	 * The dataset value.
+	 */
+	value: TValue;
+	/**
+	 * The dataset issues.
+	 */
+	issues: [TIssue, ...TIssue[]];
+}
+
+/**
+ * Failure dataset type.
+ */
+export interface FailureDataset<TIssue extends BaseIssue<unknown>> {
 	/**
 	 * Whether is's typed.
 	 */
@@ -33,12 +71,14 @@ export interface UntypedDataset<TIssue extends BaseIssue<unknown>> {
 	value: unknown;
 	/**
 	 * The dataset issues.
-	 * At least one issue is required for the issues array to be considered valid.
 	 */
-	issues?: [TIssue, ...TIssue[]];
+	issues: [TIssue, ...TIssue[]];
 }
 
 /**
- * Dataset type.
+ * Output dataset type.
  */
-export type Dataset<TValue, TIssue extends BaseIssue<unknown>> = TypedDataset<TValue, TIssue> | UntypedDataset<TIssue>;
+export type OutputDataset<TValue, TIssue extends BaseIssue<unknown>> =
+	| SuccessDataset<TValue>
+	| PartialDataset<TValue, TIssue>
+	| FailureDataset<TIssue>;

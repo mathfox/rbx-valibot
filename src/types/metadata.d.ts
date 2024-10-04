@@ -19,11 +19,13 @@ export interface BaseMetadata<TInput> {
 	 *
 	 * @internal
 	 */
-	readonly _types?: {
-		readonly input: TInput;
-		readonly output: TInput;
-		readonly issue: never;
-	};
+	readonly _types?:
+		| {
+				readonly input: TInput;
+				readonly output: TInput;
+				readonly issue: never;
+		  }
+		| undefined;
 }
 
 /**

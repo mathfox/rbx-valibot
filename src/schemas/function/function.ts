@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -70,14 +71,14 @@ export function function_(
 		expects: "Function",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (typeIs(dataset.value, "function")) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<(...args: unknown[]) => unknown, FunctionIssue>;
+			return dataset as OutputDataset<(...args: unknown[]) => unknown, FunctionIssue>;
 		},
 	};
 }

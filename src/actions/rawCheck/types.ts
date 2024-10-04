@@ -1,4 +1,4 @@
-import type { BaseIssue, Config, Dataset, ErrorMessage } from "../../types";
+import type { BaseIssue, Config, ErrorMessage, OutputDataset } from "../../types";
 
 /**
  * Raw check issue type.
@@ -34,7 +34,7 @@ type AddIssue<TInput> = (info?: IssueInfo<TInput>) => void;
  * Context type.
  */
 export interface Context<TInput> {
-	readonly dataset: Dataset<TInput, BaseIssue<unknown>>;
+	readonly dataset: OutputDataset<TInput, BaseIssue<unknown>>;
 	readonly config: Config<RawCheckIssue<TInput>>;
 	readonly addIssue: AddIssue<TInput>;
 }

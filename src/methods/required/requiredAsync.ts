@@ -17,7 +17,6 @@ import type {
 	BaseSchema,
 	BaseSchemaAsync,
 	Config,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -26,7 +25,9 @@ import type {
 	InferOutput,
 	ObjectEntriesAsync,
 	ObjectKeys,
+	OutputDataset,
 	SchemaWithoutPipe,
+	UnknownDataset,
 } from "../../types";
 
 /**
@@ -85,21 +86,26 @@ export type SchemaWithRequiredAsync<
 			 */
 			readonly _run: (
 				this: unknown,
-				dataset: Dataset<unknown, never>,
+				dataset: UnknownDataset,
 				config: Config<BaseIssue<unknown>>,
 			) => Promise<
-				Dataset<InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>, NonOptionalIssue | InferIssue<TSchema>>
+				OutputDataset<
+					InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>,
+					NonOptionalIssue | InferIssue<TSchema>
+				>
 			>;
 			/**
 			 * Input, output and issue type.
 			 *
 			 * @internal
 			 */
-			readonly _types?: {
-				readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>>;
-				readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>;
-				readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-			};
+			readonly _types?:
+				| {
+						readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>>;
+						readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>;
+						readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+				  }
+				| undefined;
 		}
 	: TSchema extends LooseObjectSchemaAsync<infer TEntries, ErrorMessage<LooseObjectIssue> | undefined>
 		? Omit<TSchema, "entries" | "_run" | "_types"> & {
@@ -119,10 +125,10 @@ export type SchemaWithRequiredAsync<
 				 */
 				readonly _run: (
 					this: unknown,
-					dataset: Dataset<unknown, never>,
+					dataset: UnknownDataset,
 					config: Config<BaseIssue<unknown>>,
 				) => Promise<
-					Dataset<
+					OutputDataset<
 						InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 							[key: string]: unknown;
 						},
@@ -134,15 +140,17 @@ export type SchemaWithRequiredAsync<
 				 *
 				 * @internal
 				 */
-				readonly _types?: {
-					readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-						[key: string]: unknown;
-					};
-					readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-						[key: string]: unknown;
-					};
-					readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-				};
+				readonly _types?:
+					| {
+							readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+								[key: string]: unknown;
+							};
+							readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+								[key: string]: unknown;
+							};
+							readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+					  }
+					| undefined;
 			}
 		: TSchema extends ObjectWithRestSchemaAsync<
 					infer TEntries,
@@ -166,10 +174,10 @@ export type SchemaWithRequiredAsync<
 					 */
 					readonly _run: (
 						this: unknown,
-						dataset: Dataset<unknown, never>,
+						dataset: UnknownDataset,
 						config: Config<BaseIssue<unknown>>,
 					) => Promise<
-						Dataset<
+						OutputDataset<
 							InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
 								[key: string]: InferOutput<TRest>;
 							},
@@ -181,15 +189,17 @@ export type SchemaWithRequiredAsync<
 					 *
 					 * @internal
 					 */
-					readonly _types?: {
-						readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-							[key: string]: InferInput<TRest>;
-						};
-						readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
-							[key: string]: InferOutput<TRest>;
-						};
-						readonly issue: NonOptionalIssue | InferIssue<TSchema>;
-					};
+					readonly _types?:
+						| {
+								readonly input: InferObjectInput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+									[key: string]: InferInput<TRest>;
+								};
+								readonly output: InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
+									[key: string]: InferOutput<TRest>;
+								};
+								readonly issue: NonOptionalIssue | InferIssue<TSchema>;
+						  }
+						| undefined;
 				}
 			: never;
 

@@ -8,10 +8,11 @@ import type {
 	BaseValidation,
 	BaseValidationAsync,
 	Config,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
+	OutputDataset,
+	UnknownDataset,
 } from "../../types";
 import { _stringify } from "../_stringify";
 
@@ -55,7 +56,7 @@ export function _addIssue<const TContext extends Context>(
 		message?: ErrorMessage<Extract<InferIssue<TContext>, { type: TContext["type"] }>> | undefined;
 	},
 	label: string,
-	dataset: Dataset<unknown, BaseIssue<unknown>>,
+	dataset: UnknownDataset | OutputDataset<unknown, BaseIssue<unknown>>,
 	config: Config<any>, // InferIssue<TContext>
 	other?: Other<TContext>,
 ): void {
@@ -107,6 +108,6 @@ export function _addIssue<const TContext extends Context>(
 	if (dataset.issues !== undefined) {
 		dataset.issues.push(issue);
 	} else {
-		dataset.issues = [issue];
+		(dataset as unknown as { issues: defined[] }).issues = [issue];
 	}
 }

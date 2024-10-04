@@ -1,5 +1,5 @@
 import { expect } from "@rbxts/jest-globals";
-import type { BaseIssue, BaseSchema, InferIssue, UntypedDataset } from "../types";
+import type { BaseIssue, BaseSchema, FailureDataset, InferIssue } from "../types";
 import { _stringify } from "../utils";
 
 /**
@@ -17,7 +17,7 @@ export function expectSchemaIssue<TSchema extends BaseSchema<unknown, unknown, B
 	received?: string,
 ): void {
 	for (const value of values) {
-		expect(schema._run({ typed: false, value }, {})).toEqual({
+		expect(schema._run({ value }, {})).toEqual({
 			typed: false,
 			value,
 			issues: [
@@ -33,6 +33,6 @@ export function expectSchemaIssue<TSchema extends BaseSchema<unknown, unknown, B
 					received: received ?? _stringify(value),
 				},
 			],
-		} satisfies UntypedDataset<InferIssue<TSchema>>);
+		} satisfies FailureDataset<InferIssue<TSchema>>);
 	}
 }

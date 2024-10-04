@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -66,14 +67,14 @@ export function nan(message?: ErrorMessage<NanIssue>): NanSchema<ErrorMessage<Na
 		expects: "NaN",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (typeIs(dataset.value, "number") && dataset.value !== dataset.value) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<number, NanIssue>;
+			return dataset as OutputDataset<number, NanIssue>;
 		},
 	};
 }

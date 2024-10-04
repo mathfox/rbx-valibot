@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Config, Dataset, InferIssue, InferOutput } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, Config, InferIssue, InferOutput, OutputDataset } from "../../types";
 import { getFallback } from "../getFallback";
 
 /**
@@ -7,7 +8,7 @@ import { getFallback } from "../getFallback";
 export type Fallback<TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>> =
 	| InferOutput<TSchema>
 	| ((
-			dataset?: Dataset<InferOutput<TSchema>, InferIssue<TSchema>>,
+			dataset?: OutputDataset<InferOutput<TSchema>, InferIssue<TSchema>>,
 			config?: Config<InferIssue<TSchema>>,
 	  ) => InferOutput<TSchema>);
 
@@ -39,7 +40,7 @@ export function fallback<
 	return {
 		...schema,
 		fallback,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			const outputDataset = schema._run(dataset, config);
 
 			return outputDataset.issues ? { typed: true, value: getFallback(this, outputDataset, config) } : outputDataset;

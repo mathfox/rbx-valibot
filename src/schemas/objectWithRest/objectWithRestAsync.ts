@@ -1,8 +1,8 @@
+import { getGlobalConfig } from "../../storages";
 import type {
 	BaseIssue,
 	BaseSchema,
 	BaseSchemaAsync,
-	Dataset,
 	ErrorMessage,
 	InferInput,
 	InferIssue,
@@ -11,6 +11,7 @@ import type {
 	InferObjectOutput,
 	InferOutput,
 	ObjectEntriesAsync,
+	OutputDataset,
 } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ObjectWithRestIssue } from "./types";
@@ -105,7 +106,7 @@ export function objectWithRestAsync(
 		entries,
 		rest,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Get input value from dataset
 			const input = dataset.value;
 
@@ -183,7 +184,7 @@ export function objectWithRestAsync(
 				for (const [key, value, valueDataset] of normalDatasets as [
 					key: string,
 					value: unknown,
-					valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
@@ -220,7 +221,7 @@ export function objectWithRestAsync(
 					for (const [key, value, valueDataset] of restDatasets as [
 						key: string,
 						value: unknown,
-						valueDataset: Dataset<unknown, BaseIssue<unknown>>,
+						valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 					][]) {
 						// If there are issues, capture them
 						if (valueDataset.issues !== undefined) {
@@ -256,7 +257,7 @@ export function objectWithRestAsync(
 			}
 
 			// Return output dataset
-			return dataset as Dataset<
+			return dataset as OutputDataset<
 				InferObjectOutput<ObjectEntriesAsync> & { [key: string]: unknown },
 				ObjectWithRestIssue | InferObjectIssue<ObjectEntriesAsync> | BaseIssue<unknown>
 			>;

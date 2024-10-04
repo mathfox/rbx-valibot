@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -68,14 +69,14 @@ export function boolean(message?: ErrorMessage<BooleanIssue>): BooleanSchema<Err
 		expects: "boolean",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (typeIs(dataset.value, "boolean")) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<boolean, BooleanIssue>;
+			return dataset as OutputDataset<boolean, BooleanIssue>;
 		},
 	};
 }

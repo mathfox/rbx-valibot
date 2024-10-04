@@ -1,4 +1,5 @@
-import type { BaseIssue, BaseSchema, Dataset, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseSchema, ErrorMessage, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -68,14 +69,14 @@ export function promise(message?: ErrorMessage<PromiseIssue>): PromiseSchema<Err
 		expects: "Promise",
 		async: false,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.value instanceof Promise) {
 				dataset.typed = true;
 			} else {
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset as Dataset<Promise<unknown>, PromiseIssue>;
+			return dataset as OutputDataset<Promise<unknown>, PromiseIssue>;
 		},
 	};
 }

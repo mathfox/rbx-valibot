@@ -1,5 +1,5 @@
 import type { Config } from "./config";
-import type { Dataset, TypedDataset } from "./dataset";
+import type { OutputDataset, SuccessDataset } from "./dataset";
 import type { BaseIssue } from "./issue";
 
 /**
@@ -34,19 +34,21 @@ export interface BaseTransformation<TInput, TOutput, TIssue extends BaseIssue<un
 	 */
 	readonly _run: (
 		this: BaseTransformation<any, any, BaseIssue<unknown>>,
-		dataset: TypedDataset<TInput, never>,
+		dataset: SuccessDataset<TInput>,
 		config: Config<BaseIssue<unknown>>,
-	) => Dataset<TOutput, TIssue>;
+	) => OutputDataset<TOutput, BaseIssue<unknown> | TIssue>;
 	/**
 	 * Input, output and issue type.
 	 *
 	 * @internal
 	 */
-	readonly _types?: {
-		readonly input: TInput;
-		readonly output: TOutput;
-		readonly issue: TIssue;
-	};
+	readonly _types?:
+		| {
+				readonly input: TInput;
+				readonly output: TOutput;
+				readonly issue: TIssue;
+		  }
+		| undefined;
 }
 
 /**
@@ -76,9 +78,9 @@ export interface BaseTransformationAsync<TInput, TOutput, TIssue extends BaseIss
 	 */
 	readonly _run: (
 		this: BaseTransformationAsync<any, any, BaseIssue<unknown>>,
-		dataset: TypedDataset<TInput, never>,
+		dataset: SuccessDataset<TInput>,
 		config: Config<BaseIssue<unknown>>,
-	) => Promise<Dataset<TOutput, TIssue>>;
+	) => Promise<OutputDataset<TOutput, BaseIssue<unknown> | TIssue>>;
 }
 
 /**

@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseSchema, BaseSchemaAsync, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 import type { InferNonOptionalInput, InferNonOptionalIssue, InferNonOptionalOutput, NonOptionalIssue } from "./types";
@@ -80,7 +81,7 @@ export function nonOptionalAsync(
 		async: true,
 		wrapped,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// If value is `undefined`, add issue and return dataset
 			if (dataset.value === undefined) {
 				_addIssue(this, "type", dataset, config);
