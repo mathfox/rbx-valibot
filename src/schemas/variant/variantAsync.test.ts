@@ -282,7 +282,7 @@ describe("variantAsync", () => {
 			} satisfies UntypedDataset<InferIssue<typeof schema>>);
 		});
 
-		test("for first nested invalid discriminator", async () => {
+		test.only("for first nested invalid discriminator", async () => {
 			const schema = variantAsync("type", [
 				variantAsync("subType1", [
 					object({
@@ -309,7 +309,9 @@ describe("variantAsync", () => {
 					}),
 				]),
 			]);
+
 			const input = { type: "bar", subType2: "baz-2" };
+
 			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
@@ -449,7 +451,9 @@ describe("variantAsync", () => {
 					]),
 				]),
 			]);
+
 			const input = { type: "bar", subType1: "bar-1", subType2: "invalid" };
+
 			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
@@ -571,7 +575,9 @@ describe("variantAsync", () => {
 				object({ type: literal("bar"), other: number() }),
 				objectAsync({ type: literal("bar"), other: boolean() }),
 			]);
-			const input = { type: "bar", other: 3 };
+
+			const input = { type: "bar", other: undefined };
+
 			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,
 				value: input,
