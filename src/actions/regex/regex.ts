@@ -1,5 +1,5 @@
 import type RegExp from "@rbxts/regexp";
-import type { BaseIssue, BaseValidation, ErrorMessage, OutputDataset } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -97,7 +97,7 @@ export function regex(
 				_addIssue(this, "format", dataset, config);
 			}
 
-			return dataset as OutputDataset<string, RegexIssue<string>>;
+			return dataset;
 		},
 	};
 }

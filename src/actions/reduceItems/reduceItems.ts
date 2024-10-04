@@ -1,4 +1,4 @@
-import type { BaseTransformation, MaybeReadonly, OutputDataset } from "../../types";
+import type { BaseTransformation, MaybeReadonly, SuccessDataset } from "../../types";
 import type { ArrayInput } from "../types";
 
 /**
@@ -64,7 +64,7 @@ export function reduceItems(
 				(this as ReduceItemsAction<unknown[], unknown>).initial as defined,
 			) as defined[];
 
-			return dataset as OutputDataset<unknown, never>;
+			return dataset as SuccessDataset<unknown>;
 		},
 	};
 }

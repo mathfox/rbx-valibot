@@ -1,4 +1,4 @@
-import type { BaseTransformation, OutputDataset } from "../../types";
+import type { BaseIssue, BaseTransformation, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawTransformIssue } from "./types";
 
@@ -49,7 +49,7 @@ export function rawTransform<TInput, TOutput>(
 			}
 
 			// Return output dataset
-			return dataset as unknown as OutputDataset<TOutput, RawTransformIssue<TInput>>;
+			return dataset as unknown as OutputDataset<TOutput, BaseIssue<unknown> | RawTransformIssue<TInput>>;
 		},
 	};
 }

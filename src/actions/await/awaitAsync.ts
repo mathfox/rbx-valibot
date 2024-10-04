@@ -1,4 +1,4 @@
-import type { BaseTransformationAsync, OutputDataset } from "../../types";
+import type { BaseTransformationAsync, SuccessDataset } from "../../types";
 
 /**
  * Await action async type.
@@ -29,7 +29,7 @@ export function awaitAsync<TInput extends Promise<unknown>>(): AwaitActionAsync<
 		async _run(dataset) {
 			dataset.value = (await dataset.value) as TInput;
 
-			return dataset as OutputDataset<Awaited<TInput>, never>;
+			return dataset as SuccessDataset<Awaited<TInput>>;
 		},
 	};
 }

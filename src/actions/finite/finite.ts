@@ -1,5 +1,5 @@
 import isFinite from "@rbxts/phantom/src/Number/isFinite";
-import type { BaseIssue, BaseValidation, ErrorMessage, OutputDataset } from "../../types";
+import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
 /**
@@ -92,7 +92,7 @@ export function finite(
 				_addIssue(this, "finite", dataset, config);
 			}
 
-			return dataset as OutputDataset<number, FiniteIssue<number>>;
+			return dataset;
 		},
 	};
 }
