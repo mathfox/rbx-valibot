@@ -3,7 +3,6 @@ import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
-import { optional } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { looseTuple } from "./looseTuple";
 import type { LooseTupleIssue } from "./types";
@@ -14,12 +13,12 @@ describe("looseTuple", () => {
 			expectNoSchemaIssue(looseTuple([]), [[]]);
 		});
 
-		const schema = looseTuple([optional(string_()), number()]);
+		const schema = looseTuple([string_(), number()]);
 
 		test("for simple tuple", () => {
 			expectNoSchemaIssue(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -29,7 +28,7 @@ describe("looseTuple", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = looseTuple([optional(string_()), number()], "message");
+		const schema = looseTuple([string_(), number()], "message");
 		const baseIssue: Omit<LooseTupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "loose_tuple",
@@ -62,17 +61,17 @@ describe("looseTuple", () => {
 		});
 
 		test("for objects", () => {
-			expectSchemaIssue(schema, baseIssue, [{}, { key: "value" }]);
+			expectSchemaIssue(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = looseTuple([optional(string_()), number()]);
+		const schema = looseTuple([string_(), number()]);
 
 		test("for simple tuple", () => {
 			expectNoSchemaIssue(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -80,7 +79,7 @@ describe("looseTuple", () => {
 			expectNoSchemaIssue(looseTuple([schema, schema]), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});

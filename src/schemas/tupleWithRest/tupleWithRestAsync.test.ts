@@ -94,7 +94,7 @@ describe("tupleWithRestAsync", () => {
 	});
 
 	describe("should return dataset with nested issues", () => {
-		const schema = tupleWithRestAsync([string_(), number(), boolean()], undefined_());
+		const schema = tupleWithRestAsync([string_(), number(), boolean()], string_());
 
 		const baseInfo = {
 			message: expect.any("string"),
@@ -150,7 +150,7 @@ describe("tupleWithRestAsync", () => {
 		});
 
 		test("for wrong nested items", async () => {
-			const nestedSchema = tupleWithRestAsync([schema, schema], undefined_());
+			const nestedSchema = tupleWithRestAsync([schema, schema], number());
 			const input: [[string, string, boolean], number, number] = [["foo", "123", false], 3, 3];
 			expect(await nestedSchema._run({ typed: false, value: input }, {})).toEqual({
 				typed: false,

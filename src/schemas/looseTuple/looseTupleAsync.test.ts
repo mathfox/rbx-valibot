@@ -3,7 +3,6 @@ import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
-import { optionalAsync } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { looseTupleAsync } from "./looseTupleAsync";
 import type { LooseTupleIssue } from "./types";
@@ -14,12 +13,12 @@ describe("looseTupleAsync", () => {
 			await expectNoSchemaIssueAsync(looseTupleAsync([]), [[]]);
 		});
 
-		const schema = looseTupleAsync([optionalAsync(string_()), number()]);
+		const schema = looseTupleAsync([string_(), number()]);
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -29,7 +28,7 @@ describe("looseTupleAsync", () => {
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = looseTupleAsync([optionalAsync(string_()), number()], "message");
+		const schema = looseTupleAsync([string_(), number()], "message");
 		const baseIssue: Omit<LooseTupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "loose_tuple",
@@ -62,17 +61,17 @@ describe("looseTupleAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = looseTupleAsync([optionalAsync(string_()), number()]);
+		const schema = looseTupleAsync([string_(), number()]);
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -80,7 +79,7 @@ describe("looseTupleAsync", () => {
 			await expectNoSchemaIssueAsync(looseTupleAsync([schema, schema]), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});
