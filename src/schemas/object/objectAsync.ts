@@ -135,25 +135,25 @@ export function objectAsync(
 					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (valueDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
+					if (valueDataset.issues) {
+						if (!dataset.issues) {
 							(dataset as unknown as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
 							// Add modified entry dataset issues to issues
 							for (const issue of valueDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (valueDataset.typed === false) {
+					if (!valueDataset.typed) {
 						dataset.typed = false;
 					}
 
