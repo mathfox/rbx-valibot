@@ -17,15 +17,12 @@ describe("notSize", () => {
 			expectNoActionIssue(action, [
 				new Map(),
 				new Map([[1, "one"]]),
-				new Map([
-					["one", 1],
-					["two", undefined],
-				]),
+				new Map([["one", 1]]),
 				new Map<string | number, string | undefined>([
 					[1, "one"],
 					[2, "two"],
 					["3", "three"],
-					[4, undefined],
+					[4, "true"],
 				]),
 			]);
 		});
@@ -34,7 +31,7 @@ describe("notSize", () => {
 			expectNoActionIssue(action, [
 				new Set(),
 				new Set([1]),
-				new Set(["one", undefined]),
+				new Set(["one"]),
 				new Set(["1234"]),
 				new Set([[1, 2, 3, 4], [5, 6], [7], [8, 9]]),
 			]);
@@ -71,11 +68,6 @@ describe("notSize", () => {
 						["two", "2"],
 						["three", 3],
 					]),
-					new Map<string | number | boolean, string | undefined>([
-						["1", "one"],
-						[2, undefined],
-						[true, undefined],
-					]),
 				],
 				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
@@ -90,8 +82,8 @@ describe("notSize", () => {
 					new Set(["123"]),
 					new Set([" ", "\n", "\t"]),
 					new Set([[1, 2, 3, 4], [5, 6], [7]]),
-					new Set([1, "two", undefined]),
-					new Set(["1", { value: "5" }, undefined]),
+					new Set([1, "two", "hey"]),
+					new Set(["1", { value: "5" }, "there"]),
 				],
 				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);

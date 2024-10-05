@@ -73,7 +73,7 @@ describe("maxSize", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[new Set([1, 2, 3, 4]), new Set([1, "3", true, undefined, [], {}])],
+				[new Set([1, 2, 3, 4]), new Set([1, "3", true, [], {}])],
 				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});

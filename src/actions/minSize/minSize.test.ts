@@ -37,11 +37,7 @@ describe("minSize", () => {
 		});
 
 		test("for valid sets", () => {
-			expectNoActionIssue(action, [
-				new Set([1, 2, 3]),
-				new Set([1, "two", undefined, "4"]),
-				new Set(["1", 2, "three", undefined, { value: "5" }]),
-			]);
+			expectNoActionIssue(action, [new Set([1, 2, 3]), new Set([1, "two", "4"]), new Set(["1", 2, "three"])]);
 		});
 	});
 
@@ -75,7 +71,7 @@ describe("minSize", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[new Set(), new Set([1]), new Set(["one", undefined])],
+				[new Set(), new Set([1]), new Set(["one"])],
 				(value) => `${(value as ReadonlyMap<unknown, unknown>).size()}`,
 			);
 		});

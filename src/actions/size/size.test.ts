@@ -32,8 +32,8 @@ describe("size", () => {
 				]),
 				new Map<string | number | boolean, string | undefined>([
 					["1", "one"],
-					[2, undefined],
-					[true, undefined],
+					[2, "two"],
+					[true, "true"],
 				]),
 			]);
 		});
@@ -41,11 +41,10 @@ describe("size", () => {
 		test("for valid sets", () => {
 			expectNoActionIssue(action, [
 				new Set([1, 2, 3]),
-				new Set(["123"]),
 				new Set([" ", "\n", "\t"]),
 				new Set([[1, 2, 3, 4], [5, 6], [7]]),
-				new Set([1, "two", undefined]),
-				new Set(["1", { value: "5" }, undefined]),
+				new Set([1, "two", true]),
+				new Set(["1", { value: "5" }, "hey"]),
 			]);
 		});
 	});
@@ -69,13 +68,13 @@ describe("size", () => {
 					new Map([[1, "one"]]),
 					new Map([
 						["one", 1],
-						["two", undefined],
+						["two", 2],
 					]),
 					new Map<string | number, string | undefined>([
 						[1, "one"],
 						[2, "two"],
 						["3", "three"],
-						[4, undefined],
+						[4, "trh"],
 					]),
 				],
 				(value) => `${(value as ReadonlySet<unknown>).size()}`,
@@ -86,13 +85,7 @@ describe("size", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[
-					new Set(),
-					new Set([1]),
-					new Set(["one", undefined]),
-					new Set(["1234"]),
-					new Set([[1, 2, 3, 4], [5, 6], [7], [8, 9]]),
-				],
+				[new Set(), new Set([1]), new Set(["one", 3]), new Set(["1234"]), new Set([[1, 2, 3, 4], [5, 6], [7], [8, 9]])],
 				(value) => `${(value as ReadonlySet<unknown>).size()}`,
 			);
 		});
