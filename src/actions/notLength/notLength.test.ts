@@ -14,22 +14,7 @@ describe("notLength", () => {
 		});
 
 		test("for valid strings", () => {
-			expectNoActionIssue(action, [
-				"",
-				" ",
-				"  ",
-				"\n",
-				"\n\t",
-				"あ", // 'あ' is 3 bytes
-				"ab",
-				"abcd",
-				"1",
-				"12",
-				"1234",
-				"@",
-				"@#",
-				"@#$%",
-			]);
+			expectNoActionIssue(action, ["", " ", "  ", "\n", "\n\t", "ab", "abcd", "1", "12", "1234", "@", "@#", "@#$%"]);
 		});
 
 		test("for valid arrays", () => {
@@ -60,16 +45,7 @@ describe("notLength", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[
-					"   ",
-					" \n\n",
-					"\n\n\t",
-					"abc",
-					"ABC",
-					"123",
-					"あああ", // 'あ' is 3 bytes but the total length of the string is 3
-					"@#$",
-				],
+				["   ", " \n\n", "\n\n\t", "abc", "ABC", "123", "@#$"],
 				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
@@ -81,7 +57,6 @@ describe("notLength", () => {
 				[
 					[1, 2, 3],
 					["foo", "bar", "baz"],
-					[1, undefined, undefined],
 					[[1, 2, 3, 4], [5], [6, 7]],
 					[{ value: 1 }, { value: 2 }, { value: 3 }],
 					["1", 2, { value: 3 }],

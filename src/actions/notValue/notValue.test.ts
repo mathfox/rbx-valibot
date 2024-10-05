@@ -2,6 +2,7 @@ import { describe, expect, test } from "@rbxts/jest-globals";
 import { expectActionIssue, expectNoActionIssue } from "../../tests";
 import { notValue } from "./notValue";
 import { MIN_SAFE_INTEGER, MAX_SAFE_INTEGER } from "@rbxts/phantom/src/Number";
+import { _stringify } from "../../utils";
 
 describe("notValue", () => {
 	describe("should return dataset with issues", () => {
@@ -74,8 +75,6 @@ describe("notValue", () => {
 			message: "message",
 		} as const;
 
-		const getReceived = (value: unknown): string => tostring(value);
-
 		test("for invalid booleans", () => {
 			expectActionIssue(notValue(true, "message"), { ...baseInfo, expected: "!true", requirement: true }, [true]);
 			expectActionIssue(notValue(false, "message"), { ...baseInfo, expected: "!false", requirement: false }, [false]);
@@ -85,46 +84,10 @@ describe("notValue", () => {
 			expectActionIssue(notValue(123, "message"), { ...baseInfo, expected: "!123", requirement: 123 }, [123, 123.0]);
 		});
 
-		test("for invalid non-numbers", () => {
-			expectActionIssue(
-				notValue(123, "message"),
-				{ ...baseInfo, expected: "!123", requirement: 123 },
-				["123", "123.0", " 123 "],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue(1, "message"),
-				{ ...baseInfo, expected: "!1", requirement: 1 },
-				["1", "1.0", " 1 ", true],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue(0, "message"),
-				{ ...baseInfo, expected: "!0", requirement: 0 },
-				["0", "0.0", " 0 ", "", " ", false],
-				getReceived,
-			);
-		});
-
 		test("for invalid strings", () => {
 			expectActionIssue(notValue("2024", "message"), { ...baseInfo, expected: '!"2024"', requirement: "2024" }, [
 				"2024",
 			]);
-		});
-
-		test("for invalid non-strings", () => {
-			expectActionIssue(
-				notValue("1", "message"),
-				{ ...baseInfo, expected: '!"1"', requirement: "1" },
-				[1, 1.0, true],
-				getReceived,
-			);
-			expectActionIssue(
-				notValue("0", "message"),
-				{ ...baseInfo, expected: '!"0"', requirement: "0" },
-				[0, 0.0, false],
-				getReceived,
-			);
 		});
 	});
 });

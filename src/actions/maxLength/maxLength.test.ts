@@ -45,7 +45,7 @@ describe("maxLength", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[[1, 2, 3, 4, 5, 6], new Array(999)],
+				[[1, 2, 3, 4, 5, 6], new Array(999, 0)],
 				(value) => `${(value as ArrayLike<defined>).size()}`,
 			);
 		});

@@ -95,16 +95,16 @@ export function notValue(
 		requirement,
 		message,
 		_run(dataset, config = getGlobalConfig()) {
-			const requirement = (
-				this as NotValueAction<ValueInput, ValueInput, ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined>
-			).requirement;
-
 			if (
-				dataset.typed && typeIs(dataset.value, "boolean")
-					? dataset.value === (requirement as boolean)
-					: typeIs(dataset.value, "string")
-						? dataset.value === (requirement as string)
-						: (dataset.value as number) === (requirement as number)
+				dataset.typed &&
+				dataset.value ===
+					(
+						this as NotValueAction<
+							ValueInput,
+							ValueInput,
+							ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined
+						>
+					).requirement
 			) {
 				_addIssue(this, "value", dataset, config, {
 					received: _stringify(dataset.value),
