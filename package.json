@@ -9,7 +9,7 @@
 		"type": "git",
 		"url": "git+https://github.com/mathfox/rbx-valibot.git"
 	},
-	"keywords": ["roblox", "roblox-ts", "validation", "typecheck", "valibot"],
+	"keywords": ["roblox", "roblox-ts", "validation", "typecheck", "valibot", "runtime"],
 	"author": {
 		"name": "Ivan Leontev",
 		"url": "https://github.com/mathfox"
