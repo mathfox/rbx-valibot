@@ -90,30 +90,30 @@ export function intersect(
 					const optionDataset = schema._run({ typed: false, value: input }, config);
 
 					// If there are issues, capture them
-					if (optionDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = optionDataset.issues;
+					if (optionDataset.issues) {
+						if (!dataset.issues) {
+							(dataset as unknown as { issues: defined[] }).issues = optionDataset.issues;
 						} else {
 							for (const issue of optionDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (optionDataset.typed === false) {
+					if (!optionDataset.typed) {
 						dataset.typed = false;
 					}
 
 					// Add output of option if necessary
-					if (dataset.typed === true) {
-						if (outputs !== undefined) {
+					if (dataset.typed) {
+						if (outputs) {
 							(outputs as defined[]).push(optionDataset.value as defined);
 						} else {
 							outputs = [optionDataset.value];
@@ -122,7 +122,7 @@ export function intersect(
 				}
 
 				// If outputs are typed, merge them
-				if (dataset.typed === true) {
+				if (dataset.typed) {
 					// Set first output as initial output
 					dataset.value = outputs![0];
 
@@ -131,7 +131,7 @@ export function intersect(
 						const mergeDataset = _merge(dataset.value, outputs![index]);
 
 						// If outputs can't be merged, add issue and break loop
-						if (mergeDataset.issue !== undefined) {
+						if (mergeDataset.issue) {
 							_addIssue(this, "type", dataset, config, {
 								received: "unknown",
 							});

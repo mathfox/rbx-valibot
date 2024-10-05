@@ -14,15 +14,14 @@ export type UnknownDataset =
 /**
  * Untyped dataset type.
  *
- * The `typed` property optionally could be set to `false`.
- *
  * The `issues` property should never be present.
  */
 export interface UntypedDataset {
 	/**
 	 * Whether is's typed.
 	 */
-	typed?: false;
+	//typed?: false;
+	typed: false;
 	/**
 	 * The dataset value.
 	 */

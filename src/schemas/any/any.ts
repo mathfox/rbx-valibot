@@ -1,4 +1,4 @@
-import type { BaseSchema } from "../../types";
+import type { BaseSchema, SuccessDataset } from "../../types";
 
 /**
  * Any schema type.
@@ -37,7 +37,7 @@ export function any(): AnySchema {
 		_run(dataset) {
 			dataset.typed = true;
 
-			return dataset;
+			return dataset as SuccessDataset<any>;
 		},
 	};
 }
