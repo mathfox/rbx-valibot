@@ -37,9 +37,7 @@ describe("_addIssue", () => {
 
 	describe("should generate default message", () => {
 		test("with expected and received", () => {
-			const dataset: UnknownDataset = {
-				value: undefined,
-			};
+			const dataset: UnknownDataset = { typed: false, value: undefined };
 			_addIssue(string_(), "type", dataset, {});
 			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(
 				"Invalid type: Expected string but received nil",
@@ -65,6 +63,7 @@ describe("_addIssue", () => {
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
 			const dataset: UnknownDataset = {
+				typed: false,
 				value: undefined,
 			};
 			_addIssue(string_(contextMessage), "type", dataset, {
@@ -78,6 +77,7 @@ describe("_addIssue", () => {
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
 			const dataset: UnknownDataset = {
+				typed: false,
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
@@ -90,6 +90,7 @@ describe("_addIssue", () => {
 			setSchemaMessage(() => schemaMessage);
 			setGlobalMessage(globalMessage);
 			const dataset: UnknownDataset = {
+				typed: false,
 				value: undefined,
 			};
 			_addIssue(string_(), "type", dataset, {
@@ -100,9 +101,7 @@ describe("_addIssue", () => {
 
 		test("from config object", () => {
 			setGlobalMessage(globalMessage);
-			const dataset: UnknownDataset = {
-				value: undefined,
-			};
+			const dataset: UnknownDataset = { typed: false, value: undefined };
 			_addIssue(string_(), "type", dataset, {
 				message: () => configMessage,
 			});
@@ -111,18 +110,14 @@ describe("_addIssue", () => {
 
 		test("from global storage", () => {
 			setGlobalMessage(globalMessage);
-			const dataset: UnknownDataset = {
-				value: undefined,
-			};
+			const dataset: UnknownDataset = { typed: false, value: undefined };
 			_addIssue(string_(), "type", dataset, {});
 			expect((dataset.issues?.[0] as unknown as { message: string }).message).toBe(globalMessage);
 		});
 	});
 
 	test("should include configuration", () => {
-		const dataset: UnknownDataset = {
-			value: undefined,
-		};
+		const dataset: UnknownDataset = { typed: false, value: undefined };
 		const config = {
 			lang: "en",
 			abortEarly: true,
@@ -133,9 +128,7 @@ describe("_addIssue", () => {
 	});
 
 	test("should include other information", () => {
-		const dataset: UnknownDataset = {
-			value: undefined,
-		};
+		const dataset: UnknownDataset = { typed: false, value: undefined };
 		const other = {
 			received: '"foo"',
 			expected: '"bar"',

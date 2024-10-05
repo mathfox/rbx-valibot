@@ -15,7 +15,7 @@ export async function expectSchemaIssueAsync<TSchema extends BaseSchemaAsync<unk
 	values: unknown[],
 ): Promise<void> {
 	for (const value of values) {
-		expect(await schema._run({ value }, {})).toEqual({
+		expect(await schema._run({ typed: false, value }, {})).toEqual({
 			typed: false,
 			value,
 			issues: [

@@ -116,9 +116,9 @@ export function union(
 					// Otherwise, add it to untyped datasets
 				} else {
 					if (untypedDatasets !== undefined) {
-						untypedDatasets.push(optionDataset);
+						(untypedDatasets as defined[]).push(optionDataset);
 					} else {
-						untypedDatasets = [optionDataset];
+						(untypedDatasets as unknown as defined[]) = [optionDataset];
 					}
 				}
 			}

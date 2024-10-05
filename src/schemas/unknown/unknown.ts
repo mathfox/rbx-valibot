@@ -1,4 +1,4 @@
-import type { BaseSchema } from "../../types";
+import type { BaseSchema, SuccessDataset } from "../../types";
 
 /**
  * Unknown schema type.
@@ -33,7 +33,7 @@ export function unknown(): UnknownSchema {
 		_run(dataset) {
 			dataset.typed = true;
 
-			return dataset;
+			return dataset as SuccessDataset<unknown>;
 		},
 	};
 }

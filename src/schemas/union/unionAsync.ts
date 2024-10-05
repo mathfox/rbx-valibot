@@ -107,7 +107,7 @@ export function unionAsync(
 				);
 
 				// If typed, add it to valid or typed datasets
-				if (optionDataset.typed === true) {
+				if (optionDataset.typed) {
 					// If there are issues, add it to typed datasets
 					if (optionDataset.issues !== undefined) {
 						if (typedDatasets !== undefined) {
@@ -125,9 +125,9 @@ export function unionAsync(
 					// Otherwise, add it to untyped datasets
 				} else {
 					if (untypedDatasets !== undefined) {
-						untypedDatasets.push(optionDataset);
+						(untypedDatasets as unknown as defined[]).push(optionDataset);
 					} else {
-						untypedDatasets = [optionDataset];
+						(untypedDatasets as unknown as defined[]) = [optionDataset];
 					}
 				}
 			}

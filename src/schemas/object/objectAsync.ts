@@ -137,7 +137,7 @@ export function objectAsync(
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+							(dataset as unknown as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
 							// Add modified entry dataset issues to issues
 							for (const issue of valueDataset.issues) {

@@ -17,7 +17,7 @@ export function expectSchemaIssue<TSchema extends BaseSchema<unknown, unknown, B
 	received?: string,
 ): void {
 	for (const value of values) {
-		expect(schema._run({ value }, {})).toEqual({
+		expect(schema._run({ typed: false, value }, {})).toEqual({
 			typed: false,
 			value,
 			issues: [

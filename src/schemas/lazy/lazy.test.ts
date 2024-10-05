@@ -52,7 +52,7 @@ describe("lazy", () => {
 
 	test("should call getter with input", () => {
 		const getter = jest.fn(() => string_());
-		const dataset = { typed: false, value: "foo" };
+		const dataset = { typed: false, value: "foo" } as const;
 		lazy(getter)._run(dataset, {});
 		expect(getter).toHaveBeenCalledWith(dataset.value);
 	});

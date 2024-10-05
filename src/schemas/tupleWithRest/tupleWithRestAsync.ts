@@ -171,7 +171,7 @@ export function tupleWithRestAsync(
 					// If there are issues, capture them
 					if (itemDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = itemDataset.issues;
+							(dataset as unknown as { issues: defined[] }).issues = itemDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of itemDataset.issues) {
@@ -205,7 +205,7 @@ export function tupleWithRestAsync(
 						// If there are issues, capture them
 						if (itemDataset.issues !== undefined) {
 							if (dataset.issues === undefined) {
-								(dataset as { issues: defined[] }).issues = itemDataset.issues;
+								(dataset as unknown as { issues: defined[] }).issues = itemDataset.issues;
 							} else {
 								// Add modified item dataset issues to issues
 								for (const issue of itemDataset.issues) {

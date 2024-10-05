@@ -117,7 +117,7 @@ export function record(
 					// If there are issues, capture them
 					if (keyDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = keyDataset.issues;
+							(dataset as unknown as { issues: defined[] }).issues = keyDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of keyDataset.issues) {
@@ -144,7 +144,7 @@ export function record(
 					// If there are issues, capture them
 					if (valueDataset.issues !== undefined) {
 						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+							(dataset as unknown as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of valueDataset.issues) {

@@ -65,10 +65,10 @@ export function literal<const TLiteral, const TMessage extends ErrorMessage<Lite
 	message: TMessage,
 ): LiteralSchema<TLiteral, TMessage>;
 
-export function literal(
-	literal_: unknown,
+export function literal<TLiteral>(
+	literal_: TLiteral,
 	message?: ErrorMessage<LiteralIssue>,
-): LiteralSchema<unknown, ErrorMessage<LiteralIssue> | undefined> {
+): LiteralSchema<TLiteral, ErrorMessage<LiteralIssue> | undefined> {
 	return {
 		kind: "schema",
 		type: "literal",
@@ -84,7 +84,7 @@ export function literal(
 				_addIssue(this, "type", dataset, config);
 			}
 
-			return dataset;
+			return dataset as OutputDataset<TLiteral, LiteralIssue>;
 		},
 	};
 }

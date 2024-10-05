@@ -103,25 +103,25 @@ export function looseObject(
 					).entries[key]._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (valueDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
-							(dataset as { issues: defined[] }).issues = valueDataset.issues;
+					if (valueDataset.issues) {
+						if (!dataset.issues) {
+							(dataset as unknown as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
 							// Add modified entry dataset issues to issues
 							for (const issue of valueDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (valueDataset.typed === false) {
+					if (!valueDataset.typed) {
 						dataset.typed = false;
 					}
 
@@ -133,7 +133,7 @@ export function looseObject(
 
 				// Add rest to dataset if necessary
 				// Hint: We exclude specific keys for security reasons
-				if (dataset.issues === undefined || !config.abortEarly) {
+				if (!dataset.issues || !config.abortEarly) {
 					for (const [key] of input as unknown as Map<string, unknown>) {
 						if (
 							!(key in (this as LooseObjectSchema<ObjectEntries, ErrorMessage<LooseObjectIssue> | undefined>).entries)
