@@ -94,25 +94,25 @@ export function strictTuple(
 					const itemDataset = items[key]._run({ typed: false, value }, config);
 
 					// If there are issues, capture them
-					if (itemDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
+					if (itemDataset.issues) {
+						if (!dataset.issues) {
 							(dataset as unknown as { issues: defined[] }).issues = itemDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of itemDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (itemDataset.typed === false) {
+					if (!itemDataset.typed) {
 						dataset.typed = false;
 					}
 
@@ -121,7 +121,7 @@ export function strictTuple(
 				}
 
 				// Check input for unknown items if necessary
-				if (!(dataset.issues !== undefined && config.abortEarly === true) && items.size() < input.size()) {
+				if (!(dataset.issues && config.abortEarly) && items.size() < input.size()) {
 					const value = input[items.size()];
 
 					_addIssue(this, "type", dataset, config, {

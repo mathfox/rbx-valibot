@@ -3,7 +3,6 @@ import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
-import { optionalAsync } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { strictTupleAsync } from "./strictTupleAsync";
 import type { StrictTupleIssue } from "./types";
@@ -15,15 +14,15 @@ describe("strictTupleAsync", () => {
 		});
 
 		test("for simple tuple", async () => {
-			await expectNoSchemaIssueAsync(strictTupleAsync([optionalAsync(string_()), number()]), [
+			await expectNoSchemaIssueAsync(strictTupleAsync([string_(), number()]), [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = strictTupleAsync([optionalAsync(string_()), number()], "message");
+		const schema = strictTupleAsync([string_(), number()], "message");
 		const baseIssue: Omit<StrictTupleIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "strict_tuple",
@@ -56,17 +55,17 @@ describe("strictTupleAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = strictTupleAsync([optionalAsync(string_()), number()]);
+		const schema = strictTupleAsync([string_(), number()]);
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
@@ -74,7 +73,7 @@ describe("strictTupleAsync", () => {
 			await expectNoSchemaIssueAsync(strictTupleAsync([schema, schema]), [
 				[
 					["foo", 123],
-					[undefined, 123],
+					["test", 123],
 				],
 			]);
 		});

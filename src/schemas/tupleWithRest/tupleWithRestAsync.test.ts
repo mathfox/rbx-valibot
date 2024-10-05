@@ -3,7 +3,6 @@ import type { FailureDataset, InferIssue } from "../../types";
 import { expectNoSchemaIssueAsync, expectSchemaIssueAsync } from "../../tests";
 import { boolean } from "../boolean";
 import { number } from "../number";
-import { optionalAsync } from "../optional";
 import { type StringIssue, string_ } from "../string";
 import { tupleWithRestAsync } from "./tupleWithRestAsync";
 import type { TupleWithRestIssue } from "./types";
@@ -15,25 +14,25 @@ describe("tupleWithRestAsync", () => {
 			await expectNoSchemaIssueAsync(tupleWithRestAsync([], undefined_()), [[]]);
 		});
 
-		const schema = tupleWithRestAsync([optionalAsync(string_()), number()], undefined_());
+		const schema = tupleWithRestAsync([string_(), number()], undefined_());
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
 		test("for rest items", async () => {
 			await expectNoSchemaIssueAsync(schema, [
-				[undefined, 123, undefined],
-				["foo", 123, undefined, undefined, undefined],
+				["test", 123],
+				["foo", 123],
 			]);
 		});
 	});
 
 	describe("should return dataset with issues", () => {
-		const schema = tupleWithRestAsync([optionalAsync(string_()), number()], undefined_(), "message");
+		const schema = tupleWithRestAsync([string_(), number()], undefined_(), "message");
 		const baseIssue: Omit<TupleWithRestIssue, "input" | "received"> = {
 			kind: "schema",
 			type: "tuple_with_rest",
@@ -66,30 +65,30 @@ describe("tupleWithRestAsync", () => {
 		});
 
 		test("for objects", async () => {
-			await expectSchemaIssueAsync(schema, baseIssue, [{}, { key: "value" }]);
+			await expectSchemaIssueAsync(schema, baseIssue, [{ key: "value" }]);
 		});
 	});
 
 	describe("should return dataset without nested issues", () => {
-		const schema = tupleWithRestAsync([optionalAsync(string_()), number()], undefined_());
+		const schema = tupleWithRestAsync([string_(), number()], string_());
 
 		test("for simple tuple", async () => {
 			await expectNoSchemaIssueAsync(schema, [
 				["foo", 123],
-				[undefined, 123],
+				["test", 123],
 			]);
 		});
 
 		test("for nested tuple", async () => {
-			await expectNoSchemaIssueAsync(tupleWithRestAsync([schema, schema], undefined_()), [
-				[["foo", 123], [undefined, 123, undefined], undefined],
+			await expectNoSchemaIssueAsync(tupleWithRestAsync([schema, schema], string_()), [
+				[["foo", 123], ["test", 123, "extra"], "extra-2"],
 			]);
 		});
 
 		test("for rest items", async () => {
 			await expectNoSchemaIssueAsync(schema, [
-				[undefined, 123, undefined],
-				["foo", 123, undefined, undefined, undefined, undefined],
+				["foo", 123, "extra"],
+				["foo", 123, "extra", "extra-2", "extra-3"],
 			]);
 		});
 	});
