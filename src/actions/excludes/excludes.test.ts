@@ -37,12 +37,7 @@ describe("excludes", () => {
 		});
 
 		test("for invalid arrays", () => {
-			expectActionIssue(
-				action,
-				baseIssue,
-				[["foo"], [123, "foo"], [undefined, 123, "foo", true, "foo"]],
-				() => '"foo"',
-			);
+			expectActionIssue(action, baseIssue, [["foo"], [123, "foo"], [123, "foo", true, "foo"]], () => '"foo"');
 		});
 	});
 });

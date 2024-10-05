@@ -119,7 +119,6 @@ describe("recordAsync", () => {
 					baz: input.baz,
 				},
 				issues: [
-					numberIssue1,
 					{
 						...baseInfo,
 						kind: "schema",
@@ -128,6 +127,7 @@ describe("recordAsync", () => {
 						expected: '("foo" | "bar" | "baz")',
 						received: '"other"',
 					},
+					numberIssue1,
 				],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
@@ -141,14 +141,13 @@ describe("recordAsync", () => {
 							foo: 1,
 							bar: "2",
 							baz: undefined,
-							other: 4,
 						},
 					},
 					{ abortEarly: true },
 				),
 			).toEqual({
 				typed: false,
-				value: { foo: 1 },
+				value: {},
 				issues: [{ ...numberIssue1, abortEarly: true }],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});

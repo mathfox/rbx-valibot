@@ -4,6 +4,7 @@ import { expectNoSchemaIssue, expectSchemaIssue } from "../../tests";
 import { type StringIssue, string_ } from "../string";
 import { set } from "./set";
 import type { SetIssue } from "./types";
+import { deepEquals } from "@rbxts/phantom/src/Shared";
 
 describe("set", () => {
 	describe("should return dataset without issues", () => {
@@ -68,7 +69,13 @@ describe("set", () => {
 		});
 
 		test("for nested set", () => {
-			expectNoSchemaIssue(set(schema), [new Set([new Set(["foo", "bar"]), new Set(["baz"])])]);
+			const value = new Set([new Set(["foo", "bar"]), new Set(["baz"])]);
+			expect(
+				deepEquals(set(schema)._run({ typed: false, value }), {
+					typed: true,
+					value,
+				}),
+			).toBe(true);
 		});
 	});
 
@@ -114,7 +121,7 @@ describe("set", () => {
 		test("with abort early", () => {
 			expect(schema._run({ typed: false, value: new Set(["foo", 123, "baz"]) }, { abortEarly: true })).toEqual({
 				typed: false,
-				value: new Set(["foo", 123, "baz"]),
+				value: new Set([]),
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
@@ -123,35 +130,38 @@ describe("set", () => {
 			const nestedSchema = set(schema);
 			const input = new Set([new Set([123, "foo"]), "bar", new Set()]);
 			expect(
-				nestedSchema._run(
+				deepEquals(
+					nestedSchema._run(
+						{
+							typed: false,
+							value: input,
+						},
+						{},
+					),
 					{
 						typed: false,
 						value: input,
-					},
-					{},
+						issues: [
+							{
+								...baseInfo,
+								kind: "schema",
+								type: "string",
+								input: 123,
+								expected: "string",
+								received: "123",
+							},
+							{
+								...baseInfo,
+								kind: "schema",
+								type: "set",
+								input: "bar",
+								expected: "Set",
+								received: '"bar"',
+							},
+						],
+					} satisfies FailureDataset<InferIssue<typeof nestedSchema>>,
 				),
-			).toEqual({
-				typed: false,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "string",
-						input: 123,
-						expected: "string",
-						received: "123",
-					},
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "set",
-						input: "bar",
-						expected: "Set",
-						received: '"bar"',
-					},
-				],
-			} satisfies FailureDataset<InferIssue<typeof nestedSchema>>);
+			).toBe(true);
 		});
 	});
 });

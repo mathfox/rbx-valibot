@@ -4,7 +4,7 @@ import type { ArrayInput } from "../types";
 /**
  * Array action type.
  */
-type ArrayAction<TInput extends ArrayInput> = (itemA: TInput[number], itemB: TInput[number]) => number;
+type ArrayAction<TInput extends ArrayInput> = (itemA: TInput[number], itemB: TInput[number]) => boolean;
 
 /**
  * Sort items action type.

@@ -152,48 +152,48 @@ export function recordAsync(
 					valueDataset: OutputDataset<unknown, BaseIssue<unknown>>,
 				][]) {
 					// If there are issues, capture them
-					if (keyDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
+					if (keyDataset.issues) {
+						if (!dataset.issues) {
 							(dataset as unknown as { issues: defined[] }).issues = keyDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of keyDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If there are issues, capture them
-					if (valueDataset.issues !== undefined) {
-						if (dataset.issues === undefined) {
+					if (valueDataset.issues) {
+						if (!dataset.issues) {
 							(dataset as unknown as { issues: defined[] }).issues = valueDataset.issues;
 						} else {
 							// Add modified item dataset issues to issues
 							for (const issue of valueDataset.issues) {
-								(dataset.issues as defined[]).push(issue);
+								dataset.issues.push(issue);
 							}
 						}
 
 						// If necessary, abort early
-						if (config.abortEarly === true) {
+						if (config.abortEarly) {
 							dataset.typed = false;
 							break;
 						}
 					}
 
 					// If not typed, set typed to `false`
-					if (keyDataset.typed === false || valueDataset.typed === false) {
+					if (!keyDataset.typed || !valueDataset.typed) {
 						dataset.typed = false;
 					}
 
 					// If key is typed, add entry to dataset
-					if (keyDataset.typed === true) {
+					if (keyDataset.typed) {
 						(dataset.value as Record<string, unknown>)[keyDataset.value as string] = valueDataset.value;
 					}
 				}

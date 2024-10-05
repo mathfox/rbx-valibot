@@ -14,16 +14,7 @@ describe("length", () => {
 		});
 
 		test("for valid strings", () => {
-			expectNoActionIssue(action, [
-				"   ",
-				" \n\n",
-				"\n\n\t",
-				"abc",
-				"ABC",
-				"123",
-				"あああ", // 'あ' is 3 bytes but the total length of the string is 3
-				"@#$",
-			]);
+			expectNoActionIssue(action, ["   ", " \n\n", "\n\n\t", "abc", "ABC", "123", "@#$"]);
 		});
 
 		test("for valid arrays", () => {

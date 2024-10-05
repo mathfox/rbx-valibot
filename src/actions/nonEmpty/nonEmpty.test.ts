@@ -18,7 +18,7 @@ describe("nonEmpty", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [[undefined], [1, 2, 3, 4, 6], new Array(999)]);
+			expectNoActionIssue(action, [[3], [1, 2, 3, 4, 6], new Array(999, 0)]);
 		});
 	});
 

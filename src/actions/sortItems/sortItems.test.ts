@@ -2,7 +2,7 @@ import { describe, expect, test } from "@rbxts/jest-globals";
 import { sortItems } from "./sortItems";
 
 describe("sortItems", () => {
-	const operation = (itemA: number, itemB: number) => (itemA > itemB ? 1 : itemA < itemB ? -1 : 0);
+	const operation = (itemA: number, itemB: number) => itemA < itemB;
 	const action = sortItems<number[]>(operation);
 
 	test("should transform input", () => {

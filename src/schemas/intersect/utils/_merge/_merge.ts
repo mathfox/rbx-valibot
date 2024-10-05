@@ -43,6 +43,8 @@ export function _merge(value1: unknown, value2: unknown): MergeDataset {
 				// Return deeply merged array
 				return { value: value1 };
 			}
+
+			return { issue: true };
 		}
 	}
 

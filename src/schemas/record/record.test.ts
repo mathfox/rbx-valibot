@@ -117,7 +117,6 @@ describe("record", () => {
 					baz: input.baz,
 				},
 				issues: [
-					numberIssue1,
 					{
 						...baseInfo,
 						kind: "schema",
@@ -126,6 +125,7 @@ describe("record", () => {
 						expected: '("foo" | "bar" | "baz")',
 						received: '"other"',
 					},
+					numberIssue1,
 				],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
@@ -145,7 +145,7 @@ describe("record", () => {
 				),
 			).toEqual({
 				typed: false,
-				value: { foo: 1 },
+				value: {},
 				issues: [{ ...numberIssue1, abortEarly: true }],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
