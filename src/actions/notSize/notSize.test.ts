@@ -79,7 +79,6 @@ describe("notSize", () => {
 				baseIssue,
 				[
 					new Set([1, 2, 3]),
-					new Set(["123"]),
 					new Set([" ", "\n", "\t"]),
 					new Set([[1, 2, 3, 4], [5, 6], [7]]),
 					new Set([1, "two", "hey"]),
