@@ -1,10 +1,14 @@
 {
 	"name": "@rbxts/valibot",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A Runtime Typechecker for Roblox",
 	"main": "out/init.luau",
 	"types": "out/index.d.ts",
 	"files": ["out", "!out/jest.config.*", "!out/**/*.test.*", "!out/tests"],
+	"scripts": {
+		"build": "rbxtsc --type package",
+		"prepublishOnly": "bun run build"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mathfox/rbx-valibot.git"
