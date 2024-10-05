@@ -88,16 +88,23 @@ export function intersectAsync(
 				// Set typed initially to `true`
 				dataset.typed = true;
 
-				// Parse schema of each option async
-				const optionDatasets = await Promise.all(
-					(this as IntersectSchemaAsync<IntersectOptionsAsync, ErrorMessage<IntersectIssue> | undefined>).options.map(
-						(schema) =>
-							(schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
+				const optionDatasetsPromises = new Array<Promise<unknown>>();
+
+				for (const schema of (
+					this as IntersectSchemaAsync<IntersectOptionsAsync, ErrorMessage<IntersectIssue> | undefined>
+				).options) {
+					optionDatasetsPromises.push(
+						(async () => {
+							return (schema as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)._run(
 								{ typed: false, value: input },
 								config,
-							),
-					),
-				);
+							);
+						})(),
+					);
+				}
+
+				// Parse schema of each option async
+				const optionDatasets = await Promise.all(optionDatasetsPromises);
 
 				// Collect outputs of option datasets
 				for (const optionDataset of optionDatasets as OutputDataset<unknown, BaseIssue<unknown>>[]) {

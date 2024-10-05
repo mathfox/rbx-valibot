@@ -4,7 +4,7 @@ import { type RegexIssue, regex } from "./regex";
 import RegExp from "@rbxts/regexp";
 
 describe("regex", () => {
-	const requirement = RegExp("^ID-d{3}$");
+	const requirement = RegExp("^ID-[0-9]{3}$", "m");
 
 	describe("should return dataset without issues", () => {
 		const action = regex(requirement);

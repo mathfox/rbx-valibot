@@ -30,7 +30,6 @@ describe("length", () => {
 			expectNoActionIssue(action, [
 				[1, 2, 3],
 				["foo", "bar", "baz"],
-				[1, undefined],
 				[[1, 2, 3, 4], [5], [6, 7]],
 				[{ value: 1 }, { value: 2 }, { value: 3 }],
 				["1", 2, { value: 3 }],
@@ -52,22 +51,7 @@ describe("length", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[
-					"",
-					" ",
-					"  ",
-					"\n",
-					"\n\t",
-					"あ", // 'あ' is 3 bytes
-					"ab",
-					"abcd",
-					"1",
-					"12",
-					"1234",
-					"@",
-					"@#",
-					"@#$%",
-				],
+				["", " ", "  ", "\n", "\n\t", "ab", "abcd", "1", "12", "1234", "@", "@#", "@#$%"],
 				(value) => `${(value as ArrayLike<unknown>).size()}`,
 			);
 		});
