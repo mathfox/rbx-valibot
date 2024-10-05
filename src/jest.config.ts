@@ -1,5 +1,5 @@
 import type { Config } from "@rbxts/jest";
 
 export = identity<Config>({
-	testMatch: ["**/*tuple*.test", "**/*Tuple*.test"],
+	testMatch: ["**/safeParse*.test"],
 });

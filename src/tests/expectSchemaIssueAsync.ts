@@ -21,7 +21,6 @@ export async function expectSchemaIssueAsync<TSchema extends BaseSchemaAsync<unk
 			issues: [
 				{
 					requirement: undefined,
-					path: undefined,
 					issues: undefined,
 					lang: undefined,
 					abortEarly: undefined,

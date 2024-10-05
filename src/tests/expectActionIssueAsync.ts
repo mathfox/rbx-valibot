@@ -23,7 +23,6 @@ export async function expectActionIssueAsync<TAction extends BaseValidationAsync
 			issues: [
 				{
 					requirement: undefined,
-					path: undefined,
 					issues: undefined,
 					lang: undefined,
 					abortEarly: undefined,

@@ -38,7 +38,6 @@ describe("rawTransformAsync", () => {
 						input: "fo",
 						received: '"fo"',
 						requirement: undefined,
-						path: undefined,
 						issues: undefined,
 						lang: undefined,
 						abortEarly: undefined,

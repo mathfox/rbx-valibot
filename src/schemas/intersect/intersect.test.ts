@@ -28,7 +28,6 @@ describe("intersect", () => {
 		const baseInfo = {
 			message: expect.any("string"),
 			requirement: undefined,
-			path: undefined,
 			issues: undefined,
 			lang: undefined,
 			abortEarly: undefined,

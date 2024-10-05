@@ -33,7 +33,6 @@ describe("pipeAsync", () => {
 
 	const baseInfo = {
 		message: expect.any("string"),
-		path: undefined,
 		issues: undefined,
 		lang: undefined,
 		abortEarly: undefined,

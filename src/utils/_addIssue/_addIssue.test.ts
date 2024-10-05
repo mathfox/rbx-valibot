@@ -15,7 +15,6 @@ import { _addIssue } from "./_addIssue";
 describe("_addIssue", () => {
 	describe("should add issue to dataset", () => {
 		const baseInfo = {
-			path: undefined,
 			issues: undefined,
 			lang: undefined,
 			abortEarly: undefined,

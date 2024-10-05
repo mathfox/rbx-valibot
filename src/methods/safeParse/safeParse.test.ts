@@ -39,15 +39,6 @@ describe("safeParse", () => {
 					received: "3",
 					message: "Invalid length: Expected >=5 but received 3",
 					requirement: 5,
-					path: [
-						{
-							type: "object",
-							origin: "value",
-							input: { key: "foo" },
-							key: "key",
-							value: "foo",
-						},
-					],
 					issues: undefined,
 					lang: undefined,
 					abortEarly: undefined,
@@ -71,15 +62,6 @@ describe("safeParse", () => {
 					received: "123",
 					message: "Invalid type: Expected string but received 123",
 					requirement: undefined,
-					path: [
-						{
-							type: "object",
-							origin: "value",
-							input: { key: 123 },
-							key: "key",
-							value: 123,
-						},
-					],
 					issues: undefined,
 					lang: undefined,
 					abortEarly: undefined,
