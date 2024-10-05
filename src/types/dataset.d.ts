@@ -2,21 +2,33 @@ import type { BaseIssue } from "./issue.ts";
 
 /**
  * Unknown dataset type.
+ *
+ * The narrowing is required to distinguish between variants of the dataset.
  */
-export interface UnknownDataset {
+export type UnknownDataset =
+	| UntypedDataset
+	| SuccessDataset<unknown>
+	| PartialDataset<unknown, BaseIssue<unknown>>
+	| FailureDataset<BaseIssue<unknown>>;
+
+/**
+ * Untyped dataset type.
+ *
+ * The `typed` property optionally could be set to `false`.
+ *
+ * The `issues` property should never be present.
+ */
+export interface UntypedDataset {
 	/**
 	 * Whether is's typed.
-	 * TODO: Should we keep this?
 	 */
-	typed?: never;
-	// typed?: false;
+	typed?: false;
 	/**
 	 * The dataset value.
 	 */
 	value: unknown;
 	/**
 	 * The dataset issues.
-	 * TODO: Should we keep this?
 	 */
 	issues?: never;
 }
@@ -36,7 +48,7 @@ export interface SuccessDataset<TValue> {
 	/**
 	 * The dataset issues.
 	 */
-	issues?: never;
+	issues?: undefined;
 }
 
 /**
