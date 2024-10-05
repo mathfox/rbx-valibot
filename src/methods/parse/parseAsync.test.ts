@@ -21,8 +21,8 @@ describe("parseAsync", () => {
 	});
 
 	test("should throw error for invalid input", async () => {
-		await expect(() => parseAsync(string_(), 123)).rejects.toThrowError();
-		await expect(() => parseAsync(number(), "foo")).rejects.toThrowError();
-		await expect(() => parseAsync(objectAsync(entries), undefined)).rejects.toThrowError();
+		expect(parseAsync(string_(), 123).awaitStatus()[0] === "Rejected").toBe(true);
+		expect(parseAsync(number(), "foo").awaitStatus()[0] === "Rejected").toBe(true);
+		expect(parseAsync(objectAsync(entries), undefined).awaitStatus()[0] === "Rejected").toBe(true);
 	});
 });
