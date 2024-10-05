@@ -1,4 +1,5 @@
-import type { BaseValidationAsync, ErrorMessage, MaybePromise } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseValidationAsync, ErrorMessage, InferIssue, MaybePromise, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { CheckIssue } from "./types";
 
@@ -65,7 +66,7 @@ export function checkAsync(
 		expects: undefined,
 		requirement,
 		message,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(await (this as CheckActionAsync<unknown, ErrorMessage<CheckIssue<unknown>> | undefined>).requirement(
@@ -74,7 +75,8 @@ export function checkAsync(
 			) {
 				_addIssue(this, "input", dataset, config);
 			}
-			return dataset;
+
+			return dataset as OutputDataset<unknown, InferIssue<ReturnType<typeof checkAsync>>>;
 		},
 	};
 }

@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseTransformation, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawTransformIssue } from "./types";
@@ -32,7 +33,7 @@ export function rawTransform<TInput, TOutput>(
 		type: "raw_transform",
 		reference: rawTransform,
 		async: false,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			// Execute action and get its output
 			const output = action({
 				dataset,

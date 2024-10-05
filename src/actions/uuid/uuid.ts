@@ -2,6 +2,7 @@ import type RegExp from "@rbxts/regexp";
 import { UUID_REGEX } from "../../regex";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * UUID issue type.
@@ -85,7 +86,7 @@ export function uuid(
 		expects: undefined,
 		requirement: UUID_REGEX,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(this as UuidAction<string, ErrorMessage<UuidIssue<string>> | undefined>).requirement.test(dataset.value)

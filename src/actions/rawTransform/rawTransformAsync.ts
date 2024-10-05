@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseTransformationAsync, MaybePromise, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawTransformIssue } from "./types";
@@ -32,7 +33,7 @@ export function rawTransformAsync<TInput, TOutput>(
 		type: "raw_transform",
 		reference: rawTransformAsync,
 		async: true,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			// Execute action and get its output
 			const output = await action({
 				dataset,

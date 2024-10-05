@@ -1,5 +1,5 @@
 import type { Config } from "./config";
-import type { OutputDataset } from "./dataset";
+import type { OutputDataset, UnknownDataset } from "./dataset";
 import type { BaseIssue } from "./issue";
 
 /**
@@ -39,6 +39,7 @@ export interface BaseValidation<TInput, TOutput, TIssue extends BaseIssue<unknow
 	readonly _run: (
 		this: BaseValidation<any, any, BaseIssue<unknown>>,
 		dataset: OutputDataset<TInput, BaseIssue<unknown>>,
+		//dataset: UnknownDataset,
 		config?: Config<BaseIssue<unknown>>,
 	) => OutputDataset<TOutput, BaseIssue<unknown> | TIssue>;
 	/**
@@ -83,6 +84,7 @@ export interface BaseValidationAsync<TInput, TOutput, TIssue extends BaseIssue<u
 	readonly _run: (
 		this: BaseValidationAsync<any, any, BaseIssue<unknown>>,
 		dataset: OutputDataset<TInput, BaseIssue<unknown>>,
+		//dataset: UnknownDataset,
 		config?: Config<BaseIssue<unknown>>,
 	) => Promise<OutputDataset<TOutput, BaseIssue<unknown> | TIssue>>;
 }

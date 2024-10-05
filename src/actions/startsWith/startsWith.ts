@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 
@@ -94,7 +95,7 @@ export function startsWith(
 		expects: `"${requirement}"`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			const requirement = (
 				this as StartsWithAction<string, string, ErrorMessage<StartsWithIssue<string, string>> | undefined>
 			).requirement;

@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
 import type { ContentInput, ContentRequirement } from "../types";
@@ -98,7 +99,7 @@ export function includes(
 		expects,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.typed) {
 				if (
 					(typeIs(dataset.value, "string") &&

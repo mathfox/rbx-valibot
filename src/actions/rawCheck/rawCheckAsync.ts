@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseValidationAsync, MaybePromise } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawCheckIssue } from "./types";
@@ -36,7 +37,7 @@ export function rawCheckAsync<TInput>(
 		reference: rawCheckAsync,
 		async: true,
 		expects: undefined,
-		async _run(dataset, config) {
+		async _run(dataset, config = getGlobalConfig()) {
 			await action({
 				dataset,
 				config,

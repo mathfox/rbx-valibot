@@ -1,6 +1,7 @@
 import PhantomString from "@rbxts/phantom/src/String";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Ends with issue type.
@@ -95,7 +96,7 @@ export function endsWith(
 		expects: `"${requirement}"`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!PhantomString.endsWith(

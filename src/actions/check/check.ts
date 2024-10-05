@@ -1,4 +1,5 @@
-import type { BaseValidation, ErrorMessage } from "../../types";
+import { getGlobalConfig } from "../../storages";
+import type { BaseIssue, BaseValidation, ErrorMessage, InferIssue, OutputDataset } from "../../types";
 import { _addIssue } from "../../utils";
 import type { CheckIssue } from "./types";
 
@@ -63,14 +64,15 @@ export function check(
 		expects: undefined,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(this as CheckAction<unknown, ErrorMessage<CheckIssue<unknown>> | undefined>).requirement(dataset.value)
 			) {
 				_addIssue(this, "input", dataset, config);
 			}
-			return dataset;
+
+			return dataset as OutputDataset<unknown, InferIssue<ReturnType<typeof check>>>;
 		},
 	};
 }

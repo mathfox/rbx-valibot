@@ -1,6 +1,7 @@
 import isFinite from "@rbxts/phantom/src/Number/isFinite";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Finite issue type.
@@ -84,7 +85,7 @@ export function finite(
 		expects: undefined,
 		requirement: isFinite,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(this as FiniteAction<number, ErrorMessage<FiniteIssue<number>> | undefined>).requirement(dataset.value)

@@ -1,6 +1,7 @@
 import isInteger from "@rbxts/phantom/src/Number/isInteger";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Integer issue type.
@@ -84,7 +85,7 @@ export function integer(
 		expects: undefined,
 		requirement: isInteger,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(this as IntegerAction<number, ErrorMessage<IntegerIssue<number>> | undefined>).requirement(dataset.value)

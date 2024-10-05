@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
 //import type { ValueInput } from "../types";
@@ -93,7 +94,7 @@ export function notValue(
 		expects: `!${_stringify(requirement)}`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			const requirement = (
 				this as NotValueAction<ValueInput, ValueInput, ErrorMessage<NotValueIssue<ValueInput, ValueInput>> | undefined>
 			).requirement;

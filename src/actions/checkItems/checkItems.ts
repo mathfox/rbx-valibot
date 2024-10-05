@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ArrayInput, ArrayRequirement } from "../types";
@@ -91,7 +92,7 @@ export function checkItems(
 		expects: undefined,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.typed) {
 				for (let index = 0; index < dataset.value.size(); index++) {
 					const item = dataset.value[index];

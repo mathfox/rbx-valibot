@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage, MaybeReadonly } from "../../types";
 import { _addIssue } from "../../utils";
 import type { ArrayInput, ArrayRequirement } from "../types";
@@ -89,7 +90,7 @@ export function someItem(
 		expects: undefined,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(dataset.value as Array<defined>).some(

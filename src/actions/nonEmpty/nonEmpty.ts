@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 import type { LengthInput } from "../types";
@@ -78,7 +79,7 @@ export function nonEmpty(
 		async: false,
 		expects: "!0",
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.typed && (dataset.value as ArrayLike<unknown>).size() === 0) {
 				_addIssue(this, "length", dataset, config, {
 					received: "0",

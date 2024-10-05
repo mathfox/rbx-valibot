@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseValidation } from "../../types";
 import { _addIssue } from "../../utils";
 import type { Context, RawCheckIssue } from "./types";
@@ -34,7 +35,7 @@ export function rawCheck<TInput>(action: (context: Context<TInput>) => void): Ra
 		reference: rawCheck,
 		async: false,
 		expects: undefined,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			action({
 				dataset,
 				config,

@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue, _stringify } from "../../utils";
 
@@ -92,7 +93,7 @@ export function minValue(
 		expects: `>=${_stringify(requirement)}`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			const typedThis = this as MinValueAction<
 				ValueInput,
 				ValueInput,

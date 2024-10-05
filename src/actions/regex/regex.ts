@@ -1,6 +1,7 @@
 import type RegExp from "@rbxts/regexp";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
+import { getGlobalConfig } from "../../storages";
 
 /**
  * Regex issue type.
@@ -89,7 +90,7 @@ export function regex(
 		expects: `${requirement}`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				!(this as RegexAction<string, ErrorMessage<RegexIssue<string>> | undefined>).requirement.test(dataset.value)

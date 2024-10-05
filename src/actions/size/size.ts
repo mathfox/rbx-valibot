@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 import type { SizeInput } from "../types";
@@ -95,7 +96,7 @@ export function size(
 		expects: `${requirement}`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			if (
 				dataset.typed &&
 				(dataset.value as ReadonlySet<unknown>).size() !==

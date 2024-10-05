@@ -1,3 +1,4 @@
+import { getGlobalConfig } from "../../storages";
 import type { BaseIssue, BaseValidation, ErrorMessage } from "../../types";
 import { _addIssue } from "../../utils";
 import type { SizeInput } from "../types";
@@ -95,7 +96,7 @@ export function minSize(
 		expects: `>=${requirement}`,
 		requirement,
 		message,
-		_run(dataset, config) {
+		_run(dataset, config = getGlobalConfig()) {
 			const typedThis = this as MinSizeAction<
 				SizeInput,
 				number,
