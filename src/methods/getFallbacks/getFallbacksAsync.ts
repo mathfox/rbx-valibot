@@ -1,4 +1,3 @@
-import entries from "@rbxts/phantom/src/Shared/entries";
 import type {
 	LooseObjectIssue,
 	LooseObjectSchema,
@@ -90,9 +89,18 @@ export async function getFallbacksAsync<
 	if ("entries" in schema) {
 		const object: Record<string, unknown> = {};
 
-		for (const [key, value] of (await Promise.all(
-			entries(schema.entries).map(async ([key, value]) => [key, await getFallbacksAsync(value)]),
-		)) as unknown as Map<string, unknown>) {
+		const promises = new Array<Promise<unknown>>();
+
+		for (const [key, value] of schema.entries as unknown as Map<string, unknown>) {
+			promises.push(
+				(async () => {
+					return [key, await getFallbacksAsync(value as BaseSchemaAsync<unknown, unknown, BaseIssue<unknown>>)];
+				})(),
+			);
+		}
+
+		for (const [key, value] of (await Promise.all(promises)) as unknown as [key: string, value: unknown][]) {
+			object[key] = value;
 		}
 
 		return object as InferFallbacks<TSchema>;
