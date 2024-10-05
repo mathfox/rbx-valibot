@@ -281,52 +281,6 @@ describe("variantAsync", () => {
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
 
-		test.only("for first nested invalid discriminator", async () => {
-			const schema = variantAsync("type", [
-				variantAsync("subType1", [
-					object({
-						type: literal("foo"),
-						subType1: literal("foo-1"),
-						other1: string_(),
-					}),
-					object({
-						type: literal("bar"),
-						subType1: literal("bar-1"),
-						other2: string_(),
-					}),
-				]),
-				variantAsync("subType2", [
-					object({
-						type: literal("foo"),
-						subType2: literal("foo-2"),
-						other3: string_(),
-					}),
-					object({
-						type: literal("bar"),
-						subType2: literal("bar-2"),
-						other4: string_(),
-					}),
-				]),
-			]);
-
-			const input = { type: "bar", subType2: "baz-2" };
-
-			expect(await schema._run({ typed: false, value: input }, {})).toEqual({
-				typed: false,
-				value: input,
-				issues: [
-					{
-						...baseInfo,
-						kind: "schema",
-						type: "variant",
-						input: input.subType2,
-						expected: '"bar-2"',
-						received: `"${input.subType2}"`,
-					},
-				],
-			} satisfies FailureDataset<InferIssue<typeof schema>>);
-		});
-
 		test("for first nested invalid discriminator", async () => {
 			const schema = variantAsync("type", [
 				variantAsync("subType1", [

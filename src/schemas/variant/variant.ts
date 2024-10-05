@@ -98,7 +98,7 @@ export function variant(
 				let invalidDiscriminatorKey = (
 					this as VariantSchema<string, VariantOptions<string>, ErrorMessage<VariantIssue> | undefined>
 				).key;
-				let expectedDiscriminators: string[] = [];
+				let expectedDiscriminators = new Array<string>();
 
 				// Create recursive function to parse nested variant options
 				const parseOptions = (variant: VariantOptionSchema<string>, allKeys: Set<string>) => {
@@ -171,7 +171,7 @@ export function variant(
 						// If valid option is found, break loop
 						// Hint: The `break` statement is intentionally placed at the end of
 						// the loop to break any outer loops in case of recursive execution.
-						if (outputDataset && outputDataset.issues === undefined) {
+						if (outputDataset && !outputDataset.issues) {
 							break;
 						}
 					}
@@ -186,7 +186,7 @@ export function variant(
 				);
 
 				// If any output dataset is available, return it
-				if (outputDataset !== undefined) {
+				if (outputDataset) {
 					return outputDataset;
 				}
 

@@ -104,7 +104,7 @@ export function variantAsync(
 				let invalidDiscriminatorKey = (
 					this as VariantSchemaAsync<string, VariantOptionsAsync<string>, ErrorMessage<VariantIssue> | undefined>
 				).key;
-				let expectedDiscriminators: string[] = [];
+				let expectedDiscriminators = new Array<string>();
 
 				// Create recursive function to parse nested variant options
 				const parseOptions = async (
@@ -132,7 +132,7 @@ export function variantAsync(
 											{ typed: false, value: input[currentKey as keyof typeof input] },
 											config,
 										)
-									).issues !== undefined
+									).issues
 								) {
 									keysAreValid = false;
 
@@ -176,7 +176,7 @@ export function variantAsync(
 								// Store output dataset if necessary
 								// Hint: Only the first untyped or typed dataset is returned, and
 								// typed datasets take precedence over untyped ones.
-								if (outputDataset === undefined || (outputDataset.typed === false && optionDataset.typed === true)) {
+								if (!outputDataset || (!outputDataset.typed && optionDataset.typed)) {
 									outputDataset = optionDataset;
 								}
 							}
@@ -185,7 +185,7 @@ export function variantAsync(
 						// If valid option is found, break loop
 						// Hint: The `break` statement is intentionally placed at the end of
 						// the loop to break any outer loops in case of recursive execution.
-						if (outputDataset !== undefined && outputDataset.issues === undefined) {
+						if (outputDataset && !outputDataset.issues) {
 							break;
 						}
 					}
@@ -201,7 +201,7 @@ export function variantAsync(
 				);
 
 				// If any output dataset is available, return it
-				if (outputDataset !== undefined) {
+				if (outputDataset) {
 					return outputDataset;
 				}
 
