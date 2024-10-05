@@ -107,7 +107,7 @@ describe("variant", () => {
 						...baseInfo,
 						kind: "schema",
 						type: "variant",
-						input: undefined,
+						input: "undefined",
 						expected: '("foo" | "bar")',
 						received: "undefined",
 					},

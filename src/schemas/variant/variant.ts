@@ -190,9 +190,11 @@ export function variant(
 					return outputDataset;
 				}
 
+				warn(invalidDiscriminatorKey, "invalidDiscriminatorKey");
 				// Otherwise, add discriminator issue
 				_addIssue(this, "type", dataset, config, {
-					input: input[invalidDiscriminatorKey as keyof typeof input],
+					input: input[invalidDiscriminatorKey as keyof typeof input] ?? "undefined",
+					received: input[invalidDiscriminatorKey as keyof typeof input] === undefined ? "undefined" : undefined,
 					expected: _joinExpects(expectedDiscriminators, "|"),
 				});
 
