@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/valibot",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A Runtime Typechecker for Roblox",
 	"main": "out/init.luau",
 	"types": "out/index.d.ts",
