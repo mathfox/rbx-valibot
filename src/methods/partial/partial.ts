@@ -76,7 +76,7 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 			readonly _run: (
 				this: unknown,
 				dataset: UnknownDataset,
-				config: Config<BaseIssue<unknown>>,
+				config?: Config<BaseIssue<unknown>>,
 			) => OutputDataset<InferObjectOutput<PartialEntries<TEntries, TKeys>>, InferIssue<TSchema>>;
 			/**
 			 * Input, output and issue type.
@@ -110,7 +110,7 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 				readonly _run: (
 					this: unknown,
 					dataset: UnknownDataset,
-					config: Config<BaseIssue<unknown>>,
+					config?: Config<BaseIssue<unknown>>,
 				) => OutputDataset<
 					InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 						[key: string]: unknown;
@@ -153,7 +153,7 @@ export type SchemaWithPartial<TSchema extends Schema, TKeys extends ObjectKeys<T
 					readonly _run: (
 						this: unknown,
 						dataset: UnknownDataset,
-						config: Config<BaseIssue<unknown>>,
+						config?: Config<BaseIssue<unknown>>,
 					) => OutputDataset<
 						InferObjectOutput<PartialEntries<TEntries, TKeys>> & {
 							[key: string]: InferOutput<TRest>;

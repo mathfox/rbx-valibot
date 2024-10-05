@@ -78,7 +78,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 			readonly _run: (
 				this: unknown,
 				dataset: UnknownDataset,
-				config: Config<BaseIssue<unknown>>,
+				config?: Config<BaseIssue<unknown>>,
 			) => OutputDataset<
 				InferObjectOutput<Pick<TEntries, TKeys[number]>>,
 				Extract<InferIssue<TSchema>, { type: TSchema["type"] }> | InferObjectIssue<Pick<TEntries, TKeys[number]>>
@@ -119,7 +119,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 				readonly _run: (
 					this: unknown,
 					dataset: UnknownDataset,
-					config: Config<BaseIssue<unknown>>,
+					config?: Config<BaseIssue<unknown>>,
 				) => Promise<
 					OutputDataset<
 						InferObjectOutput<Pick<TEntries, TKeys[number]>>,
@@ -160,7 +160,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 					readonly _run: (
 						this: unknown,
 						dataset: UnknownDataset,
-						config: Config<BaseIssue<unknown>>,
+						config?: Config<BaseIssue<unknown>>,
 					) => OutputDataset<
 						InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 							[key: string]: unknown;
@@ -205,7 +205,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 						readonly _run: (
 							this: unknown,
 							dataset: UnknownDataset,
-							config: Config<BaseIssue<unknown>>,
+							config?: Config<BaseIssue<unknown>>,
 						) => Promise<
 							OutputDataset<
 								InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
@@ -257,7 +257,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 							readonly _run: (
 								this: unknown,
 								dataset: UnknownDataset,
-								config: Config<BaseIssue<unknown>>,
+								config?: Config<BaseIssue<unknown>>,
 							) => OutputDataset<
 								InferObjectOutput<Pick<TEntries, TKeys[number]>> & {
 									[key: string]: InferOutput<TSchema["rest"]>;
@@ -309,7 +309,7 @@ export type SchemaWithPick<TSchema extends Schema, TKeys extends ObjectKeys<TSch
 								readonly _run: (
 									this: unknown,
 									dataset: UnknownDataset,
-									config: Config<BaseIssue<unknown>>,
+									config?: Config<BaseIssue<unknown>>,
 								) => Promise<
 									OutputDataset<
 										InferObjectOutput<Pick<TEntries, TKeys[number]>> & {

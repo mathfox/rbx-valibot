@@ -9,7 +9,7 @@ describe("config", () => {
 	//		(schema as typeof schema & { _run: Callback })._run = jest.fn((dataset, config) => {
 	//			return schema._run(dataset, config);
 	//		});
-	//		const dataset = { typed: false, value: "foo" };
+	//		const dataset = { typed: false, value: "foo" } as const;
 	//		const globalConfig: Config<BaseIssue<unknown>> = {
 	//			lang: "de",
 	//		};
@@ -28,7 +28,7 @@ describe("config", () => {
 	//		(schema as typeof schema & { _run: Callback })._run = jest.fn((dataset, config) => {
 	//			return schema._run(dataset, config);
 	//		});
-	//		const dataset = { typed: false, value: { key: "foo" } };
+	//		const dataset = { typed: false, value: { key: "foo" } } as const;
 	//		const globalConfig: Config<BaseIssue<unknown>> = {
 	//			lang: "de",
 	//		};

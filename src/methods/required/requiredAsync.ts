@@ -87,7 +87,7 @@ export type SchemaWithRequiredAsync<
 			readonly _run: (
 				this: unknown,
 				dataset: UnknownDataset,
-				config: Config<BaseIssue<unknown>>,
+				config?: Config<BaseIssue<unknown>>,
 			) => Promise<
 				OutputDataset<
 					InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>>,
@@ -126,7 +126,7 @@ export type SchemaWithRequiredAsync<
 				readonly _run: (
 					this: unknown,
 					dataset: UnknownDataset,
-					config: Config<BaseIssue<unknown>>,
+					config?: Config<BaseIssue<unknown>>,
 				) => Promise<
 					OutputDataset<
 						InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
@@ -175,7 +175,7 @@ export type SchemaWithRequiredAsync<
 					readonly _run: (
 						this: unknown,
 						dataset: UnknownDataset,
-						config: Config<BaseIssue<unknown>>,
+						config?: Config<BaseIssue<unknown>>,
 					) => Promise<
 						OutputDataset<
 							InferObjectOutput<RequiredEntries<TEntries, TKeys, TMessage>> & {
