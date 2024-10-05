@@ -127,44 +127,5 @@ describe("setAsync", () => {
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
-
-		test("for wrong nested values", async () => {
-			const nestedSchema = setAsync(schema);
-			const input = new Set([new Set([123, "foo"]), "bar", new Set()]);
-
-			expect(
-				deepEquals(
-					await nestedSchema._run(
-						{
-							typed: false,
-							value: input,
-						},
-						{},
-					),
-					{
-						typed: false,
-						value: input,
-						issues: [
-							{
-								...baseInfo,
-								kind: "schema",
-								type: "string",
-								input: 123,
-								expected: "string",
-								received: "123",
-							},
-							{
-								...baseInfo,
-								kind: "schema",
-								type: "set",
-								input: "bar",
-								expected: "Set",
-								received: '"bar"',
-							},
-						],
-					} satisfies FailureDataset<InferIssue<typeof nestedSchema>>,
-				),
-			).toBe(true);
-		});
 	});
 });

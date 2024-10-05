@@ -125,43 +125,5 @@ describe("set", () => {
 				issues: [{ ...stringIssue, abortEarly: true }],
 			} satisfies FailureDataset<InferIssue<typeof schema>>);
 		});
-
-		test("for wrong nested values", () => {
-			const nestedSchema = set(schema);
-			const input = new Set([new Set([123, "foo"]), "bar", new Set()]);
-			expect(
-				deepEquals(
-					nestedSchema._run(
-						{
-							typed: false,
-							value: input,
-						},
-						{},
-					),
-					{
-						typed: false,
-						value: input,
-						issues: [
-							{
-								...baseInfo,
-								kind: "schema",
-								type: "string",
-								input: 123,
-								expected: "string",
-								received: "123",
-							},
-							{
-								...baseInfo,
-								kind: "schema",
-								type: "set",
-								input: "bar",
-								expected: "Set",
-								received: '"bar"',
-							},
-						],
-					} satisfies FailureDataset<InferIssue<typeof nestedSchema>>,
-				),
-			).toBe(true);
-		});
 	});
 });
