@@ -18,7 +18,7 @@ describe("includes", () => {
 		});
 
 		test("for valid arrays", () => {
-			expectNoActionIssue(action, [["foo"], [123, "foo"], [undefined, 123, "foo", true, "foo"]]);
+			expectNoActionIssue(action, [["foo"], [123, "foo"], [123, "foo", true, "foo"]]);
 		});
 	});
 

@@ -102,25 +102,25 @@ export function excludes(
 		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.typed) {
 				if (
-					(typeIs(dataset.value, "string") &&
-						dataset.value.match(
-							(
-								this as ExcludesAction<
-									ContentInput,
-									ContentRequirement<ContentInput>,
-									ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
-								>
-							).requirement as string,
-						)[0] !== undefined) ||
-					(dataset.value as defined[]).includes(
-						(
-							this as ExcludesAction<
-								ContentInput,
-								ContentRequirement<ContentInput>,
-								ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
-							>
-						).requirement as defined,
-					)
+					typeIs(dataset.value, "string")
+						? dataset.value.match(
+								(
+									this as ExcludesAction<
+										ContentInput,
+										ContentRequirement<ContentInput>,
+										ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+									>
+								).requirement as string,
+							)[0] !== undefined
+						: (dataset.value as defined[]).includes(
+								(
+									this as ExcludesAction<
+										ContentInput,
+										ContentRequirement<ContentInput>,
+										ErrorMessage<ExcludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+									>
+								).requirement as defined,
+							)
 				) {
 					_addIssue(this, "content", dataset, config, { received });
 				}

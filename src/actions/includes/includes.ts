@@ -102,27 +102,27 @@ export function includes(
 		_run(dataset, config = getGlobalConfig()) {
 			if (dataset.typed) {
 				if (
-					(typeIs(dataset.value, "string") &&
-						dataset.value.find(
-							(
-								this as IncludesAction<
-									ContentInput,
-									ContentRequirement<ContentInput>,
-									ErrorMessage<IncludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
-								>
-							).requirement as string,
-						)[0] === undefined) ||
-					(dataset.value as defined[]).find(
-						(value) =>
-							value ===
-							(
-								this as IncludesAction<
-									ContentInput,
-									ContentRequirement<ContentInput>,
-									ErrorMessage<IncludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
-								>
-							).requirement,
-					) === undefined
+					typeIs(dataset.value, "string")
+						? dataset.value.find(
+								(
+									this as IncludesAction<
+										ContentInput,
+										ContentRequirement<ContentInput>,
+										ErrorMessage<IncludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+									>
+								).requirement as string,
+							)[0] === undefined
+						: (dataset.value as defined[]).find(
+								(value) =>
+									value ===
+									(
+										this as IncludesAction<
+											ContentInput,
+											ContentRequirement<ContentInput>,
+											ErrorMessage<IncludesIssue<ContentInput, ContentRequirement<ContentInput>>> | undefined
+										>
+									).requirement,
+							) === undefined
 				) {
 					_addIssue(this, "content", dataset, config, {
 						received: `!${expects}`,

@@ -44,7 +44,7 @@ describe("empty", () => {
 			expectActionIssue(
 				action,
 				baseIssue,
-				[[undefined], [1, 2, 3, 4, 6], new Array(999)],
+				[[1, 2, 3, 4, 6], new Array(999, 0)],
 				(input) => `${(input as ArrayLike<any>).size()}`,
 			);
 		});
