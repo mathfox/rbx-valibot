@@ -3,5 +3,5 @@
 Source: https://github.com/fabian-hiller/valibot
 Site: https://valibot.dev/
 
-Synced to 0.41.0 (September 11/2024)
-Commit: https://github.com/fabian-hiller/valibot/tree/44d7fc9603c0851a91a17f15673b0aba38f74a87
+Synced to v0.42.1 (October 6/2024)
+Commit: https://github.com/fabian-hiller/valibot/tree/62ccacc90507bb48cf712c35cecb0c93cc1718da
