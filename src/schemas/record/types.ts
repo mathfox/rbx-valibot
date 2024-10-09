@@ -1,14 +1,7 @@
+import type { Prettify } from "valibot";
 import type { Brand, ReadonlyAction } from "../../actions";
 import type { SchemaWithPipe, SchemaWithPipeAsync } from "../../methods";
-import type {
-	BaseIssue,
-	BaseSchema,
-	BaseSchemaAsync,
-	InferInput,
-	InferOutput,
-	MarkOptional,
-	Prettify,
-} from "../../types";
+import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferInput, InferOutput, MarkOptional } from "../../types";
 
 /**
  * Record issue type.

@@ -1,3 +1,4 @@
+import type { Prettify } from "valibot";
 import type { ReadonlyAction } from "../actions";
 import type { SchemaWithPipe, SchemaWithPipeAsync } from "../methods";
 import type {
@@ -20,7 +21,7 @@ import type { InferInput, InferIssue, InferOutput } from "./infer";
 import type { BaseIssue } from "./issue";
 import type { ErrorMessage } from "./other";
 import type { BaseSchema, BaseSchemaAsync } from "./schema";
-import type { MarkOptional, MaybeReadonly, Prettify } from "./utils";
+import type { MarkOptional, MaybeReadonly } from "./utils";
 
 /**
  * Object entries type.
