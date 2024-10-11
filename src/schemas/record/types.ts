@@ -1,4 +1,4 @@
-import type { Prettify } from "valibot";
+import type { Prettify } from "@rbxts/valibot/types";
 import type { Brand, ReadonlyAction } from "../../actions";
 import type { SchemaWithPipe, SchemaWithPipeAsync } from "../../methods";
 import type { BaseIssue, BaseSchema, BaseSchemaAsync, InferInput, InferOutput, MarkOptional } from "../../types";
