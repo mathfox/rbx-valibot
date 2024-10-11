@@ -1,4 +1,4 @@
-declare module "valibot" {
+declare module "@rbxts/valibot/types" {
 	/**
 	 * Prettifies a type for better readability.
 	 *
