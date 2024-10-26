@@ -39,13 +39,13 @@
 	},
 	"devDependencies": {
 		"@rbxts/compiler-types": "^3.0.0-types.0",
-		"@rbxts/types": "^1.0.805",
+		"@rbxts/types": "^1.0.813",
 		"@rbxts/jest": "^0.1.0",
 		"@rbxts/jest-globals": "^0.1.0",
 		"roblox-ts": "^3.0.0-dev-834585a"
 	},
 	"dependencies": {
-		"@rbxts/phantom": "0.6.1",
+		"@rbxts/phantom": "^0.7.0",
 		"@rbxts/regexp": "^0.2.1-ts.4"
 	}
 }
