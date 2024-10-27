@@ -1,3 +1,4 @@
+export * from "./assert";
 export * from "./config";
 export * from "./fallback";
 export * from "./getDefault";
